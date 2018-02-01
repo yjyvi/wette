@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.ProductTableAdapter;
@@ -36,7 +38,7 @@ import java.util.List;
  * @date 2018/1/31
  */
 @ContentView(R.layout.activity_product_details)
-public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
+public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -49,6 +51,20 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
 
     @ViewInject(R.id.iv_cart)
     private ImageView iv_cart;
+
+    @ViewInject(R.id.ll_shop)
+    private LinearLayout ll_shop;
+
+    @ViewInject(R.id.ll_collection)
+    private LinearLayout ll_collection;
+
+    @ViewInject(R.id.tv_join_cart)
+    private TextView tv_join_cart;
+
+    @ViewInject(R.id.tv_pay)
+    private TextView tv_pay;
+
+
 
 
     public static String[] mTitles = {"商品", "详情", "评论"};
@@ -63,6 +79,7 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
     protected void setControlBasis() {
         iv_back.setOnClickListener(this);
         iv_cart.setOnClickListener(this);
+
     }
 
     @Override
@@ -103,7 +120,7 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setNormalColor(Color.BLACK);
                 colorTransitionPagerTitleView.setSelectedColor(context.getResources().getColor(R.color.normal_color));
-                colorTransitionPagerTitleView.setTextSize(15);
+                colorTransitionPagerTitleView.setTextSize(18);
 
                 colorTransitionPagerTitleView.setText(mTitles[index]);
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -120,9 +137,9 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setColors(context.getResources().getColor(R.color.normal_color));
-                indicator.setLineHeight(3);
+                indicator.setLineHeight(4);
                 indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-                indicator.setYOffset(AutoUtils.getPercentHeightSize(1));
+                indicator.setYOffset(AutoUtils.getPercentHeightSize(2));
                 return indicator;
             }
 
@@ -135,7 +152,7 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
 
 
     public static void start(Context context) {
-        Intent starter = new Intent(context, PreductDetailsUI.class);
+        Intent starter = new Intent(context, ProductDetailsUI.class);
         context.startActivity(starter);
     }
 
@@ -146,7 +163,7 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
                 back();
                 break;
             case R.id.iv_cart:
-
+                //购物车
                 break;
             default:
                 break;

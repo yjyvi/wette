@@ -69,6 +69,7 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
     };
 
     private ViewPager.OnPageChangeListener mListener;
+    public int mItem;
 
     public MyViewPagerIndicator(Context context) {
         super(context);
@@ -144,10 +145,14 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
             }
         });
         addDotView(count);
-        int item = 500 - (500 % count);
-        viewPager.setCurrentItem(item);
+        mItem = 500 - (500 % count);
+        viewPager.setCurrentItem(mItem);
         mHandler.removeMessages(MESSAGE_WHAT_NEXT_ITEM);
         mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT_NEXT_ITEM,delayed);
+    }
+
+    public int getItem() {
+        return mItem;
     }
 
     /**

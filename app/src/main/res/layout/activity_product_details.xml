@@ -7,12 +7,12 @@
     <!--顶部标题-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="148px">
+        android:layout_height="128px">
 
         <com.risenb.wette.views.AutoMagicIndicator
             android:layout_gravity="bottom|center_horizontal"
             android:id="@+id/ami_type"
-            android:layout_width="300px"
+            android:layout_width="350px"
             android:layout_height="80px"/>
 
 
@@ -43,15 +43,15 @@
     </FrameLayout>
 
     <View
-        android:layout_marginTop="148px"
+        android:layout_marginTop="128px"
         android:layout_width="match_parent"
         android:background="@color/gray_text"
-        android:layout_height="2px"/>
+        android:layout_height="1px"/>
 
 
     <!--内容列表-->
     <android.support.v4.view.ViewPager
-        android:layout_marginTop="150px"
+        android:layout_marginTop="130px"
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_marginBottom="98px"
@@ -67,6 +67,7 @@
 
         <!--店铺-->
         <LinearLayout
+            android:id="@+id/ll_shop"
             android:layout_marginTop="18px"
             android:layout_marginLeft="42px"
             android:layout_marginRight="40px"
@@ -98,6 +99,7 @@
 
         <!--收藏-->
         <LinearLayout
+            android:id="@+id/ll_collection"
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
             android:layout_marginTop="18px"
@@ -125,6 +127,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/tv_join_cart"
                 android:layout_weight="0.9"
                 android:layout_width="wrap_content"
                 style="@style/text_blue_32"
@@ -135,6 +138,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:id="@+id/tv_pay"
                 android:layout_weight="1.2"
                 style="@style/text_blue_32"
                 android:layout_width="wrap_content"

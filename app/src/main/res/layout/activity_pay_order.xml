@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/common_title"/>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_text"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:layout_marginTop="30px"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:textColor="@color/orange"
+        android:textSize="26px"
+        android:text="感谢您的提交订单，请在6小时内完成支付。我们将在您付款成功后处理此订单。"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!--地址-->
+    <LinearLayout
+        android:id="@+id/ll_selected_address"
+        android:paddingLeft="22px"
+        android:paddingRight="22px"
+        android:gravity="center_vertical"
+        android:paddingTop="30px"
+        android:paddingBottom="30px"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/address_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_marginLeft="30px"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                style="@style/text_gray_30"
+                android:text="收货人：xxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text_gray_30"
+                android:layout_marginTop="24px"
+                android:text="联系方式：xxxxxxxxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text_gray_30"
+                android:textColor="@color/gray_6"
+                android:layout_marginTop="24px"
+                android:text="收货地址：xxxx幽幽xxxxxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/more"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@mipmap/address_line"
+        android:layout_height="wrap_content"/>
+    
+    <Button
+        android:id="@+id/bt_pay"
+        android:textColor="@color/white"
+        android:layout_marginTop="400px"
+        android:layout_marginLeft="46px"
+        android:layout_marginRight="46px"
+        android:layout_width="match_parent"
+        android:text="立即支付"
+        android:background="@drawable/shape_item_rand_normal"
+        android:layout_height="98px"/>
+</LinearLayout>
