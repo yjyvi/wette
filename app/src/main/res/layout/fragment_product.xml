@@ -170,6 +170,7 @@
             android:layout_height="wrap_content"/>
 
         <ImageView
+            android:id="@+id/iv_selected_style"
             android:src="@mipmap/normal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
@@ -180,7 +181,8 @@
         android:paddingLeft="22px"
         android:paddingRight="22px"
         android:gravity="center_vertical"
-        android:layout_marginTop="30px"
+        android:paddingTop="30px"
+        android:paddingBottom="30px"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -225,6 +227,10 @@
             android:src="@mipmap/more"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@mipmap/address_line"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

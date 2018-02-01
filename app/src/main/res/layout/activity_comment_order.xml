@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_title"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_text"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="376px"
+        android:layout_marginLeft="20px"
+        android:layout_marginRight="20px"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="说说您的使用心得，分享给想买的小主们..."
+        android:padding="24px"
+        android:textSize="28px"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="98px"
+        android:layout_marginLeft="46px"
+        android:layout_marginRight="46px"
+        android:layout_marginTop="270px"
+        android:background="@drawable/shape_item_rand_normal"
+        android:text="提交"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

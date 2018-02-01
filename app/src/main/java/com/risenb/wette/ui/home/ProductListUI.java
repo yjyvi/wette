@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
@@ -25,6 +26,10 @@ public class ProductListUI extends BaseUI {
 
     @ViewInject(R.id.rv_product_list)
     private RecyclerView rv_product_list;
+
+    @ViewInject(R.id.common_title_back)
+    private RelativeLayout common_title_back;
+
     public ProductListAdapter mProductListAdapter;
     private ArrayList<String > mLeftData;
 
@@ -54,6 +59,13 @@ public class ProductListUI extends BaseUI {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PreductDetailsUI.start(view.getContext());
+            }
+        });
+
+        common_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back();
             }
         });
     }

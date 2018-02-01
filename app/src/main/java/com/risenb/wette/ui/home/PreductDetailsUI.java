@@ -120,9 +120,9 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setColors(context.getResources().getColor(R.color.normal_color));
-                indicator.setLineHeight(3);
+                indicator.setLineHeight(4);
                 indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
-                indicator.setYOffset(AutoUtils.getPercentHeightSize(1));
+                indicator.setYOffset(AutoUtils.getPercentHeightSize(2));
                 return indicator;
             }
 
@@ -146,7 +146,7 @@ public class PreductDetailsUI extends BaseUI implements View.OnClickListener {
                 back();
                 break;
             case R.id.iv_cart:
-
+                //购物车
                 break;
             default:
                 break;
