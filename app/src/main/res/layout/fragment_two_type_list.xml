@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_frg_main"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#EEEEEE"
+        android:text="Fragment"
+        android:textSize="16sp"/>
+
+    <ScrollView
+        android:id="@+id/sl_frg_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_frg_main"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:id="@+id/ll_frg_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+
+</RelativeLayout>
