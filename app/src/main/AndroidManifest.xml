@@ -139,7 +139,7 @@
         <!--向导界面-->
         <activity android:name=".ui.GuideUI"/>
         <activity android:name=".ui.home.ProductListUI"/>
-        <activity android:name=".ui.home.PreductDetailsUI"/>
+        <activity android:name=".ui.home.ProductDetailsUI"/>
         <activity android:name=".ui.home.PayOrderUI"/>
         <activity android:name=".ui.home.CommentOderUI"/>
 

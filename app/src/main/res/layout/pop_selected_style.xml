@@ -15,7 +15,7 @@
 
 
         <TextView
-            style="@style/text_gray_34"
+            style="@style/text_gray_36"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40px"
@@ -35,7 +35,7 @@
             android:background="@color/gray_line"/>
 
         <TextView
-            style="@style/text_gray_34"
+            style="@style/text_gray_36"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="尺码"/>
@@ -49,9 +49,9 @@
 
     <TextView
         android:id="@+id/tv_commit"
-        style="@style/text_back_32"
+        android:textSize="40px"
         android:layout_width="match_parent"
-        android:layout_height="98px"
+        android:layout_height="150px"
         android:layout_marginTop="40px"
         android:background="@color/normal_color"
         android:gravity="center"

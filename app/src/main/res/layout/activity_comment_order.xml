@@ -16,7 +16,7 @@
         android:layout_height="376px"
         android:layout_marginLeft="20px"
         android:layout_marginRight="20px"
-        android:background="@null"
+        android:background="@drawable/shape_item_rand_white"
         android:gravity="top"
         android:hint="说说您的使用心得，分享给想买的小主们..."
         android:padding="24px"

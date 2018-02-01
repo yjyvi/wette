@@ -30,25 +30,25 @@ public class PopUtils {
     public static void showGoodsStyle(final Activity context, View contentView, String colorContent, String sizeContent, final GoodsSelectedStyleListener clickListener) {
 
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.pop_selected_style, null);
-        final PopupWindow sharePopupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
+        final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
 
         AutoFlowLayout alf_color_type = (AutoFlowLayout) layoutView.findViewById(R.id.alf_color_type);
         AutoFlowLayout alf_size = (AutoFlowLayout) layoutView.findViewById(R.id.alf_size);
         TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
 
-        showItems(alf_color_type, context, colorContent);
-        showItems(alf_size, context, sizeContent);
+        showItems(alf_color_type, context, colorContent, 1);
+        showItems(alf_size, context, sizeContent, 2);
 
 
         tv_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.selectedResult(selectedColorStyleResult + selectedSizeStyleResult);
-                sharePopupWindow.dismiss();
+                popupWindow.dismiss();
             }
         });
 
-        showPoPNormal(context, contentView, sharePopupWindow, Gravity.BOTTOM);
+        showPoPNormal(context, contentView, popupWindow, Gravity.BOTTOM);
     }
 
 
@@ -60,9 +60,9 @@ public class PopUtils {
      * @param contents
      * @return
      */
-    private static void showItems(AutoFlowLayout autoFlowLayout, final Activity context, String contents) {
+    private static void showItems(final AutoFlowLayout autoFlowLayout, final Activity context, String contents, final int type) {
         autoFlowLayout.removeAllViews();
-        String pressTexts = contents.substring(0, contents.length() - 1);
+        String pressTexts = contents.substring(0, contents.length());
         final String[] split = pressTexts.split(",");
         for (int i = 0; i < split.length; i++) {
             final TextView tag = (TextView) LayoutInflater.from(context).inflate(R.layout.item_goos_sytle, autoFlowLayout, false);
@@ -73,11 +73,18 @@ public class PopUtils {
                 @Override
                 public void onClick(View v) {
                     if (!tag.isSelected()) {
+                        //单选操作，遍历后设置为未选中状态
+                        for (int i1 = 0; i1 < autoFlowLayout.getChildCount(); i1++) {
+                            autoFlowLayout.getChildAt(i1).setSelected(false);
+                        }
                         tag.setSelected(true);
                         String content = tag.getText().toString().trim();
                         ToastUtils.showToast(content);
-                        selectedColorStyleResult = content;
-                        selectedSizeStyleResult = content;
+                        if (1 == type) {
+                            selectedColorStyleResult = content;
+                        } else {
+                            selectedSizeStyleResult = content;
+                        }
                     } else {
                         tag.setSelected(false);
                     }
