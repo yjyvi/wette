@@ -1,5 +1,8 @@
 package com.risenb.wette.ui.mine;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseUI;
 
@@ -29,5 +32,10 @@ public class ModifyPhoneNumberActivity extends BaseUI {
     @Override
     protected void prepareData() {
 
+    }
+    
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, ModifyPhoneNumberActivity.class);
+        context.startActivity(intent);
     }
 }

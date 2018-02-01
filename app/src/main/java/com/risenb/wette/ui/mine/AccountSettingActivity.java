@@ -1,9 +1,14 @@
 package com.risenb.wette.ui.mine;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseUI;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 
 /**
  * <pre>
@@ -30,4 +35,19 @@ public class AccountSettingActivity extends BaseUI {
     protected void prepareData() {
 
     }
+
+    @Event(value = {R.id.tv_modify_account_setting},type = View.OnClickListener.class)
+    private void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_modify_account_setting:
+                PersonalInformationActivity.toActivity(view.getContext());
+                break;
+        }
+    }
+
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, AccountSettingActivity.class);
+        context.startActivity(intent);
+    }
+    
 }

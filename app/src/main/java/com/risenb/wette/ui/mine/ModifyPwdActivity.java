@@ -1,5 +1,8 @@
 package com.risenb.wette.ui.mine;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseUI;
 
@@ -30,4 +33,10 @@ public class ModifyPwdActivity extends BaseUI {
     protected void prepareData() {
 
     }
+    
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, ModifyPwdActivity.class);
+        context.startActivity(intent);
+    }
+    
 }

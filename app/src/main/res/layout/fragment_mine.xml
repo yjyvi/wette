@@ -13,19 +13,28 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
 
-            <ImageView
-                    android:layout_width="128px"
-                    android:layout_height="128px"
-                    android:layout_marginTop="144px"
-                    android:src="@drawable/mine_no_login_head_image"/>
-
-            <TextView
+            <LinearLayout
+                    android:id="@+id/ll_login_or_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="26px"
-                    android:textSize="30px"
-                    android:textColor="#333333"
-                    android:text="请登录/注册"/>
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="144px"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:layout_width="128px"
+                        android:layout_height="128px"
+                        android:src="@drawable/mine_no_login_head_image"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26px"
+                        android:textSize="30px"
+                        android:textColor="#333333"
+                        android:text="请登录/注册"/>
+
+            </LinearLayout>
 
             <View
                     style="@style/common_line"
@@ -274,6 +283,7 @@
                 </FrameLayout>
 
                 <FrameLayout
+                        android:id="@+id/fl_feedback"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
@@ -299,6 +309,7 @@
                     android:background="#f5f5f5"/>
 
             <LinearLayout
+                    android:id="@+id/ll_account_setting"
                     android:layout_width="match_parent"
                     android:layout_height="100px"
                     android:paddingLeft="24px"

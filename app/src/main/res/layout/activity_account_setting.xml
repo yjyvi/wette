@@ -10,6 +10,7 @@
             />
 
     <TextView
+            android:id="@+id/tv_modify_account_setting"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:text="更改账户设置"
@@ -35,19 +36,6 @@
     <View
             style="@style/common_line"/>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:text="清除本地缓存"
-            android:gravity="center_vertical"
-            style="@style/text_view_title_3"
-            android:paddingLeft="24px"
-            android:paddingRight="20px"
-            android:drawableRight="@drawable/mine_arrow"/>
-
-    <View
-            style="@style/common_line"/>
-
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,7 +44,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100px"
-                android:text="法律条款与关于"
+                android:text="清除本地缓存"
                 android:gravity="center_vertical"
                 style="@style/text_view_title_3"
                 android:paddingLeft="24px"
@@ -73,6 +61,20 @@
                 android:textSize="28px"/>
 
     </FrameLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="法律条款与关于"
+            android:gravity="center_vertical"
+            style="@style/text_view_title_3"
+            android:paddingLeft="24px"
+            android:paddingRight="20px"
+            android:drawableRight="@drawable/mine_arrow"/>
+
 
     <View
             style="@style/common_line"/>

@@ -151,6 +151,19 @@
         <activity android:name=".ui.mine.GetBackPwdActivity"/>
         <!-- 绑定手机 -->
         <activity android:name=".ui.mine.BindPhoneNumberActivity"/>
+        <!-- 账户设置 -->
+        <activity android:name=".ui.mine.AccountSettingActivity"/>
+        <!-- 个人信息 -->
+        <activity android:name=".ui.mine.PersonalInformationActivity"/>
+        <!-- 修改昵称 -->
+        <activity android:name=".ui.mine.ModifyNickNameActivity"/>
+        <!-- 修改手机号 -->
+        <activity android:name=".ui.mine.ModifyPhoneNumberActivity"/>
+        <!-- 修改密码 -->
+        <activity android:name=".ui.mine.ModifyPwdActivity"/>
+        <!-- 反馈 -->
+        <activity android:name=".ui.mine.FeedbackActivity"/>
+
         <activity android:name=".ui.home.ShopUI"/>
         <activity android:name=".ui.home.SearchResultUI"/>
 

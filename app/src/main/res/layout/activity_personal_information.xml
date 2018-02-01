@@ -9,6 +9,7 @@
             />
 
     <LinearLayout
+            android:id="@+id/ll_modify_nick_name"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:paddingLeft="24px"
@@ -43,6 +44,7 @@
             style="@style/common_line"/>
 
     <LinearLayout
+            android:id="@+id/ll_modify_phone_number"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:paddingLeft="24px"
@@ -77,6 +79,7 @@
             style="@style/common_line"/>
 
     <LinearLayout
+            android:id="@+id/ll_modify_pwd"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:paddingLeft="24px"
