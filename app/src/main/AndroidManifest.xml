@@ -152,6 +152,7 @@
         <!-- 绑定手机 -->
         <activity android:name=".ui.mine.BindPhoneNumberActivity"/>
         <activity android:name=".ui.home.ShopUI"/>
+        <activity android:name=".ui.home.SearchResultUI"/>
 
     </application>
 

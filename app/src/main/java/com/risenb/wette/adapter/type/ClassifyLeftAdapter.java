@@ -23,7 +23,6 @@ public class ClassifyLeftAdapter extends BaseQuickAdapter<String, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-
-        helper.setTag(R.id.tv_name,item);
+        helper.setText(R.id.tv_name,item);
     }
 }

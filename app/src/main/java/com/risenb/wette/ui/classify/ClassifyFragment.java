@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
@@ -63,10 +64,13 @@ public class ClassifyFragment extends LazyLoadFragment {
         classifyLeftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                rv_left.scrollToPosition(position);
-                view.setBackgroundResource(R.drawable.type_selected);
+
+                scroll(position,adapter,view);
+                TextView item = (TextView) adapter.getItem(position);
+                item.setSelected(true);
                 ToastUtils.showToast(String.valueOf(position));
             }
+
         });
 
 
@@ -78,6 +82,55 @@ public class ClassifyFragment extends LazyLoadFragment {
         rv_right.setAdapter(mClassifyRightAdapter);
         rv_right.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
+    }
+
+
+    //可见列表项的数量
+    private int visibleCount = 0;
+    //上次点击的位置
+    private int lastPosition = 0;
+    private int ce = 0;
+    //实际列表是否超出屏幕
+    private boolean isOut = true;
+
+    private void scroll(int position,BaseQuickAdapter adapter, View view) {
+        if (visibleCount == 0) {
+            visibleCount = rv_left.getChildCount();
+            if (visibleCount == mLeftData.size())
+                isOut = false;
+            else {
+                ce = visibleCount / 2;
+            }
+        }
+
+        RecyclerView.LayoutManager layoutManager  = rv_left.getLayoutManager();
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+
+            //上移
+            if (position <= (linearManager.findFirstVisibleItemPosition() + ce)) {
+                rv_left.smoothScrollToPosition(position - ce);
+            } else {
+                //下移
+                if ((linearManager.findLastVisibleItemPosition() + ce + 1) <= adapter.getItemCount()) {
+                    rv_left.smoothScrollToPosition(position + ce);
+                } else {
+                    rv_left.smoothScrollToPosition(adapter.getItemCount() - 1);
+                }
+
+            }
+
+            lastPosition = position;
+
+//            adapter.setSelected(position);
+//            adapter.notifyDataSetChanged();
+        }
+
+
+
+        //更新右侧标签页的标题
+//        fragment.updateTitle("c" + (position + 1));
     }
 
     private void leftData() {

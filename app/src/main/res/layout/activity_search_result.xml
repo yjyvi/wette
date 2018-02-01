@@ -4,145 +4,41 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <FrameLayout
+    <include layout="@layout/common_title"/>
+
+
+    <EditText
+        android:id="@+id/et_search"
         android:layout_width="match_parent"
-        android:layout_height="128px"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/title_back"
-            android:layout_width="100px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="26px"
-            android:gravity="bottom">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="36px"
-                android:layout_height="36px"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20px"
-                android:src="@mipmap/back"/>
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/common_title"
-            android:layout_width="150px"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20px"
-            android:gravity="bottom|center">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:text="店铺"
-                android:textColor="#333333"
-                android:textSize="36px"
-                />
-
-
-        </RelativeLayout>
-
-
-        <!--右功能键图片-->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:gravity="bottom">
-
-            <RelativeLayout
-                android:id="@+id/rl_right"
-                android:layout_width="100px"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="26px"
-                >
-
-                <ImageView
-                    android:id="@+id/iv_right"
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="21px"
-                    android:src="@mipmap/home_search"/>
-
-            </RelativeLayout>
-
-            <!--右功能键图片-->
-            <RelativeLayout
-                android:id="@+id/rl_right2"
-                android:layout_width="80px"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="26px"
-
-                >
-
-                <ImageView
-                    android:id="@+id/iv_right2"
-                    android:layout_width="40px"
-                    android:layout_height="40px"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="21px"
-                    android:src="@mipmap/home_cart"/>
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_gravity="bottom"
-            android:background="#999999"/>
-
-    </FrameLayout>
-    
-    <LinearLayout
+        android:layout_height="66px"
+        android:textSize="28px"
         android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="150px">
-        
-        
-        <com.risenb.wette.views.CircleImageView
-            android:src="@color/gray"
-            android:layout_width="100px"
-            android:layout_height="100px"/>
+        android:layout_marginLeft="30px"
+        android:drawablePadding="20px"
+        android:background="@drawable/shape_item_rand_white"
+        android:drawableLeft="@mipmap/search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:hint="搜索"/>
 
-        <TextView
-            android:layout_marginLeft="30px"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:text="店铺名称"
-            android:layout_height="wrap_content"/>
-
-         <ImageView
-             android:layout_width="wrap_content"
-             android:src="@mipmap/shop_collection"
-             android:layout_height="wrap_content"/>
-    </LinearLayout>
 
     <TextView
-        android:paddingLeft="20px"
+        style="@style/text_gray_32"
+        android:textColor="@color/gray_9"
         android:layout_width="match_parent"
+        android:layout_height="100px"
         android:gravity="center_vertical"
-        android:text="精品专区"
-        style="@style/text_back_32"
-        android:layout_height="100px"/>
+        android:paddingLeft="20px"
+        android:text="3112个结果"/>
 
     <android.support.v7.widget.RecyclerView
-        android:paddingLeft="10px"
-        android:paddingRight="10px"
-        android:background="@color/white"
-        android:id="@+id/rv_goods_list"
+        android:id="@+id/rv_search_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="10px"
+        android:paddingRight="10px"/>
 
 
 </LinearLayout>
