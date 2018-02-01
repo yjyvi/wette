@@ -152,4 +152,16 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">32px</item>
     </style>
+
+    <!-- 字号 -->
+    <style name="text_view_title_3">
+        <item name="android:textSize">30px</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="text_view_title_4">
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
 </resources>

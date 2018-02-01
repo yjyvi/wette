@@ -52,6 +52,15 @@ public abstract class BaseUI extends AutoLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(getActivity());
+        View back = findViewById(R.id.common_title_back);
+        if(back != null){
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    back();
+                }
+            });
+        }
         //沉浸式布局
         setTranslucentStatus();
         setControlBasis();

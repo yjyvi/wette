@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/common_title"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="30px"
+            android:paddingRight="30px">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="@color/translate"
+                android:hint="请输入您的旧密码(6~16位字符)"
+                android:textSize="30px"
+                android:textColor="#999999"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/login_phone_number"/>
+
+
+        <View
+                style="@style/common_line"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="@color/translate"
+                android:hint="请输入您的新密码(6~16位字符)"
+                android:textSize="30px"
+                android:textColor="#999999"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/login_phone_number"/>
+
+
+        <View
+                style="@style/common_line"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="@color/translate"
+                android:hint="确认新密码"
+                android:textSize="30px"
+                android:textColor="#999999"
+                android:drawablePadding="8dp"
+                android:drawableLeft="@drawable/login_phone_number"/>
+
+
+        <View
+                style="@style/common_line"/>
+
+    </LinearLayout>
+
+    <TextView
+            style="@style/text_view_login_btn"
+            android:layout_marginLeft="32px"
+            android:layout_marginRight="32px"
+            android:text="完成"
+            android:layout_marginTop="360px"/>
+
+</LinearLayout>
