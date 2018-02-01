@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <!--轮播图-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="380px">
+
+        <!-- ViewPager -->
+        <android.support.v4.view.ViewPager
+            android:background="@color/gray"
+            android:id="@+id/vp_item_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--一张图的时候-->
+        <ImageView
+            android:id="@+id/iv_item_banner"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <!-- 标题 -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/ll_item_banner_title"
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:gravity="center_vertical"
+                android:paddingLeft="20px"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_gravity="right|bottom"
+                android:paddingTop="10px"
+                android:paddingBottom="10px"
+                android:layout_marginBottom="20px"
+                android:paddingLeft="24px"
+                android:paddingRight="30px"
+                android:background="@drawable/shape_product_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/text_gray_30"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:text="1"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:textColor="@color/white"
+                    style="@style/text_gray_26"
+                    android:layout_width="wrap_content"
+                    android:text="/5"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+            <!--&lt;!&ndash; ViewPager 指示器 &ndash;&gt;-->
+            <!--<com.risenb.wette.views.MyViewPagerIndicator-->
+                <!--android:id="@+id/vpi_item_banner_indicator"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:paddingBottom="10px"-->
+                <!--android:layout_marginRight="20px">-->
+            <!--</com.risenb.wette.views.MyViewPagerIndicator>-->
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <TextView
+        android:layout_marginTop="20px"
+        android:paddingLeft="22px"
+        android:paddingRight="22px"
+        style="@style/text_back_32"
+        android:layout_width="wrap_content"
+        android:text="商品标题xxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxxxxxx"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="30px"
+        android:orientation="horizontal"
+        android:paddingLeft="22px"
+        android:paddingRight="22px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:text="￥998"
+            style="@style/text_gray_34"
+            android:textColor="@color/red"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:background="@mipmap/add_reduce_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_weight="1"
+                android:src="@mipmap/reduce"
+                android:paddingTop="20px"
+                android:paddingBottom="20px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:paddingLeft="5px"
+                android:paddingRight="5px"
+                android:text="1"
+                style="@style/text_gray_24"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:paddingTop="10px"
+                android:paddingBottom="10px"
+                android:layout_weight="1"
+                android:src="@mipmap/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_line"
+        android:layout_height="1px"/>
+
+
+
+    <!--样式选择-->
+    <LinearLayout
+        android:paddingLeft="22px"
+        android:paddingRight="22px"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="90px">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:text="样式"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@mipmap/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <!--地址-->
+    <LinearLayout
+        android:paddingLeft="22px"
+        android:paddingRight="22px"
+        android:gravity="center_vertical"
+        android:layout_marginTop="30px"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/address_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_marginLeft="30px"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                style="@style/text_gray_30"
+                android:text="收货人：xxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text_gray_30"
+                android:layout_marginTop="24px"
+                android:text="联系方式：xxxxxxxxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                style="@style/text_gray_30"
+                android:textColor="@color/gray_6"
+                android:layout_marginTop="24px"
+                android:text="收货地址：xxxx幽幽xxxxxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/more"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="service_host_address">http://test.1x9x.cn/client/</string>
+    <string name="service_host_image">http://rajy.4pole.cn</string>
+    <!-- 测试 -->
+    <string name="service_test_address">http://192.168.1.174:8080/client/</string>
+    <string name="defaulpage">app/defaulpage</string>
+
+
+    <!-- 文件上传 -->
+    <string name="uploadFiles">sys/uploadFiles</string>
+
+
+    <!-- 登陆 -->
+    <string name="userLogin">user/login</string>
+    <!-- 注册 -->
+    <string name="userRegister">user/userRegister</string>
+    <!-- 验证码 -->
+    <string name="authcode">user/getSmsCode</string>
+    <!--邮箱验证码-->
+    <string name="getEmailCode">user/getEmailCode</string>
+    <!-- 忘记密码 -->
+    <string name="forgetPassword">user/updatePwdByMobile</string>
+    <!-- 修改个人资料 -->
+    <string name="updateInfo">user/update</string>
+    <!-- 获取个人资料 -->
+    <string name="getUserInfo">user/getInformation</string>
+    <!--修改密码-->
+    <string name="updatePwd">user/updatePwd</string>
+
+
+
+</resources>

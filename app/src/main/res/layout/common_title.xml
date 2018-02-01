@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="128px"
+             android:background="@color/white"
+             android:orientation="horizontal">
+
+    <RelativeLayout
+        android:gravity="bottom"
+        android:id="@+id/common_title_back"
+        android:layout_marginBottom="26px"
+        android:layout_width="100px"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="36px"
+            android:layout_height="36px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:src="@mipmap/back"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/common_title"
+        android:gravity="bottom|center"
+        android:layout_marginBottom="20px"
+        android:layout_width="150px"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:visibility="gone"
+            android:gravity="bottom"
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="标题文字"
+            android:textColor="@color/black_2"
+            android:textSize="36px"
+            />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/iv_title"
+            android:layout_width="71px"
+            android:layout_height="46px"
+            android:src="@mipmap/home_logo"/>
+    </RelativeLayout>
+
+
+
+    <!--右功能键图片-->
+    <RelativeLayout
+        android:gravity="bottom"
+        android:layout_marginBottom="26px"
+        android:id="@+id/rl_right"
+        android:layout_width="100px"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="40px"
+            android:layout_height="40px"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="21px"
+            android:src="@mipmap/back"/>
+
+    </RelativeLayout>
+
+    <!--右功能键文字-->
+
+    <RelativeLayout
+        android:gravity="right|bottom"
+        android:layout_marginBottom="30px"
+        android:id="@+id/rl_right_title"
+        android:layout_width="200px"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/iv_right_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:text="功能"
+            android:textColor="@color/common_text_color"
+            android:textSize="30px"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

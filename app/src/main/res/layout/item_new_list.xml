@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:paddingLeft="20px"
+              android:paddingRight="20px"
+              android:layout_marginTop="60px"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+
+    <com.risenb.wette.views.CircleImageView
+        android:layout_width="100px"
+        android:src="@color/gray"
+        android:layout_height="100px"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="29px"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_blue_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="产品标题"/>
+
+        <TextView
+            style="@style/text_gray_28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25px"
+            android:lineSpacingExtra="25px"
+            android:text="产品描述产品描述产品描述产产品描述产品描述产品描述产品描述产品描述产品描述产品描述品描述产品描述产品描述产品描述"/>
+        
+        <ImageView
+            android:layout_marginTop="28px"
+            android:src="@color/gray"
+            android:layout_width="350px"
+            android:layout_height="350px"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥968"
+        android:textColor="@color/red"/>
+
+</LinearLayout>

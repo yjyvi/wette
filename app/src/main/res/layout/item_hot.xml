@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="244px">
+
+        <ImageView
+            android:layout_weight="1"
+            android:src="@color/gray"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="5px"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_marginLeft="5px"
+            android:src="@color/gray"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textSize="30px"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Michael Kors"/>
+
+
+        <TextView
+            android:layout_marginLeft="16px"
+            android:textSize="30px"
+            android:textColor="@color/gray_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="大气简约 低调奢华"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_new_client_share"
+        android:src="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="280px"/>
+
+    <LinearLayout
+        android:layout_marginTop="29px"
+        android:layout_width="400px"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="241px"
+            android:layout_weight="1"
+            android:layout_height="1px"
+            android:background="@color/gray_line"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:paddingLeft="17px"
+            android:paddingRight="17px"
+            android:textSize="32px"
+            android:layout_height="wrap_content"
+            android:text="最新"/>
+
+        <View
+            android:layout_width="241px"
+            android:layout_weight="1"
+            android:layout_height="1px"
+            android:background="@color/gray_line"/>
+
+    </LinearLayout>
+
+</LinearLayout>

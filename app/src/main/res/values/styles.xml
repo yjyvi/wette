@@ -1,0 +1,125 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="colorPrimary">@color/normal_color</item>-->
+        <!--<item name="colorPrimaryDark">@color/normal_color</item>-->
+        <!--<item name="colorAccent">@color/normal_color</item>-->
+        <!--&lt;!&ndash; 隐藏状态栏 &ndash;&gt;-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!-- 隐藏标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- API 21 theme customizations can go here. -->
+    </style>
+
+
+    <!--主菜单栏-->
+    <style name="Main_RadioGroup">
+        <!--<item name="android:layout_marginBottom">9px</item>-->
+        <item name="android:layout_marginTop">12px</item>
+        <item name="android:textSize">28px</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center_horizontal|bottom</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@drawable/tab_text</item>
+        <item name="android:drawablePadding">12px</item>
+        <item name="android:background">#00ffffff</item>
+    </style>
+
+
+    <!--字体样式-->
+
+    <style name="text_back_32">
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_blue_32">
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="text_gray_22">
+        <item name="android:textSize">22px</item>
+        <item name="android:textColor">@color/gray_9</item>
+    </style>
+
+    <style name="text_gray_26">
+        <item name="android:textSize">26px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_28">
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_30">
+        <item name="android:textSize">30px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_32">
+        <item name="android:textSize">32px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_34">
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_36">
+        <item name="android:textSize">36px</item>
+        <item name="android:textColor">@color/gray_3</item>
+    </style>
+
+    <style name="text_gray_24">
+        <item name="android:textSize">24px</item>
+        <item name="android:textColor">@color/gray_6</item>
+    </style>
+
+    <!--ShadowLayout的样式-->
+    <declare-styleable name="ShadowLayout">
+        <attr name="shadowColor" format="color" />
+        <attr name="shadowRadius" format="dimension" />
+        <attr name="shadowDx" format="dimension" />
+        <attr name="shadowDy" format="dimension" />
+        <attr name="shadowSide">
+            <flag name="all" value="0x1111" />
+            <flag name="left" value="0x0001" />
+            <flag name="top" value="0x0010" />
+            <flag name="right" value="0x0100" />
+            <flag name="bottom" value="0x1000" />
+        </attr>
+    </declare-styleable>
+
+
+    <!--开关按扭的样式-->
+    <declare-styleable name="SwitchButton">
+        <attr name="sb_shadow_radius" format="reference|dimension" />
+        <attr name="sb_shadow_offset" format="reference|dimension" />
+        <attr name="sb_shadow_color" format="reference|color" />
+        <attr name="sb_uncheck_color" format="reference|color" />
+        <attr name="sb_checked_color" format="reference|color" />
+
+        <attr name="sb_border_width" format="reference|dimension" />
+        <attr name="sb_checkline_color" format="reference|color" />
+        <attr name="sb_checkline_width" format="reference|dimension" />
+        <attr name="sb_uncheckcircle_color" format="reference|color" />
+        <attr name="sb_uncheckcircle_width" format="reference|dimension" />
+        <attr name="sb_uncheckcircle_radius" format="reference|dimension" />
+
+        <attr name="sb_checked" format="reference|boolean" />
+        <attr name="sb_shadow_effect" format="reference|boolean" />
+        <attr name="sb_effect_duration" format="reference|integer" />
+        <attr name="sb_button_color" format="reference|color" />
+        <attr name="sb_show_indicator" format="reference|boolean" />
+        <attr name="sb_background" format="reference|color" />
+        <attr name="sb_enable_effect" format="reference|boolean" />
+    </declare-styleable>
+</resources>

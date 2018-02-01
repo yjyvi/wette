@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+             android:background="@color/transparent"
+              android:orientation="vertical">
+    <!--主页面-->
+    <com.risenb.wette.views.MyViewPager
+        android:id="@+id/tab_pager"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="98px"
+        android:layout_height="match_parent"/>
+
+    <!--首页-->
+    <RadioGroup
+        android:layout_gravity="bottom"
+        android:id="@+id/rg_home_table_groups"
+        android:layout_width="match_parent"
+        android:layout_height="98px"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/Main_RadioGroup"
+            android:checked="true"
+            android:drawableTop="@drawable/tab_home"
+            android:text="首页"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_type"
+            style="@style/Main_RadioGroup"
+            android:drawableTop="@drawable/tab_type"
+            android:text="分类"/>
+
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            style="@style/Main_RadioGroup"
+            android:drawableTop="@drawable/tab_mine"
+            android:text="我的"/>
+    </RadioGroup>
+
+</FrameLayout>

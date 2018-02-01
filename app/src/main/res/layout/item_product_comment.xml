@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:paddingLeft="20px"
+              android:paddingRight="20px"
+
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.risenb.wette.views.CircleImageView
+            android:layout_width="80px"
+            android:src="@color/gray"
+            android:layout_height="80px"/>
+
+
+        <TextView
+            style="@style/text_gray_26"
+            android:layout_marginLeft="20px"
+            android:layout_weight="1"
+            android:text="评论者名称"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            style="@style/text_gray_22"
+            android:text="2017-30-10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_gray_34"
+        android:layout_marginTop="20px"
+        android:layout_width="wrap_content"
+        android:text="评论的内容评论的内容评论的内容评论的内容评论的内容评论的内容评论的内容"
+        android:layout_marginBottom="30px"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
