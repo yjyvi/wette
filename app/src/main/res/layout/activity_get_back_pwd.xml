@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_title"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="46px"
+            android:paddingRight="46px"
+            android:paddingTop="64px"
+            android:orientation="vertical">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="28px"
+                android:paddingRight="28px">
+
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/login_phone_number"
+                    android:hint="请输入手机号"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/register_validate_code"
+                    android:hint="验证码"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/login_pwd"
+                    android:hint="密码为6~16位字符，由数字和字母组成"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/login_pwd"
+                    android:hint="确认密码"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tv_get_back_pwd"
+                style="@style/text_view_login_btn"
+                android:layout_marginTop="290px"
+                android:text="确定"/>
+
+    </LinearLayout>
+
+</LinearLayout>

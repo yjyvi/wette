@@ -1,7 +1,9 @@
 package com.risenb.wette.ui.mine;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
@@ -28,6 +30,16 @@ public class MineFragment extends LazyLoadFragment {
 
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getView().findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.toActivity(v.getContext());
+            }
+        });
+    }
 
     /**
      * 初始化实例

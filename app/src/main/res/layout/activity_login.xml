@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <include layout="@layout/common_title"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="64px"
+            android:paddingLeft="46px"
+            android:paddingRight="46px">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="28px"
+                android:paddingRight="28px">
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/login_phone_number"
+                    android:hint="请输入手机号"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+            <EditText
+                    android:textSize="30px"
+                    android:drawableLeft="@drawable/login_pwd"
+                    android:hint="请输入密码 (6~16位字符)"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    style="@style/edit_text_login"
+                    />
+
+            <View
+                    style="@style/common_line"/>
+
+        </LinearLayout>
+        
+        <TextView
+                android:id="@+id/tv_login"
+                android:layout_marginTop="170px"
+                android:text="登录"
+                style="@style/text_view_login_btn"/>
+
+        <TextView
+                android:id="@+id/tv_get_back_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码"
+                android:textSize="30px"
+                android:textColor="#999999"
+                android:layout_marginTop="46px"
+                />
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="90px"
+                android:paddingRight="90px"
+                android:gravity="center_vertical">
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="1"
+                    android:background="#e5e5e5"
+                    />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#999999"
+                    android:textSize="26px"
+                    android:layout_marginLeft="24px"
+                    android:layout_marginRight="24px"
+                    android:text="第三方登录"/>
+            
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:background="#e5e5e5"
+                    android:layout_weight="1"
+                    />
+            
+        </LinearLayout>
+
+        <ImageView
+                android:id="@+id/iv_wechat_login"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_marginTop="50px"
+                android:layout_marginBottom="60px"
+                android:src="@drawable/login_wechat"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

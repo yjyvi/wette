@@ -143,6 +143,15 @@
         <activity android:name=".ui.home.PayOrderUI"/>
         <activity android:name=".ui.home.CommentOderUI"/>
 
+        <!-- 登录 -->
+        <activity android:name=".ui.mine.LoginActivity"/>
+        <!-- 注册 -->
+        <activity android:name=".ui.mine.RegisterActivity"/>
+        <!-- 找回密码 -->
+        <activity android:name=".ui.mine.GetBackPwdActivity"/>
+        <!-- 绑定手机 -->
+        <activity android:name=".ui.mine.BindPhoneNumberActivity"/>
+
     </application>
 
 </manifest>
