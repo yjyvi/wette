@@ -143,8 +143,13 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
                     }
                 });
                 vpi_item_banner_indicator.bindBannerViewPager(vp_item_banner, mResultBannerBean.size());
-                tv_total_page.setText(String.valueOf("/"+mResultBannerBean.size()));
-                tv_current_page.setText(String.valueOf(vpi_item_banner_indicator.getItem()));
+                tv_total_page.setText(String.valueOf("/" + mResultBannerBean.size()));
+                vpi_item_banner_indicator.setCurrentPositionListener(new MyViewPagerIndicator.CurrentPositionListener() {
+                    @Override
+                    public void currentPosition(int position) {
+                        tv_current_page.setText(String.valueOf(position));
+                    }
+                });
             }
         }
     }

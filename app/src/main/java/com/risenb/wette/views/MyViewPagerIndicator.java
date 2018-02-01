@@ -49,6 +49,16 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
      */
     private boolean isBindBannerViewPager = false;
 
+    /**
+     * 当前轮播图位置
+     */
+    private CurrentPositionListener currentPositionListener;
+
+
+    public void setCurrentPositionListener(CurrentPositionListener currentPositionListener) {
+        this.currentPositionListener = currentPositionListener;
+    }
+
     private Handler mHandler = new Handler() {
 
         @Override
@@ -63,10 +73,17 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
                         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
                     }
                 }
+                if (currentPositionListener != null) {
+                    currentPositionListener.currentPosition(mViewPager.getCurrentItem());
+                }
                 mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT_NEXT_ITEM, delayed);
             }
         }
     };
+
+    public interface CurrentPositionListener {
+        void currentPosition(int position);
+    }
 
     private ViewPager.OnPageChangeListener mListener;
     public int mItem;
@@ -92,6 +109,7 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
     private void initial() {
         //强制设置
         setOrientation(HORIZONTAL);
+
         mDotImageViewLeftMargin = AutoUtils.getPercentWidthSize(10);
         mListener = new ViewPager.OnPageChangeListener() {
             @Override
@@ -148,7 +166,7 @@ public class MyViewPagerIndicator extends AutoLinearLayout {
         mItem = 500 - (500 % count);
         viewPager.setCurrentItem(mItem);
         mHandler.removeMessages(MESSAGE_WHAT_NEXT_ITEM);
-        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT_NEXT_ITEM,delayed);
+        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT_NEXT_ITEM, delayed);
     }
 
     public int getItem() {

@@ -89,6 +89,7 @@
         android:layout_marginTop="30px"
         android:orientation="horizontal"
         android:paddingLeft="22px"
+        android:gravity="center_vertical"
         android:paddingRight="22px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -144,6 +145,7 @@
 
     <!--分割线-->
     <View
+        android:layout_marginTop="40px"
         android:layout_width="match_parent"
         android:background="@color/gray_line"
         android:layout_height="1px"/>
