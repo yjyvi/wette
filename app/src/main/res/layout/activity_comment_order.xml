@@ -6,10 +6,6 @@
 
     <include layout="@layout/common_title"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray_text"/>
 
     <EditText
         android:layout_width="match_parent"

@@ -7,6 +7,8 @@
     <include layout="@layout/common_title"/>
 
     <android.support.v7.widget.RecyclerView
+        android:paddingLeft="10px"
+        android:paddingRight="10px"
         android:id="@+id/rv_product_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

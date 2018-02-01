@@ -65,8 +65,6 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
     private TextView tv_pay;
 
 
-
-
     public static String[] mTitles = {"商品", "详情", "评论"};
     private List<Fragment> mFragmentLists = new ArrayList<>();
 
@@ -79,6 +77,7 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
     protected void setControlBasis() {
         iv_back.setOnClickListener(this);
         iv_cart.setOnClickListener(this);
+        ll_shop.setOnClickListener(this);
 
     }
 
@@ -164,6 +163,12 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
                 break;
             case R.id.iv_cart:
                 //购物车
+                break;
+            case R.id.ll_shop:
+                ShopUI.start(view.getContext());
+                break;
+            case R.id.ll_collection:
+
                 break;
             default:
                 break;

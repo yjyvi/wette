@@ -151,6 +151,7 @@
         <activity android:name=".ui.mine.GetBackPwdActivity"/>
         <!-- 绑定手机 -->
         <activity android:name=".ui.mine.BindPhoneNumberActivity"/>
+        <activity android:name=".ui.home.ShopUI"/>
 
     </application>
 
