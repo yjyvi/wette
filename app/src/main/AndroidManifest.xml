@@ -169,6 +169,8 @@
         <activity android:name=".ui.mine.MessageActivity"/>
         <!-- 收藏 -->
         <activity android:name=".ui.mine.CollectionActivity"/>
+        <!-- 我的订单 -->
+        <activity android:name=".ui.mine.OrderActivity"/>
         <activity android:name=".ui.home.ShopUI"/>
         <activity android:name=".ui.home.SearchResultUI"/>
 

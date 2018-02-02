@@ -153,6 +153,7 @@
                         />
 
                 <LinearLayout
+                        android:id="@+id/ll_order"
                         android:layout_width="match_parent"
                         android:layout_height="100px"
                         android:paddingLeft="24px"
