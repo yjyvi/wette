@@ -57,6 +57,7 @@ public class OKHttpManager {
 
     /**
      * get异步请求
+     *
      * @param url
      * @param callBack
      */
@@ -85,6 +86,7 @@ public class OKHttpManager {
 
     /**
      * post异步请求
+     *
      * @param url
      * @param params
      * @param callBack
@@ -108,7 +110,7 @@ public class OKHttpManager {
         }
         requestBody = builder.build();
 
-        Log.e("请求返回参数=", url+params.toString());
+        Log.e("请求返回参数=", url + params.toString());
         final Request request = new Request.Builder().url(url).post(requestBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -131,6 +133,8 @@ public class OKHttpManager {
         });
     }
 
+
+
     /**
      * 数据分发的方法
      */
@@ -139,7 +143,7 @@ public class OKHttpManager {
             @Override
             public void run() {
                 if (callBack != null) {
-                    callBack.onStatusError( e.getMessage());
+                    callBack.onStatusError(e.getMessage());
                 }
             }
         });
@@ -157,11 +161,90 @@ public class OKHttpManager {
     }
 
 
+    //===================不经反射基类的网络请求========================================
+
+
+    private void p_postAsync(String url, Map<String, String> params, final StringCallBack callBack) {
+        RequestBody requestBody = null;
+
+        if (params == null) {
+            params = new HashMap<String, String>();
+        }
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey().toString();
+            String value = null;
+            if (entry.getValue() == null) {
+                value = "";
+            } else {
+                value = entry.getValue().toString();
+            }
+            builder.add(key, value);
+        }
+        requestBody = builder.build();
+
+        Log.e("请求返回参数=", url + params.toString());
+        final Request request = new Request.Builder().url(url).post(requestBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                deliverDataFailure(call, e, callBack);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                try {
+                    String result = response.body().string();
+                    Log.e("请求成功返回参数=", result);
+                    deliverDataSuccess(result, callBack);
+                } catch (IOException e) {
+                    deliverDataFailure(call, e, callBack);
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 数据分发的方法
+     */
+    private void deliverDataFailure(final Call call, final IOException e, final StringCallBack callBack) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (callBack != null) {
+                    callBack.requestFailure(call, e);
+                }
+            }
+        });
+    }
+
+    private void deliverDataSuccess(final String result, final StringCallBack callBack) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (callBack != null) {
+                    callBack.requestSuccess(result);
+                }
+            }
+        });
+    }
+
+
+    public static void postAsync(String url, Map<String, String> params, StringCallBack callBack) {
+        getInstance().p_postAsync(url, params, callBack);
+    }
+
+    //===========================================================
+
     /******************
      * 对外公布的方法
      *****************/
     /**
      * //同步GET，返回Response类型数据
+     *
      * @param url
      * @return
      * @throws IOException
@@ -173,6 +256,7 @@ public class OKHttpManager {
 
     /**
      * //同步GET，返回String类型数据
+     *
      * @param url
      * @return
      * @throws IOException
@@ -182,9 +266,9 @@ public class OKHttpManager {
     }
 
 
-
     /**
      * //异步GET请求
+     *
      * @param url
      * @param callBack
      */
@@ -194,6 +278,7 @@ public class OKHttpManager {
 
     /**
      * //异步POST请求
+     *
      * @param url
      * @param params
      * @param callBack
@@ -202,13 +287,15 @@ public class OKHttpManager {
         getInstance().p_postAsync(url, params, callBack);
     }
 
-//
-//    /**
-//     * 数据回调接口
-//     */
-//    public interface DataCallBack<T> {
-//        void requestFailure(Call call, IOException e);
-//
-//        void requestSuccess(T result);
-//    }
+
+
+
+    /**
+     * 数据回调接口
+     */
+    public interface StringCallBack {
+        void requestFailure(Call call, IOException e);
+
+        void requestSuccess(String result);
+    }
 }

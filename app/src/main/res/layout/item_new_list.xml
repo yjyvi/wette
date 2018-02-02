@@ -10,6 +10,7 @@
 
 
     <com.risenb.wette.views.CircleImageView
+        android:id="@+id/iv_user_icon"
         android:layout_width="100px"
         android:src="@color/gray"
         android:layout_height="100px"/>
@@ -22,12 +23,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_title"
             style="@style/text_blue_32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="产品标题"/>
 
         <TextView
+            android:id="@+id/tv_introduce"
             style="@style/text_gray_28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +39,7 @@
             android:text="产品描述产品描述产品描述产产品描述产品描述产品描述产品描述产品描述产品描述产品描述品描述产品描述产品描述产品描述"/>
         
         <ImageView
+            android:id="@+id/iv_img"
             android:layout_marginTop="28px"
             android:src="@color/gray"
             android:layout_width="350px"
@@ -44,6 +48,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_price"
         android:layout_gravity="bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

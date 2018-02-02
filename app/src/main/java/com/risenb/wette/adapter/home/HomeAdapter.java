@@ -7,16 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.BannerBean;
+import com.risenb.wette.beans.GoodsListBean;
+import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.BaseViewHolder;
 import com.risenb.wette.ui.home.ProductDetailsUI;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.MyViewPagerIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,14 +44,24 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      */
     public static final int NEW_LIST = 3;
     private List<BannerBean.ResultdataBean> mResultBannerBean;
+    private HomeBean homeDataBean;
+    private GoodsListBean goodsListBean;
 
+
+    public void setGoodsListBean(GoodsListBean goodsListBean) {
+        this.goodsListBean = goodsListBean;
+    }
+
+    public void setHomeDataBean(HomeBean homeDataBean) {
+        this.homeDataBean = homeDataBean;
+    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder baseViewHolder = null;
         switch (viewType) {
             case BANNER:
-                initTestData();
+//                initTestData();
                 baseViewHolder = new HomeAdapter.HomeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_banner, parent, false));
                 break;
             case HOT:
@@ -65,54 +77,41 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return baseViewHolder;
     }
 
-    private void initTestData() {
-        mResultBannerBean = new ArrayList<>();
-        BannerBean.ResultdataBean e = new BannerBean.ResultdataBean();
-        BannerBean.ResultdataBean e2 = new BannerBean.ResultdataBean();
-        BannerBean.ResultdataBean e3 = new BannerBean.ResultdataBean();
-        e.setBanner_Url("http://img5.imgtn.bdimg.com/it/u=104961686,3757525983&fm=27&gp=0.jpg");
-        e2.setBanner_Url("http://pic21.photophoto.cn/20111106/0020032891433708_b.jpg");
-        e3.setBanner_Url("http://img0.imgtn.bdimg.com/it/u=442310530,2243332126&fm=214&gp=0.jpg");
-        mResultBannerBean.add(e);
-        mResultBannerBean.add(e2);
-        mResultBannerBean.add(e3);
-    }
-
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case BANNER:
                 if (holder instanceof HomeBannerViewHolder) {
                     HomeBannerViewHolder bannerViewHolder = (HomeBannerViewHolder) holder;
-                    if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
-                        if (mResultBannerBean.size() == 1) {
+                    if (homeDataBean != null && homeDataBean.getRecommendGoods().size() > 0) {
+                        if (homeDataBean.getRecommendGoods().size() == 1) {
                             bannerViewHolder.iv_item_banner.setVisibility(View.VISIBLE);
-                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(), mResultBannerBean.get(0).getBanner_Url(), bannerViewHolder.iv_item_banner);
+                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(), homeDataBean.getRecommendGoods().get(0).getCover(), bannerViewHolder.iv_item_banner);
                             bannerViewHolder.iv_item_banner.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //跳转事件
-                                    if (mResultBannerBean.get(0).getBanner_Url() != null && !TextUtils.isEmpty(mResultBannerBean.get(0).getBanner_Url())) {
-                                        ToastUtils.showToast(mResultBannerBean.get(0).getBanner_Url());
+                                    if (homeDataBean.getRecommendGoods().get(0).getCover() != null && !TextUtils.isEmpty(homeDataBean.getRecommendGoods().get(0).getCover())) {
+                                        ToastUtils.showToast(homeDataBean.getRecommendGoods().get(0).getCover());
                                     }
                                 }
                             });
                         } else {
-                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<BannerBean.ResultdataBean>(mResultBannerBean) {
+                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<HomeBean.RecommendGoodsBean>(homeDataBean.getRecommendGoods()) {
                                 @Override
                                 public String getImageUrl(int position) {
                                     return mResultBannerBean.get(position).getBanner_Url();
                                 }
 
                                 @Override
-                                public void onItemClickListener(BannerBean.ResultdataBean data, View view) {
+                                public void onItemClickListener(HomeBean.RecommendGoodsBean data, View view) {
                                     //跳转事件
-                                    if (data.getBanner_LinkUrl() != null && !TextUtils.isEmpty(data.getBanner_LinkUrl().trim())) {
-                                        ToastUtils.showToast(data.getBanner_LinkUrl());
+                                    if (data.getCover() != null && !TextUtils.isEmpty(data.getCover().trim())) {
+                                        ToastUtils.showToast(data.getCover());
                                     }
                                 }
                             });
-                            bannerViewHolder.vpi_item_banner_indicator.bindBannerViewPager(bannerViewHolder.vp_item_banner, mResultBannerBean.size());
+                            bannerViewHolder.vpi_item_banner_indicator.bindBannerViewPager(bannerViewHolder.vp_item_banner, homeDataBean.getRecommendGoods().size());
                         }
                     }
                 }
@@ -120,12 +119,29 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case HOT:
                 if (holder instanceof HomeHotViewHolder) {
                     HomeHotViewHolder hotViewHolder = (HomeHotViewHolder) holder;
+                    if (homeDataBean != null) {
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_left);
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_right);
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getActity().getCover(), hotViewHolder.iv_new_client_share);
+                        hotViewHolder.tv_activity.setText(homeDataBean.getActity().getTitle());
+                    }
 
                 }
                 break;
             case NEW_LIST:
                 if (holder instanceof HomeNewListViewHolder) {
                     HomeNewListViewHolder newListViewHolder = (HomeNewListViewHolder) holder;
+                    if (goodsListBean.getData() != null && goodsListBean.getData().size() > 0) {
+                        GoodsListBean.DataBean goods = goodsListBean.getData().get(position-2);
+                        if (goods != null) {
+                            newListViewHolder.tv_title.setText(goods.getGoodsName());
+                            newListViewHolder.tv_introduce.setText(goods.getGoodsIntroduce());
+                            newListViewHolder.tv_price.setText("￥" + goods.getPrice());
+                            GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getLogo(), newListViewHolder.iv_user_icon);
+                            GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getCover(), newListViewHolder.iv_img);
+                        }
+                    }
+
                     newListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -152,14 +168,18 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 13;
+        return goodsListBean == null ? 2 : goodsListBean.getData().size() + 2;
     }
 
+
+    /**
+     * 轮播图的
+     */
     class HomeBannerViewHolder extends BaseViewHolder {
 
-        ViewPager vp_item_banner;
-        MyViewPagerIndicator vpi_item_banner_indicator;
-        ImageView iv_item_banner;
+        private ViewPager vp_item_banner;
+        private MyViewPagerIndicator vpi_item_banner_indicator;
+        private  ImageView iv_item_banner;
 
         public HomeBannerViewHolder(View view) {
             super(view);
@@ -170,15 +190,47 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
+
+    /**
+     * 中间热门
+     */
     class HomeHotViewHolder extends BaseViewHolder {
+
+        private TextView tv_activity;
+        private ImageView iv_new_client_share;
+        private ImageView iv_hot_left;
+        private ImageView iv_hot_right;
+
         public HomeHotViewHolder(View view) {
             super(view);
+
+            tv_activity = ((TextView) view.findViewById(R.id.tv_activity));
+            iv_new_client_share = ((ImageView) view.findViewById(R.id.iv_new_client_share));
+            iv_hot_left = ((ImageView) view.findViewById(R.id.iv_hot_left));
+            iv_hot_right = ((ImageView) view.findViewById(R.id.iv_hot_right));
         }
     }
 
+
+    /**
+     * 最新列表
+     */
     class HomeNewListViewHolder extends BaseViewHolder {
+
+        private ImageView iv_user_icon;
+        private ImageView iv_img;
+        private TextView tv_price;
+        private TextView tv_introduce;
+        private TextView tv_title;
+
         public HomeNewListViewHolder(View view) {
             super(view);
+            tv_price = ((TextView) view.findViewById(R.id.tv_price));
+            tv_introduce = ((TextView) view.findViewById(R.id.tv_introduce));
+            tv_title = ((TextView) view.findViewById(R.id.tv_title));
+            tv_price = ((TextView) view.findViewById(R.id.tv_price));
+            iv_user_icon = ((ImageView) view.findViewById(R.id.iv_user_icon));
+            iv_img = ((ImageView) view.findViewById(R.id.iv_img));
         }
     }
 }

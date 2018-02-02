@@ -64,7 +64,7 @@ public class NetworkUtils {
      * @param pageNo
      * @param httpBack
      */
-    public void getGoodsList(int categoryTid, int pageSize, int pageNo, DataCallBack httpBack) {
+    public void getGoodsList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("categoryTid", String.valueOf(""));
         params.put("pageSize", String.valueOf(pageSize));
