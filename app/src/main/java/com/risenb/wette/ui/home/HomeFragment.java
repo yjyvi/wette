@@ -39,6 +39,9 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     public GoodsListP mGoodsListP;
     private int page = 1;
     private int limit = 10;
+    public HomeAdapter mHomeAdapter;
+    private HomeBean homeDataBean;
+    private GoodsListBean goodsListBean;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -57,7 +60,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     @Override
     protected void prepareData() {
         rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv_home.setAdapter(new HomeAdapter());
+        mHomeAdapter = new HomeAdapter();
+        rv_home.setAdapter(mHomeAdapter);
 
         rl_title_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +105,14 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @Override
     public void resultData(HomeBean result) {
-
+        this.homeDataBean=result;
+        mHomeAdapter.setHomeDataBean(result);
+        mHomeAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void resultGoodsListData(GoodsListBean result) {
-
+        this.goodsListBean =result;
+        mHomeAdapter.setGoodsListBean(result);
     }
 }

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.BannerBean;
+import com.risenb.wette.beans.GoodsListBean;
+import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.BaseViewHolder;
 import com.risenb.wette.ui.home.ProductDetailsUI;
 import com.risenb.wette.utils.GlideImgUtils;
@@ -42,14 +44,24 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      */
     public static final int NEW_LIST = 3;
     private List<BannerBean.ResultdataBean> mResultBannerBean;
+    private HomeBean homeDataBean;
+    private GoodsListBean goodsListBean;
 
+
+    public void setGoodsListBean(GoodsListBean goodsListBean) {
+        this.goodsListBean = goodsListBean;
+    }
+
+    public void setHomeDataBean(HomeBean homeDataBean) {
+        this.homeDataBean = homeDataBean;
+    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder baseViewHolder = null;
         switch (viewType) {
             case BANNER:
-                initTestData();
+//                initTestData();
                 baseViewHolder = new HomeAdapter.HomeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_banner, parent, false));
                 break;
             case HOT:
@@ -84,35 +96,35 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case BANNER:
                 if (holder instanceof HomeBannerViewHolder) {
                     HomeBannerViewHolder bannerViewHolder = (HomeBannerViewHolder) holder;
-                    if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
-                        if (mResultBannerBean.size() == 1) {
+                    if (homeDataBean != null && homeDataBean.getRecommendGoods().size() > 0) {
+                        if (homeDataBean.getRecommendGoods().size() == 1) {
                             bannerViewHolder.iv_item_banner.setVisibility(View.VISIBLE);
-                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(), mResultBannerBean.get(0).getBanner_Url(), bannerViewHolder.iv_item_banner);
+                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(),homeDataBean.getRecommendGoods().get(0).getCover(), bannerViewHolder.iv_item_banner);
                             bannerViewHolder.iv_item_banner.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //跳转事件
-                                    if (mResultBannerBean.get(0).getBanner_Url() != null && !TextUtils.isEmpty(mResultBannerBean.get(0).getBanner_Url())) {
-                                        ToastUtils.showToast(mResultBannerBean.get(0).getBanner_Url());
+                                    if (homeDataBean.getRecommendGoods().get(0).getCover() != null && !TextUtils.isEmpty(homeDataBean.getRecommendGoods().get(0).getCover())) {
+                                        ToastUtils.showToast(homeDataBean.getRecommendGoods().get(0).getCover());
                                     }
                                 }
                             });
                         } else {
-                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<BannerBean.ResultdataBean>(mResultBannerBean) {
+                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<HomeBean.RecommendGoodsBean>(homeDataBean.getRecommendGoods()) {
                                 @Override
                                 public String getImageUrl(int position) {
                                     return mResultBannerBean.get(position).getBanner_Url();
                                 }
 
                                 @Override
-                                public void onItemClickListener(BannerBean.ResultdataBean data, View view) {
+                                public void onItemClickListener(HomeBean.RecommendGoodsBean data, View view) {
                                     //跳转事件
-                                    if (data.getBanner_LinkUrl() != null && !TextUtils.isEmpty(data.getBanner_LinkUrl().trim())) {
-                                        ToastUtils.showToast(data.getBanner_LinkUrl());
+                                    if (data.getCover() != null && !TextUtils.isEmpty(data.getCover().trim())) {
+                                        ToastUtils.showToast(data.getCover());
                                     }
                                 }
                             });
-                            bannerViewHolder.vpi_item_banner_indicator.bindBannerViewPager(bannerViewHolder.vp_item_banner, mResultBannerBean.size());
+                            bannerViewHolder.vpi_item_banner_indicator.bindBannerViewPager(bannerViewHolder.vp_item_banner, homeDataBean.getRecommendGoods().size());
                         }
                     }
                 }
@@ -152,7 +164,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 13;
+        return goodsListBean == null ? 2 : goodsListBean.getData().size() + 2;
     }
 
     class HomeBannerViewHolder extends BaseViewHolder {
