@@ -29,6 +29,7 @@ public class MyApplication extends MultiDexApplication {
         //-----------初始化applicationContext----------start------
         applicationContext = getApplicationContext();
 
+
         //-----------初始化xUtils----------start------
         //
         x.Ext.init(this);

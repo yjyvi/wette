@@ -14,7 +14,6 @@ import java.util.TreeMap;
  */
 public class NetworkUtils {
     private static NetworkUtils networkUtils;
-    protected MyApplication applicationContext;
     private String PAGE = "page";
     private String LIMIT = "limit";
     private String TIME = "timestamp";
@@ -26,12 +25,9 @@ public class NetworkUtils {
         return networkUtils;
     }
 
-    public void setApplication(MyApplication application) {
-        this.applicationContext = application;
-    }
 
     private String getUrl(int id) {
-        return applicationContext.getResources().getString(R.string.service_host_address).concat(applicationContext.getString(id).concat(".do"));
+        return MyApplication.applicationContext.getResources().getString(R.string.service_host_address).concat(MyApplication.applicationContext.getString(id).concat(".do"));
     }
 
     /**
@@ -62,6 +58,7 @@ public class NetworkUtils {
 
     /**
      * 获取首页数据
+     *
      * @param categoryTid
      * @param pageSize
      * @param pageNo
@@ -72,7 +69,7 @@ public class NetworkUtils {
         params.put("categoryTid", String.valueOf(""));
         params.put("pageSize", String.valueOf(pageSize));
         params.put("pageNo", String.valueOf(pageNo));
-        OKHttpManager.postAsync(getUrl(R.string.homeData), params, httpBack);
+        OKHttpManager.postAsync(getUrl(R.string.goodsList), params, httpBack);
     }
 
 
