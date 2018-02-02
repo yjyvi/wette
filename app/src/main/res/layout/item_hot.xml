@@ -12,6 +12,7 @@
         android:layout_height="244px">
 
         <ImageView
+            android:id="@+id/iv_hot_left"
             android:layout_weight="1"
             android:src="@color/gray"
             android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
             android:layout_height="match_parent"/>
 
         <ImageView
+            android:id="@+id/iv_hot_right"
             android:layout_marginLeft="5px"
             android:src="@color/gray"
             android:layout_weight="1"
@@ -37,20 +39,13 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textSize="30px"
-            android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Michael Kors"/>
-
-
-        <TextView
+            android:id="@+id/tv_activity"
             android:layout_marginLeft="16px"
             android:textSize="30px"
             android:textColor="@color/gray_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="大气简约 低调奢华"/>
+            android:text="Michael Kors  大气简约 低调奢华"/>
 
     </LinearLayout>
 
