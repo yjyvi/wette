@@ -8,6 +8,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseViewHolder;
+import com.risenb.wette.ui.classify.TwoClassifyFragment;
 import com.risenb.wette.ui.home.ProductListUI;
 import com.risenb.wette.utils.ToastUtils;
 
@@ -17,17 +18,17 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ClassifyRightAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    private List<String> data;
+public class ClassifyRightAdapter extends BaseQuickAdapter<TwoClassifyFragment.Category, BaseViewHolder> {
+    private List<TwoClassifyFragment.Category> data;
 
-    public ClassifyRightAdapter(int layoutResId, @Nullable List<String> data) {
+    public ClassifyRightAdapter(int layoutResId, @Nullable List<TwoClassifyFragment.Category> data) {
         super(layoutResId, data);
         this.data = data;
     }
 
 
     @Override
-    protected void convert(com.risenb.wette.ui.BaseViewHolder helper, String item) {
+    protected void convert(com.risenb.wette.ui.BaseViewHolder helper, TwoClassifyFragment.Category item) {
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
         GridLayoutManager layout = new GridLayoutManager(helper.itemView.getContext(), 3);
         layout.setAutoMeasureEnabled(true);

@@ -35,6 +35,8 @@
     <string name="homeData">/base/home</string>
     <!--商品列表-->
     <string name="goodsList">/goods/list</string>
+    <!--商品分类-->
+    <string name="goodsCategory">/goods/category</string>
     <!--搜索-->
     <string name="search">/base/search</string>
 

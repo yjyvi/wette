@@ -73,4 +73,14 @@ public class NetworkUtils {
     }
 
 
+    /**
+     * 获取分类
+     * @param httpBack
+     */
+    public void getGoodsCategory(DataCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        OKHttpManager.postAsync(getUrl(R.string.goodsCategory), params, httpBack);
+    }
+
+
 }
