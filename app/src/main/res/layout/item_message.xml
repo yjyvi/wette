@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:gravity="center_vertical"
+              android:paddingLeft="20px"
+              android:paddingRight="20px"
+              android:layout_height="100px">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="30px"
+            android:textColor="#333333"
+            android:maxLength="20"
+            android:text="恭喜您，获得IPhoneX一部"/>
+
+    <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-01-01"
+            android:textSize="22px"
+            android:textColor="#999999"/>
+    
+    <ImageView
+            android:layout_marginLeft="20px"
+            style="@style/image_view_right_arrow"/>
+
+</LinearLayout>

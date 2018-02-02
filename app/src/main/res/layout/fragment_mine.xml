@@ -1,406 +1,421 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                    android:id="@+id/ll_login_or_register"
-                    android:layout_width="wrap_content"
+            <ImageView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginTop="144px"
-                    android:orientation="vertical">
+                    android:scaleType="fitXY"
+                    android:src="@drawable/mine_top_bg"/>
 
-                <ImageView
-                        android:layout_width="128px"
-                        android:layout_height="128px"
-                        android:src="@drawable/mine_no_login_head_image"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
 
-                <TextView
+
+                <LinearLayout
+                        android:id="@+id/ll_login_or_register"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="26px"
-                        android:textSize="30px"
-                        android:textColor="#333333"
-                        android:text="请登录/注册"/>
+                        android:layout_marginTop="144px"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
 
-            </LinearLayout>
-
-            <View
-                    style="@style/common_line"
-                    android:layout_marginTop="46px"/>
-
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150px"
-                    android:orientation="horizontal">
-
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
+                    <ImageView
+                            android:layout_width="128px"
+                            android:layout_height="128px"
+                            android:src="@drawable/mine_no_login_head_image"/>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawablePadding="8dp"
-                            android:drawableTop="@drawable/mine_pending_payment"
-                            android:textColor="@color/black"
-                            android:text="待付款"/>
+                            android:layout_marginTop="26px"
+                            android:textSize="30px"
+                            android:textColor="#333333"
+                            android:text="请登录/注册"/>
 
-
-                </FrameLayout>
+                </LinearLayout>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="120px"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/common_line"/>
+                        style="@style/common_line"
+                        android:layout_marginTop="46px"/>
 
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawablePadding="8dp"
-                            android:drawableTop="@drawable/mine_shipping"
-                            android:textColor="@color/black"
-                            android:text="发货中"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150px"
+                        android:orientation="horizontal">
 
-                </FrameLayout>
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="24px"
+                                android:drawablePadding="8dp"
+                                android:drawableTop="@drawable/mine_pending_payment"
+                                android:textColor="@color/black"
+                                android:text="待付款"/>
+
+
+                    </FrameLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="120px"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/common_line"/>
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="24px"
+                                android:drawablePadding="8dp"
+                                android:drawableTop="@drawable/mine_shipping"
+                                android:textColor="@color/black"
+                                android:text="发货中"/>
+
+                    </FrameLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="120px"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/common_line"/>
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="24px"
+                                android:drawablePadding="8dp"
+                                android:drawableTop="@drawable/mine_wait_comment"
+                                android:textColor="@color/black"
+                                android:text="待评价"/>
+
+                    </FrameLayout>
+
+                    <View
+                            android:layout_width="1px"
+                            android:layout_height="120px"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/common_line"/>
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textSize="24px"
+                                android:drawablePadding="8dp"
+                                android:drawableTop="@drawable/mine_already_cancel"
+                                android:textColor="@color/black"
+                                android:text="已取消"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="120px"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/common_line"/>
+                        style="@style/common_line"
+                        />
 
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:paddingLeft="24px"
+                        android:paddingRight="20px"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <TextView
+                            style="@style/text_view_title_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/mine_order"
+                            android:text="我的订单"
+                            />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawablePadding="8dp"
-                            android:drawableTop="@drawable/mine_wait_comment"
-                            android:textColor="@color/black"
-                            android:text="待评价"/>
+                            android:layout_marginRight="20px"
+                            android:textSize="26px"
+                            android:textColor="#999999"
+                            android:text="查看更多订单"/>
 
-                </FrameLayout>
+                    <ImageView
+                            android:layout_width="14px"
+                            android:layout_height="25px"
+                            android:src="@drawable/mine_arrow"/>
+
+                </LinearLayout>
 
                 <View
-                        android:layout_width="1px"
-                        android:layout_height="120px"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/common_line"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="12px"
+                        android:background="#f5f5f5"/>
 
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
+                <TextView
+                        android:id="@+id/tv_collection"
+                        style="@style/text_view_title_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:paddingLeft="24px"
+                        android:gravity="center_vertical"
+                        android:drawablePadding="10dp"
+                        android:drawableLeft="@drawable/mine_collection"
+                        android:text="我的收藏"/>
 
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawablePadding="8dp"
-                            android:drawableTop="@drawable/mine_already_cancel"
-                            android:textColor="@color/black"
-                            android:text="已取消"/>
+                <View
+                        style="@style/common_line"
+                        />
 
-                </FrameLayout>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="90px"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
 
-            <View
-                    style="@style/common_line"
-                    />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:textSize="24px"
+                                android:drawableLeft="@drawable/mine_commodity"
+                                android:drawablePadding="8dp"
+                                android:textColor="#333333"
+                                android:text="商品"/>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:paddingLeft="24px"
-                    android:paddingRight="20px"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    </FrameLayout>
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:textSize="24px"
+                                android:drawableLeft="@drawable/mine_shop"
+                                android:drawablePadding="8dp"
+                                android:textColor="#333333"
+                                android:text="店铺"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="12px"
+                        android:background="#f5f5f5"/>
+
 
                 <TextView
                         style="@style/text_view_title_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:paddingLeft="24px"
+                        android:gravity="center_vertical"
                         android:drawablePadding="10dp"
-                        android:drawableLeft="@drawable/mine_order"
-                        android:text="我的订单"
-                        />
+                        android:drawableLeft="@drawable/mine_contact_customer_service"
+                        android:text="联系客服"/>
 
                 <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20px"
-                        android:textSize="26px"
-                        android:textColor="#999999"
-                        android:text="查看更多订单"/>
-
-                <ImageView
-                        android:layout_width="14px"
-                        android:layout_height="25px"
-                        android:src="@drawable/mine_arrow"/>
-
-            </LinearLayout>
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="12px"
-                    android:background="#f5f5f5"/>
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    style="@style/text_view_title_3"
-                    android:text="我的收藏"
-                    android:paddingLeft="24px"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/mine_collection"
-                    android:gravity="center_vertical"/>
-
-            <View
-                    style="@style/common_line"
-                    />
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="90px"
-                    android:orientation="horizontal">
-
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:gravity="center_vertical"
-                            android:drawableLeft="@drawable/mine_commodity"
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:text="商品"/>
-
-                </FrameLayout>
-
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawableLeft="@drawable/mine_shop"
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:gravity="center_vertical"
-                            android:text="店铺"/>
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="12px"
-                    android:background="#f5f5f5"/>
-
-
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    style="@style/text_view_title_3"
-                    android:text="联系客服"
-                    android:paddingLeft="24px"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/mine_contact_customer_service"
-                    android:gravity="center_vertical"/>
-
-            <View
-                    style="@style/common_line"
-                    />
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="90px"
-                    android:orientation="horizontal">
-
-                <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawableLeft="@drawable/mine_client_service"
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:gravity="center_vertical"
-                            android:text="客户服务"/>
-
-                </FrameLayout>
-
-                <FrameLayout
-                        android:id="@+id/fl_feedback"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="24px"
-                            android:drawableLeft="@drawable/mine_feedback"
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:gravity="center_vertical"
-                            android:text="意见反馈"/>
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="12px"
-                    android:background="#f5f5f5"/>
-
-            <LinearLayout
-                    android:id="@+id/ll_account_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:paddingLeft="24px"
-                    android:paddingRight="20px"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                <TextView
-                        style="@style/text_view_title_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="10dp"
-                        android:drawableLeft="@drawable/mine_account_setting"
-                        android:text="账户设置"
+                        style="@style/common_line"
                         />
 
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="90px"
+                        android:orientation="horizontal">
+
+                    <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:textSize="24px"
+                                android:drawableLeft="@drawable/mine_client_service"
+                                android:drawablePadding="8dp"
+                                android:textColor="#333333"
+                                android:text="客户服务"/>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                            android:id="@+id/fl_feedback"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center_vertical"
+                                android:textSize="24px"
+                                android:drawableLeft="@drawable/mine_feedback"
+                                android:drawablePadding="8dp"
+                                android:textColor="#333333"
+                                android:text="意见反馈"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
                 <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="12px"
+                        android:background="#f5f5f5"/>
+
+                <LinearLayout
+                        android:id="@+id/ll_account_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:paddingLeft="24px"
+                        android:paddingRight="20px"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <TextView
+                            style="@style/text_view_title_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/mine_account_setting"
+                            android:text="账户设置"
+                            />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20px"
+                            android:textSize="26px"
+                            android:textColor="#999999"
+                            android:text="开通消息提醒，管理收获地址"/>
+
+                    <ImageView
+                            android:layout_width="14px"
+                            android:layout_height="25px"
+                            android:src="@drawable/mine_arrow"/>
+
+                </LinearLayout>
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="12px"
+                        android:background="#f5f5f5"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100px"
+                        android:paddingLeft="24px"
+                        android:paddingRight="20px"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                    <TextView
+                            style="@style/text_view_title_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/mine_change_country"
+                            android:text="更换国家"
+                            />
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20px"
+                            android:textSize="26px"
+                            android:textColor="#999999"
+                            android:text="中国"/>
+
+                    <ImageView
+                            android:layout_width="14px"
+                            android:layout_height="25px"
+                            android:src="@drawable/mine_arrow"/>
+
+                </LinearLayout>
+
+                <View
+                        style="@style/common_line"/>
+
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20px"
-                        android:textSize="26px"
-                        android:textColor="#999999"
-                        android:text="开通消息提醒，管理收获地址"/>
-
-                <ImageView
-                        android:layout_width="14px"
-                        android:layout_height="25px"
-                        android:src="@drawable/mine_arrow"/>
+                        style="@style/text_view_login_btn"
+                        android:layout_marginLeft="46px"
+                        android:layout_marginRight="46px"
+                        android:layout_marginTop="64px"
+                        android:layout_marginBottom="64px"
+                        android:text="退出登录"/>
 
             </LinearLayout>
 
-            <View
-                    android:layout_width="match_parent"
-                    android:layout_height="12px"
-                    android:background="#f5f5f5"/>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
-                    android:paddingLeft="24px"
-                    android:paddingRight="20px"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                <TextView
-                        style="@style/text_view_title_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="10dp"
-                        android:drawableLeft="@drawable/mine_change_country"
-                        android:text="更换国家"
-                        />
-
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20px"
-                        android:textSize="26px"
-                        android:textColor="#999999"
-                        android:text="中国"/>
-
-                <ImageView
-                        android:layout_width="14px"
-                        android:layout_height="25px"
-                        android:src="@drawable/mine_arrow"/>
-
-            </LinearLayout>
-
-            <View
-                    style="@style/common_line"/>
-
-
-            <TextView
-                    android:layout_marginLeft="46px"
-                    android:layout_marginRight="46px"
-                    android:text="退出登录"
-                    android:layout_marginTop="64px"
-                    android:layout_marginBottom="64px"
-                    style="@style/text_view_login_btn"/>
-
-        </LinearLayout>
+        </FrameLayout>
 
     </ScrollView>
 

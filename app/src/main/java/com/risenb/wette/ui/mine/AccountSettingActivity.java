@@ -36,11 +36,14 @@ public class AccountSettingActivity extends BaseUI {
 
     }
 
-    @Event(value = {R.id.tv_modify_account_setting},type = View.OnClickListener.class)
+    @Event(value = {R.id.tv_modify_account_setting,R.id.tv_address_list},type = View.OnClickListener.class)
     private void onClick(View view){
         switch (view.getId()){
             case R.id.tv_modify_account_setting:
                 PersonalInformationActivity.toActivity(view.getContext());
+                break;
+            case R.id.tv_address_list:
+                AddressListActivity.toActivity(view.getContext());
                 break;
         }
     }

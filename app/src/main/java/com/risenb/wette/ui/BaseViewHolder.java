@@ -1,6 +1,5 @@
 package com.risenb.wette.ui;
 
-import android.graphics.Color;
 import android.view.View;
 
 import com.zhy.autolayout.utils.AutoUtils;
@@ -20,8 +19,8 @@ public class BaseViewHolder extends com.chad.library.adapter.base.BaseViewHolder
     public BaseViewHolder(View itemView) {
         super(itemView);
         AutoUtils.auto(itemView);
-        if (itemView.getBackground() == null) {
-            itemView.setBackgroundColor(Color.WHITE);
-        }
+//        if (itemView.getBackground() == null) {
+//            itemView.setBackgroundColor(Color.WHITE);
+//        }
     }
 }
