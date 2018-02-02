@@ -22,9 +22,34 @@ public  class NetBaseBean<T> {
 
     public String errorCode;
     public String errorMsg;
-    public boolean status;
+    public String status;
+    public String msg;
+    public int total;
 
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public String getErrorCode() {
         return errorCode;
@@ -41,14 +66,5 @@ public  class NetBaseBean<T> {
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
 
 }

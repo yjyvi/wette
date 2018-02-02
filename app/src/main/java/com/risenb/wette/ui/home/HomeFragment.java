@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.HomeAdapter;
+import com.risenb.wette.beans.GoodsListBean;
+import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.utils.ToastUtils;
 
@@ -23,7 +25,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by yjyvi on 2018/1/30.
  */
 
-public class HomeFragment extends LazyLoadFragment {
+public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener, GoodsListP.GoodsListListener {
 
     @ViewInject(R.id.rv_home)
     private RecyclerView rv_home;
@@ -33,6 +35,10 @@ public class HomeFragment extends LazyLoadFragment {
 
     @ViewInject(R.id.et_search)
     private EditText et_search;
+    public HomeP mHomeP;
+    public GoodsListP mGoodsListP;
+    private int page = 1;
+    private int limit = 10;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -42,7 +48,10 @@ public class HomeFragment extends LazyLoadFragment {
 
     @Override
     protected void setControlBasis() {
-
+        mHomeP = new HomeP(getActivity(), this);
+        mGoodsListP = new GoodsListP(getActivity(), this);
+        mHomeP.setHomeData();
+        mGoodsListP.setGoodsList(0, limit, page);
     }
 
     @Override
@@ -61,7 +70,7 @@ public class HomeFragment extends LazyLoadFragment {
                         if (TextUtils.isEmpty(textView.getText().toString().trim())) {
                             ToastUtils.showToast("请输入搜索关键字");
                         } else {
-                            SearchResultUI.start(view.getContext(),et_search.getText().toString().trim());
+                            SearchResultUI.start(view.getContext(), et_search.getText().toString().trim());
                             et_search.setText("");
                             et_search.setVisibility(View.GONE);
                             rl_title_search.setVisibility(View.VISIBLE);
@@ -88,5 +97,15 @@ public class HomeFragment extends LazyLoadFragment {
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setArguments(bundle);
         return homeFragment;
+    }
+
+    @Override
+    public void resultData(HomeBean result) {
+
+    }
+
+    @Override
+    public void resultGoodsListData(GoodsListBean result) {
+
     }
 }

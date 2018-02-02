@@ -3,18 +3,13 @@ package com.risenb.wette.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.RadioGroup;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.HomeTableViewPagerAdapter;
-import com.risenb.wette.beans.UserBean;
-import com.risenb.wette.network.DataCallBack;
 import com.risenb.wette.ui.classify.ClassifyFragment;
 import com.risenb.wette.ui.home.HomeFragment;
 import com.risenb.wette.ui.mine.MineFragment;
-import com.risenb.wette.utils.NetworkUtils;
-import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.MyViewPager;
 
 import org.xutils.view.annotation.ContentView;
@@ -109,17 +104,5 @@ public class HomeTableUI extends BaseUI {
         tab_pager.setCurrentItem(position);
     }
 
-    private void testPost() {
-        NetworkUtils.getNetworkUtils().getUserInfo("1", new DataCallBack<UserBean>() {
-            @Override
-            public void onSuccess(UserBean result) {
-                Log.e("HomeTableUI", "result:" + result);
-            }
 
-            @Override
-            public void onStatusError(String errorMsg) {
-                ToastUtils.showToast(errorMsg);
-            }
-        });
-    }
 }

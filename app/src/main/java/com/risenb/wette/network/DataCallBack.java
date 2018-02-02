@@ -38,7 +38,7 @@ public abstract class DataCallBack<T>   {
 
         T data = t.getData();
         //状态错误
-        if (!t.isStatus()) {
+        if (!"1".equals(t.getStatus())) {
             onStatusError(t.getErrorMsg());
             return;
         }

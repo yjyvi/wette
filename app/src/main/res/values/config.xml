@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="service_host_address">http://test.1x9x.cn/client/</string>
-    <string name="service_host_image">http://rajy.4pole.cn</string>
+    <string name="service_host_address">http://code.4pole.cn:6006</string>
+    <string name="service_host_image">http://code.4pole.cn:6006</string>
     <!-- 测试 -->
-    <string name="service_test_address">http://192.168.1.174:8080/client/</string>
-    <string name="defaulpage">app/defaulpage</string>
+    <!--<string name="service_test_address">http://192.168.1.174:8080/client/</string>-->
+    <!--<string name="defaulpage">app/defaulpage</string>-->
 
 
     <!-- 文件上传 -->
@@ -28,6 +28,16 @@
     <string name="getUserInfo">user/getInformation</string>
     <!--修改密码-->
     <string name="updatePwd">user/updatePwd</string>
+
+
+
+    <!--首页-->
+    <string name="homeData">/base/home</string>
+    <!--商品列表-->
+    <string name="goodsList">/goods/list</string>
+    <!--搜索-->
+    <string name="search">/base/search</string>
+
 
 
 

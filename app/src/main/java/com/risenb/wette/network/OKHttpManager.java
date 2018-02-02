@@ -120,7 +120,6 @@ public class OKHttpManager {
             public void onResponse(Call call, Response response) throws IOException {
 
                 try {
-//                callBack.requestSuccess(response);
                     String result = response.body().string();
                     Log.e("请求成功返回参数=", result);
                     deliverDataSuccess(result, callBack);

@@ -1,6 +1,7 @@
 package com.risenb.wette.utils;
 
 import com.risenb.wette.MyApplication;
+import com.risenb.wette.R;
 import com.risenb.wette.network.DataCallBack;
 import com.risenb.wette.network.OKHttpManager;
 
@@ -29,14 +30,9 @@ public class NetworkUtils {
         this.applicationContext = application;
     }
 
-//    private String getUrl(int id) {
-//        return applicationContext.getResources().getString(R.string.service_host_address).concat(applicationContext.getString(id).concat(".do"));
-//    }
-//
-//    public String getUrl1(int id) {
-//        return applicationContext.getResources().getString(R.string.service_test_address).concat(applicationContext.getString(id).concat(".do"));
-//    }
-
+    private String getUrl(int id) {
+        return applicationContext.getResources().getString(R.string.service_host_address).concat(applicationContext.getString(id).concat(".do"));
+    }
 
     /**
      * 获取验证码
@@ -53,13 +49,30 @@ public class NetworkUtils {
 
     }
 
-    public void getUserInfo(String userId,  DataCallBack httpBack) {
+    /**
+     * 获取首页数据
+     *
+     * @param httpBack
+     */
+    public void getHomeData(DataCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
-        params.put("c", userId);
+        OKHttpManager.postAsync(getUrl(R.string.homeData), params, httpBack);
+    }
 
-        OKHttpManager instance = OKHttpManager.getInstance();
-        OKHttpManager.postAsync("http://web.rongyaojiazu.com/api/user/getUserInfo", params, httpBack);
 
+    /**
+     * 获取首页数据
+     * @param categoryTid
+     * @param pageSize
+     * @param pageNo
+     * @param httpBack
+     */
+    public void getGoodsList(int categoryTid, int pageSize, int pageNo, DataCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("categoryTid", String.valueOf(""));
+        params.put("pageSize", String.valueOf(pageSize));
+        params.put("pageNo", String.valueOf(pageNo));
+        OKHttpManager.postAsync(getUrl(R.string.homeData), params, httpBack);
     }
 
 
