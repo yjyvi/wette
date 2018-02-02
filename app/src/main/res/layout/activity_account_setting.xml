@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <include
+            layout="@layout/common_title"
+            />
+
+    <TextView
+            android:id="@+id/tv_modify_account_setting"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="更改账户设置"
+            android:gravity="center_vertical"
+            style="@style/text_view_title_3"
+            android:paddingLeft="24px"
+            android:paddingRight="20px"
+            android:drawableRight="@drawable/mine_arrow"/>
+
+    <View
+            style="@style/common_line"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="收获地址管理"
+            android:gravity="center_vertical"
+            style="@style/text_view_title_3"
+            android:paddingLeft="24px"
+            android:paddingRight="20px"
+            android:drawableRight="@drawable/mine_arrow"/>
+
+    <View
+            style="@style/common_line"/>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="20px">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:text="清除本地缓存"
+                android:gravity="center_vertical"
+                style="@style/text_view_title_3"
+                android:paddingLeft="24px"
+                android:paddingRight="20px"/>
+
+        <TextView
+                android:layout_width="112px"
+                android:layout_height="48px"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="right|center_vertical"
+                android:text="233M"
+                android:background="@drawable/account_setting_cache"
+                android:textSize="28px"/>
+
+    </FrameLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="法律条款与关于"
+            android:gravity="center_vertical"
+            style="@style/text_view_title_3"
+            android:paddingLeft="24px"
+            android:paddingRight="20px"
+            android:drawableRight="@drawable/mine_arrow"/>
+
+
+    <View
+            style="@style/common_line"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="给我们程序评分"
+            android:gravity="center_vertical"
+            style="@style/text_view_title_3"
+            android:paddingLeft="24px"
+            android:paddingRight="20px"
+            android:drawableRight="@drawable/mine_arrow"/>
+
+    <View
+            style="@style/common_line"/>
+
+</LinearLayout>

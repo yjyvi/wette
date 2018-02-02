@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_title"/>
+
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="378px"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/feedback_input_bg"
+            >
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="留下您宝贵的意见吧，谢谢支持~"
+                android:gravity="top"
+                android:padding="10dp"
+                style="@style/text_view_title_3"
+                android:background="@color/translate"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999999"
+                android:textSize="24px"
+                android:text="(还可以输入200字)"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="16px"
+                android:layout_marginBottom="16px"/>
+
+    </FrameLayout>
+
+
+    <TextView
+            android:text="提交"
+            android:layout_marginTop="266px"
+            android:layout_marginLeft="46px"
+            android:layout_marginRight="46px"
+            style="@style/text_view_login_btn"/>
+
+</LinearLayout>

@@ -45,5 +45,8 @@
     <color name="gray_back">#f0f0f0</color>
     <color name="join_cart">#FE8323</color>
 
+    <!--线条-->
+    <color name="common_line">#e5e5e5</color>
+
 
 </resources>

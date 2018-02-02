@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+            layout="@layout/common_title"
+            />
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@color/translate"
+            android:hint="请输入您的新昵称"
+            android:textSize="30px"
+            android:textColor="#999999"
+            android:paddingLeft="22px"
+            android:paddingRight="22px"/>
+
+    <View
+            android:layout_marginLeft="22px"
+            android:layout_marginRight="22px"
+            style="@style/common_line"/>
+
+
+    <TextView
+            style="@style/text_view_login_btn"
+            android:text="完成"
+            android:layout_marginTop="464px"
+            android:layout_marginRight="45px"
+            android:layout_marginLeft="45px"/>
+
+</LinearLayout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+            layout="@layout/common_title"
+            />
+
+    <LinearLayout
+            android:id="@+id/ll_modify_nick_name"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:paddingLeft="24px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_3"
+                android:text="昵称"
+                />
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_4"
+                android:text="HelloWorld"
+                android:layout_marginRight="16px"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/mine_arrow"
+                />
+
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <LinearLayout
+            android:id="@+id/ll_modify_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:paddingLeft="24px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_3"
+                android:text="手机号"
+                />
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_4"
+                android:text="133333333333"
+                android:layout_marginRight="16px"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/mine_arrow"
+                />
+
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <LinearLayout
+            android:id="@+id/ll_modify_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:paddingLeft="24px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_3"
+                android:text="密码"
+                />
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_view_title_4"
+                android:text="*******"
+                android:layout_marginRight="16px"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/mine_arrow"
+                />
+
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+</LinearLayout>
