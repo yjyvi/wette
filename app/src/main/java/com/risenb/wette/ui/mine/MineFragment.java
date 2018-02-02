@@ -37,7 +37,7 @@ public class MineFragment extends LazyLoadFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Event(value = {R.id.ll_login_or_register,R.id.ll_account_setting,R.id.fl_feedback},type = View.OnClickListener.class)
+    @Event(value = {R.id.ll_login_or_register,R.id.ll_account_setting,R.id.fl_feedback,R.id.tv_collection},type = View.OnClickListener.class)
     private void onClick(View view){
         switch (view.getId()){
             case R.id.ll_login_or_register:
@@ -48,6 +48,9 @@ public class MineFragment extends LazyLoadFragment {
                 break;
             case R.id.fl_feedback:
                 FeedbackActivity.toActivity(view.getContext());
+                break;
+            case R.id.tv_collection:
+                CollectionActivity.toActivity(view.getContext());
                 break;
         }
     }

@@ -163,7 +163,12 @@
         <activity android:name=".ui.mine.ModifyPwdActivity"/>
         <!-- 反馈 -->
         <activity android:name=".ui.mine.FeedbackActivity"/>
-
+        <!-- 收货地址 -->
+        <activity android:name=".ui.mine.AddressListActivity"/>
+        <!-- 消息 -->
+        <activity android:name=".ui.mine.MessageActivity"/>
+        <!-- 收藏 -->
+        <activity android:name=".ui.mine.CollectionActivity"/>
         <activity android:name=".ui.home.ShopUI"/>
         <activity android:name=".ui.home.SearchResultUI"/>
 

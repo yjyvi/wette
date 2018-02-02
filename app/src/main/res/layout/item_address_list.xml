@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:paddingLeft="20px"
+              android:paddingRight="20px"
+              android:gravity="center_vertical"
+              android:layout_height="240px">
+
+    <ImageView
+            android:layout_width="38px"
+            android:layout_height="38px"
+            android:src="@drawable/address_list_unselected"/>
+
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="20px"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30px"
+                android:textColor="#333333"
+                android:text="收货人: HelloWorld"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30px"
+                android:layout_marginTop="10px"
+                android:textColor="#333333"
+                android:text="联系方式: 1333333"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28px"
+                android:layout_marginTop="10px"
+                android:textColor="#666666"
+                android:text="收货地址: 湖北武汉湖北武汉湖北武汉"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28px"
+                android:layout_marginTop="10px"
+                android:textColor="#666666"
+                android:text="邮政编码: 100010"/>
+
+    </LinearLayout>
+    
+    
+    <ImageView
+            android:layout_width="14px"
+            android:layout_height="25px"
+            android:src="@drawable/mine_arrow"/>
+
+</LinearLayout>

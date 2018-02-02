@@ -64,5 +64,10 @@ dependencies {
     //权限
     compile 'com.github.dfqin:grantor:2.1.0'
 
+    //MultiType
+    compile('me.drakeet.multitype:multitype:3.4.2',{
+        exclude group: 'com.android.support'
+    })
+
 
 }

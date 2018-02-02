@@ -164,4 +164,10 @@
         <item name="android:textColor">#333333</item>
     </style>
 
+    <style name="image_view_right_arrow">
+        <item name="android:layout_height">25px</item>
+        <item name="android:layout_width">14px</item>
+        <item name="android:src">@drawable/mine_arrow</item>
+    </style>
+
 </resources>

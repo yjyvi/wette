@@ -24,6 +24,7 @@
             style="@style/common_line"/>
 
     <TextView
+            android:id="@+id/tv_address_list"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:text="收获地址管理"
