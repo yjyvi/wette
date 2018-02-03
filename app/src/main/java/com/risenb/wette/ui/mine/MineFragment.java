@@ -18,8 +18,8 @@ import org.xutils.view.annotation.Event;
 public class MineFragment extends LazyLoadFragment {
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
-        this.inflater=inflater;
-        view = inflater.inflate(R.layout.fragment_mine, container,false);
+        this.inflater = inflater;
+        view = inflater.inflate(R.layout.fragment_mine, container, false);
     }
 
     @Override
@@ -37,9 +37,15 @@ public class MineFragment extends LazyLoadFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Event(value = {R.id.ll_login_or_register,R.id.ll_account_setting,R.id.fl_feedback,R.id.tv_collection},type = View.OnClickListener.class)
-    private void onClick(View view){
-        switch (view.getId()){
+    @Event(value = {
+            R.id.ll_login_or_register,
+            R.id.ll_account_setting,
+            R.id.fl_feedback,
+            R.id.tv_collection,
+            R.id.ll_order
+    }, type = View.OnClickListener.class)
+    private void onClick(View view) {
+        switch (view.getId()) {
             case R.id.ll_login_or_register:
                 LoginActivity.toActivity(view.getContext());
                 break;
@@ -52,12 +58,14 @@ public class MineFragment extends LazyLoadFragment {
             case R.id.tv_collection:
                 CollectionActivity.toActivity(view.getContext());
                 break;
+            case R.id.ll_order:
+                OrderActivity.toActivity(view.getContext());
+                break;
         }
     }
 
     /**
      * 初始化实例
-     * @return
      */
     public static MineFragment newInstance() {
         Bundle bundle = new Bundle();

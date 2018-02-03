@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="538px">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="48px"
+                android:layout_height="48px"/>
+        
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                android:textSize="28px"
+                android:text="HelloWorld旗舰店"
+                android:layout_marginLeft="20px"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="待付款"
+                android:textSize="30px"
+                android:textColor="#fe8124"/>
+
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30px"
+            android:paddingBottom="30px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:orientation="horizontal">
+        
+        <ImageView
+                android:layout_width="200px"
+                android:layout_height="200px"
+                android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="6px"
+                android:paddingBottom="6px"
+                android:paddingLeft="20px"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30px"
+                    android:textColor="#333333"
+                    android:text="ThinkPad T470P i7-7700HQ 16G 512SSD"/>
+
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:textSize="34px"
+                        android:text="¥2333"/>
+                
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24px"
+                        android:textColor="#999999"
+                        android:text="x1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingRight="20px"
+            android:textColor="#333333"
+            android:textSize="28px"
+            android:layout_marginTop="36px"
+            android:text="共1件商品 合计¥233(含运费¥0.00)"/>
+
+
+    <TextView
+            android:layout_width="140px"
+            android:layout_height="60px"
+            android:layout_marginRight="20px"
+            android:background="@drawable/order_btn"
+            android:text="支付"
+            android:textColor="#fe8124"
+            android:textSize="28px"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginTop="26px"
+            />
+
+</LinearLayout>

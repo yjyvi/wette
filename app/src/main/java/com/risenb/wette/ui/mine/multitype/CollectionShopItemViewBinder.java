@@ -2,7 +2,6 @@ package com.risenb.wette.ui.mine.multitype;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
@@ -20,24 +19,16 @@ import me.drakeet.multitype.ItemViewBinder;
  *     version: 1.0
  * </pre>
  */
-public class CollectionShopItemViewBinder extends ItemViewBinder<CollectionShopBean,CollectionShopItemViewBinder.CollectionShopViewHolder> {
+public class CollectionShopItemViewBinder extends ItemViewBinder<CollectionShopBean,BaseViewHolder> {
 
     @NonNull
     @Override
-    protected CollectionShopViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new CollectionShopViewHolder(inflater.inflate(R.layout.item_collection_shop,parent,false));
+    protected BaseViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        return new BaseViewHolder(inflater.inflate(R.layout.item_collection_shop,parent,false));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CollectionShopViewHolder holder, @NonNull CollectionShopBean item) {
-
-    }
-
-    public static class CollectionShopViewHolder extends BaseViewHolder{
-
-        public CollectionShopViewHolder(View itemView) {
-            super(itemView);
-        }
+    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull CollectionShopBean item) {
     }
 
 }

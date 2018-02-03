@@ -22,11 +22,14 @@ public class PaddingItemDecoration extends RecyclerView.ItemDecoration {
 
     Paint mPaint;
 
+    int mDividerHeight;
+
     int mPaddingLeft;
 
     int mPaddingRight;
 
     {
+        mDividerHeight = 1;
         mPaint = new Paint();
         mPaint.setColor(Color.parseColor("#e5e5e5"));
     }
@@ -41,19 +44,29 @@ public class PaddingItemDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
             top = child.getBottom();
-            bottom = top + AutoUtils.getPercentHeightSize(1);
+            bottom = top + AutoUtils.getPercentHeightSize(mDividerHeight);
             c.drawRect(left, top, right, bottom, mPaint);
         }
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, AutoUtils.getPercentHeightSize(2));
+        outRect.set(0, 0, 0, AutoUtils.getPercentHeightSize(mDividerHeight));
     }
 
     public PaddingItemDecoration setPadding(int paddingLeft, int paddingRight) {
         this.mPaddingLeft = paddingLeft;
         this.mPaddingRight = paddingRight;
+        return this;
+    }
+
+    public PaddingItemDecoration setColor(String color) {
+        mPaint.setColor(Color.parseColor(color));
+        return this;
+    }
+
+    public PaddingItemDecoration setDividerHeight(int height) {
+        this.mDividerHeight = height;
         return this;
     }
 
