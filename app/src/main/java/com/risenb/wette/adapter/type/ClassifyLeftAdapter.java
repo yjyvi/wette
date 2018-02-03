@@ -25,16 +25,5 @@ public class ClassifyLeftAdapter extends BaseQuickAdapter<String, BaseViewHolder
     protected void convert(final BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_name, item);
         LinearLayout ll_type = helper.getView(R.id.ll_type);
-//        ll_type.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                View v_line = helper.getView(R.id.v_line);
-//                if (!v_line.isSelected()) {
-//                    v_line.setSelected(true);
-//                }else {
-//                    v_line.setSelected(false);
-//                }
-//            }
-//        });
     }
 }
