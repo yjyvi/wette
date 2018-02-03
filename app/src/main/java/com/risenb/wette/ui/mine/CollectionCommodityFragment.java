@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.LazyLoadFragment;
+import com.risenb.wette.ui.home.GoodsListP;
 
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,14 +24,17 @@ import java.util.List;
  *     version: 1.0
  * </pre>
  */
-public class CollectionCommodityFragment extends LazyLoadFragment {
+public class CollectionCommodityFragment extends LazyLoadFragment implements GoodsListP.GoodsListListener {
 
     @ViewInject(R.id.rv_collection_commodity)
     private RecyclerView rv_collection_commodity;
 
-    private ProductListAdapter mAdapter;
+    private ProductListAdapter mProductListAdapter;
+    private GoodsListP mGoodsListP;
+    private int page=1;
+    private int limit=10;
+    private List<GoodsListBean.DataBean> mGoodsList;
 
-    private List<String> mData = new ArrayList();
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -39,15 +43,21 @@ public class CollectionCommodityFragment extends LazyLoadFragment {
 
     @Override
     protected void setControlBasis() {
-        mAdapter = new ProductListAdapter(R.layout.item_product_list,mData);
-        rv_collection_commodity.setLayoutManager(new GridLayoutManager(getContext(),2));
-        rv_collection_commodity.setAdapter(mAdapter);
+        mGoodsListP = new GoodsListP(getActivity(),this);
+        mGoodsListP.setGoodsList(0,page,limit);
     }
 
     @Override
     protected void prepareData() {
-        for (int i = 0; i < 20; i++) {
-            mData.add("xxxx");
-        }
+
+        rv_collection_commodity.setLayoutManager(new GridLayoutManager(getContext(),2));
+        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list,mGoodsList);
+        rv_collection_commodity.setAdapter(mProductListAdapter);
+    }
+
+    @Override
+    public void resultGoodsListData(GoodsListBean result) {
+        mGoodsList = result.getData() ;
+        mProductListAdapter.setNewData(mGoodsList);
     }
 }

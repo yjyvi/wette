@@ -9,18 +9,20 @@ import android.widget.RelativeLayout;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.BaseUI;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yjyvi on 2018/2/1.
  */
 @ContentView(R.layout.activity_shop)
-public class ShopUI extends BaseUI {
+public class ShopUI extends BaseUI implements GoodsListP.GoodsListListener {
 
     @ViewInject(R.id.rv_goods_list)
     private RecyclerView rv_goods_list;
@@ -29,6 +31,11 @@ public class ShopUI extends BaseUI {
     private RelativeLayout title_back;
 
     private ArrayList<String> mLeftData;
+    private GoodsListP mGoodsListP;
+    private int page=1;
+    private int limit=10;
+    public ProductListAdapter mProductListAdapter;
+    private List<GoodsListBean.DataBean> mGoodsList;
 
     @Override
     protected void back() {
@@ -37,13 +44,15 @@ public class ShopUI extends BaseUI {
 
     @Override
     protected void setControlBasis() {
-        testData();
+//        testData();
         title_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 back();
             }
         });
+        mGoodsListP = new GoodsListP(getActivity(),this);
+        mGoodsListP.setGoodsList(0,page,limit);
     }
 
     private void testData() {
@@ -58,11 +67,18 @@ public class ShopUI extends BaseUI {
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
         rv_goods_list.setLayoutManager(layout);
-        rv_goods_list.setAdapter(new ProductListAdapter(R.layout.item_product_list, mLeftData));
+        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list, mGoodsList);
+        rv_goods_list.setAdapter(mProductListAdapter);
     }
 
     public static void start(Context context) {
         Intent starter = new Intent(context, ShopUI.class);
         context.startActivity(starter);
+    }
+
+    @Override
+    public void resultGoodsListData(GoodsListBean result) {
+        mGoodsList = result.getData() ;
+        mProductListAdapter.setNewData(mGoodsList);
     }
 }

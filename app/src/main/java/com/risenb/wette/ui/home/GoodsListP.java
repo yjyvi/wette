@@ -14,7 +14,9 @@ import java.io.IOException;
 import okhttp3.Call;
 
 /**
- * Created by yjyvi on 2018/2/2.
+ *
+ * @author yjyvi
+ * @date 2018/2/2
  */
 
 public class GoodsListP extends PresenterBase {
@@ -26,7 +28,7 @@ public class GoodsListP extends PresenterBase {
         this.mGoodsListListener = goodsListListener;
     }
 
-    public void setGoodsList(int categoryTid, int pageSize, int pageNo) {
+    public void setGoodsList(int categoryTid, int pageNo, int  pageSize) {
         NetworkUtils.getNetworkUtils().getGoodsList(categoryTid, pageSize, pageNo, new OKHttpManager.StringCallBack() {
             @Override
             public void requestSuccess(String result) {

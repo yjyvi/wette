@@ -10,19 +10,21 @@ import android.widget.RelativeLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.BaseUI;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yjyvi on 2018/1/31.
  */
 
 @ContentView(R.layout.activity_product_list)
-public class ProductListUI extends BaseUI {
+public class ProductListUI extends BaseUI implements GoodsListP.GoodsListListener {
 
     @ViewInject(R.id.rv_product_list)
     private RecyclerView rv_product_list;
@@ -32,6 +34,10 @@ public class ProductListUI extends BaseUI {
 
     public ProductListAdapter mProductListAdapter;
     private ArrayList<String > mLeftData;
+    public GoodsListP mGoodsListP;
+    private int page=1;
+    private int limit=10;
+    private List<GoodsListBean.DataBean> mGoodsList;
 
     @Override
     protected void back() {
@@ -52,8 +58,17 @@ public class ProductListUI extends BaseUI {
         leftVisible(R.mipmap.back);
         rightVisible(R.mipmap.home_cart);
 
+
+    }
+
+    @Override
+    protected void prepareData() {
+
+        mGoodsListP = new GoodsListP(this,this);
+        mGoodsListP.setGoodsList(0,page,limit);
+
         rv_product_list.setLayoutManager(new GridLayoutManager(this, 2));
-        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list, mLeftData);
+        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list, mGoodsList);
         rv_product_list.setAdapter(mProductListAdapter);
         mProductListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -70,13 +85,14 @@ public class ProductListUI extends BaseUI {
         });
     }
 
-    @Override
-    protected void prepareData() {
-
-    }
-
     public static void start(Context context) {
         Intent starter = new Intent(context, ProductListUI.class);
         context.startActivity(starter);
+    }
+
+    @Override
+    public void resultGoodsListData(GoodsListBean result) {
+        mGoodsList = result.getData() ;
+        mProductListAdapter.setNewData(mGoodsList);
     }
 }

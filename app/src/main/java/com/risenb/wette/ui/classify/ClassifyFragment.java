@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.type.ClassifyLeftAdapter;
+import com.risenb.wette.beans.ClassifyBean;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.SmoothScrollLayoutManager;
@@ -19,12 +20,13 @@ import com.risenb.wette.views.SmoothScrollLayoutManager;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yjyvi on 2018/1/30.
  */
 
-public class ClassifyFragment extends LazyLoadFragment {
+public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.ClassifyListener {
 
     @ViewInject(R.id.rv_left)
     private RecyclerView rv_left;
@@ -44,6 +46,8 @@ public class ClassifyFragment extends LazyLoadFragment {
         setTitle("品类");
         leftVisible(R.mipmap.home_search);
         rightVisible(R.mipmap.home_cart);
+
+        ClassifyP classifyP = new ClassifyP(getActivity(),this);
     }
 
     @Override
@@ -152,5 +156,10 @@ public class ClassifyFragment extends LazyLoadFragment {
         ClassifyFragment classifyFragment = new ClassifyFragment();
         classifyFragment.setArguments(bundle);
         return classifyFragment;
+    }
+
+    @Override
+    public void classifyData(List<ClassifyBean.DataBean> dataBean) {
+
     }
 }

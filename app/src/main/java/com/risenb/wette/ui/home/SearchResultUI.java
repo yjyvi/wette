@@ -12,20 +12,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.adapter.home.SearchGoodsListAdapter;
+import com.risenb.wette.beans.SearchBean;
 import com.risenb.wette.ui.BaseUI;
+import com.risenb.wette.ui.home.productDetial.SearchP;
 import com.risenb.wette.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yjyvi on 2018/2/1.
  */
 @ContentView(R.layout.activity_search_result)
-public class SearchResultUI extends BaseUI {
+public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListener {
 
     @ViewInject(R.id.rv_search_list)
     private RecyclerView rv_search_list;
@@ -37,6 +40,10 @@ public class SearchResultUI extends BaseUI {
     private EditText et_search;
 
     private ArrayList<String> mLeftData;
+    public SearchP mSearchP;
+    public SearchGoodsListAdapter mSearchGoodsListAdapter;
+    public List<SearchBean.GoodsListBean> mGoodsList;
+
 
     @Override
     protected void back() {
@@ -45,7 +52,7 @@ public class SearchResultUI extends BaseUI {
 
     @Override
     protected void setControlBasis() {
-        testData();
+//        testData();
         leftVisible(R.mipmap.back);
         setTitle("搜索");
         title_back.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +72,15 @@ public class SearchResultUI extends BaseUI {
 
     @Override
     protected void prepareData() {
+
+        mSearchP = new SearchP(this, this);
+
+
         Intent intent = getIntent();
         String searchContent = intent.getStringExtra("searchContent");
         if (!TextUtils.isEmpty(searchContent)) {
             et_search.setText(searchContent);
+            mSearchP.setSearchData(searchContent);
         }
 
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -87,12 +99,19 @@ public class SearchResultUI extends BaseUI {
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
         rv_search_list.setLayoutManager(layout);
-        rv_search_list.setAdapter(new ProductListAdapter(R.layout.item_product_list, mLeftData));
+        mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_product_list,mGoodsList);
+        rv_search_list.setAdapter(mSearchGoodsListAdapter);
     }
 
     public static void start(Context context, String searchContent) {
         Intent starter = new Intent(context, SearchResultUI.class);
         starter.putExtra("searchContent", searchContent);
         context.startActivity(starter);
+    }
+
+    @Override
+    public void searchData(SearchBean searchBean) {
+        mGoodsList = searchBean.getGoodsList();
+        mSearchGoodsListAdapter.setNewData(mGoodsList);
     }
 }
