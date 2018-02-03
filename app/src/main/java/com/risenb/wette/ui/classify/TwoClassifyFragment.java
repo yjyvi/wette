@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.type.GoodsListAdapter;
 import com.risenb.wette.ui.LazyLoadFragment;
-import com.zhy.autolayout.AutoLinearLayout;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -37,8 +36,8 @@ public class TwoClassifyFragment extends LazyLoadFragment {
     @ViewInject(R.id.tv_frg_main)
     private TextView tv;
 
-    private AutoLinearLayout.LayoutParams lp_gd = null;
-    private AutoLinearLayout.LayoutParams lp_tv = null;
+    private LinearLayout.LayoutParams lp_gd = null;
+    private LinearLayout.LayoutParams lp_tv = null;
     private ArrayList<Category> itemList = null;
     private GDAdapter adapter = null;
     private ArrayList<String> mRightData;
@@ -75,14 +74,11 @@ public class TwoClassifyFragment extends LazyLoadFragment {
     protected void updateTitle(String title) {
         if (tv != null) {
             tv.setText(title);
-//            if (mGoodsListAdapter != null) {
-//                mGoodsListAdapter.notifyDataSetChanged();
-//            }
         }
     }
 
     private void setData() {
-        rightData();
+
         if (itemList == null) {
             itemList = new ArrayList<>();
             for (int i = 1; i < 11; i++) {
@@ -101,14 +97,14 @@ public class TwoClassifyFragment extends LazyLoadFragment {
             height = (itemList.size() / 3 + 1) * heightUnit;
         }
 
-        if (lp_gd == null)
-            lp_gd = new AutoLinearLayout.LayoutParams(AutoLinearLayout.LayoutParams.MATCH_PARENT, height);
-
-        if (lp_tv == null)
-            lp_tv = new AutoLinearLayout.LayoutParams(AutoLinearLayout.LayoutParams.MATCH_PARENT
+        if (lp_gd == null) {
+            lp_gd = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+        }
+        if (lp_tv == null) {
+            lp_tv = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
                     , (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP
                     , 30, getResources().getDisplayMetrics()));
-
+        }
         TextView tv_title = new TextView(getActivity());
         tv_title.setLayoutParams(lp_tv);
         tv_title.setText("组一");
@@ -128,15 +124,8 @@ public class TwoClassifyFragment extends LazyLoadFragment {
         adapter = new GDAdapter(getActivity(), itemList, R.color.gray);
         gridView.setAdapter(adapter);
         llayout_main.addView(gridView);
-    }
 
-    private void rightData() {
-        mRightData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mRightData.add("二级分类" + i);
-        }
     }
-
 
     public static class GDAdapter extends BaseAdapter {
         Context context;

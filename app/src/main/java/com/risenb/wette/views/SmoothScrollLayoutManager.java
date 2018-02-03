@@ -27,8 +27,9 @@ public class SmoothScrollLayoutManager extends LinearLayoutManager {
                         return 150f / displayMetrics.densityDpi;
                     }
                 };
-
-        smoothScroller.setTargetPosition(position);
-        startSmoothScroll(smoothScroller);
+        if (position >= 0) {
+            smoothScroller.setTargetPosition(position);
+            startSmoothScroll(smoothScroller);
+        }
     }
 }

@@ -54,7 +54,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
         mHomeP = new HomeP(getActivity(), this);
         mGoodsListP = new GoodsListP(getActivity(), this);
         mHomeP.setHomeData();
-//        mGoodsListP.setGoodsList(0, limit, page);
+        mGoodsListP.setGoodsList(0, limit, page);
     }
 
     @Override
@@ -82,12 +82,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                         return true;
                     }
                 });
-
-
             }
         });
-
-
     }
 
 

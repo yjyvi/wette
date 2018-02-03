@@ -5,10 +5,14 @@
     android:layout_height="108px"
     android:background="@color/white"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_3"/>
     <LinearLayout
+        android:id="@+id/ll_type"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="107px"
         android:orientation="horizontal">
 
         <View
@@ -28,8 +32,4 @@
     </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray_line"/>
 </LinearLayout>
