@@ -2,7 +2,6 @@ package com.risenb.wette.ui.mine.multitype;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
@@ -20,24 +19,17 @@ import me.drakeet.multitype.ItemViewBinder;
  *     version: 1.0
  * </pre>
  */
-public class AddressItemViewBinder extends ItemViewBinder<AddressBean,AddressItemViewBinder.AddressViewHolder> {
+public class AddressItemViewBinder extends ItemViewBinder<AddressBean, BaseViewHolder> {
 
     @NonNull
     @Override
-    protected AddressViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new AddressViewHolder(inflater.inflate(R.layout.item_address_list,parent,false));
+    protected BaseViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
+        return new BaseViewHolder(inflater.inflate(R.layout.item_address_list,parent,false));
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull AddressViewHolder holder, @NonNull AddressBean item) {
+    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull AddressBean item) {
 
-    }
-
-    public static class AddressViewHolder extends BaseViewHolder {
-
-        public AddressViewHolder(View itemView) {
-            super(itemView);
-        }
     }
 
 }

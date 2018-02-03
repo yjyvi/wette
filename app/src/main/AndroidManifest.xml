@@ -171,6 +171,12 @@
         <activity android:name=".ui.mine.CollectionActivity"/>
         <!-- 我的订单 -->
         <activity android:name=".ui.mine.OrderActivity"/>
+        <!-- 购物车 -->
+        <activity android:name=".ui.mine.ShoppingCartActivity"/>
+        <!-- 支付方式 -->
+        <activity android:name=".ui.mine.PaymentMethodActivity"/>
+
+        <activity android:name=".ui.mine.EditAddressActivity"/>
         <activity android:name=".ui.home.ShopUI"/>
         <activity android:name=".ui.home.SearchResultUI"/>
 

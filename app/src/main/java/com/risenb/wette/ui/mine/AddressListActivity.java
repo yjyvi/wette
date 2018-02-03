@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.AddressBean;
@@ -12,6 +13,7 @@ import com.risenb.wette.ui.mine.multitype.AddressItemViewBinder;
 import com.risenb.wette.utils.PaddingItemDecoration;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import me.drakeet.multitype.Items;
@@ -44,6 +46,8 @@ public class AddressListActivity extends BaseUI {
 
     @Override
     protected void setControlBasis() {
+        setTitle("收获地址");
+        rightVisible(R.mipmap.home_cart);
         mAdapter = new MultiTypeAdapter();
         mItems = new Items();
         mAdapter.register(AddressBean.class,new AddressItemViewBinder());
@@ -51,6 +55,11 @@ public class AddressListActivity extends BaseUI {
         rv_address_list.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.setItems(mItems);
         rv_address_list.setAdapter(mAdapter);
+    }
+
+    @Event(value = {R.id.rl_right},type = View.OnClickListener.class)
+    private void onClick(View view){
+        ShoppingCartActivity.toActivity(view.getContext());
     }
 
     @Override

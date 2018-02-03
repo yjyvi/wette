@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="101px">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="20px"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+
+        <ImageView
+                android:layout_width="26px"
+                android:layout_height="26px"
+                android:src="@drawable/shopping_cart_unselected"/>
+        
+        <ImageView
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginLeft="20px"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20px"
+                android:text="ThinKPad旗舰店"/>
+
+    </LinearLayout>
+
+    <View
+            style="@style/common_line"/>
+
+</LinearLayout>
