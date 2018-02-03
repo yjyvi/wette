@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.type.ClassifyLeftAdapter;
-import com.risenb.wette.adapter.type.ClassifyRightAdapter;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.SmoothScrollLayoutManager;
@@ -32,8 +31,6 @@ public class ClassifyFragment extends LazyLoadFragment {
 
     public ArrayList<String> mLeftData;
     private ArrayList<String> mRightData;
-    public ClassifyRightAdapter mClassifyRightAdapter;
-    private ArrayList<TwoClassifyFragment.Category> itemList  =new ArrayList<>();
     private TwoClassifyFragment fragment;
 
     @Override
@@ -53,7 +50,6 @@ public class ClassifyFragment extends LazyLoadFragment {
     protected void prepareData() {
 
         leftData();
-        rightData();
 
         //左侧列表
         SmoothScrollLayoutManager layout = new SmoothScrollLayoutManager(getActivity());
@@ -65,7 +61,8 @@ public class ClassifyFragment extends LazyLoadFragment {
         classifyLeftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                scroll(position,adapter,view);
+                scroll(position, adapter, view);
+                initRightData();
                 ToastUtils.showToast(String.valueOf(position));
             }
 
@@ -75,11 +72,6 @@ public class ClassifyFragment extends LazyLoadFragment {
     }
 
     private void initRightData() {
-        for(int i=1; i<20; i++)
-        {
-            itemList.add(new TwoClassifyFragment.Category("选项 " + i, ""+i));
-        }
-
         //模拟右侧标签页
         fragment = new TwoClassifyFragment();
         Bundle bundle = new Bundle();
@@ -100,17 +92,31 @@ public class ClassifyFragment extends LazyLoadFragment {
     //实际列表是否超出屏幕
     private boolean isOut = true;
 
-    private void scroll(int position,BaseQuickAdapter adapter, View view) {
+    private View lastView;
+
+    private void scroll(int position, BaseQuickAdapter adapter, View view) {
+
+        //改变选中状态
+        if (!view.isSelected()) {
+            //去除上一次控件的状态
+            if (lastView != null) {
+                lastView.setSelected(false);
+            }
+            lastView = view;
+            view.setSelected(true);
+        }
+
+
         if (visibleCount == 0) {
             visibleCount = rv_left.getChildCount();
-            if (visibleCount == mLeftData.size())
+            if (visibleCount == mLeftData.size()) {
                 isOut = false;
-            else {
+            } else {
                 ce = visibleCount / 2;
             }
         }
 
-        RecyclerView.LayoutManager layoutManager  = rv_left.getLayoutManager();
+        RecyclerView.LayoutManager layoutManager = rv_left.getLayoutManager();
         if (layoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
             //上移
@@ -123,15 +129,10 @@ public class ClassifyFragment extends LazyLoadFragment {
                 } else {
                     rv_left.smoothScrollToPosition(adapter.getItemCount() - 1);
                 }
-
             }
-
             lastPosition = position;
-
         }
 
-        //更新右侧标签页的标题
-        fragment.updateTitle("c" + (position + 1));
     }
 
     private void leftData() {
@@ -140,14 +141,6 @@ public class ClassifyFragment extends LazyLoadFragment {
             mLeftData.add("一级分类" + i);
         }
     }
-
-    private void rightData() {
-        mRightData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mRightData.add("二级分类" + i);
-        }
-    }
-
 
     /**
      * 初始化实例

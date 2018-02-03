@@ -104,6 +104,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.yanzhenjie/loading/1.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.yanzhenjie/recyclerview-swipe/1.1.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.zhy/autolayout/1.4.5/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.drakeet.multitype/multitype/3.4.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/org.xutils/xutils/3.5.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
@@ -144,6 +145,7 @@
     <orderEntry type="library" exported="" name="com.github.bumptech.glide:okhttp3-integration:4.0.0@jar" level="project" />
     <orderEntry type="library" exported="" name="com.github.bumptech.glide:gifdecoder:4.0.0@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:appcompat-v7-25.0.0" level="project" />
+    <orderEntry type="library" exported="" name="me.drakeet.multitype:multitype-3.4.2" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:transition-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="com.github.bumptech.glide:annotations:4.0.0@jar" level="project" />
     <orderEntry type="library" exported="" name="com.github.anzaizai:EasySwipeMenuLayout-1.1.2" level="project" />

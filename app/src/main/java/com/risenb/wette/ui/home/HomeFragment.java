@@ -82,12 +82,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                         return true;
                     }
                 });
-
-
             }
         });
-
-
     }
 
 
