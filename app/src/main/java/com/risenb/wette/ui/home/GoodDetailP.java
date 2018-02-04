@@ -27,7 +27,7 @@ public class GoodDetailP extends PresenterBase {
     }
 
     public void setProductDetailsData(String goodsId, String userId) {
-        NetworkUtils.getNetworkUtils().getProductDetails(goodsId, userId, new OKHttpManager.StringCallBack() {
+        NetworkUtils.getNetworkUtils().getGoodDetails(goodsId, userId, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 ToastUtils.showToast(e.getMessage());

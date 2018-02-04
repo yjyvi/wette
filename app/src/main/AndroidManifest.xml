@@ -138,9 +138,13 @@
 
         <!--向导界面-->
         <activity android:name=".ui.GuideUI"/>
+        <!--商品列表-->
         <activity android:name=".ui.home.GoodListUI"/>
+        <!--商品详情-->
         <activity android:name=".ui.home.GoodDetailsUI"/>
+        <!--提交订单-->
         <activity android:name=".ui.home.PayOrderUI"/>
+        <!--评论商品-->
         <activity android:name=".ui.home.CommentOderUI"/>
 
         <!-- 登录 -->
@@ -177,7 +181,9 @@
         <activity android:name=".ui.mine.PaymentMethodActivity"/>
 
         <activity android:name=".ui.mine.EditAddressActivity"/>
+        <!--店铺-->
         <activity android:name=".ui.home.ShopUI"/>
+        <!--商品搜索结果-->
         <activity android:name=".ui.home.SearchResultUI"/>
 
     </application>
