@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
+import com.risenb.wette.beans.ClassifyBean;
 import com.risenb.wette.ui.BaseViewHolder;
 import com.risenb.wette.ui.home.GoodListUI;
 import com.risenb.wette.utils.ToastUtils;
@@ -21,17 +22,17 @@ import java.util.List;
  * @date 2018/1/31
  */
 
-public class ClassifyRightAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    private List<String> data;
+public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean.ListBeanX, BaseViewHolder> {
+    private List<ClassifyBean.DataBean.ListBeanX> data;
 
-    public ClassifyRightAdapter(int layoutResId, @Nullable List<String> data) {
+    public ClassifyRightAdapter(int layoutResId, @Nullable List<ClassifyBean.DataBean.ListBeanX> data) {
         super(layoutResId, data);
         this.data = data;
     }
 
 
     @Override
-    protected void convert(com.risenb.wette.ui.BaseViewHolder helper, String item) {
+    protected void convert(com.risenb.wette.ui.BaseViewHolder helper, ClassifyBean.DataBean.ListBeanX item) {
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
         GridLayoutManager layout = new GridLayoutManager(helper.itemView.getContext(), 3);
         layout.setAutoMeasureEnabled(true);
@@ -41,7 +42,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<String, BaseViewHolde
         TextView tv_title = new TextView(helper.itemView.getContext());
         LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tv_title.setLayoutParams(titleLayoutParams);
-        tv_title.setText("组一" + helper.getOldPosition());
+        tv_title.setText(item.getName());
         tv_title.setPadding(0, 34, 0, 34);
 
 
@@ -51,7 +52,8 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<String, BaseViewHolde
         lineView.setLayoutParams(lineLayoutParams);
         lineView.setBackgroundResource(R.mipmap.gray_line);
 
-        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(R.layout.item_goods_list, data);
+
+        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(R.layout.item_goods_list, item.getList());
         goodsListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

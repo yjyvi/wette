@@ -19,7 +19,6 @@ import com.risenb.wette.views.SmoothScrollLayoutManager;
 
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,9 +30,9 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
     @ViewInject(R.id.rv_left)
     private RecyclerView rv_left;
 
-    public ArrayList<String> mLeftData;
-    private ArrayList<String> mRightData;
-    private TwoClassifyFragment fragment;
+    public ClassifyP mClassifyP;
+    public ClassifyLeftAdapter mClassifyLeftAdapter;
+    private List<ClassifyBean.DataBean> mClassifyData;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -47,40 +46,38 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         leftVisible(R.mipmap.home_search);
         rightVisible(R.mipmap.home_cart);
 
-        ClassifyP classifyP = new ClassifyP(getActivity(),this);
+        mClassifyP = new ClassifyP(getActivity(), this);
+        mClassifyP.setClassifyData();
     }
 
     @Override
     protected void prepareData() {
 
-        leftData();
+//        leftData();
 
         //左侧列表
         SmoothScrollLayoutManager layout = new SmoothScrollLayoutManager(getActivity());
         layout.setAutoMeasureEnabled(true);
 
         rv_left.setLayoutManager(layout);
-        ClassifyLeftAdapter classifyLeftAdapter = new ClassifyLeftAdapter(R.layout.item_classify_left, mLeftData);
-        rv_left.setAdapter(classifyLeftAdapter);
-        classifyLeftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mClassifyLeftAdapter = new ClassifyLeftAdapter(R.layout.item_classify_left, mClassifyData);
+        rv_left.setAdapter(mClassifyLeftAdapter);
+        mClassifyLeftAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 scroll(position, adapter, view);
-                initRightData();
+                if (mClassifyData != null && mClassifyData.size() > 0) {
+                    initRightData(mClassifyData.get(position).getList());
+                }
                 ToastUtils.showToast(String.valueOf(position));
             }
 
         });
-
-        initRightData();
     }
 
-    private void initRightData() {
+    private void initRightData(List<ClassifyBean.DataBean.ListBeanX> classifyData) {
         //模拟右侧标签页
-        fragment = new TwoClassifyFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("name", "c1");
-        fragment.setArguments(bundle);
+        TwoClassifyFragment fragment = TwoClassifyFragment.newInstance(classifyData);
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.ll_right_main, fragment, "c0").commit();
@@ -113,7 +110,7 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
         if (visibleCount == 0) {
             visibleCount = rv_left.getChildCount();
-            if (visibleCount == mLeftData.size()) {
+            if (visibleCount == mClassifyData.size()) {
                 isOut = false;
             } else {
                 ce = visibleCount / 2;
@@ -139,12 +136,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
     }
 
-    private void leftData() {
-        mLeftData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mLeftData.add("一级分类" + i);
-        }
-    }
 
     /**
      * 初始化实例
@@ -160,6 +151,11 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
     @Override
     public void classifyData(List<ClassifyBean.DataBean> dataBean) {
-
+        this.mClassifyData = dataBean;
+        mClassifyLeftAdapter.setNewData(dataBean);
+        //默认显示第一个分类的数据
+        if (dataBean != null && dataBean.size() > 0) {
+            initRightData(dataBean.get(0).getList());
+        }
     }
 }

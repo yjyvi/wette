@@ -44,21 +44,12 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener {
         finish();
     }
 
-    private void testData() {
-        mLeftData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mLeftData.add("商品列表名称" + i);
-        }
-    }
 
     @Override
     protected void setControlBasis() {
-        testData();
         setTitle("商品列表");
         leftVisible(R.mipmap.back);
         rightVisible(R.mipmap.home_cart);
-
-
     }
 
     @Override
