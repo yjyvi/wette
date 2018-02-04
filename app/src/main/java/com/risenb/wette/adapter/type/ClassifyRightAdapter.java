@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseViewHolder;
-import com.risenb.wette.ui.home.ProductListUI;
+import com.risenb.wette.ui.home.GoodListUI;
 import com.risenb.wette.utils.ToastUtils;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<String, BaseViewHolde
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToastUtils.showToast(String.valueOf(position));
-                ProductListUI.start(view.getContext());
+                GoodListUI.start(view.getContext());
             }
         });
 

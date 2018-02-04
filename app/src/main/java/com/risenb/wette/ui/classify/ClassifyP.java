@@ -31,7 +31,7 @@ public class ClassifyP extends PresenterBase {
 
 
     public void setClassifyData(){
-        NetworkUtils.getNetworkUtils().getProductCategory(new OKHttpManager.StringCallBack() {
+        NetworkUtils.getNetworkUtils().getGoodCategory(new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 ToastUtils.showToast(e.getMessage());

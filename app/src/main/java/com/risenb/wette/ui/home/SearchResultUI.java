@@ -99,7 +99,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
         rv_search_list.setLayoutManager(layout);
-        mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_product_list,mGoodsList);
+        mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_good_list,mGoodsList);
         rv_search_list.setAdapter(mSearchGoodsListAdapter);
     }
 

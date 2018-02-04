@@ -29,7 +29,7 @@ public class GoodsListP extends PresenterBase {
     }
 
     public void setGoodsList(int categoryTid, int pageNo, int  pageSize) {
-        NetworkUtils.getNetworkUtils().getProductList(categoryTid, pageSize, pageNo, new OKHttpManager.StringCallBack() {
+        NetworkUtils.getNetworkUtils().getGoodList(categoryTid, pageSize, pageNo, new OKHttpManager.StringCallBack() {
             @Override
             public void requestSuccess(String result) {
                 GoodsListBean goodsListBean = JSON.parseObject(result,GoodsListBean.class);

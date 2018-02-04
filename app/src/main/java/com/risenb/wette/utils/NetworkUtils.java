@@ -64,7 +64,7 @@ public class NetworkUtils {
      * @param pageNo
      * @param httpBack
      */
-    public void getProductList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
 //        params.put("categoryTid", String.valueOf(""));
         params.put("pageNo", String.valueOf(pageNo));
@@ -91,12 +91,12 @@ public class NetworkUtils {
      *
      * @param httpBack
      */
-    public void getProductCategory(OKHttpManager.StringCallBack httpBack) {
+    public void getGoodCategory(OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         OKHttpManager.postAsync(getUrl(R.string.goodsCategory), params, httpBack);
     }
 
-    public void getProductDetails(String goodsId, String userId, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodDetails(String goodsId, String userId, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", goodsId);
         params.put("c", userId);

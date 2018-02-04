@@ -138,8 +138,8 @@
 
         <!--向导界面-->
         <activity android:name=".ui.GuideUI"/>
-        <activity android:name=".ui.home.ProductListUI"/>
-        <activity android:name=".ui.home.ProductDetailsUI"/>
+        <activity android:name=".ui.home.GoodListUI"/>
+        <activity android:name=".ui.home.GoodDetailsUI"/>
         <activity android:name=".ui.home.PayOrderUI"/>
         <activity android:name=".ui.home.CommentOderUI"/>
 
