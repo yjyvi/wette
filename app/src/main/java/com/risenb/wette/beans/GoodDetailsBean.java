@@ -6,7 +6,7 @@ import java.util.List;
  * Created by yjyvi on 2018/2/4.
  */
 
-public class ProductDetailsBean {
+public class GoodDetailsBean {
 
     /**
      * data : {"amount":"","attrIds":"1,4","attrList":[{"attrId":1,"attrList":[{"attrId":2,"attrList":"","attrName":"绿色","attrPid":1,"createTime":1516847897000,"goodsId":1},{"attrId":3,"attrList":"","attrName":"蓝色","attrPid":1,"createTime":1516847910000,"goodsId":1}],"attrName":"颜色","attrPid":"","createTime":1516847881000,"goodsId":""},{"attrId":4,"attrList":[{"attrId":5,"attrList":"","attrName":"32","attrPid":4,"createTime":1516847936000,"goodsId":1},{"attrId":6,"attrList":"","attrName":"33","attrPid":4,"createTime":1516847948000,"goodsId":1}],"attrName":"尺码","attrPid":"","createTime":1516847927000,"goodsId":""}],"carousel":"","cartId":"","categoryFid":"","categorySid":"","categoryTid":"","cover":"https://ss0.bdstatic.com/6ONWsjip0QIZ8tyhnq/it/u=3545401083,2251952841&fm=77&w_h=121_75&cs=2008984878,1171842780","createTime":"","goodsDetail":"雅诗兰黛就是好","goodsId":1,"goodsIntroduce":"雅诗兰黛就是好","goodsName":"雅诗兰黛1","isCollection":0,"isDel":"","isRecommend":"","lastUpdateTime":"","logo":"","price":100.01,"propertiesName":"","shopId":1,"skuId":"","skuStock":"","skuSurplus":"","sort":"","status":"","stock":1,"surplus":1,"type":1,"video":"https://ss0.bdstatic.com/6ONWsjip0QIZ8tyhnq/it/u=3545401083,2251952841&fm=77&w_h=121_75&cs=2008984878,1171842780"}

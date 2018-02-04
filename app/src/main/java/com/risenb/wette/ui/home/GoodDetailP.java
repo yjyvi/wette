@@ -3,7 +3,7 @@ package com.risenb.wette.ui.home;
 import android.support.v4.app.FragmentActivity;
 
 import com.alibaba.fastjson.JSON;
-import com.risenb.wette.beans.ProductDetailsBean;
+import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
@@ -17,13 +17,13 @@ import okhttp3.Call;
  * Created by yjyvi on 2018/2/4.
  */
 
-public class ProductDetialP extends PresenterBase {
+public class GoodDetailP extends PresenterBase {
 
-    private ProductDetailsListener mProductDetailsListener;
+    private GoodsDetailsListener mGoodsDetailsListener;
 
-    public ProductDetialP(FragmentActivity fragmentActivity, ProductDetailsListener productDetailsListener) {
+    public GoodDetailP(FragmentActivity fragmentActivity, GoodsDetailsListener productDetailsListener) {
         setActivity(fragmentActivity);
-        this.mProductDetailsListener = productDetailsListener;
+        this.mGoodsDetailsListener = productDetailsListener;
     }
 
     public void setProductDetailsData(String goodsId, String userId) {
@@ -35,14 +35,14 @@ public class ProductDetialP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-                ProductDetailsBean productDetailsBean = JSON.parseObject(result, ProductDetailsBean.class);
-                mProductDetailsListener.productData(productDetailsBean.getData());
+                GoodDetailsBean goodDetailsBean = JSON.parseObject(result, GoodDetailsBean.class);
+                mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
             }
         });
     }
 
 
-    public interface ProductDetailsListener {
-        void productData(ProductDetailsBean.DataBean dataBean);
+    public interface GoodsDetailsListener {
+        void goodsData(GoodDetailsBean.DataBean dataBean);
     }
 }

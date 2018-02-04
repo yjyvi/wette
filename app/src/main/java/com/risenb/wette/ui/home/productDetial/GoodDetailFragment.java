@@ -19,7 +19,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ProductDetialFragment extends LazyLoadFragment {
+public class GoodDetailFragment extends LazyLoadFragment {
 
     @ViewInject(R.id.web_content)
     private WebView wb_content;
@@ -30,7 +30,7 @@ public class ProductDetialFragment extends LazyLoadFragment {
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
         this.inflater=inflater;
-        view=inflater.inflate(R.layout.fragment_product_detial,container,false);
+        view=inflater.inflate(R.layout.fragment_good_detial,container,false);
     }
 
     @Override
@@ -85,10 +85,10 @@ public class ProductDetialFragment extends LazyLoadFragment {
      *
      * @return
      */
-    public static ProductDetialFragment newInstance() {
+    public static GoodDetailFragment newInstance() {
         Bundle bundle = new Bundle();
-        ProductDetialFragment productFragment = new ProductDetialFragment();
-        productFragment.setArguments(bundle);
-        return productFragment;
+        GoodDetailFragment goodDetailFragment = new GoodDetailFragment();
+        goodDetailFragment.setArguments(bundle);
+        return goodDetailFragment;
     }
 }
