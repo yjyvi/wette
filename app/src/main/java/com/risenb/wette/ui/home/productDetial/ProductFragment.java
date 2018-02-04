@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.BannerViewPagerAdapter;
 import com.risenb.wette.beans.BannerBean;
+import com.risenb.wette.beans.ProductDetailsBean;
 import com.risenb.wette.pop.PopUtils;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.home.PayOrderUI;
+import com.risenb.wette.ui.home.ProductDetialP;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.MyViewPagerIndicator;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ProductFragment extends LazyLoadFragment implements View.OnClickListener {
+public class ProductFragment extends LazyLoadFragment implements View.OnClickListener, ProductDetialP.ProductDetailsListener {
 
 
     //样式选择
@@ -110,6 +112,8 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
         mResultBannerBean.add(e);
         mResultBannerBean.add(e2);
         mResultBannerBean.add(e3);
+
+        ProductDetialP productDetialP = new ProductDetialP(getActivity(),this);
     }
 
 
@@ -211,5 +215,10 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
             i--;
         }
         tv_goods_num.setText(String.valueOf(i));
+    }
+
+    @Override
+    public void productData(ProductDetailsBean.DataBean dataBean) {
+
     }
 }

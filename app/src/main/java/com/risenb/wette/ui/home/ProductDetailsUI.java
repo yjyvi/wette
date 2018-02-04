@@ -38,7 +38,7 @@ import java.util.List;
  * @date 2018/1/31
  */
 @ContentView(R.layout.activity_product_details)
-public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
+public class ProductDetailsUI extends BaseUI implements View.OnClickListener{
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -83,6 +83,9 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
 
     @Override
     protected void prepareData() {
+
+
+
 
         mFragmentLists.add(ProductFragment.newInstance());
         mFragmentLists.add(ProductDetialFragment.newInstance());
@@ -174,4 +177,6 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
                 break;
         }
     }
+
+
 }

@@ -39,6 +39,8 @@
     <string name="goodsCategory">/goods/category</string>
     <!--搜索-->
     <string name="search">/base/search</string>
+    <!--商品详情-->
+    <string name="goodsDetail">/goods/detail</string>
 
 
 
