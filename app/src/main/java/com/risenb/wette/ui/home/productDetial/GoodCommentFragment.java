@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.ProductCommentAdapter;
+import com.risenb.wette.adapter.home.GoodCommentAdapter;
 import com.risenb.wette.ui.LazyLoadFragment;
 
 import org.xutils.view.annotation.ViewInject;
@@ -19,10 +19,10 @@ import java.util.ArrayList;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ProductCommentFragment extends LazyLoadFragment {
+public class GoodCommentFragment extends LazyLoadFragment {
 
-    @ViewInject(R.id.rv_product_comment)
-    private RecyclerView rv_product_comment;
+    @ViewInject(R.id.rv_goods_comment)
+    private RecyclerView rv_goods_comment;
 
 
     private ArrayList<String> mLeftData;
@@ -40,10 +40,10 @@ public class ProductCommentFragment extends LazyLoadFragment {
     @Override
     protected void prepareData() {
         testData();
-        rv_product_comment.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ProductCommentAdapter productCommentAdapter = new ProductCommentAdapter(R.layout.item_product_comment,mLeftData);
-        rv_product_comment.setAdapter(productCommentAdapter);
-        rv_product_comment.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        rv_goods_comment.setLayoutManager(new LinearLayoutManager(getActivity()));
+        GoodCommentAdapter productCommentAdapter = new GoodCommentAdapter(R.layout.item_good_comment,mLeftData);
+        rv_goods_comment.setAdapter(productCommentAdapter);
+        rv_goods_comment.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
     }
 
@@ -59,10 +59,10 @@ public class ProductCommentFragment extends LazyLoadFragment {
      *
      * @return
      */
-    public static ProductCommentFragment newInstance() {
+    public static GoodCommentFragment newInstance() {
         Bundle bundle = new Bundle();
-        ProductCommentFragment productFragment = new ProductCommentFragment();
-        productFragment.setArguments(bundle);
-        return productFragment;
+        GoodCommentFragment goodCommentFragment = new GoodCommentFragment();
+        goodCommentFragment.setArguments(bundle);
+        return goodCommentFragment;
     }
 }

@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.BannerViewPagerAdapter;
 import com.risenb.wette.beans.BannerBean;
+import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.pop.PopUtils;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.home.PayOrderUI;
+import com.risenb.wette.ui.home.GoodDetailP;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.MyViewPagerIndicator;
@@ -23,12 +25,13 @@ import com.risenb.wette.views.MyViewPagerIndicator;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ProductFragment extends LazyLoadFragment implements View.OnClickListener {
+public class GoodFragment extends LazyLoadFragment implements View.OnClickListener, GoodDetailP.GoodsDetailsListener {
 
 
     //样式选择
@@ -57,6 +60,12 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
     @ViewInject(R.id.tv_address)
     private TextView tv_address;
 
+    @ViewInject(R.id.tv_good_name)
+    private TextView tv_good_name;
+
+    @ViewInject(R.id.tv_good_price)
+    private TextView tv_good_price;
+
     @ViewInject(R.id.tv_current_page)
     private TextView tv_current_page;
 
@@ -77,6 +86,10 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
      */
     private int GOODS_NUM_MAX = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
+    public GoodDetailP mProductDetailP;
+    private String mGoodsId = "1";
+    public String mColorContent = "";
+    public String mSizeContent = "";
 
 
     @Override
@@ -110,6 +123,11 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
         mResultBannerBean.add(e);
         mResultBannerBean.add(e2);
         mResultBannerBean.add(e3);
+
+
+        mGoodsId = getArguments().getString("goodsId");
+        mProductDetailP = new GoodDetailP(getActivity(), this);
+        mProductDetailP.setProductDetailsData(mGoodsId, "1");
     }
 
 
@@ -160,9 +178,10 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
      *
      * @return
      */
-    public static ProductFragment newInstance() {
+    public static GoodFragment newInstance(String goodsId) {
         Bundle bundle = new Bundle();
-        ProductFragment productFragment = new ProductFragment();
+        GoodFragment productFragment = new GoodFragment();
+        bundle.putString("goodsId", goodsId);
         productFragment.setArguments(bundle);
         return productFragment;
     }
@@ -171,9 +190,12 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
     public void onClick(final View view) {
         switch (view.getId()) {
             case R.id.iv_selected_style:
-                String colorContent = "红色,绿色,蓝色,黑色,紫色";
-                String sizeContent = "M,L,XL,XXL,XXXL,XXXXL,XXXXXL";
-                PopUtils.showGoodsStyle(getActivity(), iv_selected_style, colorContent, sizeContent, new PopUtils.GoodsSelectedStyleListener() {
+
+//                mColorContent = "红色,绿色,蓝色,黑色,紫色,";
+//
+//
+//                mSizeContent = "M,L,XL,XXL,XXXL,XXXXL,XXXXXL,";
+                PopUtils.showGoodsStyle(getActivity(), iv_selected_style, mColorContent, mSizeContent, new PopUtils.GoodsSelectedStyleListener() {
                     @Override
                     public void selectedResult(String reslut) {
                         PayOrderUI.start(view.getContext());
@@ -207,9 +229,40 @@ public class ProductFragment extends LazyLoadFragment implements View.OnClickLis
         int i = Integer.parseInt(num);
         if (isAdd && i < GOODS_NUM_MAX) {
             i++;
-        } else if (i > 0) {
+        } else if (i > 1) {
             i--;
         }
         tv_goods_num.setText(String.valueOf(i));
+    }
+
+    @Override
+    public void goodsData(GoodDetailsBean.DataBean dataBean) {
+        if (dataBean != null) {
+            StringBuilder colors = new StringBuilder();
+            StringBuilder sizes = new StringBuilder();
+            List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
+            for (int i = 0; i < attrList.size(); i++) {
+                if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
+                    List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                    for (int j = 0; j < attrList1.size(); j++) {
+                        colors.append(attrList1.get(j).getAttrName() + ",");
+                    }
+                }
+
+                if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
+                    List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                    for (int j = 0; j < attrList1.size(); j++) {
+                        sizes.append(attrList1.get(j).getAttrName() + ",");
+                    }
+                }
+            }
+
+            mColorContent = colors.toString();
+            mSizeContent = sizes.toString();
+
+
+            tv_good_name.setText(dataBean.getGoodsName());
+            tv_good_price.setText("¥" + dataBean.getPrice());
+        }
     }
 }

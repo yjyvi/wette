@@ -14,7 +14,7 @@ import com.risenb.wette.beans.BannerBean;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.BaseViewHolder;
-import com.risenb.wette.ui.home.ProductDetailsUI;
+import com.risenb.wette.ui.home.GoodDetailsUI;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.MyViewPagerIndicator;
@@ -132,22 +132,24 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 if (holder instanceof HomeNewListViewHolder) {
                     HomeNewListViewHolder newListViewHolder = (HomeNewListViewHolder) holder;
                     if (goodsListBean.getData() != null && goodsListBean.getData().size() > 0) {
-                        GoodsListBean.DataBean goods = goodsListBean.getData().get(position-2);
+                        final GoodsListBean.DataBean goods = goodsListBean.getData().get(position - 2);
                         if (goods != null) {
                             newListViewHolder.tv_title.setText(goods.getGoodsName());
                             newListViewHolder.tv_introduce.setText(goods.getGoodsIntroduce());
-                            newListViewHolder.tv_price.setText("￥" + goods.getPrice());
+                            newListViewHolder.tv_price.setText("¥" + goods.getPrice());
                             GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getLogo(), newListViewHolder.iv_user_icon);
                             GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getCover(), newListViewHolder.iv_img);
+
+                            newListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    GoodDetailsUI.start(view.getContext(), String.valueOf(goods.getGoodsId()), String.valueOf(goods.getShopId()));
+                                }
+                            });
                         }
                     }
 
-                    newListViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            ProductDetailsUI.start(view.getContext());
-                        }
-                    });
+
                 }
                 break;
             default:
@@ -179,7 +181,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         private ViewPager vp_item_banner;
         private MyViewPagerIndicator vpi_item_banner_indicator;
-        private  ImageView iv_item_banner;
+        private ImageView iv_item_banner;
 
         public HomeBannerViewHolder(View view) {
             super(view);

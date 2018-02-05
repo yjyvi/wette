@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.adapter.home.GoodListAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.home.GoodsListP;
@@ -31,9 +31,14 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
 
     @ViewInject(R.id.rv_collection_commodity)
     private RecyclerView rv_collection_commodity;
+<<<<<<< HEAD
     @ViewInject(R.id.rv_refresh)
     private MyRefreshLayout refreshLayout;
     private ProductListAdapter mProductListAdapter;
+=======
+
+    private GoodListAdapter mProductListAdapter;
+>>>>>>> 3d2a8ccf2b14032e81ac427f2f169993b305bbe9
     private GoodsListP mGoodsListP;
     private int page=1;
     private int limit=10;
@@ -57,7 +62,7 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
     protected void prepareData() {
 
         rv_collection_commodity.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list,mGoodsList);
+        mProductListAdapter = new GoodListAdapter(R.layout.item_good_list,mGoodsList);
         rv_collection_commodity.setAdapter(mProductListAdapter);
     }
 

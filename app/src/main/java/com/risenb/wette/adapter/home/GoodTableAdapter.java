@@ -10,10 +10,10 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class ProductTableAdapter extends FragmentPagerAdapter {
+public class GoodTableAdapter extends FragmentPagerAdapter {
     private  List<Fragment> fragmentLists;
 
-    public ProductTableAdapter(FragmentManager supportLoaderManager, List<Fragment> fragmentLists) {
+    public GoodTableAdapter(FragmentManager supportLoaderManager, List<Fragment> fragmentLists) {
         super(supportLoaderManager);
         this.fragmentLists=fragmentLists;
     }

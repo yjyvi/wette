@@ -2,6 +2,7 @@ package com.risenb.wette.pop;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,34 +63,36 @@ public class PopUtils {
      */
     private static void showItems(final AutoFlowLayout autoFlowLayout, final Activity context, String contents, final int type) {
         autoFlowLayout.removeAllViews();
-        String pressTexts = contents.substring(0, contents.length());
-        final String[] split = pressTexts.split(",");
-        for (int i = 0; i < split.length; i++) {
-            final TextView tag = (TextView) LayoutInflater.from(context).inflate(R.layout.item_goos_sytle, autoFlowLayout, false);
-            final String text = split[i];
-            tag.setText(text);
-            autoFlowLayout.addView(tag);
-            tag.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!tag.isSelected()) {
-                        //单选操作，遍历后设置为未选中状态
-                        for (int i1 = 0; i1 < autoFlowLayout.getChildCount(); i1++) {
-                            autoFlowLayout.getChildAt(i1).setSelected(false);
-                        }
-                        tag.setSelected(true);
-                        String content = tag.getText().toString().trim();
-                        ToastUtils.showToast(content);
-                        if (1 == type) {
-                            selectedColorStyleResult = content;
+        if (!TextUtils.isEmpty(contents)) {
+            String pressTexts = contents.substring(0, contents.length() - 1);
+            final String[] split = pressTexts.split(",");
+            for (int i = 0; i < split.length; i++) {
+                final TextView tag = (TextView) LayoutInflater.from(context).inflate(R.layout.item_goos_sytle, autoFlowLayout, false);
+                final String text = split[i];
+                tag.setText(text);
+                autoFlowLayout.addView(tag);
+                tag.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!tag.isSelected()) {
+                            //单选操作，遍历后设置为未选中状态
+                            for (int i1 = 0; i1 < autoFlowLayout.getChildCount(); i1++) {
+                                autoFlowLayout.getChildAt(i1).setSelected(false);
+                            }
+                            tag.setSelected(true);
+                            String content = tag.getText().toString().trim();
+                            ToastUtils.showToast(content);
+                            if (1 == type) {
+                                selectedColorStyleResult = content;
+                            } else {
+                                selectedSizeStyleResult = content;
+                            }
                         } else {
-                            selectedSizeStyleResult = content;
+                            tag.setSelected(false);
                         }
-                    } else {
-                        tag.setSelected(false);
                     }
-                }
-            });
+                });
+            }
         }
     }
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.ProductListAdapter;
+import com.risenb.wette.adapter.home.GoodListAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.BaseUI;
 
@@ -34,8 +34,9 @@ public class ShopUI extends BaseUI implements GoodsListP.GoodsListListener {
     private GoodsListP mGoodsListP;
     private int page=1;
     private int limit=10;
-    public ProductListAdapter mProductListAdapter;
+    public GoodListAdapter mProductListAdapter;
     private List<GoodsListBean.DataBean> mGoodsList;
+    public String mShopId;
 
     @Override
     protected void back() {
@@ -64,15 +65,18 @@ public class ShopUI extends BaseUI implements GoodsListP.GoodsListListener {
 
     @Override
     protected void prepareData() {
+        mShopId = getIntent().getStringExtra("shopId");
+
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
         rv_goods_list.setLayoutManager(layout);
-        mProductListAdapter = new ProductListAdapter(R.layout.item_product_list, mGoodsList);
+        mProductListAdapter = new GoodListAdapter(R.layout.item_good_list, mGoodsList);
         rv_goods_list.setAdapter(mProductListAdapter);
     }
 
-    public static void start(Context context) {
+    public static void start(Context context,String shopId) {
         Intent starter = new Intent(context, ShopUI.class);
+        starter.putExtra("shopId",shopId);
         context.startActivity(starter);
     }
 

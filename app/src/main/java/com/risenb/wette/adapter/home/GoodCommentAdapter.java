@@ -11,8 +11,8 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public  class ProductCommentAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
-    public ProductCommentAdapter(int layoutResId, @Nullable List<String> data) {
+public  class GoodCommentAdapter extends BaseQuickAdapter<String,BaseViewHolder> {
+    public GoodCommentAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 

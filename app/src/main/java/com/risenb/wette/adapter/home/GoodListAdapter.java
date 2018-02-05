@@ -17,9 +17,9 @@ import java.util.List;
  * @date 2018/1/31
  */
 
-public class ProductListAdapter extends BaseQuickAdapter<GoodsListBean.DataBean,BaseViewHolder> {
+public class GoodListAdapter extends BaseQuickAdapter<GoodsListBean.DataBean,BaseViewHolder> {
 
-    public ProductListAdapter(int layoutResId, @Nullable List<GoodsListBean.DataBean> data) {
+    public GoodListAdapter(int layoutResId, @Nullable List<GoodsListBean.DataBean> data) {
         super(layoutResId, data);
     }
 

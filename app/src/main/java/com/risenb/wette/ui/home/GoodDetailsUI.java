@@ -11,11 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.ProductTableAdapter;
+import com.risenb.wette.adapter.home.GoodTableAdapter;
 import com.risenb.wette.ui.BaseUI;
-import com.risenb.wette.ui.home.productDetial.ProductCommentFragment;
-import com.risenb.wette.ui.home.productDetial.ProductDetialFragment;
-import com.risenb.wette.ui.home.productDetial.ProductFragment;
+import com.risenb.wette.ui.home.productDetial.GoodCommentFragment;
+import com.risenb.wette.ui.home.productDetial.GoodDetailFragment;
+import com.risenb.wette.ui.home.productDetial.GoodFragment;
 import com.risenb.wette.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -37,8 +37,8 @@ import java.util.List;
  * @author yjyvi
  * @date 2018/1/31
  */
-@ContentView(R.layout.activity_product_details)
-public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
+@ContentView(R.layout.activity_good_details)
+public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -67,6 +67,8 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
 
     public static String[] mTitles = {"商品", "详情", "评论"};
     private List<Fragment> mFragmentLists = new ArrayList<>();
+    private String mGoodsId;
+    private String mShopId;
 
     @Override
     protected void back() {
@@ -83,12 +85,13 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
 
     @Override
     protected void prepareData() {
+        mGoodsId = getIntent().getStringExtra("goodsId");
+        mShopId = getIntent().getStringExtra("shopId");
+        mFragmentLists.add(GoodFragment.newInstance(mGoodsId));
+        mFragmentLists.add(GoodDetailFragment.newInstance());
+        mFragmentLists.add(GoodCommentFragment.newInstance());
 
-        mFragmentLists.add(ProductFragment.newInstance());
-        mFragmentLists.add(ProductDetialFragment.newInstance());
-        mFragmentLists.add(ProductCommentFragment.newInstance());
-
-        vp_content.setAdapter(new ProductTableAdapter(getSupportFragmentManager(), mFragmentLists));
+        vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
         vp_content.setOffscreenPageLimit(3);
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -150,8 +153,10 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
     }
 
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, ProductDetailsUI.class);
+    public static void start(Context context, String goodsId, String shopId) {
+        Intent starter = new Intent(context, GoodDetailsUI.class);
+        starter.putExtra("goodsId", goodsId);
+        starter.putExtra("shopId", shopId);
         context.startActivity(starter);
     }
 
@@ -165,7 +170,7 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
                 //购物车
                 break;
             case R.id.ll_shop:
-                ShopUI.start(view.getContext());
+                ShopUI.start(view.getContext(), mShopId);
                 break;
             case R.id.ll_collection:
 
@@ -174,4 +179,6 @@ public class ProductDetailsUI extends BaseUI implements View.OnClickListener {
                 break;
         }
     }
+
+
 }

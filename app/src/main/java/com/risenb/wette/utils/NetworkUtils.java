@@ -64,7 +64,7 @@ public class NetworkUtils {
      * @param pageNo
      * @param httpBack
      */
-    public void getGoodsList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
 //        params.put("categoryTid", String.valueOf(""));
         params.put("pageNo", String.valueOf(pageNo));
@@ -75,23 +75,32 @@ public class NetworkUtils {
 
     /**
      * 搜索商品
+     *
      * @param keyword
      * @param httpBack
      */
-    public void getSearch(String keyword ,DataCallBack httpBack) {
+    public void getSearch(String keyword, DataCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
-        params.put("keyword",keyword);
+        params.put("keyword", keyword);
         OKHttpManager.postAsync(getUrl(R.string.search), params, httpBack);
     }
 
 
     /**
      * 获取分类
+     *
      * @param httpBack
      */
-    public void getGoodsCategory(OKHttpManager.StringCallBack httpBack) {
+    public void getGoodCategory(OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         OKHttpManager.postAsync(getUrl(R.string.goodsCategory), params, httpBack);
+    }
+
+    public void getGoodDetails(String goodsId, String userId, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("goodsId", goodsId);
+        params.put("c", userId);
+        OKHttpManager.postAsync(getUrl(R.string.goodsDetail), params, httpBack);
     }
 
 
