@@ -170,7 +170,7 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
                 //购物车
                 break;
             case R.id.ll_shop:
-                ShopUI.start(view.getContext(), mShopId);
+                ShopDetailUI.start(view.getContext(), mShopId);
                 break;
             case R.id.ll_collection:
 

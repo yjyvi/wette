@@ -11,6 +11,12 @@ import com.risenb.wette.R;
  */
 public abstract class PresenterBase{
 
+    /**
+     * 请求成功
+     */
+    public static final String REQUEST_SUCCESS="1";
+
+
     protected FragmentActivity activity;
 
     public FragmentActivity getActivity() {

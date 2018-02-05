@@ -22,7 +22,7 @@ import java.util.List;
  * Created by yjyvi on 2018/2/1.
  */
 @ContentView(R.layout.activity_shop)
-public class ShopUI extends BaseUI implements GoodsListP.GoodsListListener {
+public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener {
 
     @ViewInject(R.id.rv_goods_list)
     private RecyclerView rv_goods_list;
@@ -75,7 +75,7 @@ public class ShopUI extends BaseUI implements GoodsListP.GoodsListListener {
     }
 
     public static void start(Context context,String shopId) {
-        Intent starter = new Intent(context, ShopUI.class);
+        Intent starter = new Intent(context, ShopDetailUI.class);
         starter.putExtra("shopId",shopId);
         context.startActivity(starter);
     }

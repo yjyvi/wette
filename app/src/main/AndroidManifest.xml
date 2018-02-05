@@ -182,7 +182,7 @@
 
         <activity android:name=".ui.mine.EditAddressActivity"/>
         <!--店铺-->
-        <activity android:name=".ui.home.ShopUI"/>
+        <activity android:name=".ui.home.ShopDetailUI"/>
         <!--商品搜索结果-->
         <activity android:name=".ui.home.SearchResultUI"/>
 

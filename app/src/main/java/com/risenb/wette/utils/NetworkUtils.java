@@ -14,8 +14,8 @@ import java.util.TreeMap;
  */
 public class NetworkUtils {
     private static NetworkUtils networkUtils;
-    private String PAGE = "page";
-    private String LIMIT = "limit";
+    private String PAGE = "pageNo";
+    private String LIMIT = "pageSize";
     private String TIME = "timestamp";
 
     public static NetworkUtils getNetworkUtils() {
@@ -67,8 +67,8 @@ public class NetworkUtils {
     public void getGoodList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
 //        params.put("categoryTid", String.valueOf(""));
-        params.put("pageNo", String.valueOf(pageNo));
-        params.put("pageSize", String.valueOf(pageSize));
+        params.put(PAGE, String.valueOf(pageNo));
+        params.put(LIMIT, String.valueOf(pageSize));
         OKHttpManager.postAsync(getUrl(R.string.goodsList), params, httpBack);
     }
 
@@ -96,11 +96,50 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.goodsCategory), params, httpBack);
     }
 
+
+    /**
+     * 商品详情
+     * @param goodsId
+     * @param userId
+     * @param httpBack
+     */
     public void getGoodDetails(String goodsId, String userId, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", goodsId);
         params.put("c", userId);
         OKHttpManager.postAsync(getUrl(R.string.goodsDetail), params, httpBack);
+    }
+
+
+    /**
+     * 商品评价列表
+     * @param goodsId
+     * @param page
+     * @param limit
+     * @param httpBack
+     */
+    public void getGoodEvaluate(String goodsId, String page,String limit, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("goodsId", goodsId);
+        params.put(PAGE, page);
+        params.put(LIMIT, limit);
+        OKHttpManager.postAsync(getUrl(R.string.evaluate), params, httpBack);
+    }
+
+
+    /**
+     * 店铺详情
+     * @param shopId
+     * @param page
+     * @param limit
+     * @param httpBack
+     */
+    public void getShopDetail(String shopId, String page,String limit, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("goodsId", shopId);
+        params.put(PAGE, page);
+        params.put(LIMIT, limit);
+        OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
     }
 
 

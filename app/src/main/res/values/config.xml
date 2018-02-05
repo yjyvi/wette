@@ -41,6 +41,12 @@
     <string name="search">/base/search</string>
     <!--商品详情-->
     <string name="goodsDetail">/goods/detail</string>
+    <!--查询商品库存-->
+    <string name="goodsSku">/goods/goodsSku</string>
+    <!--商品评价列表-->
+    <string name="evaluate">/goods/evaluate</string>
+    <!--店铺详情-->
+    <string name="shopDetail">/goods/shopDetail</string>
 
 
 
