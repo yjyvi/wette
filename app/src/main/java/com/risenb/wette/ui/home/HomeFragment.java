@@ -17,6 +17,7 @@ import com.risenb.wette.adapter.home.HomeAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.LazyLoadFragment;
+import com.risenb.wette.ui.mine.ShoppingCartActivity;
 import com.risenb.wette.utils.ToastUtils;
 
 import org.xutils.view.annotation.ViewInject;
@@ -32,6 +33,9 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @ViewInject(R.id.rl_title_search)
     private RelativeLayout rl_title_search;
+
+    @ViewInject(R.id.rl_right)
+    private RelativeLayout rl_cart;
 
     @ViewInject(R.id.et_search)
     private EditText et_search;
@@ -51,6 +55,15 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @Override
     protected void setControlBasis() {
+
+        //跳转购物车
+        rl_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShoppingCartActivity.toActivity(view.getContext());
+            }
+        });
+
         mHomeP = new HomeP(getActivity(), this);
         mGoodsListP = new GoodsListP(getActivity(), this);
         mHomeP.setHomeData();
@@ -84,6 +97,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                 });
             }
         });
+
+
     }
 
 
@@ -101,14 +116,14 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @Override
     public void resultData(HomeBean result) {
-        this.homeDataBean=result;
+        this.homeDataBean = result;
         mHomeAdapter.setHomeDataBean(result);
         mHomeAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void resultGoodsListData(GoodsListBean result) {
-        this.goodsListBean =result;
+        this.goodsListBean = result;
         mHomeAdapter.setGoodsListBean(result);
     }
 }

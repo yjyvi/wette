@@ -38,7 +38,7 @@ import java.util.List;
  * @date 2018/1/31
  */
 @ContentView(R.layout.activity_good_details)
-public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
+public class GoodDetailsUI extends BaseUI implements View.OnClickListener, CollectionP.CollectionListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -69,6 +69,10 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
     private List<Fragment> mFragmentLists = new ArrayList<>();
     private String mGoodsId;
     private String mShopId;
+    public CollectionP mCollectionP;
+    private String userId;
+    private String isCollection;
+    private String operation;
 
     @Override
     protected void back() {
@@ -80,16 +84,20 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
         iv_back.setOnClickListener(this);
         iv_cart.setOnClickListener(this);
         ll_shop.setOnClickListener(this);
+        ll_collection.setOnClickListener(this);
 
+        mCollectionP = new CollectionP(this, this);
     }
 
     @Override
     protected void prepareData() {
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
+
+
         mFragmentLists.add(GoodFragment.newInstance(mGoodsId));
         mFragmentLists.add(GoodDetailFragment.newInstance());
-        mFragmentLists.add(GoodCommentFragment.newInstance());
+        mFragmentLists.add(GoodCommentFragment.newInstance(mGoodsId));
 
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
         vp_content.setOffscreenPageLimit(3);
@@ -173,7 +181,16 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
                 ShopDetailUI.start(view.getContext(), mShopId);
                 break;
             case R.id.ll_collection:
-
+                if (!ll_collection.isSelected()) {
+                    ll_collection.setSelected(true);
+                    operation="1";
+                }else {
+                    ll_collection.setSelected(false);
+                    operation="2";
+                }
+                userId = "42ca9e5498c0dea784faaddad7ebc8d2";
+                isCollection = "-1";
+                mCollectionP.setCollection(userId, operation, isCollection, mGoodsId, "1");
                 break;
             default:
                 break;
@@ -181,4 +198,8 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener {
     }
 
 
+    @Override
+    public void collectionResult() {
+
+    }
 }

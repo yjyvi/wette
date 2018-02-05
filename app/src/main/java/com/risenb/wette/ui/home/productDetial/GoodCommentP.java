@@ -10,6 +10,7 @@ import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -49,6 +50,6 @@ public class GoodCommentP extends PresenterBase {
     }
 
     public interface GoodCommentListener {
-        void goodCommentData(GoodCommentBean.DataBean dataBean);
+        void goodCommentData(List<GoodCommentBean.DataBean> dataBean);
     }
 }

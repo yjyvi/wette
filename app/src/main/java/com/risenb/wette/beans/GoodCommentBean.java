@@ -1,5 +1,7 @@
 package com.risenb.wette.beans;
 
+import java.util.List;
+
 /**
  * Created by yjyvi on 2018/2/5.
  */
@@ -16,18 +18,18 @@ public class GoodCommentBean {
      * total : 0
      */
 
-    private DataBean data;
+    private List<DataBean> data;
     private String errorCode;
     private String errorMsg;
     private String msg;
     private String status;
     private int total;
 
-    public DataBean getData() {
+    public List<DataBean> getData() {
         return data;
     }
 
-    public void setData(DataBean data) {
+    public void setData(List<DataBean> data) {
         this.data = data;
     }
 

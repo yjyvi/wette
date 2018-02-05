@@ -1,5 +1,7 @@
 package com.risenb.wette.utils;
 
+import android.text.TextUtils;
+
 import com.risenb.wette.MyApplication;
 import com.risenb.wette.R;
 import com.risenb.wette.network.DataCallBack;
@@ -99,6 +101,7 @@ public class NetworkUtils {
 
     /**
      * 商品详情
+     *
      * @param goodsId
      * @param userId
      * @param httpBack
@@ -113,12 +116,13 @@ public class NetworkUtils {
 
     /**
      * 商品评价列表
+     *
      * @param goodsId
      * @param page
      * @param limit
      * @param httpBack
      */
-    public void getGoodEvaluate(String goodsId, String page,String limit, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodEvaluate(String goodsId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", goodsId);
         params.put(PAGE, page);
@@ -129,12 +133,13 @@ public class NetworkUtils {
 
     /**
      * 店铺详情
+     *
      * @param shopId
      * @param page
      * @param limit
      * @param httpBack
      */
-    public void getShopDetail(String shopId, String page,String limit, OKHttpManager.StringCallBack httpBack) {
+    public void getShopDetail(String shopId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", shopId);
         params.put(PAGE, page);
@@ -143,14 +148,39 @@ public class NetworkUtils {
     }
 
 
-    public void getOrderList(String c, int state, int page, int limit, OKHttpManager.StringCallBack stringCallBack) {
-        Map<String,String> params = new TreeMap<>();
-        params.put("c",c);
-        if (state != -1){
-            params.put("orderStatus",state+"");
+    /**
+     * 商品、店铺收藏与取消收藏
+     *
+     * @param c
+     * @param operation
+     * @param collectionId
+     * @param dataId
+     * @param type
+     * @param httpBack
+     */
+    public void getCollection(String c, String operation, String collectionId, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("c", c);
+        params.put("operation", operation);
+        if (TextUtils.equals(operation, "2")) {
+            params.put("collectionId", collectionId);
+        }else {
+            params.put("dataId", dataId);
+            params.put("type", type);
         }
-        params.put("pageSize",limit+"");
-        params.put("pageNo",page+"");
-        OKHttpManager.postAsync(getUrl(R.string.order_list),params,stringCallBack);
+
+        OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
+    }
+
+
+    public void getOrderList(String c, int state, int page, int limit, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("c", c);
+        if (state != -1) {
+            params.put("orderStatus", state + "");
+        }
+        params.put("pageSize", limit + "");
+        params.put("pageNo", page + "");
+        OKHttpManager.postAsync(getUrl(R.string.order_list), params, stringCallBack);
     }
 }
