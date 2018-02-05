@@ -143,4 +143,14 @@ public class NetworkUtils {
     }
 
 
+    public void getOrderList(String c, int state, int page, int limit, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String,String> params = new TreeMap<>();
+        params.put("c",c);
+        if (state != -1){
+            params.put("orderStatus",state+"");
+        }
+        params.put("pageSize",limit+"");
+        params.put("pageNo",page+"");
+        OKHttpManager.postAsync(getUrl(R.string.order_list),params,stringCallBack);
+    }
 }
