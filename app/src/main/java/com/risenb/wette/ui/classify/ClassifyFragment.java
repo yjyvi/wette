@@ -8,12 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.type.ClassifyLeftAdapter;
 import com.risenb.wette.beans.ClassifyBean;
 import com.risenb.wette.ui.LazyLoadFragment;
+import com.risenb.wette.ui.home.SearchResultUI;
+import com.risenb.wette.ui.mine.ShoppingCartActivity;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.SmoothScrollLayoutManager;
 
@@ -25,10 +28,16 @@ import java.util.List;
  * Created by yjyvi on 2018/1/30.
  */
 
-public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.ClassifyListener {
+public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.ClassifyListener, View.OnClickListener {
 
     @ViewInject(R.id.rv_left)
     private RecyclerView rv_left;
+
+    @ViewInject(R.id.common_title_back)
+    private RelativeLayout rl_search;
+
+    @ViewInject(R.id.rl_right)
+    private RelativeLayout rl_cart;
 
     public ClassifyP mClassifyP;
     public ClassifyLeftAdapter mClassifyLeftAdapter;
@@ -48,6 +57,9 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
         mClassifyP = new ClassifyP(getActivity(), this);
         mClassifyP.setClassifyData();
+
+        rl_search.setOnClickListener(this);
+        rl_cart.setOnClickListener(this);
     }
 
     @Override
@@ -157,5 +169,21 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         if (dataBean != null && dataBean.size() > 0) {
             initRightData(dataBean.get(0).getList());
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.common_title_back:
+                SearchResultUI.start(view.getContext(), "");
+                break;
+
+            case R.id.rl_right:
+                ShoppingCartActivity.toActivity(view.getContext());
+                break;
+            default:
+                break;
+        }
+
     }
 }

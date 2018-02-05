@@ -42,6 +42,14 @@
     <string name="order_list">/order/orderList</string>
     <!--商品详情-->
     <string name="goodsDetail">/goods/detail</string>
+    <!--查询商品库存-->
+    <string name="goodsSku">/goods/goodsSku</string>
+    <!--商品评价列表-->
+    <string name="evaluate">/goods/evaluate</string>
+    <!--店铺详情-->
+    <string name="shopDetail">/goods/shopDetail</string>
+    <!--商品收藏或删除-->
+    <string name="goodCollection">/userCenter/addOrDelCollection</string>
 
 
     <!-- 收货地址 -->
