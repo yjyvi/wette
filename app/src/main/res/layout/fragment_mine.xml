@@ -59,7 +59,8 @@
                         android:orientation="horizontal">
 
                     <FrameLayout
-                            android:layout_width="0dp"
+                        android:id="@+id/bt_waiting_pay"
+                        android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
 
@@ -84,7 +85,9 @@
                             android:background="@color/common_line"/>
 
                     <FrameLayout
-                            android:layout_width="0dp"
+                        android:id="@+id/bt_sending_good"
+
+                        android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
 
@@ -107,6 +110,7 @@
                             android:background="@color/common_line"/>
 
                     <FrameLayout
+                            android:id="@+id/bt_waiting_evaluation"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
@@ -135,6 +139,7 @@
                             android:layout_weight="1">
 
                         <TextView
+                            android:id="@+id/bt_canceled_order"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

@@ -39,6 +39,7 @@
     <string name="goodsCategory">/goods/category</string>
     <!--搜索-->
     <string name="search">/base/search</string>
+    <string name="order_list">/order/orderList</string>
     <!--商品详情-->
     <string name="goodsDetail">/goods/detail</string>
     <!--查询商品库存-->

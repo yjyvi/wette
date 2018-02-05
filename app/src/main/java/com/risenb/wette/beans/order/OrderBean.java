@@ -1,4 +1,4 @@
-package com.risenb.wette.beans;
+package com.risenb.wette.beans.order;
 
 /**
  * <pre>

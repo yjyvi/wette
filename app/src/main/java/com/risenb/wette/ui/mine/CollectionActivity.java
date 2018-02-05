@@ -26,7 +26,11 @@ public class CollectionActivity extends BaseUI {
 
     @ViewInject(R.id.vp_collection)
     private ViewPager vp_collection;
-
+    private static final String KEY_TYPE = "TYPE";
+    public static final int TYPE_GOODS = 0;
+    public static final int TYPE_SHOPS = 1;
+    public static final int TYPE_ALL = 2;
+    private int type;
     private Fragment[] mFragments = {new CollectionCommodityFragment(), new CollectionShopFragment()};
 
     @Override
@@ -37,6 +41,7 @@ public class CollectionActivity extends BaseUI {
     @Override
     protected void setControlBasis() {
         setTitle("我的收藏");
+        getIntent().getIntExtra(KEY_TYPE,TYPE_ALL);
         vp_collection.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -48,6 +53,19 @@ public class CollectionActivity extends BaseUI {
                 return 2;
             }
         });
+        switch (type){
+            case TYPE_GOODS:
+                vp_collection.setCurrentItem(0);
+                break;
+            case TYPE_SHOPS:
+                vp_collection.setCurrentItem(1);
+                break;
+            case TYPE_ALL:
+                vp_collection.setCurrentItem(0);
+                break;
+
+
+        }
     }
 
     @Override
@@ -55,8 +73,9 @@ public class CollectionActivity extends BaseUI {
 
     }
     
-    public static void toActivity(Context context) {
+    public static void toActivity(Context context,int type) {
         Intent intent = new Intent(context, CollectionActivity.class);
+        intent.putExtra(KEY_TYPE,type);
         context.startActivity(intent);
     }
     
