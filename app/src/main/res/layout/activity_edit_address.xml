@@ -23,6 +23,7 @@
 
 
         <EditText
+                android:id="@+id/et_addressee"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="20px"
@@ -51,6 +52,7 @@
 
 
         <EditText
+                android:id="@+id/et_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="20px"
@@ -183,6 +185,7 @@
 
 
         <EditText
+                android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="20px"
@@ -211,6 +214,7 @@
 
 
         <EditText
+                android:id="@+id/et_postal_code"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="20px"
@@ -224,6 +228,7 @@
 
 
     <TextView
+            android:id="@+id/tv_continue"
             style="@style/text_view_login_btn"
             android:layout_marginLeft="44px"
             android:layout_marginRight="44px"

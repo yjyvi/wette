@@ -80,16 +80,6 @@ public class SPUtils {
         return sp.getBoolean(key, false);
     }
 
-    public static String getCurrentLongitude(Context context){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return sp.getString(SP_KEY_LONGITUDE,"");
-    }
-
-    public static String getCurrentLatitude(Context context){
-        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return sp.getString(SP_KEY_LATITUDE,"");
-    }
-
     /**
      * 清空首选项
      *

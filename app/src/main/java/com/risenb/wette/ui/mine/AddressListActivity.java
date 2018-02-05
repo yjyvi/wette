@@ -8,13 +8,17 @@ import android.view.View;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.AddressBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.mine.multitype.AddressItemViewBinder;
+import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.PaddingItemDecoration;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import java.util.List;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -57,18 +61,31 @@ public class AddressListActivity extends BaseUI {
         rv_address_list.setAdapter(mAdapter);
     }
 
-    @Event(value = {R.id.rl_right},type = View.OnClickListener.class)
+    @Event(value = {R.id.rl_right,R.id.tv_add_address},type = View.OnClickListener.class)
     private void onClick(View view){
-        ShoppingCartActivity.toActivity(view.getContext());
+        if(view.getId() == R.id.tv_add_address){
+            EditAddressActivity.toAddAddressActivity(view.getContext());
+        }else{
+            ShoppingCartActivity.toActivity(view.getContext());
+        }
     }
 
     @Override
     protected void prepareData() {
-        for (int i = 0; i < 10; i++) {
-            mItems.add(new AddressBean());
-        }
-        mAdapter.notifyDataSetChanged();
+        getAddressList();
     }
+
+    private void getAddressList(){
+        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
+            @Override
+            protected void onSuccess(List<AddressBean> data) {
+                mItems.clear();
+                mItems.addAll(data);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, AddressListActivity.class);

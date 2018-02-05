@@ -25,6 +25,7 @@
                 android:paddingRight="28px">
 
             <EditText
+                    android:id="@+id/et_phone_number"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_phone_number"
                     android:hint="请输入手机号"
@@ -37,10 +38,11 @@
                     style="@style/common_line"/>
 
             <EditText
+                    android:id="@+id/et_password"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="请输入密码 (6~16位字符)"
-                    android:inputType="phone"
+                    android:inputType="textPassword"
                     android:maxLength="11"
                     style="@style/edit_text_login"
                     />

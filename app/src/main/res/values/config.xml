@@ -13,9 +13,9 @@
 
 
     <!-- 登陆 -->
-    <string name="userLogin">user/login</string>
+    <string name="user_login">/user/login</string>
     <!-- 注册 -->
-    <string name="userRegister">user/userRegister</string>
+    <string name="user_register">/user/register</string>
     <!-- 验证码 -->
     <string name="authcode">user/getSmsCode</string>
     <!--邮箱验证码-->
@@ -43,6 +43,11 @@
     <!--商品详情-->
     <string name="goodsDetail">/goods/detail</string>
 
+
+    <!-- 收货地址 -->
+    <string name="address_list">/userCenter/addressList</string>
+    <!-- 更新 or 添加 地址 -->
+    <string name="address_update">/userCenter/addOrUpdateAddress</string>
 
 
 

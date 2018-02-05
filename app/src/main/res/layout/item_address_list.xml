@@ -8,6 +8,7 @@
               android:layout_height="240px">
 
     <ImageView
+            android:id="@+id/iv_is_default"
             android:layout_width="38px"
             android:layout_height="38px"
             android:src="@drawable/address_list_unselected"/>
@@ -21,35 +22,35 @@
             android:orientation="vertical">
 
         <TextView
+                android:id="@+id/tv_addressee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30px"
-                android:textColor="#333333"
-                android:text="收货人: HelloWorld"/>
+                android:textColor="#333333"/>
 
         <TextView
+                android:id="@+id/tv_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30px"
                 android:layout_marginTop="10px"
-                android:textColor="#333333"
-                android:text="联系方式: 1333333"/>
+                android:textColor="#333333"/>
 
         <TextView
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="28px"
                 android:layout_marginTop="10px"
-                android:textColor="#666666"
-                android:text="收货地址: 湖北武汉湖北武汉湖北武汉"/>
+                android:textColor="#666666"/>
 
         <TextView
+                android:id="@+id/tv_postal_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="28px"
                 android:layout_marginTop="10px"
-                android:textColor="#666666"
-                android:text="邮政编码: 100010"/>
+                android:textColor="#666666"/>
 
     </LinearLayout>
     

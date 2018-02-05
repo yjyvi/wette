@@ -4,6 +4,7 @@
              android:layout_height="match_parent">
 
     <ScrollView
+            android:id="@+id/sv_mine"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -34,11 +35,13 @@
                         android:gravity="center_horizontal">
 
                     <ImageView
+                            android:id="@+id/iv_avatar"
                             android:layout_width="128px"
                             android:layout_height="128px"
-                            android:src="@drawable/mine_no_login_head_image"/>
+                           />
 
                     <TextView
+                            android:id="@+id/tv_nick_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="26px"
@@ -412,6 +415,7 @@
 
 
                 <TextView
+                        android:id="@+id/tv_exit_login"
                         style="@style/text_view_login_btn"
                         android:layout_marginLeft="46px"
                         android:layout_marginRight="46px"

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+import com.bumptech.glide.request.RequestOptions;
+import com.risenb.wette.R;
 
 /**
  * <pre>
@@ -16,10 +18,15 @@ import com.bumptech.glide.module.AppGlideModule;
  * </pre>
  */
 @GlideModule
-public final class MyAppGlideMoudle extends AppGlideModule {
+public final class MyAppGlideModule extends AppGlideModule {
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
+        builder.setDefaultRequestOptions(new RequestOptions()
+                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.ic_launcher)
+                .centerCrop()
+        );
     }
 
 }
