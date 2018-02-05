@@ -39,14 +39,11 @@
     <string name="goodsCategory">/goods/category</string>
     <!--搜索-->
     <string name="search">/base/search</string>
-<<<<<<< HEAD
     <string name="order_list">/order/orderList</string>
-=======
     <!--商品详情-->
     <string name="goodsDetail">/goods/detail</string>
 
 
->>>>>>> 3d2a8ccf2b14032e81ac427f2f169993b305bbe9
 
 
 </resources>

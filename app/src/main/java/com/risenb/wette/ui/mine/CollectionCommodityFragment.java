@@ -31,14 +31,10 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
 
     @ViewInject(R.id.rv_collection_commodity)
     private RecyclerView rv_collection_commodity;
-<<<<<<< HEAD
     @ViewInject(R.id.rv_refresh)
     private MyRefreshLayout refreshLayout;
-    private ProductListAdapter mProductListAdapter;
-=======
 
     private GoodListAdapter mProductListAdapter;
->>>>>>> 3d2a8ccf2b14032e81ac427f2f169993b305bbe9
     private GoodsListP mGoodsListP;
     private int page=1;
     private int limit=10;
