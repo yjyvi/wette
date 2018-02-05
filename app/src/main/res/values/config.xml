@@ -39,8 +39,7 @@
     <string name="goodsCategory">/goods/category</string>
     <!--搜索-->
     <string name="search">/base/search</string>
-
-
+    <string name="order_list">/order/orderList</string>
 
 
 </resources>

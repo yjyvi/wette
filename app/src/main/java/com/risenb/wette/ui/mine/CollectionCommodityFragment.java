@@ -3,6 +3,7 @@ package com.risenb.wette.ui.mine;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
@@ -10,6 +11,8 @@ import com.risenb.wette.adapter.home.ProductListAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.home.GoodsListP;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -24,11 +27,12 @@ import java.util.List;
  *     version: 1.0
  * </pre>
  */
-public class CollectionCommodityFragment extends LazyLoadFragment implements GoodsListP.GoodsListListener {
+public class CollectionCommodityFragment extends LazyLoadFragment implements GoodsListP.GoodsListListener, MyRefreshLayoutListener {
 
     @ViewInject(R.id.rv_collection_commodity)
     private RecyclerView rv_collection_commodity;
-
+    @ViewInject(R.id.rv_refresh)
+    private MyRefreshLayout refreshLayout;
     private ProductListAdapter mProductListAdapter;
     private GoodsListP mGoodsListP;
     private int page=1;
@@ -41,8 +45,10 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
         view = inflater.inflate(R.layout.fragment_collection_commodity,container,false);
     }
 
+
     @Override
     protected void setControlBasis() {
+        refreshLayout.setMyRefreshLayoutListener(this);
         mGoodsListP = new GoodsListP(getActivity(),this);
         mGoodsListP.setGoodsList(0,page,limit);
     }
@@ -59,5 +65,15 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
     public void resultGoodsListData(GoodsListBean result) {
         mGoodsList = result.getData() ;
         mProductListAdapter.setNewData(mGoodsList);
+    }
+
+    @Override
+    public void onRefresh(View view) {
+
+    }
+
+    @Override
+    public void onLoadMore(View view) {
+
     }
 }

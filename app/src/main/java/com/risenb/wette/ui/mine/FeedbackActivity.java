@@ -38,5 +38,4 @@ public class FeedbackActivity extends BaseUI {
         Intent intent = new Intent(context, FeedbackActivity.class);
         context.startActivity(intent);
     }
-    
 }

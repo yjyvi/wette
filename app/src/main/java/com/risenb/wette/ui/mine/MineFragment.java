@@ -38,6 +38,10 @@ public class MineFragment extends LazyLoadFragment {
     }
 
     @Event(value = {
+            R.id.bt_canceled_order,
+            R.id.bt_sending_good,
+            R.id.bt_waiting_evaluation,
+            R.id.bt_waiting_pay,
             R.id.ll_login_or_register,
             R.id.ll_account_setting,
             R.id.fl_feedback,
@@ -56,10 +60,22 @@ public class MineFragment extends LazyLoadFragment {
                 FeedbackActivity.toActivity(view.getContext());
                 break;
             case R.id.tv_collection:
-                CollectionActivity.toActivity(view.getContext());
+                CollectionActivity.toActivity(view.getContext(),CollectionActivity.TYPE_ALL);
                 break;
             case R.id.ll_order:
-                OrderActivity.toActivity(view.getContext());
+                OrderActivity.toActivity(view.getContext(),OrderActivity.ORDER_STATE_ALL);
+                break;
+            case R.id.bt_waiting_pay://待支付
+                OrderActivity.toActivity(view.getContext(),OrderActivity.ORDER_STATE_WAITING_PAY);
+                break;
+            case R.id.bt_waiting_evaluation://待评价
+                OrderActivity.toActivity(view.getContext(),OrderActivity.ORDER_STATE_WAITING_EVA);
+                break;
+            case R.id.bt_sending_good://发货中
+                OrderActivity.toActivity(view.getContext(),OrderActivity.ORDER_STATE_SENDING_GOODS);
+                break;
+            case R.id.bt_canceled_order://已取消
+                OrderActivity.toActivity(view.getContext(),OrderActivity.ORDER_STATE_CANCELED_ORDER);
                 break;
         }
     }
