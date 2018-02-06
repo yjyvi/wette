@@ -1,6 +1,7 @@
 package com.risenb.wette.ui.home;
 
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.risenb.wette.beans.GoodsListBean;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import okhttp3.Call;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/2
  */
@@ -28,12 +28,17 @@ public class GoodsListP extends PresenterBase {
         this.mGoodsListListener = goodsListListener;
     }
 
-    public void setGoodsList(int categoryTid, int pageNo, int  pageSize) {
+    public void setGoodsList(int categoryTid, int pageNo, int pageSize) {
         NetworkUtils.getNetworkUtils().getGoodList(categoryTid, pageSize, pageNo, new OKHttpManager.StringCallBack() {
             @Override
             public void requestSuccess(String result) {
-                GoodsListBean goodsListBean = JSON.parseObject(result,GoodsListBean.class);
-                mGoodsListListener.resultGoodsListData(goodsListBean);
+                GoodsListBean goodsListBean = JSON.parseObject(result, GoodsListBean.class);
+                if (TextUtils.equals(REQUEST_SUCCESS, goodsListBean.getStatus())) {
+                    mGoodsListListener.resultGoodsListData(goodsListBean);
+                } else {
+                    ToastUtils.showToast(goodsListBean.getMsg());
+                    mGoodsListListener.goodsListField();
+                }
             }
 
             @Override
@@ -46,5 +51,7 @@ public class GoodsListP extends PresenterBase {
 
     public interface GoodsListListener {
         void resultGoodsListData(GoodsListBean result);
+
+        void goodsListField();
     }
 }

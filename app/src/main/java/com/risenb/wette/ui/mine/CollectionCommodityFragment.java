@@ -68,6 +68,11 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
     }
 
     @Override
+    public void goodsListField() {
+
+    }
+
+    @Override
     public void onRefresh(View view) {
 
     }

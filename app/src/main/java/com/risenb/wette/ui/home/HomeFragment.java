@@ -19,14 +19,24 @@ import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.mine.ShoppingCartActivity;
 import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
 
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.List;
+
 /**
- * Created by yjyvi on 2018/1/30.
+ *
+ * @author yjyvi
+ * @date 2018/1/30
+ * 首页
  */
 
-public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener, GoodsListP.GoodsListListener {
+public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener, GoodsListP.GoodsListListener, MyRefreshLayoutListener {
+
+    @ViewInject(R.id.rv_refresh)
+    private MyRefreshLayout refreshLayout;
 
     @ViewInject(R.id.rv_home)
     private RecyclerView rv_home;
@@ -44,8 +54,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     private int page = 1;
     private int limit = 10;
     public HomeAdapter mHomeAdapter;
-    private HomeBean homeDataBean;
-    private GoodsListBean goodsListBean;
+    private List<GoodsListBean.DataBean> goodsListBean;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -63,6 +72,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                 ShoppingCartActivity.toActivity(view.getContext());
             }
         });
+
+        refreshLayout.setMyRefreshLayoutListener(this);
 
         mHomeP = new HomeP(getActivity(), this);
         mGoodsListP = new GoodsListP(getActivity(), this);
@@ -115,15 +126,52 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     }
 
     @Override
-    public void resultData(HomeBean result) {
-        this.homeDataBean = result;
+    public void homeDataSuccess(HomeBean result) {
+        refreshLayout.refreshComplete();
         mHomeAdapter.setHomeDataBean(result);
         mHomeAdapter.notifyDataSetChanged();
     }
 
     @Override
+    public void requestField() {
+        refreshLayout.refreshComplete();
+    }
+
+    @Override
     public void resultGoodsListData(GoodsListBean result) {
-        this.goodsListBean = result;
-        mHomeAdapter.setGoodsListBean(result);
+        refreshLayout.loadMoreComplete();
+        refreshLayout.refreshComplete();
+        this.goodsListBean = result.getData();
+        if (page == 1) {
+            mHomeAdapter.setGoodsListBean(result.getData());
+            mHomeAdapter.notifyDataSetChanged();
+        } else {
+            if (result.getData().size() > 0) {
+                goodsListBean.addAll(result.getData());
+                mHomeAdapter.setGoodsListBean(goodsListBean);
+            }else {
+                ToastUtils.showToast("没有更多数据了");
+            }
+            mHomeAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void goodsListField() {
+        refreshLayout.loadMoreComplete();
+        refreshLayout.refreshComplete();
+    }
+
+    @Override
+    public void onRefresh(View view) {
+        page = 1;
+        mHomeP.setHomeData();
+        mGoodsListP.setGoodsList(0, page, limit);
+    }
+
+    @Override
+    public void onLoadMore(View view) {
+        page++;
+        mGoodsListP.setGoodsList(0, page, limit);
     }
 }

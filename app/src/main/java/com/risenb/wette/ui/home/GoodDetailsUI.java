@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +17,8 @@ import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.home.productDetial.GoodCommentFragment;
 import com.risenb.wette.ui.home.productDetial.GoodDetailFragment;
 import com.risenb.wette.ui.home.productDetial.GoodFragment;
+import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -27,6 +30,8 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -36,6 +41,7 @@ import java.util.List;
 /**
  * @author yjyvi
  * @date 2018/1/31
+ * 商品详情
  */
 @ContentView(R.layout.activity_good_details)
 public class GoodDetailsUI extends BaseUI implements View.OnClickListener, CollectionP.CollectionListener {
@@ -79,8 +85,18 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
         finish();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void setControlBasis() {
+
+        EventBus.getDefault().register(this);
+
         iv_back.setOnClickListener(this);
         iv_cart.setOnClickListener(this);
         ll_shop.setOnClickListener(this);
@@ -88,6 +104,7 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
         mCollectionP = new CollectionP(this, this);
     }
+
 
     @Override
     protected void prepareData() {
@@ -183,10 +200,10 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
             case R.id.ll_collection:
                 if (!ll_collection.isSelected()) {
                     ll_collection.setSelected(true);
-                    operation="1";
-                }else {
+                    operation = "1";
+                } else {
                     ll_collection.setSelected(false);
-                    operation="2";
+                    operation = "2";
                 }
                 userId = "42ca9e5498c0dea784faaddad7ebc8d2";
                 isCollection = "-1";
@@ -200,6 +217,29 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
     @Override
     public void collectionResult() {
-
+        ToastUtils.showToast("收藏成功");
     }
+
+
+    @Subscribe
+    public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
+        if (GoodDetailsEvent.IS_COLLECTION == goodDetailsEvent.getEventType()) {
+            String data = (String) goodDetailsEvent.getData();
+            if (!TextUtils.isEmpty(data)) {
+                String[] content = data.split(",");
+                if (content.length < 0) {
+                    return;
+                }
+                isCollection = content[0];
+
+                if (1 == Integer.parseInt(content[1])) {
+                    ll_collection.setSelected(true);
+                } else {
+                    ll_collection.setSelected(false);
+                }
+            }
+        }
+    }
+
+
 }

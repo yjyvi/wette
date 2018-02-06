@@ -25,7 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yjyvi on 2018/2/1.
+ *
+ * @author yjyvi
+ * @date 2018/2/1
+ *  搜索结果界面
  */
 @ContentView(R.layout.activity_search_result)
 public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListener {

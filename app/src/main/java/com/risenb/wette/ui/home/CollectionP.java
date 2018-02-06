@@ -39,6 +39,8 @@ public class CollectionP extends PresenterBase {
                 NetBaseBean netBaseBean = JSON.parseObject(result,NetBaseBean.class);
                 if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
                     mCollectionListener.collectionResult();
+                }else {
+                    ToastUtils.showToast(netBaseBean.getMsg());
                 }
             }
         });

@@ -25,7 +25,10 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 /**
- * Created by yjyvi on 2018/1/30.
+ *
+ * @author yjyvi
+ * @date 2018/1/30
+ * 分类界面
  */
 
 public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.ClassifyListener, View.OnClickListener {

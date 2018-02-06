@@ -114,6 +114,8 @@ public class GoodDetailsBean {
         private String categoryFid;
         private String categorySid;
         private String categoryTid;
+        private String collectionId;
+
         private String cover;
         private String createTime;
         private String goodsDetail;
@@ -138,6 +140,14 @@ public class GoodDetailsBean {
         private int type;
         private String video;
         private List<AttrListBeanX> attrList;
+
+        public String getCollectionId() {
+            return collectionId;
+        }
+
+        public void setCollectionId(String collectionId) {
+            this.collectionId = collectionId;
+        }
 
         public String getAmount() {
             return amount;

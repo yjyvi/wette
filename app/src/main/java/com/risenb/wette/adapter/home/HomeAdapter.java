@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.risenb.wette.R;
-import com.risenb.wette.beans.BannerBean;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.ui.BaseViewHolder;
@@ -43,12 +42,13 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      * 最新商品列表
      */
     public static final int NEW_LIST = 3;
-    private List<BannerBean.ResultdataBean> mResultBannerBean;
+
+
     private HomeBean homeDataBean;
-    private GoodsListBean goodsListBean;
+    private List<GoodsListBean.DataBean> goodsListBean;
 
 
-    public void setGoodsListBean(GoodsListBean goodsListBean) {
+    public void setGoodsListBean(List<GoodsListBean.DataBean> goodsListBean) {
         this.goodsListBean = goodsListBean;
     }
 
@@ -61,7 +61,6 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         BaseViewHolder baseViewHolder = null;
         switch (viewType) {
             case BANNER:
-//                initTestData();
                 baseViewHolder = new HomeAdapter.HomeBannerViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_banner, parent, false));
                 break;
             case HOT:
@@ -100,7 +99,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                             bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<HomeBean.RecommendGoodsBean>(homeDataBean.getRecommendGoods()) {
                                 @Override
                                 public String getImageUrl(int position) {
-                                    return mResultBannerBean.get(position).getBanner_Url();
+                                    return homeDataBean.getRecommendGoods().get(position).getCover();
                                 }
 
                                 @Override
@@ -121,7 +120,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     HomeHotViewHolder hotViewHolder = (HomeHotViewHolder) holder;
                     if (homeDataBean != null) {
                         GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_left);
-                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_right);
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSales().getCover(), hotViewHolder.iv_hot_right);
                         GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getActity().getCover(), hotViewHolder.iv_new_client_share);
                         hotViewHolder.tv_activity.setText(homeDataBean.getActity().getTitle());
                     }
@@ -131,8 +130,8 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case NEW_LIST:
                 if (holder instanceof HomeNewListViewHolder) {
                     HomeNewListViewHolder newListViewHolder = (HomeNewListViewHolder) holder;
-                    if (goodsListBean.getData() != null && goodsListBean.getData().size() > 0) {
-                        final GoodsListBean.DataBean goods = goodsListBean.getData().get(position - 2);
+                    if (goodsListBean != null && goodsListBean.size() > 0) {
+                        final GoodsListBean.DataBean goods = goodsListBean.get(position - 2);
                         if (goods != null) {
                             newListViewHolder.tv_title.setText(goods.getGoodsName());
                             newListViewHolder.tv_introduce.setText(goods.getGoodsIntroduce());
@@ -170,7 +169,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        return goodsListBean == null ? 2 : goodsListBean.getData().size() + 2;
+        return goodsListBean == null ? 2 : goodsListBean.size() + 2;
     }
 
 
