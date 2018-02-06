@@ -1,8 +1,13 @@
 package com.risenb.wette.ui.home;
 
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.risenb.wette.beans.NetBaseBean;
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
+import com.risenb.wette.utils.ToastUtils;
 
 import java.io.IOException;
 
@@ -16,13 +21,13 @@ import okhttp3.Call;
 
 public class AddCartP extends PresenterBase {
 
-    private  AddCartListener mAddCartListener;
+    private AddCartListener mAddCartListener;
 
-    public AddCartP( AddCartListener addCartListener){
+    public AddCartP(AddCartListener addCartListener) {
         this.mAddCartListener = addCartListener;
     }
 
-    public void setAddCart(String shopId, String goodsId, String skuId, String addressId, String amount){
+    public void setAddCart(String shopId, String goodsId, String skuId, String addressId, String amount) {
 
         NetworkUtils.getNetworkUtils().addCart(shopId, goodsId, skuId, addressId, amount, new OKHttpManager.StringCallBack() {
             @Override
@@ -32,13 +37,20 @@ public class AddCartP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-                mAddCartListener.addCartSuccess();
+                NetBaseBean netBaseBean = JSON.parseObject(result, NetBaseBean.class);
+                if (TextUtils.equals(REQUEST_SUCCESS, netBaseBean.getStatus())) {
+                    mAddCartListener.addCartSuccess();
+                } else {
+                    ToastUtils.showToast(netBaseBean.getErrorMsg());
+                    mAddCartListener.addCartField();
+                }
             }
         });
     }
 
-    public interface AddCartListener{
+    public interface AddCartListener {
         void addCartSuccess();
+
         void addCartField();
     }
 }

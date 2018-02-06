@@ -276,7 +276,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
 
     @Override
-    public void collectionResult() {
+    public void collectionSuccess() {
         ToastUtils.showToast("收藏成功");
     }
 
