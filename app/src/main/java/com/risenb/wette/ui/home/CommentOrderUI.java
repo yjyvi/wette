@@ -49,8 +49,6 @@ public class CommentOrderUI extends BaseUI {
     @Override
     protected void prepareData() {
 
-
-
         common_title_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -10,20 +10,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.BannerViewPagerAdapter;
+import com.risenb.wette.beans.AddressBean;
 import com.risenb.wette.beans.BannerBean;
+import com.risenb.wette.beans.CreateOrderGoodsBean;
 import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.pop.PopUtils;
 import com.risenb.wette.ui.LazyLoadFragment;
-import com.risenb.wette.ui.home.PayOrderUI;
+import com.risenb.wette.ui.home.CreateOrderUI;
+import com.risenb.wette.ui.mine.AddressListActivity;
+import com.risenb.wette.ui.mine.LoginActivity;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.utils.UserManager;
 import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.MyViewPagerIndicator;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -33,7 +40,7 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class GoodFragment extends LazyLoadFragment implements View.OnClickListener {
+public class GoodFragment extends LazyLoadFragment {
 
 
     //样式选择
@@ -90,6 +97,8 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
     public String mColorContent = "";
     public String mSizeContent = "";
+    public AddressBean mAddressBean;
+    public GoodDetailsBean.DataBean mDataBean;
 
 
     @Override
@@ -100,19 +109,26 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
 
     @Override
     protected void setControlBasis() {
-        iv_selected_style.setOnClickListener(this);
-        ll_selected_address.setOnClickListener(this);
-        iv_add.setOnClickListener(this);
-        iv_reduce.setOnClickListener(this);
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
     protected void prepareData() {
         initTestData();
         bannerInit();
+
+
     }
 
     private void initTestData() {
+
         mResultBannerBean = new ArrayList<>();
         BannerBean.ResultdataBean e = new BannerBean.ResultdataBean();
         BannerBean.ResultdataBean e2 = new BannerBean.ResultdataBean();
@@ -123,7 +139,6 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
         mResultBannerBean.add(e);
         mResultBannerBean.add(e2);
         mResultBannerBean.add(e3);
-
 
 
     }
@@ -183,21 +198,36 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
         return productFragment;
     }
 
-    @Override
-    public void onClick(final View view) {
+    @Event(value = {
+            R.id.iv_selected_style,
+            R.id.ll_selected_address,
+            R.id.iv_reduce,
+            R.id.iv_add
+    }, type = View.OnClickListener.class)
+    private void onClick(final View view) {
         switch (view.getId()) {
             case R.id.iv_selected_style:
                 PopUtils.showGoodsStyle(getActivity(), iv_selected_style, mColorContent, mSizeContent, new PopUtils.GoodsSelectedStyleListener() {
                     @Override
                     public void selectedResult(String reslut) {
-                        PayOrderUI.start(view.getContext());
-                        ToastUtils.showToast(reslut);
+                        if (UserManager.isLogin()) {
+                            CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
+                            createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
+                            createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
+                            createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
+                            createOrderGoodsBean.setSkuId("2");
+                            CreateOrderUI.start(view.getContext(), mAddressBean, JSON.toJSONString(createOrderGoodsBean));
+                        } else {
+                            ToastUtils.showToast("未登录，请求登录");
+                            LoginActivity.toActivity(view.getContext());
+                        }
                     }
                 });
                 break;
 
             case R.id.ll_selected_address:
                 //选择地址
+                AddressListActivity.toActivity(view.getContext());
                 break;
             case R.id.iv_reduce:
                 numAddOrReduce(false);
@@ -232,36 +262,49 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
 
 
     @Subscribe
-    public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
-        if (GoodDetailsEvent.GOOD_DATA == goodDetailsEvent.getEventType()) {
-            GoodDetailsBean.DataBean dataBean = (GoodDetailsBean.DataBean) goodDetailsEvent.getData();
-            if (dataBean != null) {
-                StringBuilder colors = new StringBuilder();
-                StringBuilder sizes = new StringBuilder();
-                List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
-                for (int i = 0; i < attrList.size(); i++) {
-                    if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
-                        List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                        for (int j = 0; j < attrList1.size(); j++) {
-                            colors.append(attrList1.get(j).getAttrName() + ",");
+    public void goodsEvent(GoodDetailsEvent goodDetailsEvent) {
+        switch (goodDetailsEvent.getEventType()) {
+            case GoodDetailsEvent.GOOD_DATA:
+                mDataBean = (GoodDetailsBean.DataBean) goodDetailsEvent.getData();
+                if (mDataBean != null) {
+                    StringBuilder colors = new StringBuilder();
+                    StringBuilder sizes = new StringBuilder();
+                    List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = mDataBean.getAttrList();
+                    for (int i = 0; i < attrList.size(); i++) {
+                        if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
+                            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                            for (int j = 0; j < attrList1.size(); j++) {
+                                colors.append(attrList1.get(j).getAttrName() + ",");
+                            }
+                        }
+
+                        if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
+                            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                            for (int j = 0; j < attrList1.size(); j++) {
+                                sizes.append(attrList1.get(j).getAttrName() + ",");
+                            }
                         }
                     }
 
-                    if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
-                        List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                        for (int j = 0; j < attrList1.size(); j++) {
-                            sizes.append(attrList1.get(j).getAttrName() + ",");
-                        }
-                    }
+                    mColorContent = colors.toString();
+                    mSizeContent = sizes.toString();
+
+
+                    tv_good_name.setText(mDataBean.getGoodsName());
+                    tv_good_price.setText("¥" + mDataBean.getPrice());
                 }
-
-                mColorContent = colors.toString();
-                mSizeContent = sizes.toString();
-
-
-                tv_good_name.setText(dataBean.getGoodsName());
-                tv_good_price.setText("¥" + dataBean.getPrice());
-            }
+                break;
+            case GoodDetailsEvent.DEFAULT_ADDRESS:
+                mAddressBean = (AddressBean) goodDetailsEvent.getData();
+                if (mAddressBean != null) {
+                    tv_name.setText(String.format(getResources().getString(R.string.default_name), mAddressBean.getAddressee()));
+                    tv_tel.setText(String.format(getResources().getString(R.string.default_tel), mAddressBean.getTelephone()));
+                    tv_address.setText(String.format(getResources().getString(R.string.default_address), mAddressBean.getProvinceName() + mAddressBean.getCityName() + mAddressBean.getAreaName() + mAddressBean.getAddress()));
+                }
+                break;
+            default:
+                break;
         }
+
     }
 }

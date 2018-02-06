@@ -6,18 +6,24 @@ import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.GoodTableAdapter;
+import com.risenb.wette.beans.AddressBean;
+import com.risenb.wette.beans.CreateOrderGoodsBean;
 import com.risenb.wette.beans.GoodDetailsBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.home.productDetial.GoodCommentFragment;
 import com.risenb.wette.ui.home.productDetial.GoodDetailFragment;
 import com.risenb.wette.ui.home.productDetial.GoodFragment;
+import com.risenb.wette.ui.mine.LoginActivity;
+import com.risenb.wette.ui.mine.ShoppingCartActivity;
+import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.utils.UserManager;
 import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -33,6 +39,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -44,7 +51,7 @@ import java.util.List;
  * 商品详情
  */
 @ContentView(R.layout.activity_good_details)
-public class GoodDetailsUI extends BaseUI implements View.OnClickListener, CollectionP.CollectionListener, AddCartP.AddCartListener, GoodDetailP.GoodsDetailsListener {
+public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListener, AddCartP.AddCartListener, GoodDetailP.GoodsDetailsListener, GoodsSkuP.GoodsSkuListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -52,24 +59,8 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
     @ViewInject(R.id.ami_type)
     private AutoMagicIndicator ami_type;
 
-    @ViewInject(R.id.iv_back)
-    private ImageView iv_back;
-
-    @ViewInject(R.id.iv_cart)
-    private ImageView iv_cart;
-
-    @ViewInject(R.id.ll_shop)
-    private LinearLayout ll_shop;
-
     @ViewInject(R.id.ll_collection)
     private LinearLayout ll_collection;
-
-    @ViewInject(R.id.tv_join_cart)
-    private TextView tv_join_cart;
-
-    @ViewInject(R.id.tv_pay)
-    private TextView tv_pay;
-
 
     public static String[] mTitles = {"商品", "详情", "评论"};
     private List<Fragment> mFragmentLists = new ArrayList<>();
@@ -82,8 +73,11 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
     public AddCartP mAddCartP;
     private GoodDetailP mProductDetailP;
     private GoodDetailsBean.DataBean mGoodDetailsBean;
-    private String mAmount;
-    private String mAddressId;
+    private String mAmount = "1";
+    private String mAddressId = "1";
+    public AddressBean mAddressData;
+    public GoodsSkuP mGoodsSkuP;
+    public String mSkuId = "1";
 
     @Override
     protected void back() {
@@ -102,23 +96,21 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
         EventBus.getDefault().register(this);
 
-        iv_back.setOnClickListener(this);
-        iv_cart.setOnClickListener(this);
-        ll_shop.setOnClickListener(this);
-        ll_collection.setOnClickListener(this);
-
-        mCollectionP = new CollectionP(this, this);
+        mCollectionP = new CollectionP(this);
         mAddCartP = new AddCartP(this, this);
         mProductDetailP = new GoodDetailP(getActivity(), this);
-        mProductDetailP.setProductDetailsData(mGoodsId);
+        mGoodsSkuP = new GoodsSkuP(this);
     }
 
 
     @Override
     protected void prepareData() {
+
+        getAddressList();
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
 
+        mProductDetailP.setProductDetailsData(mGoodsId);
 
         mFragmentLists.add(GoodFragment.newInstance());
         mFragmentLists.add(GoodDetailFragment.newInstance());
@@ -186,6 +178,25 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
     }
 
 
+    private void getAddressList() {
+        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
+
+
+            @Override
+            protected void onSuccess(List<AddressBean> data) {
+                //获取到默认地址
+                for (AddressBean datum : data) {
+                    if (1 == datum.getIsDefault()) {
+                        mAddressData = datum;
+                        mAddressId = String.valueOf(datum.getAddressId());
+                        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.DEFAULT_ADDRESS).setData(datum));
+                    }
+                }
+            }
+        });
+    }
+
+
     public static void start(Context context, String goodsId, String shopId) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
         starter.putExtra("goodsId", goodsId);
@@ -193,21 +204,23 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
         context.startActivity(starter);
     }
 
-    @Override
-    public void onClick(View view) {
+    @Event(value = {
+            R.id.iv_back,
+            R.id.iv_cart,
+            R.id.ll_shop,
+            R.id.tv_login,
+            R.id.ll_collection,
+            R.id.tv_join_cart,
+            R.id.tv_pay
+    }, type = View.OnClickListener.class)
+    private void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 back();
                 break;
             case R.id.iv_cart:
                 //购物车
-                if (mGoodDetailsBean != null) {
-                    mAddCartP.setAddCart(
-                            String.valueOf(mGoodDetailsBean.getShopId()),
-                            String.valueOf(mGoodDetailsBean.getGoodsId()),
-                            mGoodDetailsBean.getSkuId(),mAddressId,mAmount
-                            );
-                }
+                ShoppingCartActivity.toActivity(view.getContext());
                 break;
             case R.id.ll_shop:
                 ShopDetailUI.start(view.getContext(), mShopId);
@@ -221,6 +234,40 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
                     operation = "2";
                 }
                 mCollectionP.setCollection(operation, mGoodsId, "1");
+                break;
+            case R.id.tv_join_cart:
+
+//                getSku();
+
+                if (mGoodDetailsBean != null) {
+//                    mSkuId = mGoodDetailsBean.getSkuId();
+                    mSkuId = "1";
+                    mAddCartP.setAddCart(
+                            String.valueOf(mGoodDetailsBean.getShopId()),
+                            String.valueOf(mGoodDetailsBean.getGoodsId()),
+                            mSkuId, mAddressId, mAmount
+                    );
+                }
+                break;
+            case R.id.tv_pay:
+
+                if (mGoodDetailsBean == null) {
+                    return;
+                }
+
+                if (UserManager.isLogin()) {
+                    CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
+                    createOrderGoodsBean.setGoodsId(String.valueOf(mGoodDetailsBean.getGoodsId()));
+                    createOrderGoodsBean.setGoodsAmount(mAmount);
+                    createOrderGoodsBean.setShopId(String.valueOf(mGoodDetailsBean.getShopId()));
+                    createOrderGoodsBean.setSkuId(mSkuId);
+
+                    String goods = JSON.toJSONString(createOrderGoodsBean);
+                    CreateOrderUI.start(view.getContext(), mAddressData, goods);
+                } else {
+                    ToastUtils.showToast("未登录，请求登录");
+                    LoginActivity.toActivity(view.getContext());
+                }
                 break;
             default:
                 break;
@@ -240,9 +287,9 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
 
     @Subscribe
-    public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
+    public void goodsEvent(GoodDetailsEvent goodDetailsEvent) {
         //购买的商品数量
-        if (GoodDetailsEvent.GOOD_NUM==goodDetailsEvent.getEventType()) {
+        if (GoodDetailsEvent.GOOD_NUM == goodDetailsEvent.getEventType()) {
             mAmount = (String) goodDetailsEvent.getData();
         }
     }
@@ -250,7 +297,7 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
     @Override
     public void addCartSuccess() {
-
+        ToastUtils.showToast("添加成功");
     }
 
     @Override
@@ -270,13 +317,33 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
             ll_collection.setSelected(false);
         }
 
-        //传递是否收藏
-         EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
+        //传递商品数据
+        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
 
     }
 
     @Override
     public void requestGoodsDataField() {
 
+    }
+
+    @Override
+    public void requestSkuSuccess() {
+
+    }
+
+    @Override
+    public void requestSkuField() {
+
+    }
+
+    public String getSku() {
+        String skuId = "1";
+
+        String properties = String.valueOf(mGoodDetailsBean.getAttrList().get(0).getAttrList().get(0).getAttrId());
+        mGoodsSkuP.setGoodsSku(mGoodsId, properties);
+
+
+        return skuId;
     }
 }

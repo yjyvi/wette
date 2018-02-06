@@ -1,7 +1,5 @@
 package com.risenb.wette.ui.home;
 
-import android.support.v4.app.FragmentActivity;
-
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
@@ -20,8 +18,7 @@ public class AddCartP extends PresenterBase {
 
     private  AddCartListener mAddCartListener;
 
-    public AddCartP(FragmentActivity fragmentActivity, AddCartListener addCartListener){
-        setActivity(fragmentActivity);
+    public AddCartP( AddCartListener addCartListener){
         this.mAddCartListener = addCartListener;
     }
 

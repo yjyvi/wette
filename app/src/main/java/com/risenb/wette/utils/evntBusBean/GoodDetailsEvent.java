@@ -16,4 +16,9 @@ public class GoodDetailsEvent extends BaseEvent {
      * 购买的商品数量
      */
     public static final int GOOD_NUM = 1002;
+
+    /**
+     * 传递默认地址
+     */
+    public static final int DEFAULT_ADDRESS = 1003;
 }

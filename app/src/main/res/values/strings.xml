@@ -69,5 +69,8 @@
     <string name="et_length_medalInfo_tip">勋章描述最大字符不能超过30个</string>
     <!-- 正则判断 -->
     <string name="telRegex">^[1][3,4,5,7,8][0-9]{9}$</string>
+    <string name="default_address">收货地址：%1$s</string>
+    <string name="default_name">收货人：%1$s</string>
+    <string name="default_tel">联系方式：%1$s</string>
 
 </resources>

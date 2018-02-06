@@ -12,5 +12,15 @@ public class CommonConstant {
 
         //第一次启动
         public static final String FIRST_LAUNCHER = "first_launcher";
+
+        //支付方式-> 微信
+        public static final String PAY_METHOD_WX = "1";
+
+        //支付方式-> 支付宝
+        public static final String PAY_METHOD_ZFB = "2";
+
+
+        //微信APP ID
+        public static final String WX_APP_ID = "wx40ca58b47b16d576";
     }
 }

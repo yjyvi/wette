@@ -111,11 +111,13 @@
 
 
         <com.risenb.wette.views.CircleImageView
+            android:id="@+id/iv_shop_img"
             android:layout_width="100px"
             android:layout_height="100px"
             android:src="@color/gray"/>
 
         <TextView
+            android:id="@+id/tv_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
@@ -123,9 +125,10 @@
             android:text="店铺名称"/>
 
         <ImageView
+            android:id="@+id/iv_is_collection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/shop_collection"/>
+            android:src="@drawable/shop_collection_selected"/>
     </LinearLayout>
 
     <TextView

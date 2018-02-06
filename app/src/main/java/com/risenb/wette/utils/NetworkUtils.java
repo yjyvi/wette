@@ -116,7 +116,7 @@ public class NetworkUtils {
      */
     public void getShopDetail(String shopId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
-        params.put("goodsId", shopId);
+        params.put("shopId", shopId);
         params.put(PAGE, page);
         params.put(LIMIT, limit);
         OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
@@ -138,6 +138,19 @@ public class NetworkUtils {
         params.put("type", type);
 
         OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
+    }
+
+    /**
+     * 查询库存
+     * @param goodsId
+     * @param properties
+     * @param httpBack
+     */
+    public void goodsSku(String goodsId, String properties,  OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("goodsId", goodsId);
+        params.put("properties", properties);
+        OKHttpManager.postAsync(getUrl(R.string.goodsSku), params, httpBack);
     }
 
 
@@ -166,13 +179,13 @@ public class NetworkUtils {
     /**
      * 创建订单
      *
-     * @param goodsId
+     * @param goods
      * @param addressId
      * @param stringCallBack
      */
-    public void createOrder(String goodsId, String addressId, OKHttpManager.StringCallBack stringCallBack) {
+    public void createOrder(String goods, String addressId, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
-        params.put("goodsId", goodsId);
+        params.put("goods", goods);
         params.put("addressId", addressId);
         OKHttpManager.postAsync(getUrl(R.string.createOrder), params, stringCallBack);
     }
