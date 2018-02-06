@@ -82,10 +82,13 @@ public class EditAddressActivity extends BaseUI {
     protected void setControlBasis() {
         mAddressBean = getIntent().getParcelableExtra("addressBean");
         setTitle(mAddressBean == null ? "添加收货地址" : "修改收货地址");
-        if(mAddressBean != null){
-            mSelectCityArray.put(0,new Pair<>(mAddressBean.getProvinceId(),mAddressBean.getProvinceName()));
-            mSelectCityArray.put(1,new Pair<>(mAddressBean.getCityId(),mAddressBean.getCityName()));
-            mSelectCityArray.put(2,new Pair<>(mAddressBean.getAreaId(),mAddressBean.getAreaName()));
+        if (mAddressBean != null) {
+            mSelectCityArray.put(0, new Pair<>(mAddressBean.getProvinceId(), mAddressBean.getProvinceName()));
+            mSelectCityArray.put(1, new Pair<>(mAddressBean.getCityId(), mAddressBean.getCityName()));
+            mSelectCityArray.put(2, new Pair<>(mAddressBean.getAreaId(), mAddressBean.getAreaName()));
+            tv_region.setText(mAddressBean.getProvinceName());
+            tv_city.setText(mAddressBean.getCityName());
+            tv_area.setText(mAddressBean.getAreaName());
             et_addressee.setText(mAddressBean.getAddressee());
             et_address.setText(mAddressBean.getAddress());
             et_phone_number.setText(mAddressBean.getTelephone());
@@ -104,7 +107,7 @@ public class EditAddressActivity extends BaseUI {
         switch (view.getId()) {
             case R.id.tv_region:
 
-                if(!Utils.getText(tv_city).equals("市")||!Utils.getText(tv_area).equals("区")){
+                if (!Utils.getText(tv_city).equals("市") || !Utils.getText(tv_area).equals("区")) {
                     mSelectCityArray.clear();
                     tv_city.setText("市");
                     tv_area.setText("区");
@@ -114,19 +117,19 @@ public class EditAddressActivity extends BaseUI {
                 break;
             case R.id.tv_city:
 
-                Pair<Integer,String> selectRegion = mSelectCityArray.get(0);
-                if(selectRegion == null){
+                Pair<Integer, String> selectRegion = mSelectCityArray.get(0);
+                if (selectRegion == null) {
                     ToastUtils.showToast("请选择省");
                     return;
                 }
 
-                if(!Utils.getText(tv_area).equals("区")){
+                if (!Utils.getText(tv_area).equals("区")) {
                     mSelectCityArray.remove(2);
                     tv_area.setText("区");
                 }
 
                 final List<RegionBean.CityListBean> cityList = mCityList.get(selectRegion.first);
-                String [] cityArray = new String[cityList.size()];
+                String[] cityArray = new String[cityList.size()];
                 for (int i = 0; i < cityList.size(); i++) {
                     cityArray[i] = cityList.get(i).getRegionName();
                 }
@@ -136,21 +139,21 @@ public class EditAddressActivity extends BaseUI {
                             public void onClick(DialogInterface dialog, int which) {
                                 RegionBean.CityListBean cityBean = cityList.get(which);
                                 tv_city.setText(cityBean.getRegionName());
-                                mSelectCityArray.put(1,new Pair<>(cityBean.getId(),cityBean.getRegionName()));
+                                mSelectCityArray.put(1, new Pair<>(cityBean.getId(), cityBean.getRegionName()));
                                 dialog.dismiss();
                             }
                         })
                         .show();
                 break;
             case R.id.tv_area:
-                Pair<Integer,String> selectCity = mSelectCityArray.get(1);
-                if(selectCity == null){
+                Pair<Integer, String> selectCity = mSelectCityArray.get(1);
+                if (selectCity == null) {
                     ToastUtils.showToast("请选择市");
                     return;
                 }
 
                 final List<RegionBean.CityListBean.AreaListBean> areaList = mAreaList.get(selectCity.first);
-                String [] areaArray = new String[areaList.size()];
+                String[] areaArray = new String[areaList.size()];
                 for (int i = 0; i < areaList.size(); i++) {
                     areaArray[i] = areaList.get(i).getRegionName();
                 }
@@ -160,7 +163,7 @@ public class EditAddressActivity extends BaseUI {
                             public void onClick(DialogInterface dialog, int which) {
                                 RegionBean.CityListBean.AreaListBean areaBean = areaList.get(which);
                                 tv_area.setText(areaBean.getRegionName());
-                                mSelectCityArray.put(2,new Pair<>(areaBean.getId(),areaBean.getRegionName()));
+                                mSelectCityArray.put(2, new Pair<>(areaBean.getId(), areaBean.getRegionName()));
                                 dialog.dismiss();
                             }
                         })
@@ -174,7 +177,7 @@ public class EditAddressActivity extends BaseUI {
     }
 
     private void addOrUpdateAddress() {
-        String addressee =  Utils.getText(et_addressee);
+        String addressee = Utils.getText(et_addressee);
         String phoneNumber = Utils.getText(et_phone_number);
         String address = Utils.getText(et_address);
         String postalCode = Utils.getText(et_postal_code);
@@ -194,7 +197,7 @@ public class EditAddressActivity extends BaseUI {
                 new CommonCallBack<String>() {
                     @Override
                     protected void onSuccess(String data) {
-                        if(mAddressBean != null)
+                        if (mAddressBean != null)
                             ToastUtils.showToast("收货地址修改成功");
                         else
                             ToastUtils.showToast("收货地址添加成功");
@@ -206,11 +209,31 @@ public class EditAddressActivity extends BaseUI {
 
     }
 
+    private ProgressDialog mProgressDialog;
+
     private void getRegionList() {
-        final ProgressDialog progressDialog = ProgressDialog.show(this, "提示", "加载中...");
+        mProgressDialog = ProgressDialog.show(this, "提示", "加载中...");
         NetworkUtils.getNetworkUtils().getRegionList(new CommonCallBack<List<RegionBean>>() {
             @Override
-            protected void onSuccess(List<RegionBean> data) {
+            protected void onSuccess(final List<RegionBean> data) {
+                initialData(data);
+                mProgressDialog.dismiss();
+            }
+
+            @Override
+            protected void onError(String msg) {
+                mProgressDialog.dismiss();
+                ToastUtils.showToast("数据加载失败，请稍后再试");
+                finish();
+            }
+        });
+    }
+
+
+    private void initialData(final List<RegionBean> data) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
                 for (RegionBean region : data) {
                     mRegionList.add(region);
                     int regionId = region.getId();
@@ -222,34 +245,30 @@ public class EditAddressActivity extends BaseUI {
                     }
                 }
 
-                String [] regionArray = new String[mRegionList.size()];
+                final String[] regionArray = new String[mRegionList.size()];
                 for (int i = 0; i < mRegionList.size(); i++) {
                     regionArray[i] = mRegionList.get(i).getRegionName();
                 }
 
-                mRegionDialog = new AlertDialog.Builder(EditAddressActivity.this)
-                        .setItems(regionArray, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                RegionBean regionBean = mRegionList.get(which);
-                                tv_region.setText(regionBean.getRegionName());
-                                mSelectCityArray.put(0,new Pair<>(regionBean.getId(),regionBean.getRegionName()));
-                                dialog.dismiss();
-                            }
-                        })
-                        .create();
-
-                progressDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRegionDialog = new AlertDialog.Builder(EditAddressActivity.this)
+                                .setItems(regionArray, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        RegionBean regionBean = mRegionList.get(which);
+                                        tv_region.setText(regionBean.getRegionName());
+                                        mSelectCityArray.put(0, new Pair<>(regionBean.getId(), regionBean.getRegionName()));
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create();
+                        mProgressDialog.dismiss();
+                    }
+                });
             }
-
-            @Override
-            protected void onError(String msg) {
-                super.onError(msg);
-                progressDialog.dismiss();
-                ToastUtils.showToast("数据加载失败，请稍后再试");
-                finish();
-            }
-        });
+        }).start();
     }
 
     private boolean validate() {
@@ -264,7 +283,7 @@ public class EditAddressActivity extends BaseUI {
     public static void toActivity(Activity context, AddressBean addressBean) {
         Intent intent = new Intent(context, EditAddressActivity.class);
         if (addressBean != null) intent.putExtra("addressBean", addressBean);
-        context.startActivityForResult(intent,2);
+        context.startActivityForResult(intent, 2);
     }
 
     public static void toAddAddressActivity(Activity context) {

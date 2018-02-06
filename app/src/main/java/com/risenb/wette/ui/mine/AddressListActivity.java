@@ -13,7 +13,11 @@ import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.mine.multitype.AddressItemViewBinder;
 import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.PaddingItemDecoration;
+import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.utils.evntBusBean.BaseEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -50,6 +54,7 @@ public class AddressListActivity extends BaseUI {
 
     @Override
     protected void setControlBasis() {
+        EventBus.getDefault().register(this);
         setTitle("收获地址");
         rightVisible(R.mipmap.home_cart);
         mAdapter = new MultiTypeAdapter();
@@ -68,6 +73,24 @@ public class AddressListActivity extends BaseUI {
         }else{
             ShoppingCartActivity.toActivity(view.getContext());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessageEvent(final BaseEvent<AddressBean> msg){
+        String isDel = msg.getEventType() == 1 ? "0" : "1";
+        NetworkUtils.getNetworkUtils().updateAddress(String.valueOf(msg.getData().getAddressId()), isDel, new CommonCallBack<String>() {
+            @Override
+            protected void onSuccess(String data) {
+                ToastUtils.showToast(msg.getEventType() == 1 ? "设置成功" : "删除成功");
+                getAddressList();
+            }
+        });
     }
 
     @Override

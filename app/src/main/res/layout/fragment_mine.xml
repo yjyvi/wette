@@ -13,11 +13,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
                     android:src="@drawable/mine_top_bg"/>
+
+            <ImageView
+                    android:id="@+id/iv_message"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
+                    android:scaleType="center"
+                    android:layout_marginTop="50px"
+                    android:visibility="gone"
+                    android:src="@drawable/mine_message"/>
+
+            <ImageView
+                    android:id="@+id/iv_shopping_cart"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
+                    android:scaleType="center"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="50px"
+                    android:src="@mipmap/home_cart"/>
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -46,8 +65,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="26px"
                             android:textSize="30px"
-                            android:textColor="#333333"
-                            android:text="请登录/注册"/>
+                            android:textColor="#333333"/>
 
                 </LinearLayout>
 

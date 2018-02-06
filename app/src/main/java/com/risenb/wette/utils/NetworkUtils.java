@@ -180,6 +180,15 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.user_login), params, callBack);
     }
 
+    public void getBackPassword(String phone, String code, String password, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("phone",phone);
+        params.put("code",code);
+        params.put("password",password);
+        params.put("passwordTwo",password);
+        OKHttpManager.postAsync(getUrl(R.string.user_get_back_password), params, callBack);
+    }
+
     public void getAddressList(OKHttpManager.StringCallBack callback) {
         getAddressList("", "", callback);
     }
@@ -222,6 +231,13 @@ public class NetworkUtils {
 
     }
 
+    public void updateAddress(String addressId, String isDel, OKHttpManager.StringCallBack callBack) {
+        Map<String,String> params = getParams();
+        params.put("addressId",addressId);
+        params.put("isDel",isDel);
+        OKHttpManager.postAsync(getUrl(R.string.address_del), params, callBack);
+    }
+
     public void sendValidateCode(String phoneNumber, String type, OKHttpManager.StringCallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phone", phoneNumber);
@@ -261,6 +277,21 @@ public class NetworkUtils {
         if(!TextUtils.isEmpty(passwordNew))params.put("passwordNew",passwordNew);
         if(!TextUtils.isEmpty(passwordNew))params.put("passwordNewTwo",passwordNew);
         OKHttpManager.postAsync(getUrl(R.string.user_update),params,callBack);
+    }
+
+    public void getMessageList(String pageNo, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put(LIMIT,"10");
+        params.put(PAGE,pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
+
+    }
+
+    public void deleteMessage(String messageId, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("isDel","1");
+        params.put("userMsgId",messageId);
+        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
     }
 
 
