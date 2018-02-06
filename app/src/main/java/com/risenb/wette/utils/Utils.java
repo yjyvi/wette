@@ -2,6 +2,7 @@ package com.risenb.wette.utils;
 
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * <pre>
@@ -24,6 +25,14 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    public static String getText(EditText editText){
+        return editText.getText().toString().trim();
+    }
+
+    public static String getText(TextView textview){
+        return textview.getText().toString().trim();
     }
 
 }

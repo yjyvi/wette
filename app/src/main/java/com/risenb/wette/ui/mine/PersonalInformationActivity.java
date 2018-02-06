@@ -3,12 +3,15 @@ package com.risenb.wette.ui.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseUI;
+import com.risenb.wette.utils.UserManager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 /**
  * <pre>
@@ -21,6 +24,20 @@ import org.xutils.view.annotation.Event;
  */
 @ContentView(R.layout.activity_personal_information)
 public class PersonalInformationActivity extends BaseUI {
+
+    @ViewInject(R.id.tv_nick_name)
+    private TextView tv_nick_name;
+
+    @ViewInject(R.id.tv_phone_number)
+    private TextView tv_phone_number;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tv_nick_name.setText(UserManager.getUser().getNickname());
+        tv_phone_number.setText(UserManager.getUser().getPhone());
+    }
+
     @Override
     protected void back() {
         finish();
@@ -38,7 +55,7 @@ public class PersonalInformationActivity extends BaseUI {
 
     @Event(value = {R.id.ll_modify_nick_name, R.id.ll_modify_phone_number, R.id.ll_modify_pwd}, type = View.OnClickListener.class)
     private void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ll_modify_nick_name:
                 ModifyNickNameActivity.toActivity(view.getContext());
                 break;

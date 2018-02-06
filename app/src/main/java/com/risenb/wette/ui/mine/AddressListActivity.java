@@ -64,7 +64,7 @@ public class AddressListActivity extends BaseUI {
     @Event(value = {R.id.rl_right,R.id.tv_add_address},type = View.OnClickListener.class)
     private void onClick(View view){
         if(view.getId() == R.id.tv_add_address){
-            EditAddressActivity.toAddAddressActivity(view.getContext());
+            EditAddressActivity.toAddAddressActivity(this);
         }else{
             ShoppingCartActivity.toActivity(view.getContext());
         }
@@ -86,7 +86,14 @@ public class AddressListActivity extends BaseUI {
         });
     }
 
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode == 1){
+            getAddressList();
+        }
+    }
+
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, AddressListActivity.class);
         context.startActivity(intent);

@@ -28,6 +28,16 @@ public class UserManager {
         return sUser;
     }
 
+    public static void updateNickName(String nickName){
+        sUser.setNickname(nickName);
+        SPUtils.put(MyApplication.applicationContext, "user_json", sUser.toString());
+    }
+
+    public static void updatePhoneNumber(String phoneNumber){
+        sUser.setPhone(phoneNumber);
+        SPUtils.put(MyApplication.applicationContext, "user_json", sUser.toString());
+    }
+
     public static void clearUser(){
         SPUtils.put(MyApplication.applicationContext, "user_json","");
         sUser = null;

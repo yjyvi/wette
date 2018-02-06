@@ -29,10 +29,10 @@
                 android:layout_weight="1"/>
 
         <TextView
+                android:id="@+id/tv_nick_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/text_view_title_4"
-                android:text="HelloWorld"
                 android:layout_marginRight="16px"
                 android:drawablePadding="8dp"
                 android:drawableRight="@drawable/mine_arrow"
@@ -64,10 +64,10 @@
                 android:layout_weight="1"/>
 
         <TextView
+                android:id="@+id/tv_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/text_view_title_4"
-                android:text="133333333333"
                 android:layout_marginRight="16px"
                 android:drawablePadding="8dp"
                 android:drawableRight="@drawable/mine_arrow"

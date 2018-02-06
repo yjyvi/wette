@@ -36,6 +36,7 @@ public class AccountSettingActivity extends BaseUI {
 
     }
 
+
     @Event(value = {R.id.tv_modify_account_setting,R.id.tv_address_list},type = View.OnClickListener.class)
     private void onClick(View view){
         switch (view.getId()){

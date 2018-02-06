@@ -80,87 +80,41 @@
                 android:text="所在区域:"/>
 
 
-        <LinearLayout
+        <TextView
+                android:id="@+id/tv_region"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="20px"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:textSize="30px"
+                android:drawableRight="@drawable/edit_address_arrow"
+                android:textColor="#999999"
+                android:text="省"/>
 
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30px"
-                    android:textColor="#999999"
-                    android:text="省"/>
-
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-            <ImageView
-                    android:layout_width="22px"
-                    android:layout_height="10px"
-                    android:src="@drawable/edit_address_arrow"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+                android:id="@+id/tv_city"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="20px"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:textSize="30px"
+                android:drawableRight="@drawable/edit_address_arrow"
+                android:textColor="#999999"
+                android:text="市"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30px"
-                    android:textColor="#999999"
-                    android:text="市"/>
-
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-            <ImageView
-                    android:layout_width="22px"
-                    android:layout_height="10px"
-                    android:src="@drawable/edit_address_arrow"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+                android:id="@+id/tv_area"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="20px"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="30px"
-                    android:textColor="#999999"
-                    android:text="省"/>
-
-            <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-            <ImageView
-                    android:layout_width="22px"
-                    android:layout_height="10px"
-                    android:src="@drawable/edit_address_arrow"/>
-
-        </LinearLayout>
+                android:gravity="center_vertical"
+                android:textSize="30px"
+                android:drawableRight="@drawable/edit_address_arrow"
+                android:textColor="#999999"
+                android:text="区"/>
 
 
     </LinearLayout>
@@ -228,8 +182,8 @@
 
 
     <TextView
-            android:id="@+id/tv_continue"
             style="@style/text_view_login_btn"
+            android:id="@+id/tv_continue"
             android:layout_marginLeft="44px"
             android:layout_marginRight="44px"
             android:layout_marginTop="352px"
