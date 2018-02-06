@@ -8,6 +8,8 @@
 
 
     <EditText
+
+        android:id="@+id/et_content"
         android:layout_width="match_parent"
         android:layout_height="376px"
         android:layout_marginLeft="20px"
@@ -19,6 +21,7 @@
         android:textSize="28px"/>
 
     <Button
+        android:id="@+id/bt_commit"
         android:layout_width="match_parent"
         android:layout_height="98px"
         android:layout_marginLeft="46px"

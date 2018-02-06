@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.GoodTableAdapter;
+import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.home.productDetial.GoodCommentFragment;
 import com.risenb.wette.ui.home.productDetial.GoodDetailFragment;
@@ -44,7 +44,7 @@ import java.util.List;
  * 商品详情
  */
 @ContentView(R.layout.activity_good_details)
-public class GoodDetailsUI extends BaseUI implements View.OnClickListener, CollectionP.CollectionListener {
+public class GoodDetailsUI extends BaseUI implements View.OnClickListener, CollectionP.CollectionListener, AddCartP.AddCartListener, GoodDetailP.GoodsDetailsListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -79,6 +79,11 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
     private String userId;
     private String isCollection;
     private String operation;
+    public AddCartP mAddCartP;
+    private GoodDetailP mProductDetailP;
+    private GoodDetailsBean.DataBean mGoodDetailsBean;
+    private String mAmount;
+    private String mAddressId;
 
     @Override
     protected void back() {
@@ -103,6 +108,9 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
         ll_collection.setOnClickListener(this);
 
         mCollectionP = new CollectionP(this, this);
+        mAddCartP = new AddCartP(this, this);
+        mProductDetailP = new GoodDetailP(getActivity(), this);
+        mProductDetailP.setProductDetailsData(mGoodsId);
     }
 
 
@@ -112,7 +120,7 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
         mShopId = getIntent().getStringExtra("shopId");
 
 
-        mFragmentLists.add(GoodFragment.newInstance(mGoodsId));
+        mFragmentLists.add(GoodFragment.newInstance());
         mFragmentLists.add(GoodDetailFragment.newInstance());
         mFragmentLists.add(GoodCommentFragment.newInstance(mGoodsId));
 
@@ -193,6 +201,13 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
                 break;
             case R.id.iv_cart:
                 //购物车
+                if (mGoodDetailsBean != null) {
+                    mAddCartP.setAddCart(
+                            String.valueOf(mGoodDetailsBean.getShopId()),
+                            String.valueOf(mGoodDetailsBean.getGoodsId()),
+                            mGoodDetailsBean.getSkuId(),mAddressId,mAmount
+                            );
+                }
                 break;
             case R.id.ll_shop:
                 ShopDetailUI.start(view.getContext(), mShopId);
@@ -205,9 +220,7 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
                     ll_collection.setSelected(false);
                     operation = "2";
                 }
-                userId = "42ca9e5498c0dea784faaddad7ebc8d2";
-                isCollection = "-1";
-                mCollectionP.setCollection(userId, operation, isCollection, mGoodsId, "1");
+                mCollectionP.setCollection(operation, mGoodsId, "1");
                 break;
             default:
                 break;
@@ -228,23 +241,42 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
 
     @Subscribe
     public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
-        if (GoodDetailsEvent.IS_COLLECTION == goodDetailsEvent.getEventType()) {
-            String data = (String) goodDetailsEvent.getData();
-            if (!TextUtils.isEmpty(data)) {
-                String[] content = data.split(",");
-                if (content.length < 0) {
-                    return;
-                }
-                isCollection = content[0];
-
-                if (1 == Integer.parseInt(content[1])) {
-                    ll_collection.setSelected(true);
-                } else {
-                    ll_collection.setSelected(false);
-                }
-            }
+        //购买的商品数量
+        if (GoodDetailsEvent.GOOD_NUM==goodDetailsEvent.getEventType()) {
+            mAmount = (String) goodDetailsEvent.getData();
         }
     }
 
 
+    @Override
+    public void addCartSuccess() {
+
+    }
+
+    @Override
+    public void addCartField() {
+
+    }
+
+    @Override
+    public void goodsData(GoodDetailsBean.DataBean dataBean) {
+
+        this.mGoodDetailsBean = dataBean;
+
+        //收藏按扭回显
+        if (1 == dataBean.getIsCollection()) {
+            ll_collection.setSelected(true);
+        } else {
+            ll_collection.setSelected(false);
+        }
+
+        //传递是否收藏
+         EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
+
+    }
+
+    @Override
+    public void requestGoodsDataField() {
+
+    }
 }

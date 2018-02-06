@@ -81,7 +81,7 @@ public class PayOrderUI extends BaseUI implements View.OnClickListener {
                 //购物车
                 break;
             case R.id.bt_pay:
-                CommentOderUI.start(view.getContext());
+                CommentOrderUI.start(view.getContext());
                 //支付
                 break;
             default:

@@ -145,7 +145,7 @@
         <!--提交订单-->
         <activity android:name=".ui.home.PayOrderUI"/>
         <!--评论商品-->
-        <activity android:name=".ui.home.CommentOderUI"/>
+        <activity android:name=".ui.home.CommentOrderUI"/>
 
         <!-- 登录 -->
         <activity android:name=".ui.mine.LoginActivity"/>

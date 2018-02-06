@@ -27,8 +27,8 @@ public class CollectionP extends PresenterBase {
         setActivity(fragmentActivity);
     }
 
-    public void setCollection(String c, String operation,String collectionId,String dataId,String type){
-        NetworkUtils.getNetworkUtils().getCollection(c, operation, collectionId, dataId, type, new OKHttpManager.StringCallBack() {
+    public void setCollection( String operation,String dataId,String type){
+        NetworkUtils.getNetworkUtils().getCollection( operation, dataId, type, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 ToastUtils.showToast(e.getMessage());

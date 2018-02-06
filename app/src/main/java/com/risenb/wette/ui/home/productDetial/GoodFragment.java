@@ -17,13 +17,13 @@ import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.pop.PopUtils;
 import com.risenb.wette.ui.LazyLoadFragment;
 import com.risenb.wette.ui.home.PayOrderUI;
-import com.risenb.wette.ui.home.GoodDetailP;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.MyViewPagerIndicator;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class GoodFragment extends LazyLoadFragment implements View.OnClickListener, GoodDetailP.GoodsDetailsListener {
+public class GoodFragment extends LazyLoadFragment implements View.OnClickListener {
 
 
     //样式选择
@@ -88,8 +88,6 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
      */
     private int GOODS_NUM_MAX = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
-    public GoodDetailP mProductDetailP;
-    private String mGoodsId = "1";
     public String mColorContent = "";
     public String mSizeContent = "";
 
@@ -127,9 +125,7 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
         mResultBannerBean.add(e3);
 
 
-        mGoodsId = getArguments().getString("goodsId");
-        mProductDetailP = new GoodDetailP(getActivity(), this);
-        mProductDetailP.setProductDetailsData(mGoodsId, "1");
+
     }
 
 
@@ -180,10 +176,9 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
      *
      * @return
      */
-    public static GoodFragment newInstance(String goodsId) {
+    public static GoodFragment newInstance() {
         Bundle bundle = new Bundle();
         GoodFragment productFragment = new GoodFragment();
-        bundle.putString("goodsId", goodsId);
         productFragment.setArguments(bundle);
         return productFragment;
     }
@@ -192,11 +187,6 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
     public void onClick(final View view) {
         switch (view.getId()) {
             case R.id.iv_selected_style:
-
-//                mColorContent = "红色,绿色,蓝色,黑色,紫色,";
-//
-//
-//                mSizeContent = "M,L,XL,XXL,XXXL,XXXXL,XXXXXL,";
                 PopUtils.showGoodsStyle(getActivity(), iv_selected_style, mColorContent, mSizeContent, new PopUtils.GoodsSelectedStyleListener() {
                     @Override
                     public void selectedResult(String reslut) {
@@ -235,38 +225,43 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
             i--;
         }
         tv_goods_num.setText(String.valueOf(i));
+
+        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_NUM).setData(tv_goods_num.getText().toString().trim()));
+
     }
 
-    @Override
-    public void goodsData(GoodDetailsBean.DataBean dataBean) {
-        if (dataBean != null) {
-            StringBuilder colors = new StringBuilder();
-            StringBuilder sizes = new StringBuilder();
-            List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
-            for (int i = 0; i < attrList.size(); i++) {
-                if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
-                    List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                    for (int j = 0; j < attrList1.size(); j++) {
-                        colors.append(attrList1.get(j).getAttrName() + ",");
+
+    @Subscribe
+    public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
+        if (GoodDetailsEvent.GOOD_DATA == goodDetailsEvent.getEventType()) {
+            GoodDetailsBean.DataBean dataBean = (GoodDetailsBean.DataBean) goodDetailsEvent.getData();
+            if (dataBean != null) {
+                StringBuilder colors = new StringBuilder();
+                StringBuilder sizes = new StringBuilder();
+                List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
+                for (int i = 0; i < attrList.size(); i++) {
+                    if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
+                        List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                        for (int j = 0; j < attrList1.size(); j++) {
+                            colors.append(attrList1.get(j).getAttrName() + ",");
+                        }
+                    }
+
+                    if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
+                        List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                        for (int j = 0; j < attrList1.size(); j++) {
+                            sizes.append(attrList1.get(j).getAttrName() + ",");
+                        }
                     }
                 }
 
-                if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
-                    List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                    for (int j = 0; j < attrList1.size(); j++) {
-                        sizes.append(attrList1.get(j).getAttrName() + ",");
-                    }
-                }
+                mColorContent = colors.toString();
+                mSizeContent = sizes.toString();
+
+
+                tv_good_name.setText(dataBean.getGoodsName());
+                tv_good_price.setText("¥" + dataBean.getPrice());
             }
-
-            mColorContent = colors.toString();
-            mSizeContent = sizes.toString();
-
-            //传递是否收藏
-            EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.IS_COLLECTION).setData(dataBean.getCollectionId() + "," + dataBean.getIsCollection()));
-
-            tv_good_name.setText(dataBean.getGoodsName());
-            tv_good_price.setText("¥" + dataBean.getPrice());
         }
     }
 }
