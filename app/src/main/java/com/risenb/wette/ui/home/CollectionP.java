@@ -41,6 +41,7 @@ public class CollectionP extends PresenterBase {
                     mCollectionListener.collectionResult();
                 }else {
                     ToastUtils.showToast(netBaseBean.getMsg());
+                    mCollectionListener.collectionField();
                 }
             }
         });
@@ -49,6 +50,7 @@ public class CollectionP extends PresenterBase {
 
     public interface CollectionListener{
         void collectionResult();
+        void collectionField();
     }
 
 }

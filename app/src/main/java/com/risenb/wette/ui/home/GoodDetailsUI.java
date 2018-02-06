@@ -220,6 +220,11 @@ public class GoodDetailsUI extends BaseUI implements View.OnClickListener, Colle
         ToastUtils.showToast("收藏成功");
     }
 
+    @Override
+    public void collectionField() {
+
+    }
+
 
     @Subscribe
     public void collectionEvent(GoodDetailsEvent goodDetailsEvent) {
