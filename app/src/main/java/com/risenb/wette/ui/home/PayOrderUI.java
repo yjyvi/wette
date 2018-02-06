@@ -14,7 +14,10 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 /**
- * Created by yjyvi on 2018/2/1.
+ *
+ * @author yjyvi
+ * @date 2018/2/1
+ * 预览订单界面
  */
 @ContentView(R.layout.activity_pay_order)
 public class PayOrderUI extends BaseUI implements View.OnClickListener {

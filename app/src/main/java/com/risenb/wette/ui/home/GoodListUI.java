@@ -12,6 +12,9 @@ import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.GoodListAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.ui.BaseUI;
+import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -20,11 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yjyvi on 2018/1/31.
+ *
+ * @author yjyvi
+ * @date 2018/1/31
+ * 商品列表
  */
 
 @ContentView(R.layout.activity_good_list)
-public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener {
+public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, MyRefreshLayoutListener {
+
+    @ViewInject(R.id.rv_refresh)
+    private MyRefreshLayout refreshLayout;
 
     @ViewInject(R.id.rv_good_list)
     private RecyclerView rv_good_list;
@@ -55,6 +64,8 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener {
     @Override
     protected void prepareData() {
 
+        refreshLayout.setMyRefreshLayoutListener(this);
+
         mGoodsListP = new GoodsListP(this, this);
         mGoodsListP.setGoodsList(0, page, limit);
 
@@ -84,6 +95,35 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener {
     @Override
     public void resultGoodsListData(GoodsListBean result) {
         mGoodsList = result.getData();
-        mGoodListAdapter.setNewData(mGoodsList);
+        refreshLayout.refreshComplete();
+        refreshLayout.loadMoreComplete();
+
+        if (page == 1) {
+            mGoodListAdapter.setNewData(mGoodsList);
+        } else {
+            if (result.getData().size() > 0) {
+                mGoodListAdapter.addData(result.getData());
+            }else {
+                ToastUtils.showToast("没有更多数据了");
+            }
+        }
+    }
+
+    @Override
+    public void goodsListField() {
+        refreshLayout.refreshComplete();
+        refreshLayout.loadMoreComplete();
+    }
+
+    @Override
+    public void onRefresh(View view) {
+        page = 1;
+        mGoodsListP.setGoodsList(0, page, limit);
+    }
+
+    @Override
+    public void onLoadMore(View view) {
+        page++;
+        mGoodsListP.setGoodsList(0, page, limit);
     }
 }

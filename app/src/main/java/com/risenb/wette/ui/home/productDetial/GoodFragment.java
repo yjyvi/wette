@@ -20,8 +20,10 @@ import com.risenb.wette.ui.home.PayOrderUI;
 import com.risenb.wette.ui.home.GoodDetailP;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
+import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.MyViewPagerIndicator;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -260,6 +262,8 @@ public class GoodFragment extends LazyLoadFragment implements View.OnClickListen
             mColorContent = colors.toString();
             mSizeContent = sizes.toString();
 
+            //传递是否收藏
+            EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.IS_COLLECTION).setData(dataBean.getCollectionId() + "," + dataBean.getIsCollection()));
 
             tv_good_name.setText(dataBean.getGoodsName());
             tv_good_price.setText("¥" + dataBean.getPrice());

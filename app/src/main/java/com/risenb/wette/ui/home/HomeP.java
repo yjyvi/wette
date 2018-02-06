@@ -1,6 +1,7 @@
 package com.risenb.wette.ui.home;
 
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import com.risenb.wette.beans.HomeBean;
 import com.risenb.wette.network.DataCallBack;
@@ -9,7 +10,6 @@ import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/2
  * 首页接口
@@ -29,7 +29,11 @@ public class HomeP extends PresenterBase {
         NetworkUtils.getNetworkUtils().getHomeData(new DataCallBack<HomeBean>() {
             @Override
             public void onSuccess(HomeBean result) {
-                mHomeListener.resultData(result);
+                if (TextUtils.equals(REQUEST_SUCCESS, result.getStatus())) {
+                    mHomeListener.homeDataSuccess(result);
+                } else {
+                    mHomeListener.requestField();
+                }
             }
 
             @Override
@@ -40,6 +44,8 @@ public class HomeP extends PresenterBase {
     }
 
     public interface HomeListener {
-        void resultData(HomeBean result);
+        void homeDataSuccess(HomeBean result);
+
+        void requestField();
     }
 }

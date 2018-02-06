@@ -12,7 +12,10 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 /**
- * Created by yjyvi on 2018/2/1.
+ *
+ * @author yjyvi
+ * @date 2018/2/1
+ * 评价订单
  */
 @ContentView(R.layout.activity_comment_order)
 public class CommentOderUI extends BaseUI {

@@ -46,6 +46,8 @@
     <string name="shopDetail">/goods/shopDetail</string>
     <!--商品收藏或删除-->
     <string name="goodCollection">/userCenter/addOrDelCollection</string>
+    <!--添加到购物车-->
+    <string name="addCart">/cart/addCart</string>
 
 
     <!-- 收货地址 -->

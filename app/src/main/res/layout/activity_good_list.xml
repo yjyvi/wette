@@ -6,11 +6,15 @@
 
     <include layout="@layout/common_title"/>
 
+    <com.risenb.wette.views.refreshlayout.MyRefreshLayout
+        android:id="@+id/rv_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:paddingLeft="10px"
         android:paddingRight="10px"
         android:id="@+id/rv_good_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
+    </com.risenb.wette.views.refreshlayout.MyRefreshLayout>
 </LinearLayout>

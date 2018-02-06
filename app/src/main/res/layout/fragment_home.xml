@@ -45,23 +45,23 @@
         <!--搜索框-->
         <EditText
             android:id="@+id/et_search"
-            android:visibility="gone"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10px"
             android:layout_width="match_parent"
             android:layout_height="66px"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10px"
             android:layout_marginLeft="20px"
             android:layout_marginRight="100px"
             android:background="@drawable/shape_item_rand_white"
             android:drawableLeft="@mipmap/search"
             android:drawablePadding="20px"
             android:hint="请输入您要搜索的关键词"
-            android:paddingRight="20px"
-            android:paddingLeft="20px"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:lines="1"
-            android:textSize="28px"/>
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:textSize="28px"
+            android:visibility="gone"/>
 
         <!--右功能键图片-->
         <RelativeLayout
@@ -86,15 +86,17 @@
     </FrameLayout>
 
 
-
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="129px"
-        android:id="@+id/rv_home"
+    <com.risenb.wette.views.refreshlayout.MyRefreshLayout
+        android:id="@+id/rv_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"/>
+        android:layout_marginTop="129px"
+        android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+    </com.risenb.wette.views.refreshlayout.MyRefreshLayout>
 
 </FrameLayout>

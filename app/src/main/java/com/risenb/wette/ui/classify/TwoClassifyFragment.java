@@ -17,7 +17,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by yjyvi on 2018/2/1.
+ *
+ * @author yjyvi
+ * @date 2018/2/1
+ * 右侧二级分类界面
  */
 
 public class TwoClassifyFragment extends LazyLoadFragment {

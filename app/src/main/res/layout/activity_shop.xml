@@ -101,48 +101,53 @@
             android:background="#999999"/>
 
     </FrameLayout>
-    
+
     <LinearLayout
-        android:paddingLeft="20px"
-        android:paddingRight="20px"
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="150px">
-        
-        
+        android:layout_height="150px"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+
         <com.risenb.wette.views.CircleImageView
-            android:src="@color/gray"
             android:layout_width="100px"
-            android:layout_height="100px"/>
+            android:layout_height="100px"
+            android:src="@color/gray"/>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:text="店铺名称"
-            android:layout_height="wrap_content"/>
+            android:text="店铺名称"/>
 
-         <ImageView
-             android:layout_width="wrap_content"
-             android:src="@mipmap/shop_collection"
-             android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/shop_collection"/>
     </LinearLayout>
 
     <TextView
-        android:paddingLeft="20px"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:text="精品专区"
         style="@style/text_back_32"
-        android:layout_height="100px"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:paddingLeft="10px"
-        android:paddingRight="10px"
-        android:background="@color/white"
-        android:id="@+id/rv_goods_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:text="精品专区"/>
 
+    <com.risenb.wette.views.refreshlayout.MyRefreshLayout
+        android:id="@+id/rv_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_goods_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"/>
+    </com.risenb.wette.views.refreshlayout.MyRefreshLayout>
 
 </LinearLayout>
