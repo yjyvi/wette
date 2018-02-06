@@ -76,7 +76,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     @Override
     protected void prepareData() {
 
-        mSearchP = new SearchP(this, this);
+        mSearchP = new SearchP(this);
 
 
         Intent intent = getIntent();

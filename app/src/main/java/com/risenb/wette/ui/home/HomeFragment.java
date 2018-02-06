@@ -76,7 +76,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
         refreshLayout.setMyRefreshLayoutListener(this);
 
         mHomeP = new HomeP(getActivity(), this);
-        mGoodsListP = new GoodsListP(getActivity(), this);
+        mGoodsListP = new GoodsListP( this);
         mHomeP.setHomeData();
         mGoodsListP.setGoodsList(0, page, limit);
     }

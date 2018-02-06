@@ -66,7 +66,7 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
 
         refreshLayout.setMyRefreshLayoutListener(this);
 
-        mGoodsListP = new GoodsListP(this, this);
+        mGoodsListP = new GoodsListP( this);
         mGoodsListP.setGoodsList(0, page, limit);
 
         rv_good_list.setLayoutManager(new GridLayoutManager(this, 2));

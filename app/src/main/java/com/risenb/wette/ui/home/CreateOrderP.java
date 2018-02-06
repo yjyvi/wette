@@ -25,7 +25,7 @@ public class CreateOrderP extends PresenterBase {
         NetworkUtils.getNetworkUtils().createOrder(goodsId, addressId, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-//                ToastUtils.showToast(e.getMessage());
+                mCreateOrderListener.createField();
             }
 
             @Override

@@ -25,7 +25,7 @@ public class GoodsSkuP extends PresenterBase {
         NetworkUtils.getNetworkUtils().goodsSku(goodsId, properties, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-
+                mGoodsSkuListener.requestSkuField();
             }
 
             @Override

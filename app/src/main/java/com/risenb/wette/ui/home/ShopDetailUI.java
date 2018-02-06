@@ -69,7 +69,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
         mShopId = getIntent().getStringExtra("shopId");
 
-        mGoodsListP = new GoodsListP(getActivity(), this);
+        mGoodsListP = new GoodsListP( this);
         mShopDetailP = new ShopDetailP(this);
         mCollectionP = new CollectionP(this);
     }

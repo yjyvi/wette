@@ -97,7 +97,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         EventBus.getDefault().register(this);
 
         mCollectionP = new CollectionP(this);
-        mAddCartP = new AddCartP(this, this);
+        mAddCartP = new AddCartP(this);
         mProductDetailP = new GoodDetailP(getActivity(), this);
         mGoodsSkuP = new GoodsSkuP(this);
     }

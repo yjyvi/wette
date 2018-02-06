@@ -24,7 +24,7 @@ import org.xutils.view.annotation.ViewInject;
  * 评价订单
  */
 @ContentView(R.layout.activity_comment_order)
-public class CommentOrderUI extends BaseUI {
+public class CommentOrderUI extends BaseUI implements CommentOrderP.CommentOrderListener {
 
     @ViewInject(R.id.common_title_back)
     private RelativeLayout common_title_back;
@@ -34,6 +34,7 @@ public class CommentOrderUI extends BaseUI {
 
     @ViewInject(R.id.bt_commit)
     private Button bt_commit;
+    public CommentOrderP mCommentOrderP;
 
     @Override
     protected void back() {
@@ -48,6 +49,8 @@ public class CommentOrderUI extends BaseUI {
 
     @Override
     protected void prepareData() {
+
+        mCommentOrderP = new CommentOrderP(this);
 
         common_title_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +73,7 @@ public class CommentOrderUI extends BaseUI {
             @Override
             public void onClick(View view) {
                 String content = et_content.getText().toString().trim();
+//                mCommentOrderP.setCommentOrder();
             }
         });
     }
@@ -77,5 +81,15 @@ public class CommentOrderUI extends BaseUI {
     public static void start(Context context) {
         Intent starter = new Intent(context, CommentOrderUI.class);
         context.startActivity(starter);
+    }
+
+    @Override
+    public void commentSuccess() {
+
+    }
+
+    @Override
+    public void commentField() {
+
     }
 }

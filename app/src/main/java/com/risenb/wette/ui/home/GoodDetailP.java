@@ -31,7 +31,7 @@ public class GoodDetailP extends PresenterBase {
         NetworkUtils.getNetworkUtils().getGoodDetails(goodsId, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-                ToastUtils.showToast(e.getMessage());
+                mGoodsDetailsListener.requestGoodsDataField();
             }
 
             @Override
@@ -40,7 +40,7 @@ public class GoodDetailP extends PresenterBase {
                 if (TextUtils.equals(REQUEST_SUCCESS, goodDetailsBean.getStatus())) {
                     mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
                 } else {
-                    ToastUtils.showToast(goodDetailsBean.getMsg());
+                    ToastUtils.showToast(goodDetailsBean.getErrorMsg());
                     mGoodsDetailsListener.requestGoodsDataField();
                 }
             }
