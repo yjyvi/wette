@@ -17,15 +17,11 @@
     <!-- 注册 -->
     <string name="user_register">/user/register</string>
     <!-- 验证码 -->
-    <string name="authcode">user/getSmsCode</string>
-    <!--邮箱验证码-->
-    <string name="getEmailCode">user/getEmailCode</string>
+    <string name="user_send_validate_code">/base/getSmsCode</string>
     <!-- 忘记密码 -->
     <string name="forgetPassword">user/updatePwdByMobile</string>
     <!-- 修改个人资料 -->
     <string name="updateInfo">user/update</string>
-    <!-- 获取个人资料 -->
-    <string name="getUserInfo">user/getInformation</string>
     <!--修改密码-->
     <string name="updatePwd">user/updatePwd</string>
 
@@ -63,7 +59,12 @@
     <string name="address_list">/userCenter/addressList</string>
     <!-- 更新 or 添加 地址 -->
     <string name="address_update">/userCenter/addOrUpdateAddress</string>
-
+    <!-- 获取省市区列表 -->
+    <string name="address_get_region_list">/base/regionList</string>
+    <!-- 意见反馈 -->
+    <string name="feed_back">/userCenter/feedback</string>
+    <!-- 修改用户信息 -->
+    <string name="user_update">/userCenter/updateUserInfo</string>
 
 
 </resources>

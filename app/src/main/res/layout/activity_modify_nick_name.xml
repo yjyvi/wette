@@ -9,6 +9,7 @@
             />
 
     <EditText
+            android:id="@+id/et_nick_name"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@color/translate"
@@ -25,6 +26,7 @@
 
 
     <TextView
+            android:id="@+id/tv_finish"
             style="@style/text_view_login_btn"
             android:text="完成"
             android:layout_marginTop="464px"

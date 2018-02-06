@@ -15,6 +15,7 @@
             android:paddingRight="30px">
 
         <EditText
+                android:id="@+id/et_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="100px"
                 android:background="@color/translate"
@@ -34,6 +35,7 @@
                android:orientation="horizontal">
 
            <EditText
+                   android:id="@+id/et_validate_code"
                    android:layout_width="0dp"
                    android:layout_weight="1"
                    android:layout_height="100px"
@@ -46,11 +48,13 @@
            
            
            <TextView
+                   android:id="@+id/tv_validate_code"
                    android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
+                   android:layout_height="match_parent"
+                   android:gravity="center_vertical"
                    android:textColor="#666666"
                    android:textSize="28px"
-                   android:text="30S后重试"/>
+                   android:text="发送验证码"/>
            
        </LinearLayout>
 
@@ -60,6 +64,7 @@
     </LinearLayout>
     
     <TextView
+            android:id="@+id/tv_finish"
             style="@style/text_view_login_btn"
             android:layout_marginLeft="32px"
             android:layout_marginRight="32px"

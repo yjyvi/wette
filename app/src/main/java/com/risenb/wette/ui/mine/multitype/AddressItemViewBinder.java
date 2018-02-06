@@ -1,13 +1,16 @@
 package com.risenb.wette.ui.mine.multitype;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.AddressBean;
 import com.risenb.wette.ui.BaseViewHolder;
+import com.risenb.wette.ui.mine.EditAddressActivity;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -29,11 +32,17 @@ public class AddressItemViewBinder extends ItemViewBinder<AddressBean, BaseViewH
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull AddressBean item) {
+    protected void onBindViewHolder(@NonNull final BaseViewHolder holder, @NonNull final AddressBean item) {
         holder.<TextView>getView(R.id.tv_addressee).setText("收货人："+item.getAddressee());
         holder.<TextView>getView(R.id.tv_phone_number).setText("联系方式："+item.getTelephone());
         holder.<TextView>getView(R.id.tv_address).setText("收货地址："+item.getAddress());
         holder.<TextView>getView(R.id.tv_postal_code).setText("邮政编码："+item.getPostalcode());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditAddressActivity.toUpdateAddressActivity((Activity) holder.itemView.getContext(),item);
+            }
+        });
     }
 
 }
