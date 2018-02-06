@@ -36,7 +36,7 @@ public class CollectionP extends PresenterBase {
             public void requestSuccess(String result) {
                 NetBaseBean netBaseBean = JSON.parseObject(result,NetBaseBean.class);
                 if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
-                    mCollectionListener.collectionResult();
+                    mCollectionListener.collectionSuccess();
                 }else {
                     ToastUtils.showToast(netBaseBean.getMsg());
                     mCollectionListener.collectionField();
@@ -47,7 +47,7 @@ public class CollectionP extends PresenterBase {
 
 
     public interface CollectionListener{
-        void collectionResult();
+        void collectionSuccess();
         void collectionField();
     }
 

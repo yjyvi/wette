@@ -175,7 +175,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     }
 
     @Override
-    public void collectionResult() {
+    public void collectionSuccess() {
 
     }
 
