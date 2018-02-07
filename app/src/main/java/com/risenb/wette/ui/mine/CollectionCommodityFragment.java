@@ -7,16 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.risenb.wette.R;
-import com.risenb.wette.adapter.home.GoodListAdapter;
-import com.risenb.wette.beans.GoodsListBean;
+import com.risenb.wette.beans.CollectionBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.LazyLoadFragment;
-import com.risenb.wette.ui.home.GoodsListP;
+import com.risenb.wette.ui.mine.multitype.collection.CommodityItemViewBinder;
+import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
 import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
 
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
+
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 /**
  * <pre>
@@ -27,17 +31,20 @@ import java.util.List;
  *     version: 1.0
  * </pre>
  */
-public class CollectionCommodityFragment extends LazyLoadFragment implements GoodsListP.GoodsListListener, MyRefreshLayoutListener {
+public class CollectionCommodityFragment extends LazyLoadFragment implements MyRefreshLayoutListener {
 
     @ViewInject(R.id.rv_collection_commodity)
     private RecyclerView rv_collection_commodity;
-    @ViewInject(R.id.rv_refresh)
-    private MyRefreshLayout refreshLayout;
-    private GoodListAdapter mProductListAdapter;
-    private GoodsListP mGoodsListP;
-    private int page=1;
-    private int limit=10;
-    private List<GoodsListBean.DataBean> mGoodsList;
+
+    @ViewInject(R.id.rl_collection_commodity)
+    private MyRefreshLayout rl_collection_commodity;
+
+
+    private int mPageIndex = 1;
+
+    Items mItems;
+
+    MultiTypeAdapter mAdapter;
 
 
     @Override
@@ -45,40 +52,47 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
         view = inflater.inflate(R.layout.fragment_collection_commodity,container,false);
     }
 
-
     @Override
     protected void setControlBasis() {
-        refreshLayout.setMyRefreshLayoutListener(this);
-        mGoodsListP = new GoodsListP(this);
-        mGoodsListP.setGoodsList(0,page,limit);
+        mItems = new Items();
+        mAdapter = new MultiTypeAdapter();
+        mAdapter.register(CollectionBean.class,new CommodityItemViewBinder());
+        mAdapter.setItems(mItems);
+        rl_collection_commodity.setMyRefreshLayoutListener(this);
+        rv_collection_commodity.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rv_collection_commodity.setAdapter(mAdapter);
     }
 
     @Override
     protected void prepareData() {
-
-        rv_collection_commodity.setLayoutManager(new GridLayoutManager(getContext(),2));
-        mProductListAdapter = new GoodListAdapter(R.layout.item_good_list,mGoodsList);
-        rv_collection_commodity.setAdapter(mProductListAdapter);
+        getCollectionCommodityList();
     }
 
-    @Override
-    public void resultGoodsListData(GoodsListBean result) {
-        mGoodsList = result.getData() ;
-        mProductListAdapter.setNewData(mGoodsList);
-    }
-
-    @Override
-    public void goodsListField() {
-
+    private void getCollectionCommodityList(){
+        NetworkUtils.getNetworkUtils().getCollectionCommodityList(String.valueOf(mPageIndex), new CommonCallBack<List<CollectionBean>>() {
+            @Override
+            protected void onSuccess(List<CollectionBean> data) {
+                if(data.size()<10)
+                    rl_collection_commodity.setIsLoadingMoreEnabled(false);
+                rl_collection_commodity.refreshComplete();
+                rl_collection_commodity.loadMoreComplete();
+                mItems.addAll(data);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public void onRefresh(View view) {
-
+        mPageIndex = 1;
+        mItems.clear();
+        rl_collection_commodity.setIsLoadingMoreEnabled(true);
+        getCollectionCommodityList();
     }
 
     @Override
     public void onLoadMore(View view) {
-
+        mPageIndex ++;
+        getCollectionCommodityList();
     }
 }

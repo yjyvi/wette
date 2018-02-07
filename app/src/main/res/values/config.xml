@@ -24,6 +24,8 @@
     <string name="user_update">/userCenter/updateUserInfo</string>
     <!-- 绑定手机号 -->
     <string name="user_bind_phone_number">/user/thirdBing.do</string>
+    <!-- 收藏列表 -->
+    <string name="user_get_collection_list">/userCenter/collection</string>
 
 
 

@@ -104,6 +104,12 @@ public class MineFragment extends LazyLoadFragment {
             case R.id.tv_collection:
                 CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_ALL);
                 break;
+            case R.id.fl_collection_commodity:
+                CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_GOODS);
+                break;
+            case R.id.fl_collection_shop:
+                CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_SHOPS);
+                break;
             case R.id.ll_order:
                 OrderActivity.toActivity(view.getContext(), OrderActivity.ORDER_STATE_ALL);
                 break;

@@ -81,9 +81,6 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
         myOrderP = new MyOrderP(this);
         //刷新加载数据
         refreshLayout.beginRefreshing();
-
-
-
     }
 
     /**

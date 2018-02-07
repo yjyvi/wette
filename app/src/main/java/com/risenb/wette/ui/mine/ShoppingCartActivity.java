@@ -12,14 +12,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.risenb.wette.R;
+import com.risenb.wette.beans.CreateOrderGoodsBean;
 import com.risenb.wette.beans.shoppingcart.CommodityBean;
 import com.risenb.wette.beans.shoppingcart.ShopBean;
 import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
+import com.risenb.wette.ui.home.CreateOrderUI;
 import com.risenb.wette.ui.mine.multitype.shoppingcart.CommodityItemViewBinder;
 import com.risenb.wette.ui.mine.multitype.shoppingcart.ShopItemViewBinder;
 import com.risenb.wette.utils.NetworkUtils;
+import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.utils.evntBusBean.BaseEvent;
 import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
 import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
@@ -176,7 +180,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                     ((ShopBean) item).setSelected(isSelected);
                     if (isSelected) {
                         for (CommodityBean commodityBean : ((ShopBean) item).getGoodList()) {
-                            mSelectedCommodityList.add(commodityBean);
+                            addSelectedCommodity(commodityBean);
                         }
                     } else {
                         mSelectedCommodityList.clear();
@@ -186,7 +190,23 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             mAdapter.notifyDataSetChanged();
             onCommodityOrShopSelected();
         } else {
+            if(mSelectedCommodityList.isEmpty()){
+                ToastUtils.showToast("请选择商品");
+                return;
+            }
             //结算
+            List<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(mSelectedCommodityList.size());
+
+            for (CommodityBean commodityBean : mSelectedCommodityList) {
+                CreateOrderGoodsBean goodsBean = new CreateOrderGoodsBean();
+                goodsBean.setGoodsId(String.valueOf(commodityBean.getGoodsId()));
+                goodsBean.setGoodsAmount(String.valueOf(commodityBean.getAmount()));
+                goodsBean.setShopId(commodityBean.getShopId());
+                goodsBean.setSkuId(String.valueOf(commodityBean.getSkuId()));
+                orderGoodsBeanList.add(goodsBean);
+            }
+
+            CreateOrderUI.start(this,null, JSON.toJSONString(orderGoodsBeanList));
         }
     }
 

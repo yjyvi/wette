@@ -382,6 +382,10 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.shopping_cart_list),params,callBack);
     }
 
+    public void deleteShoppingCarCommodity(){
+
+    }
+
     public void bindPhoneNumber(String phoneNumber, String password,String authorize, OKHttpManager.StringCallBack callBack){
         Map<String,String> params = new HashMap<>();
         params.put("phone",phoneNumber);
@@ -389,6 +393,23 @@ public class NetworkUtils {
         params.put("authorize",authorize);
         params.put("type","1");
         OKHttpManager.postAsync(getUrl(R.string.user_bind_phone_number),params,callBack);
+    }
+
+
+    public void getCollectionCommodityList(String pageNo, OKHttpManager.StringCallBack callBack){
+        getCollectionList("1",pageNo,callBack);
+    }
+
+    public void getCollectionShopList(String pageNo, OKHttpManager.StringCallBack callBack) {
+        getCollectionList("2",pageNo,callBack);
+    }
+
+    public void getCollectionList(String type, String pageNo, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("type",type);
+        params.put(LIMIT,"10");
+        params.put(PAGE,pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.user_get_collection_list),params,callBack);
     }
 
     public Map<String, String> getParams() {

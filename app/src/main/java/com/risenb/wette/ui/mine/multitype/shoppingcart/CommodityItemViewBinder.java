@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.risenb.wette.R;
 import com.risenb.wette.beans.shoppingcart.CommodityBean;
 import com.risenb.wette.ui.BaseViewHolder;
+import com.risenb.wette.ui.home.GoodDetailsUI;
 import com.risenb.wette.utils.GlideApp;
 import com.risenb.wette.utils.evntBusBean.BaseEvent;
 
@@ -50,6 +51,15 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean,BaseVi
                 EventBus.getDefault().post(new BaseEvent<CommodityBean>().setEventType(1).setData(item));
             }
         });
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodDetailsUI.start(v.getContext(),String.valueOf(item.getGoodsId()),item.getShopId());
+            }
+        });
+
     }
 
 

@@ -2,9 +2,12 @@ package com.risenb.wette.ui.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.ui.BaseUI;
@@ -22,15 +25,22 @@ import org.xutils.view.annotation.ViewInject;
  * </pre>
  */
 @ContentView(R.layout.activity_collection)
-public class CollectionActivity extends BaseUI {
+public class CollectionActivity extends BaseUI implements ViewPager.OnPageChangeListener {
 
     @ViewInject(R.id.vp_collection)
     private ViewPager vp_collection;
+
+    @ViewInject(R.id.tv_commodity_selected)
+    private TextView tv_commodity_selected;
+
+    @ViewInject(R.id.tv_shop_selected)
+    private TextView tv_shop_selected;
+
     private static final String KEY_TYPE = "TYPE";
     public static final int TYPE_GOODS = 0;
     public static final int TYPE_SHOPS = 1;
     public static final int TYPE_ALL = 2;
-    private int type;
+    private int mType;
     private Fragment[] mFragments = {new CollectionCommodityFragment(), new CollectionShopFragment()};
 
     @Override
@@ -40,8 +50,10 @@ public class CollectionActivity extends BaseUI {
 
     @Override
     protected void setControlBasis() {
+        mType = getIntent().getIntExtra(KEY_TYPE,0);
         setTitle("我的收藏");
         getIntent().getIntExtra(KEY_TYPE,TYPE_ALL);
+        vp_collection.addOnPageChangeListener(this);
         vp_collection.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -53,7 +65,7 @@ public class CollectionActivity extends BaseUI {
                 return 2;
             }
         });
-        switch (type){
+        switch (mType){
             case TYPE_GOODS:
                 vp_collection.setCurrentItem(0);
                 break;
@@ -76,5 +88,33 @@ public class CollectionActivity extends BaseUI {
         intent.putExtra(KEY_TYPE,type);
         context.startActivity(intent);
     }
-    
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        changeTab(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private void changeTab(int position) {
+        if(position == 0){
+            tv_commodity_selected.setTextColor(Color.parseColor("#ee4617"));
+            tv_shop_selected.setTextColor(Color.parseColor("#666666"));
+            findViewById(R.id.v_shop_selected).setVisibility(View.GONE);
+            findViewById(R.id.v_commodity_selected).setVisibility(View.VISIBLE);
+        }else{
+            tv_commodity_selected.setTextColor(Color.parseColor("#666666"));
+            tv_shop_selected.setTextColor(Color.parseColor("#ee4617"));
+            findViewById(R.id.v_shop_selected).setVisibility(View.VISIBLE);
+            findViewById(R.id.v_commodity_selected).setVisibility(View.GONE);
+        }
+    }
 }
