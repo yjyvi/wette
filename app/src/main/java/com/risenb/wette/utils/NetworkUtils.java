@@ -222,14 +222,13 @@ public class NetworkUtils {
     }
 
 
-    public void getOrderList(String c, int state, int page, int limit, OKHttpManager.StringCallBack stringCallBack) {
-        Map<String, String> params = new TreeMap<>();
-        params.put("c", c);
+    public void getOrderList(int state, int page, int limit, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
         if (state != -1) {
-            params.put("orderStatus", state + "");
+            params.put("orderStatus", String.valueOf(state));
         }
-        params.put("pageSize", limit + "");
-        params.put("pageNo", page + "");
+        params.put(LIMIT, String.valueOf(limit));
+        params.put(PAGE, String.valueOf(page));
         OKHttpManager.postAsync(getUrl(R.string.order_list), params, stringCallBack);
     }
 
@@ -260,6 +259,15 @@ public class NetworkUtils {
         params.put("password", password);
         if (!TextUtils.isEmpty(authorize)) params.put("authorize", authorize);
         OKHttpManager.postAsync(getUrl(R.string.user_login), params, callBack);
+    }
+
+    public void getBackPassword(String phone, String code, String password, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("phone",phone);
+        params.put("code",code);
+        params.put("password",password);
+        params.put("passwordTwo",password);
+        OKHttpManager.postAsync(getUrl(R.string.user_get_back_password), params, callBack);
     }
 
     public void getAddressList(OKHttpManager.StringCallBack callback) {
@@ -304,6 +312,13 @@ public class NetworkUtils {
 
     }
 
+    public void updateAddress(String addressId, String isDel, OKHttpManager.StringCallBack callBack) {
+        Map<String,String> params = getParams();
+        params.put("addressId",addressId);
+        params.put("isDel",isDel);
+        OKHttpManager.postAsync(getUrl(R.string.address_del), params, callBack);
+    }
+
     public void sendValidateCode(String phoneNumber, String type, OKHttpManager.StringCallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phone", phoneNumber);
@@ -345,9 +360,62 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.user_update),params,callBack);
     }
 
+    public void getMessageList(String pageNo, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put(LIMIT,"10");
+        params.put(PAGE,pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
+
+    }
+
+    public void deleteMessage(String messageId, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("isDel","1");
+        params.put("userMsgId",messageId);
+        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
+    }
+
+    public void getShoppingCartList(String pageNo, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put(LIMIT,"10");
+        params.put(PAGE,pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_list),params,callBack);
+    }
+
+    public void deleteShoppingCarCommodity(){
+
+    }
+
+    public void bindPhoneNumber(String phoneNumber, String password,String authorize, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("phone",phoneNumber);
+        params.put("password",password);
+        params.put("authorize",authorize);
+        params.put("type","1");
+        OKHttpManager.postAsync(getUrl(R.string.user_bind_phone_number),params,callBack);
+    }
+
+
+    public void getCollectionCommodityList(String pageNo, OKHttpManager.StringCallBack callBack){
+        getCollectionList("1",pageNo,callBack);
+    }
+
+    public void getCollectionShopList(String pageNo, OKHttpManager.StringCallBack callBack) {
+        getCollectionList("2",pageNo,callBack);
+    }
+
+    public void getCollectionList(String type, String pageNo, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        params.put("type",type);
+        params.put(LIMIT,"10");
+        params.put(PAGE,pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.user_get_collection_list),params,callBack);
+    }
 
     public Map<String, String> getParams() {
         Map<String, String> params = new HashMap();
+        if(!UserManager.isLogin())
+            return params;
         params.put("c", UserManager.getUser().getC());
         return params;
     }

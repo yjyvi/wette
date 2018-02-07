@@ -172,6 +172,8 @@
         <activity android:name=".ui.mine.AddressListActivity"/>
         <!-- 消息 -->
         <activity android:name=".ui.mine.MessageActivity"/>
+        <!-- 消息详情 -->
+        <activity android:name=".ui.mine.MessageDetailActivity"/>
         <!-- 收藏 -->
         <activity android:name=".ui.mine.CollectionActivity"/>
         <!-- 我的订单 -->

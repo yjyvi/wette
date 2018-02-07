@@ -35,6 +35,9 @@ public class MineFragment extends LazyLoadFragment {
     @ViewInject(R.id.sv_mine)
     ScrollView sv_mine;
 
+    @ViewInject(R.id.iv_message)
+    ImageView iv_message;
+
     AlertDialog mExitLoginDialog;
 
     @Override
@@ -74,7 +77,11 @@ public class MineFragment extends LazyLoadFragment {
             R.id.fl_feedback,
             R.id.tv_collection,
             R.id.ll_order,
-            R.id.tv_exit_login
+            R.id.tv_exit_login,
+            R.id.iv_message,
+            R.id.iv_shopping_cart,
+            R.id.fl_collection_commodity,
+            R.id.fl_collection_shop,
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
 
@@ -97,6 +104,12 @@ public class MineFragment extends LazyLoadFragment {
             case R.id.tv_collection:
                 CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_ALL);
                 break;
+            case R.id.fl_collection_commodity:
+                CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_GOODS);
+                break;
+            case R.id.fl_collection_shop:
+                CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_SHOPS);
+                break;
             case R.id.ll_order:
                 OrderActivity.toActivity(view.getContext(), OrderActivity.ORDER_STATE_ALL);
                 break;
@@ -111,6 +124,12 @@ public class MineFragment extends LazyLoadFragment {
                 break;
             case R.id.bt_canceled_order://已取消
                 OrderActivity.toActivity(view.getContext(), OrderActivity.ORDER_STATE_CANCELED_ORDER);
+                break;
+            case R.id.iv_message:
+                MessageActivity.toActivity(view.getContext());
+                break;
+            case R.id.iv_shopping_cart:
+                ShoppingCartActivity.toActivity(view.getContext());
                 break;
             case R.id.tv_exit_login:
                 if(mExitLoginDialog == null) {
@@ -142,9 +161,11 @@ public class MineFragment extends LazyLoadFragment {
         if (UserManager.isLogin()) {
             GlideApp.with(this).load(UserManager.getUser().getHeadImg()).loadAvatar().into(iv_avatar);
             tv_nick_name.setText(UserManager.getUser().getNickname());
+            iv_message.setVisibility(View.VISIBLE);
         } else {
             iv_avatar.setImageResource(R.drawable.mine_no_login_head_image);
             tv_nick_name.setText("请登录/注册");
+            iv_message.setVisibility(View.GONE);
         }
     }
 

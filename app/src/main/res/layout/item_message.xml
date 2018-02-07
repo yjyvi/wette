@@ -8,24 +8,21 @@
               android:layout_height="100px">
 
     <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:lines="1"
             android:ellipsize="end"
             android:textSize="30px"
             android:textColor="#333333"
-            android:maxLength="20"
-            android:text="恭喜您，获得IPhoneX一部"/>
+            android:maxLength="20"/>
 
-    <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
 
     <TextView
+            android:id="@+id/tv_create_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2018-01-01"
             android:textSize="22px"
             android:textColor="#999999"/>
     

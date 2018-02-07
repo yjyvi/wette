@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:paddingBottom="26px"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
@@ -18,9 +19,9 @@
                 android:scaleType="fitXY"
                 android:layout_width="48px"
                 android:layout_height="48px"/>
-        
+
         <TextView
-            android:id="@+id/tv_shop_name"
+                android:id="@+id/tv_shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#333333"
@@ -31,7 +32,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
+
         <TextView
+                android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="待付款"
@@ -44,15 +47,15 @@
             style="@style/common_line"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/goods_rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            android:id="@+id/goods_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     <View
             style="@style/common_line"/>
 
     <TextView
-        android:id="@+id/tv_order_des"
+            android:id="@+id/tv_order_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -64,7 +67,7 @@
 
 
     <TextView
-        android:id="@+id/bt_order_state"
+            android:id="@+id/bt_order_state"
             android:layout_width="140px"
             android:layout_height="60px"
             android:layout_marginRight="20px"

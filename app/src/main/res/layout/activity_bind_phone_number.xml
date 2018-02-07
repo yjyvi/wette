@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
             layout="@layout/common_title"
@@ -11,10 +11,10 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="100px"
+            android:paddingLeft="70px"
+            android:gravity="center_vertical"
             android:textSize="30px"
             android:textColor="#1698d2"
-            android:gravity="center_vertical"
-            android:paddingLeft="70px"
             android:text="*为了您的账户安全，请验证手机号"/>
 
     <View
@@ -26,37 +26,38 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:paddingLeft="28px"
-            android:paddingRight="28px">
+            android:paddingRight="28px"
+            android:orientation="vertical">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="30px"
                 android:paddingLeft="46px"
                 android:paddingRight="46px"
+                android:paddingTop="30px"
                 android:orientation="vertical">
 
             <EditText
+                    style="@style/edit_text_login"
+                    android:id="@+id/et_phone_number"
+                    android:inputType="phone"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_phone_number"
-                    android:hint="请输入手机号"
-                    android:inputType="phone"
                     android:maxLength="11"
-                    style="@style/edit_text_login"
+                    android:hint="请输入手机号"
                     />
 
             <View
                     style="@style/common_line"/>
 
             <EditText
+                    style="@style/edit_text_login"
+                    android:id="@+id/et_password"
+                    android:inputType="textPassword"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="请输入密码 (6~16位字符)"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    style="@style/edit_text_login"
                     />
 
             <View
@@ -65,8 +66,9 @@
         </LinearLayout>
 
         <TextView
-                android:layout_marginTop="430px"
                 style="@style/text_view_login_btn"
+                android:id="@+id/tv_finish"
+                android:layout_marginTop="430px"
                 android:text="完成"/>
 
     </LinearLayout>

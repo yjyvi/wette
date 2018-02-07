@@ -24,6 +24,7 @@
 
 
             <EditText
+                    android:id="@+id/et_phone_number"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_phone_number"
                     android:hint="请输入手机号"
@@ -35,24 +36,42 @@
             <View
                     style="@style/common_line"/>
 
-            <EditText
-                    android:textSize="30px"
-                    android:drawableLeft="@drawable/register_validate_code"
-                    android:hint="验证码"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    style="@style/edit_text_login"
-                    />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <EditText
+                        android:id="@+id/et_validate_code"
+                        android:textSize="30px"
+                        android:drawableLeft="@drawable/register_validate_code"
+                        android:hint="验证码"
+                        android:inputType="number"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        style="@style/edit_text_login"
+                        />
+
+                <TextView
+                        android:id="@+id/tv_validate_code"
+                        android:layout_width="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="#666666"
+                        android:text="发送验证码"/>
+
+            </LinearLayout>
 
             <View
                     style="@style/common_line"/>
 
             <EditText
+                    android:id="@+id/et_password"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="密码为6~16位字符，由数字和字母组成"
-                    android:inputType="phone"
-                    android:maxLength="11"
+                    android:inputType="textPassword"
                     style="@style/edit_text_login"
                     />
 
@@ -60,11 +79,11 @@
                     style="@style/common_line"/>
 
             <EditText
+                    android:id="@+id/et_confirm_password"
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="确认密码"
-                    android:inputType="phone"
-                    android:maxLength="11"
+                    android:inputType="textPassword"
                     style="@style/edit_text_login"
                     />
 
