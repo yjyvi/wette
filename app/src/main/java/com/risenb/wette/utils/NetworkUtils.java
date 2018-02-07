@@ -382,8 +382,16 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.shopping_cart_list),params,callBack);
     }
 
-    public void deleteShoppingCarCommodity(){
-
+    public void deleteShoppingCarCommodity(String [] shoppingCarIdArray, OKHttpManager.StringCallBack callBack){
+        Map<String,String> params = getParams();
+        StringBuffer stringBuffer = new StringBuffer("[");
+        for (int i = 0; i < shoppingCarIdArray.length; i++) {
+            stringBuffer.append(shoppingCarIdArray[i]);
+            if(i!=shoppingCarIdArray.length)stringBuffer.append(",");
+        }
+        stringBuffer.append("]");
+        params.put("cartIds",stringBuffer.toString());
+        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_delete),params,callBack);
     }
 
     public void bindPhoneNumber(String phoneNumber, String password,String authorize, OKHttpManager.StringCallBack callBack){
