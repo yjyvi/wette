@@ -24,7 +24,7 @@ import org.xutils.view.annotation.ViewInject;
  *     author : Think
  *     e-mail : 1007687534@qq.com
  *     time   : 2018/01/31
- *     desc   :
+ *     desc   : 找回密码
  *     version: 1.0
  * </pre>
  */

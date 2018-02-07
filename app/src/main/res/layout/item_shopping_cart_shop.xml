@@ -9,27 +9,34 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingLeft="20px"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             >
 
+       <FrameLayout
+               android:id="@+id/fl_is_selected"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:padding="20px">
+
+           <ImageView
+                   android:id="@+id/iv_is_selected"
+                   android:layout_width="26px"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/shopping_cart_unselected"/>
+
+       </FrameLayout>
+
         <ImageView
-                android:layout_width="26px"
-                android:layout_height="26px"
-                android:src="@drawable/shopping_cart_unselected"/>
-        
-        <ImageView
+                android:id="@+id/iv_logo"
                 android:layout_width="48px"
-                android:layout_height="48px"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginLeft="20px"/>
+                android:layout_height="48px"/>
 
         <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20px"
-                android:text="ThinKPad旗舰店"/>
+                android:layout_marginLeft="20px"/>
 
     </LinearLayout>
 

@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <include layout="@layout/common_title"/>
 
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_shopping_cart"
+    <com.risenb.wette.views.refreshlayout.MyRefreshLayout
+            android:id="@+id/rl_shopping_cart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_shopping_cart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+    </com.risenb.wette.views.refreshlayout.MyRefreshLayout>
 
     <View
             style="@style/common_line"/>
@@ -21,22 +28,33 @@
             android:layout_width="match_parent"
             android:layout_height="98px"
             android:gravity="center_vertical"
-            android:paddingLeft="20px"
             android:orientation="horizontal">
 
 
-        <ImageView
-                android:layout_width="26px"
-                android:layout_height="26px"
-                android:src="@drawable/shopping_cart_unselected"/>
+       <LinearLayout
+               android:id="@+id/ll_all_selected"
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:gravity="center_vertical"
+               android:paddingLeft="20px"
+               android:tag="unSelected"
+               android:orientation="horizontal">
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="28px"
-                android:textColor="#333333"
-                android:layout_marginLeft="20px"
-                android:text="全选"/>
+           <ImageView
+                   android:id="@+id/iv_all_selected"
+                   android:layout_width="26px"
+                   android:layout_height="26px"
+                   android:src="@drawable/shopping_cart_unselected"/>
+
+           <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="28px"
+                   android:textColor="#333333"
+                   android:layout_marginLeft="20px"
+                   android:text="全选"/>
+
+       </LinearLayout>
 
         <View
                 android:layout_width="0dp"
@@ -64,9 +82,10 @@
                         android:text="合计:"/>
 
                 <TextView
+                        android:id="@+id/tv_total_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¥2333"
+                        android:text="¥0.00"
                         android:textSize="34px"
                         android:textColor="#ea2222"/>
 
@@ -82,12 +101,13 @@
         </LinearLayout>
         
         <TextView
+                android:id="@+id/tv_settlement"
                 android:layout_width="200px"
                 android:layout_height="match_parent"
                 android:background="#ee4716"
                 android:textColor="@color/white"
                 android:textSize="30px"
-                android:text="结算(1)"
+                android:text="结算(0)"
                 android:gravity="center"/>
 
 

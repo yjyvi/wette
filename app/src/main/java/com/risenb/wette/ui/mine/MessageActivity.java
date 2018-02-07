@@ -93,6 +93,7 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
     public void onRefresh(View view) {
         mPageIndex = 1;
         mItems.clear();
+        rl_message.setIsLoadingMoreEnabled(true);
         getMessageList();
     }
 

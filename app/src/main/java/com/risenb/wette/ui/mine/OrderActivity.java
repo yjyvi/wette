@@ -99,9 +99,8 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     public void onRefresh(View view) {
-        // TODO: 2018/2/5 c
         isRefresh = true;
-        myOrderP.loadList("3876fb9092a8a87ff0637c41878d27c3",orderState,1,10);
+        myOrderP.loadList(orderState,1,10);
     }
 
     @Override
@@ -119,7 +118,7 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
             return;
         }
         isRefresh = false;
-        myOrderP.loadList("3876fb9092a8a87ff0637c41878d27c3",orderState,page,10);
+        myOrderP.loadList(orderState,page,10);
 
 
     }

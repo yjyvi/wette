@@ -35,8 +35,8 @@ public class MyOrderP extends PresenterBase {
      * @param page
      * @param limit
      */
-    public void loadList(String c, int state, int page, final int limit){
-        NetworkUtils.getNetworkUtils().getOrderList(c,state,page,limit, new OKHttpManager.StringCallBack() {
+    public void loadList(int state, int page, final int limit){
+        NetworkUtils.getNetworkUtils().getOrderList(state,page,limit, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 listener.loadListError(e.getMessage());

@@ -63,8 +63,6 @@ public class CollectionActivity extends BaseUI {
             case TYPE_ALL:
                 vp_collection.setCurrentItem(0);
                 break;
-
-
         }
     }
 

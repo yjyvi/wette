@@ -9,17 +9,31 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.shoppingcart.CommodityBean;
 import com.risenb.wette.beans.shoppingcart.ShopBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.mine.multitype.shoppingcart.CommodityItemViewBinder;
 import com.risenb.wette.ui.mine.multitype.shoppingcart.ShopItemViewBinder;
+import com.risenb.wette.utils.NetworkUtils;
+import com.risenb.wette.utils.evntBusBean.BaseEvent;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
+import com.risenb.wette.views.refreshlayout.MyRefreshLayoutListener;
 import com.zhy.autolayout.utils.AutoUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
@@ -34,7 +48,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * </pre>
  */
 @ContentView(R.layout.activity_shopping_cart)
-public class ShoppingCartActivity extends BaseUI {
+public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListener {
 
     private Items mItems;
 
@@ -43,6 +57,23 @@ public class ShoppingCartActivity extends BaseUI {
     @ViewInject(R.id.rv_shopping_cart)
     private RecyclerView rv_shopping_cart;
 
+    @ViewInject(R.id.rl_shopping_cart)
+    private MyRefreshLayout rl_shopping_cart;
+
+    @ViewInject(R.id.iv_all_selected)
+    private ImageView iv_all_selected;
+
+    @ViewInject(R.id.tv_total_price)
+    private TextView tv_total_price;
+
+    @ViewInject(R.id.tv_settlement)
+    private TextView tv_settlement;
+
+    //已选中的商品
+    List<CommodityBean> mSelectedCommodityList = new ArrayList<>();
+
+    boolean isEdit = false;
+
     @Override
     protected void back() {
         finish();
@@ -50,11 +81,12 @@ public class ShoppingCartActivity extends BaseUI {
 
     @Override
     protected void setControlBasis() {
+        setTitle("购物车");
+        rightVisible("编辑");
         mAdapter = new MultiTypeAdapter();
         mItems = new Items();
         mAdapter.setItems(mItems);
         mAdapter.register(ShopBean.class, new ShopItemViewBinder());
-
         mAdapter.register(CommodityBean.class, new CommodityItemViewBinder());
         rv_shopping_cart.addItemDecoration(new RecyclerView.ItemDecoration() {
 
@@ -103,17 +135,120 @@ public class ShoppingCartActivity extends BaseUI {
         });
         rv_shopping_cart.setLayoutManager(new LinearLayoutManager(this));
         rv_shopping_cart.setAdapter(mAdapter);
+        rl_shopping_cart.setMyRefreshLayoutListener(this);
+    }
+
+    private int mPageIndex;
+
+    private void getShoppingCartList() {
+        NetworkUtils.getNetworkUtils().getShoppingCartList(String.valueOf(mPageIndex), new CommonCallBack<List<ShopBean>>() {
+            @Override
+            protected void onSuccess(List<ShopBean> data) {
+                if (data.size() < 10) rl_shopping_cart.setIsLoadingMoreEnabled(false);
+                rl_shopping_cart.refreshComplete();
+                rl_shopping_cart.loadMoreComplete();
+                for (ShopBean shopBean : data) {
+                    mItems.add(shopBean);
+                    for (CommodityBean commodityBean : shopBean.getGoodList()) {
+                        mItems.add(commodityBean);
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     protected void prepareData() {
-        for (int i = 0; i < 5; i++) {
-            mItems.add(new ShopBean());
-            for (int i1 = 0; i1 < 3; i1++) {
-                mItems.add(new CommodityBean());
+        getShoppingCartList();
+    }
+
+    @Event(value = {R.id.ll_all_selected, R.id.tv_settlement})
+    private void onClick(View view) {
+        if (view.getId() == R.id.ll_all_selected) {
+            view.setTag(view.getTag().equals("selected") ? "unSelected" : "selected");
+            boolean isSelected = view.getTag().equals("selected");
+            iv_all_selected.setImageResource(isSelected ? R.drawable.shopping_cart_selected : R.drawable.shopping_cart_unselected);
+            for (Object item : mItems) {
+                if (item instanceof CommodityBean) {
+                    ((CommodityBean) item).setSelected(isSelected);
+                } else if (item instanceof ShopBean) {
+                    ((ShopBean) item).setSelected(isSelected);
+                    if (isSelected) {
+                        for (CommodityBean commodityBean : ((ShopBean) item).getGoodList()) {
+                            mSelectedCommodityList.add(commodityBean);
+                        }
+                    } else {
+                        mSelectedCommodityList.clear();
+                    }
+                }
             }
+            mAdapter.notifyDataSetChanged();
+            onCommodityOrShopSelected();
+        } else {
+            //结算
         }
-        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onSelectedCommodityEvent(BaseEvent<CommodityBean> event) {
+        if (event.getEventType() == 1) {
+            event.getData().setSelected(!event.getData().isSelected());
+            if (event.getData().isSelected())
+                addSelectedCommodity(event.getData());
+            else
+                mSelectedCommodityList.remove(event.getData());
+            onCommodityOrShopSelected();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Subscribe
+    public void onSelectedShopEvent(BaseEvent<ShopBean> event) {
+        if (event.getEventType() == 2) {
+            boolean isSelected = !event.getData().isSelected();
+            for (CommodityBean commodityBean : event.getData().getGoodList()) {
+                commodityBean.setSelected(isSelected);
+            }
+            for (CommodityBean commodityBean : event.getData().getGoodList()) {
+                if (isSelected)
+                    addSelectedCommodity(commodityBean);
+                else
+                    mSelectedCommodityList.remove(commodityBean);
+            }
+            event.getData().setSelected(isSelected);
+            onCommodityOrShopSelected();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void addSelectedCommodity(CommodityBean commodityBean) {
+        if (!mSelectedCommodityList.contains(commodityBean))
+            mSelectedCommodityList.add(commodityBean);
+    }
+
+    private void onCommodityOrShopSelected() {
+        double totalPrice = 0;
+        for (CommodityBean commodityBean : mSelectedCommodityList) {
+            double commodityTotalPrice = commodityBean.getPrice() * commodityBean.getAmount();
+            BigDecimal b1 = new BigDecimal(Double.toString(totalPrice));
+            BigDecimal b2 = new BigDecimal(Double.toString(commodityTotalPrice));
+            totalPrice = b1.add(b2).doubleValue();
+        }
+        tv_total_price.setText(String.valueOf("¥" + totalPrice));
+        tv_settlement.setText("结算(" + mSelectedCommodityList.size() + ")");
     }
 
     public static void toActivity(Context context) {
@@ -121,4 +256,18 @@ public class ShoppingCartActivity extends BaseUI {
         context.startActivity(intent);
     }
 
+    @Override
+    public void onRefresh(View view) {
+        mItems.clear();
+        mSelectedCommodityList.clear();
+        mPageIndex = 1;
+        rl_shopping_cart.setIsLoadingMoreEnabled(true);
+        getShoppingCartList();
+    }
+
+    @Override
+    public void onLoadMore(View view) {
+        mPageIndex++;
+        getShoppingCartList();
+    }
 }

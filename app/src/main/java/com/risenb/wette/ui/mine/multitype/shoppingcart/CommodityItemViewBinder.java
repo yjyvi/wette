@@ -2,11 +2,18 @@ package com.risenb.wette.ui.mine.multitype.shoppingcart;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.shoppingcart.CommodityBean;
 import com.risenb.wette.ui.BaseViewHolder;
+import com.risenb.wette.utils.GlideApp;
+import com.risenb.wette.utils.evntBusBean.BaseEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -28,8 +35,21 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean,BaseVi
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull CommodityBean item) {
+    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull final CommodityBean item) {
+        holder.<ImageView>getView(R.id.iv_is_selected).setImageResource(item.isSelected()?R.drawable.shopping_cart_selected :R.drawable.shopping_cart_unselected);
+        holder.<TextView>getView(R.id.tv_name).setText(item.getGoodsName());
+        holder.<TextView>getView(R.id.tv_price).setText("¥"+item.getPrice());
+        holder.<TextView>getView(R.id.tv_count).setText("x"+item.getAmount());
+        GlideApp.with(holder.itemView.getContext())
+                .load(item.getLogo())
+                .into(holder.<ImageView>getView(R.id.iv_cover));
 
+        holder.getView(R.id.fl_is_selected).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new BaseEvent<CommodityBean>().setEventType(1).setData(item));
+            }
+        });
     }
 
 

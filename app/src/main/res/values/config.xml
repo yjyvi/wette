@@ -20,10 +20,10 @@
     <string name="user_send_validate_code">/base/getSmsCode</string>
     <!-- 忘记密码 -->
     <string name="user_get_back_password">/user/resetPwd</string>
-    <!-- 修改个人资料 -->
-    <string name="updateInfo">user/update</string>
-    <!--修改密码-->
-    <string name="updatePwd">user/updatePwd</string>
+    <!-- 修改用户信息 -->
+    <string name="user_update">/userCenter/updateUserInfo</string>
+    <!-- 绑定手机号 -->
+    <string name="user_bind_phone_number">/user/thirdBing.do</string>
 
 
 
@@ -65,12 +65,13 @@
     <string name="address_get_region_list">/base/regionList</string>
     <!-- 意见反馈 -->
     <string name="feed_back">/userCenter/feedback</string>
-    <!-- 修改用户信息 -->
-    <string name="user_update">/userCenter/updateUserInfo</string>
     <!-- 消息列表 -->
     <string name="message_list">/msg/list.do</string>
     <!-- 修改消息 -->
     <string name="message_update">/msg/update.do</string>
+
+    <!-- 购物车列表 -->
+    <string name="shopping_cart_list">/cart/list</string>
 
 
 </resources>

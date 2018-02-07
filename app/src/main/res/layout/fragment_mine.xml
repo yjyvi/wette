@@ -242,6 +242,7 @@
                         android:orientation="horizontal">
 
                     <FrameLayout
+                            android:id="@+id/fl_collection_commodity"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
@@ -260,6 +261,7 @@
                     </FrameLayout>
 
                     <FrameLayout
+                            android:id="@+id/fl_collection_shop"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">

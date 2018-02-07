@@ -117,4 +117,9 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         mGoodsList = searchBean.getGoodsList();
         mSearchGoodsListAdapter.setNewData(mGoodsList);
     }
+
+    @Override
+    public void searchField() {
+
+    }
 }

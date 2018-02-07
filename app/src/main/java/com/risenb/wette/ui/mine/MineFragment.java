@@ -79,7 +79,9 @@ public class MineFragment extends LazyLoadFragment {
             R.id.ll_order,
             R.id.tv_exit_login,
             R.id.iv_message,
-            R.id.iv_shopping_cart
+            R.id.iv_shopping_cart,
+            R.id.fl_collection_commodity,
+            R.id.fl_collection_shop,
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
 
