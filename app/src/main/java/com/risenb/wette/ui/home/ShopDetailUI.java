@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.GoodListAdapter;
 import com.risenb.wette.beans.GoodsListBean;
 import com.risenb.wette.beans.ShopDetailBean;
 import com.risenb.wette.ui.BaseUI;
+import com.risenb.wette.ui.mine.ShoppingCartActivity;
 import com.risenb.wette.utils.GlideImgUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.refreshlayout.MyRefreshLayout;
@@ -69,7 +71,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
         mShopId = getIntent().getStringExtra("shopId");
 
-        mGoodsListP = new GoodsListP( this);
+        mGoodsListP = new GoodsListP(this);
         mShopDetailP = new ShopDetailP(this);
         mCollectionP = new CollectionP(this);
     }
@@ -87,6 +89,16 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
         rv_goods_list.setLayoutManager(layout);
         mProductListAdapter = new GoodListAdapter(R.layout.item_good_list, mGoodsList);
         rv_goods_list.setAdapter(mProductListAdapter);
+
+        mProductListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mGoodsList != null) {
+                    GoodDetailsUI.start(view.getContext(), String.valueOf(mGoodsList.get(position).getGoodsId()), String.valueOf(mGoodsList.get(position).getShopId()));
+                }
+
+            }
+        });
     }
 
     public static void start(Context context, String shopId) {
@@ -96,21 +108,27 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     }
 
 
-    @Event(value = {R.id.title_back, R.id.iv_is_collection}, type = View.OnClickListener.class)
+    @Event(value = {R.id.rl_title_back, R.id.iv_is_collection, R.id.rl_search, R.id.rl_cart}, type = View.OnClickListener.class)
     private void onClick(View view) {
         switch (view.getId()) {
-            case R.id.title_back:
+            case R.id.rl_title_back:
                 back();
                 break;
             case R.id.iv_is_collection:
                 if (!iv_is_collection.isSelected()) {
                     iv_is_collection.setSelected(true);
-                    isCollection = "2";
-                } else {
                     isCollection = "1";
+                } else {
+                    isCollection = "2";
                     iv_is_collection.setSelected(false);
                 }
                 mCollectionP.setCollection(isCollection, mShopId, "2");
+                break;
+            case R.id.rl_search:
+                SearchResultUI.start(view.getContext(), "");
+                break;
+            case R.id.rl_cart:
+                ShoppingCartActivity.toActivity(view.getContext());
                 break;
             default:
                 break;
@@ -120,11 +138,13 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     @Override
     public void resultGoodsListData(GoodsListBean result) {
 
+        mGoodsList = result.getData();
+
         refreshLayout.loadMoreComplete();
         refreshLayout.refreshComplete();
 
         if (1 == page) {
-            mProductListAdapter.setNewData( result.getData());
+            mProductListAdapter.setNewData(result.getData());
         } else {
             if (result.getData().size() > 0) {
                 mProductListAdapter.addData(result.getData());

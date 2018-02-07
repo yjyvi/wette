@@ -115,7 +115,7 @@ public class NetworkUtils {
      * 店铺详情
      */
     public void getShopDetail(String shopId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
-        Map<String, String> params = new TreeMap<>();
+        Map<String, String> params = getParams();
         params.put("shopId", shopId);
         params.put(PAGE, page);
         params.put(LIMIT, limit);
@@ -137,7 +137,7 @@ public class NetworkUtils {
         params.put("dataId", dataId);
         params.put("type", type);
 
-        OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
+        OKHttpManager.postAsync(getUrl(R.string.goodCollection), params, httpBack);
     }
 
     /**

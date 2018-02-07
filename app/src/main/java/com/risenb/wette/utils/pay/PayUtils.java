@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -79,11 +78,8 @@ public class PayUtils {
      * 微信支付
      */
     public void wechatPay(String weChatPayParams) {
-        Log.d("PayUtils", weChatPayParams);
         if (!TextUtils.isEmpty(weChatPayParams)) {
-            JSONObject jsonObject = JSON.parseObject(weChatPayParams);
-            String data = jsonObject.getString("data");
-            JSONObject wxParams = JSON.parseObject(data);
+            JSONObject wxParams = JSON.parseObject(weChatPayParams);
 
             String packageValue = wxParams.getString("packageValue");
             String appId = wxParams.getString("appId");
