@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/title_back"
+            android:id="@+id/rl_title_back"
             android:layout_width="100px"
             android:layout_height="match_parent"
             android:layout_marginBottom="26px"
@@ -57,7 +57,7 @@
             android:gravity="bottom">
 
             <RelativeLayout
-                android:id="@+id/rl_right"
+                android:id="@+id/rl_search"
                 android:layout_width="100px"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="26px"
@@ -75,7 +75,7 @@
 
             <!--右功能键图片-->
             <RelativeLayout
-                android:id="@+id/rl_right2"
+                android:id="@+id/rl_cart"
                 android:layout_width="80px"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="26px"

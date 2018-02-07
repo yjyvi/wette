@@ -105,8 +105,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     protected void prepareData() {
-
         getAddressList();
+
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
 
@@ -179,9 +179,10 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
 
     private void getAddressList() {
+        if (!UserManager.isLogin()) {
+            return;
+        }
         NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
-
-
             @Override
             protected void onSuccess(List<AddressBean> data) {
                 //获取到默认地址
@@ -263,7 +264,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
                     createOrderGoodsBean.setSkuId(mSkuId);
 
                     String goods = JSON.toJSONString(createOrderGoodsBean);
-                    CreateOrderUI.start(view.getContext(), mAddressData, goods);
+                    CreateOrderUI.start(view.getContext(), mAddressData, "[" + goods + "]");
                 } else {
                     ToastUtils.showToast("未登录，请求登录");
                     LoginActivity.toActivity(view.getContext());
@@ -277,7 +278,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void collectionSuccess() {
-        ToastUtils.showToast("收藏成功");
+
     }
 
     @Override

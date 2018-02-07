@@ -25,7 +25,7 @@ import org.xutils.view.annotation.ViewInject;
  * 预览订单界面
  */
 @ContentView(R.layout.activity_pay_order)
-public class CreateOrderUI extends BaseUI implements  CreateOrderP.CreateOrderListener {
+public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener {
 
     @ViewInject(R.id.common_title_back)
     private RelativeLayout common_title_back;
@@ -50,7 +50,7 @@ public class CreateOrderUI extends BaseUI implements  CreateOrderP.CreateOrderLi
     private AddressBean mAddressBean;
     public CreateOrderP mCreateOrderP;
     public String mGoods;
-    private String mOrderId;
+    private String mOrderNo;
 
     @Override
     protected void back() {
@@ -100,7 +100,7 @@ public class CreateOrderUI extends BaseUI implements  CreateOrderP.CreateOrderLi
             R.id.ll_selected_address,
             R.id.rl_right,
             R.id.bt_pay
-    },type = View.OnClickListener.class)
+    }, type = View.OnClickListener.class)
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.common_title_back:
@@ -115,8 +115,7 @@ public class CreateOrderUI extends BaseUI implements  CreateOrderP.CreateOrderLi
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
             case R.id.bt_pay:
-                PaymentMethodActivity.toActivity(view.getContext(),mOrderId);
-                //支付
+                PaymentMethodActivity.toActivity(view.getContext(), mOrderNo);
                 break;
             default:
                 break;
@@ -124,8 +123,8 @@ public class CreateOrderUI extends BaseUI implements  CreateOrderP.CreateOrderLi
     }
 
     @Override
-    public void createSuccess() {
-
+    public void createSuccess(String orderNo) {
+        this.mOrderNo = orderNo;
     }
 
     @Override

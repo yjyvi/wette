@@ -216,7 +216,7 @@ public class GoodFragment extends LazyLoadFragment {
                             createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
                             createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
                             createOrderGoodsBean.setSkuId("2");
-                            CreateOrderUI.start(view.getContext(), mAddressBean, JSON.toJSONString(createOrderGoodsBean));
+                            CreateOrderUI.start(view.getContext(), mAddressBean, "["+JSON.toJSONString(createOrderGoodsBean)+"]");
                         } else {
                             ToastUtils.showToast("未登录，请求登录");
                             LoginActivity.toActivity(view.getContext());

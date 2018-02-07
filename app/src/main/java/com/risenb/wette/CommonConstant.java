@@ -21,6 +21,6 @@ public class CommonConstant {
 
 
         //微信APP ID
-        public static final String WX_APP_ID = "wx40ca58b47b16d576";
+        public static final String WX_APP_ID = "wx40a58b3c2f3872ad";
     }
 }

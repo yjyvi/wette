@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.risenb.wette.CommonConstant;
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.utils.NetworkUtils;
 
@@ -25,7 +26,7 @@ public class PayOrderP extends PresenterBase {
 
     }
 
-    public void setPayOrder(String orderId, String payChannel) {
+    public void setPayOrder(String orderId, final String payChannel) {
         NetworkUtils.getNetworkUtils().payOrder(orderId, payChannel, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
@@ -41,15 +42,16 @@ public class PayOrderP extends PresenterBase {
 
                 if (TextUtils.equals(REQUEST_SUCCESS, parseObject.getString("status"))) {
                     String data = parseObject.getString("data");
-
-                    if (!TextUtils.isEmpty(data)) {
+                    String sign;
+                    if (TextUtils.equals(payChannel, CommonConstant.Common.PAY_METHOD_ZFB)) {
                         JSONObject jsonObject = JSON.parseObject(data);
-                        String sign = jsonObject.getString("Sign");
-                        if (TextUtils.isEmpty(sign)) {
-                            sign = jsonObject.getString("WeCharPay");
-                        }
-                        mPayOrderListener.getSignSuccess(sign);
+                        sign = jsonObject.getString("sign");
+                    } else {
+                        sign = data;
                     }
+
+                    mPayOrderListener.getSignSuccess(sign);
+
                 } else {
                     String message = parseObject.getString("errorMsg");
                     mPayOrderListener.getSignField(message);

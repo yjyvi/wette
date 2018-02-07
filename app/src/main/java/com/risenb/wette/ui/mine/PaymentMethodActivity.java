@@ -35,7 +35,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
     private ImageView iv_zfb;
 
     private String payChannel = "1";
-    public String mOrderId;
+    public String mOrderNo;
     public PayOrderP mPayOrderP;
     public PayUtils mPayUtils;
 
@@ -55,7 +55,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         iv_wx.setSelected(true);
         mPayUtils = new PayUtils(this);
         mPayUtils.setPayCallBack(this);
-        mOrderId = getIntent().getStringExtra("orderId");
+        mOrderNo = getIntent().getStringExtra("orderNo");
         mPayOrderP = new PayOrderP(this);
     }
 
@@ -78,8 +78,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
                 payChannel = CommonConstant.Common.PAY_METHOD_ZFB;
                 break;
             case R.id.tv_commit:
-                mOrderId="10410";
-                mPayOrderP.setPayOrder(mOrderId, payChannel);
+                mPayOrderP.setPayOrder(mOrderNo, payChannel);
                 break;
 
             default:
@@ -87,9 +86,9 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         }
     }
 
-    public static void toActivity(Context context, String orderId) {
+    public static void toActivity(Context context, String orderNo) {
         Intent intent = new Intent(context, PaymentMethodActivity.class);
-        intent.putExtra("orderId", orderId);
+        intent.putExtra("orderNo", orderNo);
         context.startActivity(intent);
     }
 

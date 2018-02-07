@@ -43,7 +43,7 @@ public class GoodCommentP extends PresenterBase {
                 if (REQUEST_SUCCESS.equals(goodCommentBean.getStatus())) {
                     mGoodCommentListener.goodCommentData(goodCommentBean.getData());
                 } else {
-                    ToastUtils.showToast(goodCommentBean.getMsg());
+                    ToastUtils.showToast(goodCommentBean.getErrorMsg());
                 }
             }
         });
