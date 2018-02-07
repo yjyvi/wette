@@ -17,12 +17,17 @@ import com.risenb.wette.beans.AddressBean;
 import com.risenb.wette.beans.BannerBean;
 import com.risenb.wette.beans.CreateOrderGoodsBean;
 import com.risenb.wette.beans.GoodDetailsBean;
+import com.risenb.wette.beans.GoodSkuBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.pop.PopUtils;
 import com.risenb.wette.ui.LazyLoadFragment;
+import com.risenb.wette.ui.home.AddCartP;
 import com.risenb.wette.ui.home.CreateOrderUI;
+import com.risenb.wette.ui.home.GoodsSkuP;
 import com.risenb.wette.ui.mine.AddressListActivity;
 import com.risenb.wette.ui.mine.LoginActivity;
 import com.risenb.wette.utils.GlideImgUtils;
+import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.utils.UserManager;
 import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
@@ -40,7 +45,7 @@ import java.util.List;
  * Created by yjyvi on 2018/1/31.
  */
 
-public class GoodFragment extends LazyLoadFragment {
+public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSkuListener, AddCartP.AddCartListener {
 
 
     //样式选择
@@ -99,7 +104,10 @@ public class GoodFragment extends LazyLoadFragment {
     public String mSizeContent = "";
     public AddressBean mAddressBean;
     public GoodDetailsBean.DataBean mDataBean;
-
+    private GoodsSkuP mGoodsSkuP;
+    private boolean isAddCart;
+    private int mAddressId;
+    private AddCartP mAddCartP;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -121,28 +129,10 @@ public class GoodFragment extends LazyLoadFragment {
 
     @Override
     protected void prepareData() {
-        initTestData();
-        bannerInit();
-
-
+        mGoodsSkuP = new GoodsSkuP(this);
+        mAddCartP = new AddCartP(this);
+        getAddressList();
     }
-
-    private void initTestData() {
-
-        mResultBannerBean = new ArrayList<>();
-        BannerBean.ResultdataBean e = new BannerBean.ResultdataBean();
-        BannerBean.ResultdataBean e2 = new BannerBean.ResultdataBean();
-        BannerBean.ResultdataBean e3 = new BannerBean.ResultdataBean();
-        e.setBanner_Url("http://img5.imgtn.bdimg.com/it/u=104961686,3757525983&fm=27&gp=0.jpg");
-        e2.setBanner_Url("http://pic21.photophoto.cn/20111106/0020032891433708_b.jpg");
-        e3.setBanner_Url("http://img0.imgtn.bdimg.com/it/u=442310530,2243332126&fm=214&gp=0.jpg");
-        mResultBannerBean.add(e);
-        mResultBannerBean.add(e2);
-        mResultBannerBean.add(e3);
-
-
-    }
-
 
     private void bannerInit() {
         if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
@@ -178,7 +168,7 @@ public class GoodFragment extends LazyLoadFragment {
                 vpi_item_banner_indicator.setCurrentPositionListener(new MyViewPagerIndicator.CurrentPositionListener() {
                     @Override
                     public void currentPosition(int position) {
-                        tv_current_page.setText(String.valueOf(position));
+                        tv_current_page.setText(String.valueOf(position & mResultBannerBean.size()));
                     }
                 });
             }
@@ -207,24 +197,8 @@ public class GoodFragment extends LazyLoadFragment {
     private void onClick(final View view) {
         switch (view.getId()) {
             case R.id.iv_selected_style:
-                PopUtils.showGoodsStyle(getActivity(), iv_selected_style, mColorContent, mSizeContent, new PopUtils.GoodsSelectedStyleListener() {
-                    @Override
-                    public void selectedResult(String reslut) {
-                        if (UserManager.isLogin()) {
-                            CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
-                            createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
-                            createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
-                            createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
-                            createOrderGoodsBean.setSkuId("2");
-                            CreateOrderUI.start(view.getContext(), mAddressBean, "["+JSON.toJSONString(createOrderGoodsBean)+"]");
-                        } else {
-                            ToastUtils.showToast("未登录，请求登录");
-                            LoginActivity.toActivity(view.getContext());
-                        }
-                    }
-                });
+                stylePop();
                 break;
-
             case R.id.ll_selected_address:
                 //选择地址
                 AddressListActivity.toActivity(view.getContext());
@@ -238,6 +212,19 @@ public class GoodFragment extends LazyLoadFragment {
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 选择商品规格样式
+     */
+    private void stylePop() {
+        PopUtils.showGoodsStyle2(getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
+            @Override
+            public void selectedResult(String result) {
+                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
+            }
+        });
     }
 
 
@@ -267,44 +254,107 @@ public class GoodFragment extends LazyLoadFragment {
             case GoodDetailsEvent.GOOD_DATA:
                 mDataBean = (GoodDetailsBean.DataBean) goodDetailsEvent.getData();
                 if (mDataBean != null) {
-                    StringBuilder colors = new StringBuilder();
-                    StringBuilder sizes = new StringBuilder();
-                    List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = mDataBean.getAttrList();
-                    for (int i = 0; i < attrList.size(); i++) {
-                        if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
-                            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                            for (int j = 0; j < attrList1.size(); j++) {
-                                colors.append(attrList1.get(j).getAttrName() + ",");
-                            }
-                        }
-
-                        if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
-                            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                            for (int j = 0; j < attrList1.size(); j++) {
-                                sizes.append(attrList1.get(j).getAttrName() + ",");
-                            }
-                        }
-                    }
-
-                    mColorContent = colors.toString();
-                    mSizeContent = sizes.toString();
-
-
                     tv_good_name.setText(mDataBean.getGoodsName());
                     tv_good_price.setText("¥" + mDataBean.getPrice());
+                    initBannerData();
                 }
                 break;
-            case GoodDetailsEvent.DEFAULT_ADDRESS:
-                mAddressBean = (AddressBean) goodDetailsEvent.getData();
-                if (mAddressBean != null) {
-                    tv_name.setText(String.format(getResources().getString(R.string.default_name), mAddressBean.getAddressee()));
-                    tv_tel.setText(String.format(getResources().getString(R.string.default_tel), mAddressBean.getTelephone()));
-                    tv_address.setText(String.format(getResources().getString(R.string.default_address), mAddressBean.getProvinceName() + mAddressBean.getCityName() + mAddressBean.getAreaName() + mAddressBean.getAddress()));
-                }
+            case GoodDetailsEvent.SELECTED_STYLE:
+                isAddCart = true;
+                stylePop();
                 break;
             default:
                 break;
         }
+
+    }
+
+
+    /**
+     * 转换轮播图数据
+     */
+    private void initBannerData() {
+        String carousel = mDataBean.getCarousel();
+        if (!TextUtils.isEmpty(carousel)) {
+            mResultBannerBean = new ArrayList<>();
+
+            String[] banners = carousel.split(",");
+
+            for (int i = 0; i < banners.length; i++) {
+                BannerBean.ResultdataBean banner = new BannerBean.ResultdataBean();
+                banner.setBanner_Url(banners[i]);
+                mResultBannerBean.add(banner);
+            }
+            bannerInit();
+        }
+    }
+
+    private void getAddressList() {
+        if (!UserManager.isLogin()) {
+            return;
+        }
+        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
+            @Override
+            protected void onSuccess(List<AddressBean> data) {
+                //获取到默认地址
+                for (AddressBean datum : data) {
+                    if (1 == datum.getIsDefault()) {
+                        mAddressBean = datum;
+                        mAddressId=datum.getAddressId();
+                        tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
+                        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
+                        tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void requestSkuSuccess(GoodSkuBean.DataBean data) {
+        if (data == null) {
+            return;
+        }
+
+        if (!UserManager.isLogin()) {
+            ToastUtils.showToast("未登录，请求登录");
+            LoginActivity.toActivity(getActivity());
+            return;
+        }
+
+        if (isAddCart) {
+            if (mDataBean != null) {
+                mAddCartP.setAddCart(
+                        String.valueOf(mDataBean.getShopId()),
+                        String.valueOf(mDataBean.getGoodsId()),
+                        String.valueOf(data.getSkuId()),
+                        String.valueOf(mAddressId),
+                        tv_goods_num.getText().toString().trim()
+                );
+            }
+        } else {
+            CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
+            createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
+            createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
+            createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
+            createOrderGoodsBean.setSkuId(String.valueOf(data.getSkuId()));
+            CreateOrderUI.start(getActivity(), mAddressBean, "[" + JSON.toJSONString(createOrderGoodsBean) + "]");
+        }
+
+    }
+
+    @Override
+    public void requestSkuField() {
+
+    }
+
+    @Override
+    public void addCartSuccess() {
+
+    }
+
+    @Override
+    public void addCartField() {
 
     }
 }

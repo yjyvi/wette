@@ -10,14 +10,19 @@ import android.widget.TextView;
 
 import com.risenb.wette.R;
 import com.risenb.wette.beans.AddressBean;
+import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.mine.AddressListActivity;
 import com.risenb.wette.ui.mine.PaymentMethodActivity;
 import com.risenb.wette.ui.mine.ShoppingCartActivity;
+import com.risenb.wette.utils.NetworkUtils;
+import com.risenb.wette.utils.UserManager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+
+import java.util.List;
 
 /**
  * @author yjyvi
@@ -73,21 +78,61 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         mCreateOrderP = new CreateOrderP(this);
 
         if (mAddressBean != null) {
-            tv_name.setText(String.format(getResources().getString(R.string.default_name), mAddressBean.getAddressee()));
-            tv_tel.setText(String.format(getResources().getString(R.string.default_tel), mAddressBean.getTelephone()));
-            tv_address.setText(String.format(getResources().getString(R.string.default_address), mAddressBean.getProvinceName() + mAddressBean.getCityName() + mAddressBean.getAreaName() + mAddressBean.getAddress()));
+            initViewData();
+        }else {
+            getAddressList();
         }
 
         createOrder();
-
     }
 
+
+    /**
+     * 显示地址
+     */
+    private void initViewData() {
+        tv_name.setText(String.format(getResources().getString(R.string.default_name), mAddressBean.getAddressee()));
+        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), mAddressBean.getTelephone()));
+        tv_address.setText(String.format(getResources().getString(R.string.default_address), mAddressBean.getProvinceName() + mAddressBean.getCityName() + mAddressBean.getAreaName() + mAddressBean.getAddress()));
+    }
+
+
+    /**
+     * 获取地址
+     */
+    private void getAddressList() {
+        if (!UserManager.isLogin()) {
+            return;
+        }
+        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
+            @Override
+            protected void onSuccess(List<AddressBean> data) {
+                //获取到默认地址
+                for (AddressBean datum : data) {
+                    if (1 == datum.getIsDefault()) {
+                        mAddressBean = datum;
+                        initViewData();
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 生成订单
+     */
     private void createOrder() {
         if (mAddressBean != null) {
             mCreateOrderP.setCreateOrder(mGoods, String.valueOf(mAddressBean.getAddressId()));
         }
     }
 
+    /**
+     * 跳转界面
+     * @param context
+     * @param addressBean
+     * @param goods
+     */
     public static void start(Context context, AddressBean addressBean, String goods) {
         Intent starter = new Intent(context, CreateOrderUI.class);
         starter.putExtra("addressBean", addressBean);

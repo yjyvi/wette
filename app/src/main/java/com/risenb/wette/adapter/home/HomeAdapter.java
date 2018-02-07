@@ -44,7 +44,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int NEW_LIST = 3;
 
 
-    private HomeBean homeDataBean;
+    private HomeBean.DataBean homeDataBean;
     private List<GoodsListBean.DataBean> goodsListBean;
 
 
@@ -52,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.goodsListBean = goodsListBean;
     }
 
-    public void setHomeDataBean(HomeBean homeDataBean) {
+    public void setHomeDataBean(HomeBean.DataBean homeDataBean) {
         this.homeDataBean = homeDataBean;
     }
 
@@ -96,14 +96,14 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 }
                             });
                         } else {
-                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<HomeBean.RecommendGoodsBean>(homeDataBean.getRecommendGoods()) {
+                            bannerViewHolder.vp_item_banner.setAdapter(new BannerViewPagerAdapter<HomeBean.DataBean.RecommendGoodsBean>(homeDataBean.getRecommendGoods()) {
                                 @Override
                                 public String getImageUrl(int position) {
                                     return homeDataBean.getRecommendGoods().get(position).getCover();
                                 }
 
                                 @Override
-                                public void onItemClickListener(HomeBean.RecommendGoodsBean data, View view) {
+                                public void onItemClickListener(HomeBean.DataBean.RecommendGoodsBean data, View view) {
                                     //跳转事件
                                     if (data.getCover() != null && !TextUtils.isEmpty(data.getCover().trim())) {
                                         ToastUtils.showToast(data.getCover());

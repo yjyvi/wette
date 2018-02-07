@@ -50,7 +50,7 @@ public class NetworkUtils {
     /**
      * 获取首页数据
      */
-    public void getHomeData(DataCallBack httpBack) {
+    public void getHomeData(OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         OKHttpManager.postAsync(getUrl(R.string.homeData), params, httpBack);
     }
@@ -71,7 +71,7 @@ public class NetworkUtils {
     /**
      * 搜索商品
      */
-    public void getSearch(String keyword, DataCallBack httpBack) {
+    public void getSearch(String keyword, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("keyword", keyword);
         OKHttpManager.postAsync(getUrl(R.string.search), params, httpBack);
@@ -102,12 +102,12 @@ public class NetworkUtils {
     /**
      * 商品评价列表
      */
-    public void getGoodEvaluate(String goodsId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodEvaluateList(String goodsId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", goodsId);
         params.put(PAGE, page);
         params.put(LIMIT, limit);
-        OKHttpManager.postAsync(getUrl(R.string.evaluate), params, httpBack);
+        OKHttpManager.postAsync(getUrl(R.string.evaluateList), params, httpBack);
     }
 
 

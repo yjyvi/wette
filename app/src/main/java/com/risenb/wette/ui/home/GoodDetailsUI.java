@@ -8,22 +8,16 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.risenb.wette.R;
 import com.risenb.wette.adapter.home.GoodTableAdapter;
 import com.risenb.wette.beans.AddressBean;
-import com.risenb.wette.beans.CreateOrderGoodsBean;
 import com.risenb.wette.beans.GoodDetailsBean;
-import com.risenb.wette.network.CommonCallBack;
 import com.risenb.wette.ui.BaseUI;
 import com.risenb.wette.ui.home.productDetial.GoodCommentFragment;
 import com.risenb.wette.ui.home.productDetial.GoodDetailFragment;
 import com.risenb.wette.ui.home.productDetial.GoodFragment;
-import com.risenb.wette.ui.mine.LoginActivity;
 import com.risenb.wette.ui.mine.ShoppingCartActivity;
-import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
-import com.risenb.wette.utils.UserManager;
 import com.risenb.wette.utils.evntBusBean.GoodDetailsEvent;
 import com.risenb.wette.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -51,7 +45,7 @@ import java.util.List;
  * 商品详情
  */
 @ContentView(R.layout.activity_good_details)
-public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListener, AddCartP.AddCartListener, GoodDetailP.GoodsDetailsListener, GoodsSkuP.GoodsSkuListener {
+public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListener, AddCartP.AddCartListener, GoodDetailP.GoodsDetailsListener {
 
     @ViewInject(R.id.vp_content)
     private ViewPager vp_content;
@@ -73,11 +67,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     public AddCartP mAddCartP;
     private GoodDetailP mProductDetailP;
     private GoodDetailsBean.DataBean mGoodDetailsBean;
-    private String mAmount = "1";
-    private String mAddressId = "1";
     public AddressBean mAddressData;
-    public GoodsSkuP mGoodsSkuP;
-    public String mSkuId = "1";
+    private String webDataUrl;
 
     @Override
     protected void back() {
@@ -97,15 +88,13 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         EventBus.getDefault().register(this);
 
         mCollectionP = new CollectionP(this);
-        mAddCartP = new AddCartP(this);
+
         mProductDetailP = new GoodDetailP(getActivity(), this);
-        mGoodsSkuP = new GoodsSkuP(this);
     }
 
 
     @Override
     protected void prepareData() {
-        getAddressList();
 
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
@@ -113,7 +102,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mProductDetailP.setProductDetailsData(mGoodsId);
 
         mFragmentLists.add(GoodFragment.newInstance());
-        mFragmentLists.add(GoodDetailFragment.newInstance());
+        mFragmentLists.add(GoodDetailFragment.newInstance(webDataUrl));
         mFragmentLists.add(GoodCommentFragment.newInstance(mGoodsId));
 
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
@@ -177,27 +166,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     }
 
-
-    private void getAddressList() {
-        if (!UserManager.isLogin()) {
-            return;
-        }
-        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
-            @Override
-            protected void onSuccess(List<AddressBean> data) {
-                //获取到默认地址
-                for (AddressBean datum : data) {
-                    if (1 == datum.getIsDefault()) {
-                        mAddressData = datum;
-                        mAddressId = String.valueOf(datum.getAddressId());
-                        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.DEFAULT_ADDRESS).setData(datum));
-                    }
-                }
-            }
-        });
-    }
-
-
     public static void start(Context context, String goodsId, String shopId) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
         starter.putExtra("goodsId", goodsId);
@@ -237,38 +205,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
                 mCollectionP.setCollection(operation, mGoodsId, "1");
                 break;
             case R.id.tv_join_cart:
-
-//                getSku();
-
-                if (mGoodDetailsBean != null) {
-//                    mSkuId = mGoodDetailsBean.getSkuId();
-                    mSkuId = "1";
-                    mAddCartP.setAddCart(
-                            String.valueOf(mGoodDetailsBean.getShopId()),
-                            String.valueOf(mGoodDetailsBean.getGoodsId()),
-                            mSkuId, mAddressId, mAmount
-                    );
-                }
-                break;
             case R.id.tv_pay:
-
-                if (mGoodDetailsBean == null) {
-                    return;
-                }
-
-                if (UserManager.isLogin()) {
-                    CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
-                    createOrderGoodsBean.setGoodsId(String.valueOf(mGoodDetailsBean.getGoodsId()));
-                    createOrderGoodsBean.setGoodsAmount(mAmount);
-                    createOrderGoodsBean.setShopId(String.valueOf(mGoodDetailsBean.getShopId()));
-                    createOrderGoodsBean.setSkuId(mSkuId);
-
-                    String goods = JSON.toJSONString(createOrderGoodsBean);
-                    CreateOrderUI.start(view.getContext(), mAddressData, "[" + goods + "]");
-                } else {
-                    ToastUtils.showToast("未登录，请求登录");
-                    LoginActivity.toActivity(view.getContext());
-                }
+                EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.SELECTED_STYLE));
                 break;
             default:
                 break;
@@ -289,10 +227,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Subscribe
     public void goodsEvent(GoodDetailsEvent goodDetailsEvent) {
-        //购买的商品数量
-        if (GoodDetailsEvent.GOOD_NUM == goodDetailsEvent.getEventType()) {
-            mAmount = (String) goodDetailsEvent.getData();
-        }
     }
 
 
@@ -310,7 +244,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     public void goodsData(GoodDetailsBean.DataBean dataBean) {
 
         this.mGoodDetailsBean = dataBean;
-
+        this.webDataUrl = dataBean.getGoodsDetail();
         //收藏按扭回显
         if (1 == dataBean.getIsCollection()) {
             ll_collection.setSelected(true);
@@ -328,23 +262,5 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     }
 
-    @Override
-    public void requestSkuSuccess() {
 
-    }
-
-    @Override
-    public void requestSkuField() {
-
-    }
-
-    public String getSku() {
-        String skuId = "1";
-
-        String properties = String.valueOf(mGoodDetailsBean.getAttrList().get(0).getAttrList().get(0).getAttrId());
-        mGoodsSkuP.setGoodsSku(mGoodsId, properties);
-
-
-        return skuId;
-    }
 }

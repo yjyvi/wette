@@ -1,8 +1,13 @@
 package com.risenb.wette.ui.home;
 
+import android.text.TextUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.risenb.wette.beans.GoodSkuBean;
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
+import com.risenb.wette.utils.ToastUtils;
 
 import java.io.IOException;
 
@@ -15,13 +20,13 @@ import okhttp3.Call;
 
 public class GoodsSkuP extends PresenterBase {
 
-    private  GoodsSkuListener mGoodsSkuListener;
+    private GoodsSkuListener mGoodsSkuListener;
 
-    public GoodsSkuP(GoodsSkuListener goodsSkuListener){
+    public GoodsSkuP(GoodsSkuListener goodsSkuListener) {
         this.mGoodsSkuListener = goodsSkuListener;
     }
 
-    public void setGoodsSku(String goodsId, String properties){
+    public void setGoodsSku(final String goodsId, String properties) {
         NetworkUtils.getNetworkUtils().goodsSku(goodsId, properties, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
@@ -30,16 +35,21 @@ public class GoodsSkuP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
+                GoodSkuBean goodSkuBean = JSON.parseObject(result, GoodSkuBean.class);
+                if (TextUtils.equals(REQUEST_SUCCESS, goodSkuBean.getStatus())) {
+                    mGoodsSkuListener.requestSkuSuccess(goodSkuBean.getData());
+                } else {
+                    ToastUtils.showToast(goodSkuBean.getErrorMsg());
+                    mGoodsSkuListener.requestSkuField();
+                }
 
-                mGoodsSkuListener.requestSkuSuccess();
-
-                mGoodsSkuListener.requestSkuField();
             }
         });
     }
 
-    public interface GoodsSkuListener{
-        void requestSkuSuccess();
+    public interface GoodsSkuListener {
+        void requestSkuSuccess(GoodSkuBean.DataBean data);
+
         void requestSkuField();
 
     }

@@ -126,7 +126,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     }
 
     @Override
-    public void homeDataSuccess(HomeBean result) {
+    public void homeDataSuccess(HomeBean.DataBean result) {
         refreshLayout.refreshComplete();
         mHomeAdapter.setHomeDataBean(result);
         mHomeAdapter.notifyDataSetChanged();

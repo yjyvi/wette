@@ -3,7 +3,7 @@ package com.risenb.wette.ui.home.productDetial;
 import android.support.v4.app.FragmentActivity;
 
 import com.alibaba.fastjson.JSON;
-import com.risenb.wette.beans.GoodCommentBean;
+import com.risenb.wette.beans.GoodCommentListBean;
 import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
@@ -20,36 +20,38 @@ import okhttp3.Call;
  * @date 2018/2/5
  */
 
-public class GoodCommentP extends PresenterBase {
+public class GoodCommentListP extends PresenterBase {
 
     private GoodCommentListener mGoodCommentListener;
 
-    public GoodCommentP(FragmentActivity fragmentActivity, GoodCommentListener goodCommentListener) {
+    public GoodCommentListP(FragmentActivity fragmentActivity, GoodCommentListener goodCommentListener) {
         setActivity(fragmentActivity);
         this.mGoodCommentListener = goodCommentListener;
     }
 
 
     public void setGoodComment(String goodId, int page, int limit) {
-        NetworkUtils.getNetworkUtils().getGoodEvaluate(goodId, String.valueOf(page), String.valueOf(limit), new OKHttpManager.StringCallBack() {
+        NetworkUtils.getNetworkUtils().getGoodEvaluateList(goodId, String.valueOf(page), String.valueOf(limit), new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-                ToastUtils.showToast(e.getMessage());
+                mGoodCommentListener.getCommentDataField();
             }
 
             @Override
             public void requestSuccess(String result) {
-                GoodCommentBean goodCommentBean = JSON.parseObject(result, GoodCommentBean.class);
+                GoodCommentListBean goodCommentBean = JSON.parseObject(result, GoodCommentListBean.class);
                 if (REQUEST_SUCCESS.equals(goodCommentBean.getStatus())) {
                     mGoodCommentListener.goodCommentData(goodCommentBean.getData());
                 } else {
                     ToastUtils.showToast(goodCommentBean.getErrorMsg());
+                    mGoodCommentListener.getCommentDataField();
                 }
             }
         });
     }
 
     public interface GoodCommentListener {
-        void goodCommentData(List<GoodCommentBean.DataBean> dataBean);
+        void goodCommentData(List<GoodCommentListBean.DataBean> dataBean);
+        void getCommentDataField();
     }
 }

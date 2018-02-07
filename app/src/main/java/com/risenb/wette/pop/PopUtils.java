@@ -2,6 +2,8 @@ package com.risenb.wette.pop;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,9 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.risenb.wette.R;
+import com.risenb.wette.beans.GoodDetailsBean;
 import com.risenb.wette.utils.ToastUtils;
 import com.risenb.wette.views.AutoFlowLayout;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import java.util.List;
 
 
 /**
@@ -27,8 +32,9 @@ public class PopUtils {
      */
     public static String selectedColorStyleResult = "";
     public static String selectedSizeStyleResult = "";
+    public static String valueId = "";
 
-    public static void showGoodsStyle(final Activity context, View contentView, String colorContent, String sizeContent, final GoodsSelectedStyleListener clickListener) {
+    public static void showGoodsStyle(final Activity context, View contentView, GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.pop_selected_style, null);
         final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
@@ -37,8 +43,29 @@ public class PopUtils {
         AutoFlowLayout alf_size = (AutoFlowLayout) layoutView.findViewById(R.id.alf_size);
         TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
 
-        showItems(alf_color_type, context, colorContent, 1);
-        showItems(alf_size, context, sizeContent, 2);
+
+        StringBuilder colors = new StringBuilder();
+        StringBuilder sizes = new StringBuilder();
+        List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
+        for (int i = 0; i < attrList.size(); i++) {
+            if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
+                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                for (int j = 0; j < attrList1.size(); j++) {
+                    colors.append(attrList1.get(j).getAttrName() + ",");
+                }
+            }
+
+            if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
+                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                for (int j = 0; j < attrList1.size(); j++) {
+                    sizes.append(attrList1.get(j).getAttrName() + ",");
+                }
+            }
+        }
+
+
+        showItems(alf_color_type, context, colors.toString(), 1);
+        showItems(alf_size, context, sizes.toString(), 2);
 
 
         tv_commit.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +73,51 @@ public class PopUtils {
             public void onClick(View view) {
                 clickListener.selectedResult(selectedColorStyleResult + selectedSizeStyleResult);
                 popupWindow.dismiss();
+            }
+        });
+
+        showPoPNormal(context, contentView, popupWindow, Gravity.BOTTOM);
+    }
+
+
+    public static void showGoodsStyle2(final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
+
+        View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.fragment_selected_style, null);
+        final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
+
+        RecyclerView rv_style = (RecyclerView) layoutView.findViewById(R.id.rv_style);
+        TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
+
+        LinearLayoutManager layout = new LinearLayoutManager(context);
+        layout.setAutoMeasureEnabled(true);
+        rv_style.setLayoutManager(layout);
+
+        GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), new GoodStyleAdapter.ValueAttrListener() {
+            @Override
+            public void valueResult(String result) {
+                if (TextUtils.isEmpty(valueId)) {
+                    valueId = result;
+                } else {
+                    valueId = valueId + ";" + result;
+                }
+            }
+        });
+        rv_style.setAdapter(goodStyleAdapter);
+
+
+        tv_commit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.selectedResult("[" + valueId + "]");
+                valueId = "";
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                valueId = "";
             }
         });
 
@@ -63,6 +135,7 @@ public class PopUtils {
      */
     private static void showItems(final AutoFlowLayout autoFlowLayout, final Activity context, String contents, final int type) {
         autoFlowLayout.removeAllViews();
+
         if (!TextUtils.isEmpty(contents)) {
             String pressTexts = contents.substring(0, contents.length() - 1);
             final String[] split = pressTexts.split(",");
@@ -168,7 +241,7 @@ public class PopUtils {
     }
 
     public interface GoodsSelectedStyleListener {
-        void selectedResult(String reslut);
+        void selectedResult(String result);
     }
 
 

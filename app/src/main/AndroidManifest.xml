@@ -142,7 +142,7 @@
         <!--商品列表-->
         <activity android:name=".ui.home.GoodListUI"/>
         <!--商品详情-->
-        <activity android:name=".ui.home.GoodDetailsUI"/>
+        <activity android:name=".ui.home.GoodDetailsUI" />
         <!--提交订单-->
         <activity android:name=".ui.home.CreateOrderUI"/>
         <!--评论商品-->

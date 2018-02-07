@@ -45,7 +45,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     private ArrayList<String> mLeftData;
     public SearchP mSearchP;
     public SearchGoodsListAdapter mSearchGoodsListAdapter;
-    public List<SearchBean.GoodsListBean> mGoodsList;
+    public List<SearchBean.DataBean.GoodsListBean> mGoodsList;
 
 
     @Override
@@ -113,7 +113,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     }
 
     @Override
-    public void searchData(SearchBean searchBean) {
+    public void searchData(SearchBean.DataBean searchBean) {
         mGoodsList = searchBean.getGoodsList();
         mSearchGoodsListAdapter.setNewData(mGoodsList);
     }

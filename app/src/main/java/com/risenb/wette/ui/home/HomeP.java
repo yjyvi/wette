@@ -3,11 +3,16 @@ package com.risenb.wette.ui.home;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.risenb.wette.beans.HomeBean;
-import com.risenb.wette.network.DataCallBack;
+import com.risenb.wette.network.OKHttpManager;
 import com.risenb.wette.ui.PresenterBase;
 import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
+
+import java.io.IOException;
+
+import okhttp3.Call;
 
 /**
  * @author yjyvi
@@ -26,26 +31,30 @@ public class HomeP extends PresenterBase {
 
 
     public void setHomeData() {
-        NetworkUtils.getNetworkUtils().getHomeData(new DataCallBack<HomeBean>() {
+        NetworkUtils.getNetworkUtils().getHomeData(new OKHttpManager.StringCallBack() {
             @Override
-            public void onSuccess(HomeBean result) {
-                if (TextUtils.equals(REQUEST_SUCCESS, result.getStatus())) {
-                    mHomeListener.homeDataSuccess(result);
+            public void requestFailure(Call call, IOException e) {
+                mHomeListener.requestField();
+            }
+
+            @Override
+            public void requestSuccess(String result) {
+
+                HomeBean homeBean = JSON.parseObject(result, HomeBean.class);
+
+                if (TextUtils.equals(REQUEST_SUCCESS, homeBean.getStatus())) {
+                    mHomeListener.homeDataSuccess(homeBean.getData());
                 } else {
-                    ToastUtils.showToast(result.getErrorMsg());
+                    ToastUtils.showToast(homeBean.getErrorMsg());
                     mHomeListener.requestField();
                 }
             }
 
-            @Override
-            public void onStatusError(String errorMsg) {
-                mHomeListener.requestField();
-            }
         });
     }
 
     public interface HomeListener {
-        void homeDataSuccess(HomeBean result);
+        void homeDataSuccess(HomeBean.DataBean result);
 
         void requestField();
     }

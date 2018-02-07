@@ -1,6 +1,7 @@
 package com.risenb.wette.ui.home.productDetial;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class GoodDetailFragment extends LazyLoadFragment {
     @Override
     protected void prepareData() {
 
+        String webDataUrl = getArguments().getString("webDataUrl");
+
         WebSettings settings = wb_content.getSettings();
         settings.setSupportZoom(false);
 
@@ -74,7 +77,10 @@ public class GoodDetailFragment extends LazyLoadFragment {
         });
 
 
-        wb_content.loadUrl("http://www.baidu.com");
+        if (TextUtils.isEmpty(webDataUrl)) {
+            webDataUrl="http://www.baidu.com";
+        }
+        wb_content.loadUrl(webDataUrl);
 
     }
 
@@ -85,9 +91,10 @@ public class GoodDetailFragment extends LazyLoadFragment {
      *
      * @return
      */
-    public static GoodDetailFragment newInstance() {
+    public static GoodDetailFragment newInstance(String webDataUrl) {
         Bundle bundle = new Bundle();
         GoodDetailFragment goodDetailFragment = new GoodDetailFragment();
+        bundle.putString("webDataUrl", webDataUrl);
         goodDetailFragment.setArguments(bundle);
         return goodDetailFragment;
     }

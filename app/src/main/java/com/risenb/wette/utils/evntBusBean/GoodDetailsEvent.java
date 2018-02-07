@@ -21,4 +21,14 @@ public class GoodDetailsEvent extends BaseEvent {
      * 传递默认地址
      */
     public static final int DEFAULT_ADDRESS = 1003;
+
+    /**
+     * 选择样式
+     */
+    public static final int SELECTED_STYLE = 1004;
+
+    /**
+     * 获取库存
+     */
+    public static final int SKU = 1005;
 }
