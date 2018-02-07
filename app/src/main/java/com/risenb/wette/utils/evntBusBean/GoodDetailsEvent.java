@@ -8,7 +8,17 @@ package com.risenb.wette.utils.evntBusBean;
 public class GoodDetailsEvent extends BaseEvent {
 
     /**
-     * 是否收藏
+     * 首页数据
      */
-    public static final int IS_COLLECTION = 1001;
+    public static final int GOOD_DATA = 1001;
+
+    /**
+     * 购买的商品数量
+     */
+    public static final int GOOD_NUM = 1002;
+
+    /**
+     * 传递默认地址
+     */
+    public static final int DEFAULT_ADDRESS = 1003;
 }

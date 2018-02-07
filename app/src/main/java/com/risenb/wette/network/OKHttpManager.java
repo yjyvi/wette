@@ -91,7 +91,7 @@ public class OKHttpManager {
      * @param params
      * @param callBack
      */
-    private void p_postAsync(String url, Map<String, String> params, final DataCallBack callBack) {
+    private void p_postAsync(final String url, Map<String, String> params, final DataCallBack callBack) {
         RequestBody requestBody = null;
 
         if (params == null) {
@@ -123,7 +123,7 @@ public class OKHttpManager {
 
                 try {
                     String result = response.body().string();
-                    Log.e("请求成功返回参数=", result);
+                    Log.e(url + "请求成功返回参数=", result);
                     deliverDataSuccess(result, callBack);
                 } catch (IOException e) {
                     deliverDataFailure(call, e, callBack);
@@ -132,7 +132,6 @@ public class OKHttpManager {
             }
         });
     }
-
 
 
     /**
@@ -164,7 +163,7 @@ public class OKHttpManager {
     //===================不经反射基类的网络请求========================================
 
 
-    private void p_postAsync(String url, Map<String, String> params, final StringCallBack callBack) {
+    private void p_postAsync(final String url, Map<String, String> params, final StringCallBack callBack) {
         RequestBody requestBody = null;
 
         if (params == null) {
@@ -196,7 +195,7 @@ public class OKHttpManager {
 
                 try {
                     String result = response.body().string();
-                    Log.e("请求成功返回参数=", result);
+                    Log.e(url+"请求成功返回参数=", result);
                     deliverDataSuccess(result, callBack);
                 } catch (IOException e) {
                     deliverDataFailure(call, e, callBack);
@@ -286,8 +285,6 @@ public class OKHttpManager {
     public static void postAsync(String url, Map<String, String> params, DataCallBack callBack) {
         getInstance().p_postAsync(url, params, callBack);
     }
-
-
 
 
     /**

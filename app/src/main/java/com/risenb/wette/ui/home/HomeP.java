@@ -32,13 +32,14 @@ public class HomeP extends PresenterBase {
                 if (TextUtils.equals(REQUEST_SUCCESS, result.getStatus())) {
                     mHomeListener.homeDataSuccess(result);
                 } else {
+                    ToastUtils.showToast(result.getErrorMsg());
                     mHomeListener.requestField();
                 }
             }
 
             @Override
             public void onStatusError(String errorMsg) {
-                ToastUtils.showToast(errorMsg);
+                mHomeListener.requestField();
             }
         });
     }

@@ -44,10 +44,15 @@
     <string name="evaluate">/goods/evaluate</string>
     <!--店铺详情-->
     <string name="shopDetail">/goods/shopDetail</string>
+
     <!--商品收藏或删除-->
     <string name="goodCollection">/userCenter/addOrDelCollection</string>
     <!--添加到购物车-->
     <string name="addCart">/cart/addCart</string>
+    <!--下单-->
+    <string name="createOrder">/order/createOrder</string>
+    <!--支付定单-->
+    <string name="payOrder">/order/payOrder</string>
 
 
     <!-- 收货地址 -->

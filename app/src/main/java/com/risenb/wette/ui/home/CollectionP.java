@@ -1,7 +1,5 @@
 package com.risenb.wette.ui.home;
 
-import android.support.v4.app.FragmentActivity;
-
 import com.alibaba.fastjson.JSON;
 import com.risenb.wette.beans.NetBaseBean;
 import com.risenb.wette.network.OKHttpManager;
@@ -16,29 +14,29 @@ import okhttp3.Call;
 /**
  * @author yjyvi
  * @data 2018/2/5.
+ * 收藏
  */
 
 public class CollectionP extends PresenterBase {
 
     private  CollectionListener mCollectionListener;
 
-    public CollectionP(FragmentActivity fragmentActivity, CollectionListener collectionListener){
+    public CollectionP( CollectionListener collectionListener){
         this.mCollectionListener = collectionListener;
-        setActivity(fragmentActivity);
     }
 
-    public void setCollection(String c, String operation,String collectionId,String dataId,String type){
-        NetworkUtils.getNetworkUtils().getCollection(c, operation, collectionId, dataId, type, new OKHttpManager.StringCallBack() {
+    public void setCollection( String operation,String dataId,String type){
+        NetworkUtils.getNetworkUtils().getCollection( operation, dataId, type, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-                ToastUtils.showToast(e.getMessage());
+                mCollectionListener.collectionField();
             }
 
             @Override
             public void requestSuccess(String result) {
                 NetBaseBean netBaseBean = JSON.parseObject(result,NetBaseBean.class);
                 if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
-                    mCollectionListener.collectionResult();
+                    mCollectionListener.collectionSuccess();
                 }else {
                     ToastUtils.showToast(netBaseBean.getMsg());
                     mCollectionListener.collectionField();
@@ -49,7 +47,7 @@ public class CollectionP extends PresenterBase {
 
 
     public interface CollectionListener{
-        void collectionResult();
+        void collectionSuccess();
         void collectionField();
     }
 

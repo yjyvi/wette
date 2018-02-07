@@ -175,6 +175,11 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
     }
 
     @Override
+    public void getDataField() {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.common_title_back:

@@ -1,6 +1,7 @@
 package com.risenb.wette.ui.home;
 
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.risenb.wette.beans.GoodDetailsBean;
@@ -26,17 +27,22 @@ public class GoodDetailP extends PresenterBase {
         this.mGoodsDetailsListener = productDetailsListener;
     }
 
-    public void setProductDetailsData(String goodsId, String userId) {
-        NetworkUtils.getNetworkUtils().getGoodDetails(goodsId, userId, new OKHttpManager.StringCallBack() {
+    public void setProductDetailsData(String goodsId) {
+        NetworkUtils.getNetworkUtils().getGoodDetails(goodsId, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-                ToastUtils.showToast(e.getMessage());
+                mGoodsDetailsListener.requestGoodsDataField();
             }
 
             @Override
             public void requestSuccess(String result) {
                 GoodDetailsBean goodDetailsBean = JSON.parseObject(result, GoodDetailsBean.class);
-                mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
+                if (TextUtils.equals(REQUEST_SUCCESS, goodDetailsBean.getStatus())) {
+                    mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
+                } else {
+                    ToastUtils.showToast(goodDetailsBean.getErrorMsg());
+                    mGoodsDetailsListener.requestGoodsDataField();
+                }
             }
         });
     }
@@ -44,5 +50,7 @@ public class GoodDetailP extends PresenterBase {
 
     public interface GoodsDetailsListener {
         void goodsData(GoodDetailsBean.DataBean dataBean);
+
+        void requestGoodsDataField();
     }
 }

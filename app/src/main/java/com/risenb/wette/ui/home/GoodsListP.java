@@ -1,6 +1,5 @@
 package com.risenb.wette.ui.home;
 
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -23,8 +22,7 @@ public class GoodsListP extends PresenterBase {
 
     private GoodsListListener mGoodsListListener;
 
-    public GoodsListP(FragmentActivity fragmentActivity, GoodsListListener goodsListListener) {
-        setActivity(fragmentActivity);
+    public GoodsListP(GoodsListListener goodsListListener) {
         this.mGoodsListListener = goodsListListener;
     }
 
@@ -36,14 +34,14 @@ public class GoodsListP extends PresenterBase {
                 if (TextUtils.equals(REQUEST_SUCCESS, goodsListBean.getStatus())) {
                     mGoodsListListener.resultGoodsListData(goodsListBean);
                 } else {
-                    ToastUtils.showToast(goodsListBean.getMsg());
+                    ToastUtils.showToast(goodsListBean.getErrorMsg());
                     mGoodsListListener.goodsListField();
                 }
             }
 
             @Override
             public void requestFailure(Call call, IOException e) {
-                ToastUtils.showToast(e.getMessage());
+                mGoodsListListener.goodsListField();
             }
         });
 

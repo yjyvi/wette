@@ -49,7 +49,7 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements Goo
     @Override
     protected void setControlBasis() {
         refreshLayout.setMyRefreshLayoutListener(this);
-        mGoodsListP = new GoodsListP(getActivity(),this);
+        mGoodsListP = new GoodsListP(this);
         mGoodsListP.setGoodsList(0,page,limit);
     }
 

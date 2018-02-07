@@ -1,6 +1,6 @@
 package com.risenb.wette.ui.home.productDetial;
 
-import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 
 import com.risenb.wette.beans.SearchBean;
 import com.risenb.wette.network.DataCallBack;
@@ -9,7 +9,6 @@ import com.risenb.wette.utils.NetworkUtils;
 import com.risenb.wette.utils.ToastUtils;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/3
  * 搜索商品
@@ -18,8 +17,7 @@ import com.risenb.wette.utils.ToastUtils;
 public class SearchP extends PresenterBase {
     private SearchGoodsListener mSearchGoodsListener;
 
-    public SearchP(FragmentActivity fragmentActivity, SearchGoodsListener searchGoodsListener) {
-        setActivity(fragmentActivity);
+    public SearchP(SearchGoodsListener searchGoodsListener) {
         this.mSearchGoodsListener = searchGoodsListener;
     }
 
@@ -28,17 +26,24 @@ public class SearchP extends PresenterBase {
         NetworkUtils.getNetworkUtils().getSearch(keyword, new DataCallBack<SearchBean>() {
             @Override
             public void onSuccess(SearchBean result) {
-                mSearchGoodsListener.searchData(result);
+                if (TextUtils.equals(REQUEST_SUCCESS, result.getStatus())) {
+                    mSearchGoodsListener.searchData(result);
+                } else {
+                    ToastUtils.showToast(result.getErrorMsg());
+                    mSearchGoodsListener.searchField();
+                }
             }
 
             @Override
             public void onStatusError(String errorMsg) {
-                ToastUtils.showToast(errorMsg);
+                mSearchGoodsListener.searchField();
             }
         });
     }
 
     public interface SearchGoodsListener {
         void searchData(SearchBean searchBean);
+
+        void searchField();
     }
 }

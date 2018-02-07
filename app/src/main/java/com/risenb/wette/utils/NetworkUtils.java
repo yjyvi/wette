@@ -89,11 +89,12 @@ public class NetworkUtils {
 
     /**
      * 商品详情
+     * @param goodsId
+     * @param httpBack
      */
-    public void getGoodDetails(String goodsId, String userId, OKHttpManager.StringCallBack httpBack) {
-        Map<String, String> params = new TreeMap<>();
+    public void getGoodDetails(String goodsId, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = getParams();
         params.put("goodsId", goodsId);
-        params.put("c", userId);
         OKHttpManager.postAsync(getUrl(R.string.goodsDetail), params, httpBack);
     }
 
@@ -115,7 +116,7 @@ public class NetworkUtils {
      */
     public void getShopDetail(String shopId, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
-        params.put("goodsId", shopId);
+        params.put("shopId", shopId);
         params.put(PAGE, page);
         params.put(LIMIT, limit);
         OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
@@ -124,19 +125,100 @@ public class NetworkUtils {
 
     /**
      * 商品、店铺收藏与取消收藏
+     *
+     * @param operation
+     * @param dataId
+     * @param type
+     * @param httpBack
      */
-    public void getCollection(String c, String operation, String collectionId, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
-        Map<String, String> params = new TreeMap<>();
-        params.put("c", c);
+    public void getCollection(String operation, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = getParams();
         params.put("operation", operation);
-        if (TextUtils.equals(operation, "2")) {
-            params.put("collectionId", collectionId);
-        } else {
-            params.put("dataId", dataId);
-            params.put("type", type);
-        }
+        params.put("dataId", dataId);
+        params.put("type", type);
 
         OKHttpManager.postAsync(getUrl(R.string.shopDetail), params, httpBack);
+    }
+
+    /**
+     * 查询库存
+     * @param goodsId
+     * @param properties
+     * @param httpBack
+     */
+    public void goodsSku(String goodsId, String properties,  OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        params.put("goodsId", goodsId);
+        params.put("properties", properties);
+        OKHttpManager.postAsync(getUrl(R.string.goodsSku), params, httpBack);
+    }
+
+
+    /**
+     * 添加到购物车
+     *
+     * @param shopId
+     * @param goodsId
+     * @param skuId
+     * @param addressId
+     * @param amount
+     * @param stringCallBack
+     */
+    public void addCart(String shopId, String goodsId, String skuId, String addressId, String amount, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("shopId", shopId);
+        params.put("goodsId", goodsId);
+        params.put("skuId", skuId);
+        params.put("addressId", addressId);
+        params.put("amount", amount);
+
+        OKHttpManager.postAsync(getUrl(R.string.addCart), params, stringCallBack);
+    }
+
+
+    /**
+     * 创建订单
+     *
+     * @param goods
+     * @param addressId
+     * @param stringCallBack
+     */
+    public void createOrder(String goods, String addressId, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("goods", goods);
+        params.put("addressId", addressId);
+        OKHttpManager.postAsync(getUrl(R.string.createOrder), params, stringCallBack);
+    }
+
+
+    /**
+     * 支付订单
+     *
+     * @param orderId
+     * @param payChannel
+     * @param stringCallBack
+     */
+    public void payOrder(String orderId, String payChannel, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("orderId", orderId);
+        params.put("payChannel", payChannel);
+        OKHttpManager.postAsync(getUrl(R.string.payOrder), params, stringCallBack);
+    }
+
+    /**
+     * 评价商品
+     *
+     * @param goodsId
+     * @param orderGid
+     * @param content
+     * @param stringCallBack
+     */
+    public void goodComment(String goodsId, String orderGid, String content, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("goodsId", goodsId);
+        params.put("orderGid", orderGid);
+        params.put("content", content);
+        OKHttpManager.postAsync(getUrl(R.string.evaluate), params, stringCallBack);
     }
 
 

@@ -203,7 +203,7 @@
             <TextView
                 android:id="@+id/tv_name"
                 style="@style/text_gray_30"
-                android:text="收货人：xxxx"
+                android:text="@string/default_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -211,7 +211,7 @@
                 android:id="@+id/tv_tel"
                 style="@style/text_gray_30"
                 android:layout_marginTop="24px"
-                android:text="联系方式：xxxxxxxxxx"
+                android:text="@string/default_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -220,7 +220,7 @@
                 style="@style/text_gray_30"
                 android:textColor="@color/gray_6"
                 android:layout_marginTop="24px"
-                android:text="收货地址：xxxx幽幽xxxxxxx"
+                android:text="@string/default_tel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
