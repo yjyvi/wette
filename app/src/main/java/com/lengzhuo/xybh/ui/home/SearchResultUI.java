@@ -15,7 +15,6 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.SearchGoodsListAdapter;
 import com.lengzhuo.xybh.beans.SearchBean;
 import com.lengzhuo.xybh.ui.BaseUI;
-import com.lengzhuo.xybh.ui.home.productDetial.SearchP;
 import com.lengzhuo.xybh.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -25,10 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/1
- *  搜索结果界面
+ * 搜索结果界面
  */
 @ContentView(R.layout.activity_search_result)
 public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListener {
@@ -46,6 +44,8 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     public SearchP mSearchP;
     public SearchGoodsListAdapter mSearchGoodsListAdapter;
     public List<SearchBean.DataBean.GoodsListBean> mGoodsList;
+    private int page = 1;
+    private int limit = 10;
 
 
     @Override
@@ -55,7 +55,6 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
 
     @Override
     protected void setControlBasis() {
-//        testData();
         leftVisible(R.mipmap.back);
         setTitle("搜索");
         title_back.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +65,6 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         });
     }
 
-    private void testData() {
-        mLeftData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mLeftData.add("商品列表名称商品列表名称商品列表名称" + i);
-        }
-    }
 
     @Override
     protected void prepareData() {
@@ -83,7 +76,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         String searchContent = intent.getStringExtra("searchContent");
         if (!TextUtils.isEmpty(searchContent)) {
             et_search.setText(searchContent);
-            mSearchP.setSearchData(searchContent);
+            mSearchP.setSearchData(searchContent, page, limit);
         }
 
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -102,7 +95,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
         rv_search_list.setLayoutManager(layout);
-        mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_good_list,mGoodsList);
+        mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_good_list, mGoodsList);
         rv_search_list.setAdapter(mSearchGoodsListAdapter);
     }
 

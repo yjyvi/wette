@@ -161,6 +161,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 break;
             case R.id.bt_pay:
                 PaymentMethodActivity.toActivity(view.getContext(), mOrderNo);
+                finish();
                 break;
             default:
                 break;
