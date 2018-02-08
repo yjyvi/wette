@@ -142,7 +142,7 @@
         <!--商品列表-->
         <activity android:name="com.lengzhuo.xybh.ui.home.GoodListUI"/>
         <!--商品详情-->
-        <activity android:name="com.lengzhuo.xybh.ui.home.GoodDetailsUI" />
+        <activity android:name="com.lengzhuo.xybh.ui.home.GoodDetailsUI"  android:launchMode="singleInstance"/>
         <!--提交订单-->
         <activity android:name="com.lengzhuo.xybh.ui.home.CreateOrderUI"/>
         <!--评论商品-->
@@ -188,6 +188,7 @@
         <activity android:name="com.lengzhuo.xybh.ui.home.ShopDetailUI"/>
         <!--商品搜索结果-->
         <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"/>
+        <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
 
     </application>
 

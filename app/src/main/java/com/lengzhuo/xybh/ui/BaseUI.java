@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
+import com.lengzhuo.xybh.ui.mine.LoginActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.UserManager;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.xutils.x;
@@ -28,6 +30,7 @@ import java.lang.reflect.Field;
 public abstract class BaseUI extends AutoLayoutActivity {
     private long exitTime = 0;
     protected MyApplication application;
+
     /**
      * 描述：返回
      */
@@ -44,7 +47,6 @@ public abstract class BaseUI extends AutoLayoutActivity {
     protected abstract void prepareData();
 
 
-
     /**
      * 描述：创建
      */
@@ -53,7 +55,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(getActivity());
         View back = findViewById(R.id.common_title_back);
-        if(back != null){
+        if (back != null) {
             back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -202,5 +204,19 @@ public abstract class BaseUI extends AutoLayoutActivity {
             iv_right.setVisibility(View.VISIBLE);
             iv_right.setImageResource(drawable);
         }
+    }
+
+
+    /**
+     * 是否登录
+     * @return
+     */
+    public boolean isLoginClick() {
+        if (!UserManager.isLogin()) {
+            ToastUtils.showToast(getResources().getString(R.string.login_hint));
+            LoginActivity.toActivity(getActivity());
+            return true;
+        }
+        return false;
     }
 }

@@ -56,6 +56,10 @@
     <string name="createOrder">/order/createOrder</string>
     <!--支付定单-->
     <string name="payOrder">/order/payOrder</string>
+    <!--评价晒单-->
+    <string name="orderGoods">/order/orderGoods</string>
+    <!--查看评价-->
+    <string name="viewEvaluate">/order/viewEvaluate</string>
 
 
     <!-- 收货地址 -->

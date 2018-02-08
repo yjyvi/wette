@@ -71,9 +71,11 @@ public class NetworkUtils {
     /**
      * 搜索商品
      */
-    public void getSearch(String keyword, OKHttpManager.StringCallBack httpBack) {
+    public void getSearch(String keyword,String page,String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("keyword", keyword);
+        params.put(PAGE, page);
+        params.put(LIMIT, limit);
         OKHttpManager.postAsync(getUrl(R.string.search), params, httpBack);
     }
 
@@ -203,6 +205,30 @@ public class NetworkUtils {
         params.put("orderId", orderId);
         params.put("payChannel", payChannel);
         OKHttpManager.postAsync(getUrl(R.string.payOrder), params, stringCallBack);
+    }
+
+
+    /**
+     * 评价晒单
+     * @param orderId
+     * @param stringCallBack
+     */
+    public void orderGoods(String orderId, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("orderId", orderId);
+        OKHttpManager.postAsync(getUrl(R.string.orderGoods), params, stringCallBack);
+    }
+
+
+    /**
+     * 查看商品评价
+     * @param orderGid
+     * @param stringCallBack
+     */
+    public void viewEvaluate(String orderGid, OKHttpManager.StringCallBack stringCallBack) {
+        Map<String, String> params = getParams();
+        params.put("orderGid", orderGid);
+        OKHttpManager.postAsync(getUrl(R.string.viewEvaluate), params, stringCallBack);
     }
 
     /**

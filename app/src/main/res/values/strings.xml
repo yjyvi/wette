@@ -72,5 +72,6 @@
     <string name="default_address">收货地址：%1$s</string>
     <string name="default_name">收货人：%1$s</string>
     <string name="default_tel">联系方式：%1$s</string>
+    <string name="login_hint">未登录，请求登录</string>
 
 </resources>

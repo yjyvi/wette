@@ -1,4 +1,4 @@
-package com.lengzhuo.xybh.ui.home.productDetial;
+package com.lengzhuo.xybh.ui.home;
 
 import android.text.TextUtils;
 
@@ -27,8 +27,8 @@ public class SearchP extends PresenterBase {
     }
 
 
-    public void setSearchData(String keyword) {
-        NetworkUtils.getNetworkUtils().getSearch(keyword, new OKHttpManager.StringCallBack() {
+    public void setSearchData(String keyword, int page, int limit) {
+        NetworkUtils.getNetworkUtils().getSearch(keyword, String.valueOf(page), String.valueOf(limit), new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 mSearchGoodsListener.searchField();
@@ -37,7 +37,7 @@ public class SearchP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
 
-                SearchBean searchBean = JSON.parseObject(result,SearchBean.class);
+                SearchBean searchBean = JSON.parseObject(result, SearchBean.class);
 
                 if (TextUtils.equals(REQUEST_SUCCESS, searchBean.getStatus())) {
                     mSearchGoodsListener.searchData(searchBean.getData());

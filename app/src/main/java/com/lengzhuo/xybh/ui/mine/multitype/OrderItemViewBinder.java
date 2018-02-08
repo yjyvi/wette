@@ -15,8 +15,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.order.OrderListBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
-import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
+import com.lengzhuo.xybh.ui.home.OrderGoodsCommentListUI;
 import com.lengzhuo.xybh.ui.mine.OrderActivity;
+import com.lengzhuo.xybh.ui.mine.PaymentMethodActivity;
 import com.lengzhuo.xybh.utils.GlideApp;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
@@ -42,7 +43,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
     static {
         ORDER_STATUS_MAP.put(1, new String[]{"待支付", "支付"});
         ORDER_STATUS_MAP.put(2, new String[]{"已取消", "再次购买"});
-        ORDER_STATUS_MAP.put(3, new String[]{"发货中", "取消"});
+        ORDER_STATUS_MAP.put(3, new String[]{"发货中", "完成"});
         ORDER_STATUS_MAP.put(4, new String[]{"已完成", "评价"});
     }
 
@@ -76,14 +77,18 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
                     case OrderActivity.ORDER_STATE_WAITING_EVA://待评价
                         event.setEventType(1);
                         break;
+                    case OrderActivity.ORDER_STATE_SENDING_GOODS://发货中
+                        event.setEventType(4);
+                        OrderGoodsCommentListUI.start(v.getContext(), String.valueOf(item.getOrderId()));
+                        break;
                     case OrderActivity.ORDER_STATE_WAITING_PAY://待支付
                         event.setEventType(2);
+                        PaymentMethodActivity.toActivity(v.getContext(), String.valueOf(item.getOrderId()));
                         break;
                     case OrderActivity.ORDER_STATE_CANCELED_ORDER://已取消
                         event.setEventType(3);
                         break;
-                    case OrderActivity.ORDER_STATE_SENDING_GOODS://发货中
-                        event.setEventType(4);
+                    default:
                         break;
                 }
                 event.setData(item);
@@ -112,7 +117,8 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
             helper.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodDetailsUI.start(v.getContext(),item.getGoodsId(),item.getShopId());
+                    //暂时先不跳转
+//                    GoodDetailsUI.start(v.getContext(), item.getGoodsId(), item.getShopId());
                 }
             });
         }

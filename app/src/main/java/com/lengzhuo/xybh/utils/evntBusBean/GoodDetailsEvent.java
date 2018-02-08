@@ -31,4 +31,9 @@ public class GoodDetailsEvent extends BaseEvent {
      * 获取库存
      */
     public static final int SKU = 1005;
+
+    /**
+     * 加入购物车
+     */
+    public static final int SELECTED_STYLE_ADD_CART = 1006;
 }

@@ -117,7 +117,12 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     @Override
     public void aliPaySuccess() {
+        payHint();
+    }
+
+    private void payHint() {
         ToastUtils.showToast("支付成功");
+        finish();
     }
 
     @Override
@@ -127,7 +132,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     @Override
     public void wechatPaySuccess() {
-        ToastUtils.showToast("支付成功");
+        payHint();
     }
 
     @Override
