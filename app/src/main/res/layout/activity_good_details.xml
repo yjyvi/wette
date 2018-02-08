@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="128px">
 
-        <com.risenb.wette.views.AutoMagicIndicator
+        <com.lengzhuo.xybh.views.AutoMagicIndicator
             android:layout_gravity="bottom|center_horizontal"
             android:id="@+id/ami_type"
             android:layout_width="350px"

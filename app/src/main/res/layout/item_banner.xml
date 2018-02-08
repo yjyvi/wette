@@ -40,14 +40,14 @@
                 android:textColor="@color/white"/>
 
             <!-- ViewPager 指示器 -->
-            <com.risenb.wette.views.MyViewPagerIndicator
+            <com.lengzhuo.xybh.views.MyViewPagerIndicator
                 android:id="@+id/vpi_item_banner_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="10px"
                 android:layout_marginRight="20px">
-            </com.risenb.wette.views.MyViewPagerIndicator>
+            </com.lengzhuo.xybh.views.MyViewPagerIndicator>
 
         </FrameLayout>
 
