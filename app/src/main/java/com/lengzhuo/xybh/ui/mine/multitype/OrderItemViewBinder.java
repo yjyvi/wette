@@ -18,6 +18,9 @@ import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.ui.mine.OrderActivity;
 import com.lengzhuo.xybh.utils.GlideApp;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -68,16 +71,23 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         holder.getView(R.id.bt_order_state).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BaseEvent<OrderListBean.DataBean> event = new BaseEvent<>();
                 switch (item.getOrderStatus()) {
                     case OrderActivity.ORDER_STATE_WAITING_EVA://待评价
+                        event.setEventType(1);
                         break;
                     case OrderActivity.ORDER_STATE_WAITING_PAY://待支付
+                        event.setEventType(2);
                         break;
                     case OrderActivity.ORDER_STATE_CANCELED_ORDER://已取消
+                        event.setEventType(3);
                         break;
                     case OrderActivity.ORDER_STATE_SENDING_GOODS://发货中
+                        event.setEventType(4);
                         break;
                 }
+                event.setData(item);
+                EventBus.getDefault().post(event);
             }
         });
     }

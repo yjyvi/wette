@@ -12,9 +12,12 @@ import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.mine.multitype.OrderItemViewBinder;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -142,4 +145,31 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
         refreshLayout.refreshComplete();
         refreshLayout.loadMoreComplete();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessageEvent(BaseEvent<OrderListBean.DataBean> event){
+        switch (event.getEventType()){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+    }
+
 }
