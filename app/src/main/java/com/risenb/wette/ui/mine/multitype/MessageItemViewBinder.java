@@ -10,6 +10,9 @@ import com.risenb.wette.R;
 import com.risenb.wette.beans.MessageBean;
 import com.risenb.wette.ui.BaseViewHolder;
 import com.risenb.wette.ui.mine.MessageDetailActivity;
+import com.risenb.wette.utils.evntBusBean.BaseEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -38,6 +41,13 @@ public class MessageItemViewBinder extends ItemViewBinder<MessageBean, BaseViewH
             @Override
             public void onClick(View v) {
                 MessageDetailActivity.toActivity(v.getContext(), item);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                EventBus.getDefault().post(new BaseEvent<MessageBean>().setData(item).setEventType(1));
+                return true;
             }
         });
     }
