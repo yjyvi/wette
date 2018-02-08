@@ -156,5 +156,39 @@ public class MessageBean implements Parcelable {
         public MessageBean[] newArray(int size) {
             return new MessageBean[size];
         }
+
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MessageBean bean = (MessageBean) o;
+
+        if (createTime != bean.createTime) return false;
+        if (isRead != bean.isRead) return false;
+        if (type != bean.type) return false;
+        if (userMsgId != bean.userMsgId) return false;
+        if (content != null ? !content.equals(bean.content) : bean.content != null) return false;
+        if (creator != null ? !creator.equals(bean.creator) : bean.creator != null) return false;
+        if (isDel != null ? !isDel.equals(bean.isDel) : bean.isDel != null) return false;
+        if (messageId != null ? !messageId.equals(bean.messageId) : bean.messageId != null)
+            return false;
+        return title != null ? title.equals(bean.title) : bean.title == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = content != null ? content.hashCode() : 0;
+        result = 31 * result + (int) (createTime ^ (createTime >>> 32));
+        result = 31 * result + (creator != null ? creator.hashCode() : 0);
+        result = 31 * result + (isDel != null ? isDel.hashCode() : 0);
+        result = 31 * result + isRead;
+        result = 31 * result + (messageId != null ? messageId.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + type;
+        result = 31 * result + userMsgId;
+        return result;
+    }
 }

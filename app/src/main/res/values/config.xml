@@ -77,6 +77,8 @@
 
     <!-- 购物车列表 -->
     <string name="shopping_cart_list">/cart/list</string>
+    <!-- 删除购物车商品 -->
+    <string name="shopping_cart_delete">/cart/delCart</string>
 
 
 </resources>

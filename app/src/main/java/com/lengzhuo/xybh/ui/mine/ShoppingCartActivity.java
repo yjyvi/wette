@@ -73,10 +73,13 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     @ViewInject(R.id.tv_settlement)
     private TextView tv_settlement;
 
+    @ViewInject(R.id.tv_delete)
+    private TextView tv_delete;
+
     //已选中的商品
     List<CommodityBean> mSelectedCommodityList = new ArrayList<>();
 
-    boolean isEdit = false;
+    boolean mIsEdit = false;
 
     @Override
     protected void back() {
@@ -86,7 +89,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     @Override
     protected void setControlBasis() {
         setTitle("购物车");
-        rightVisible("编辑");
+        rightVisible("管理");
         mAdapter = new MultiTypeAdapter();
         mItems = new Items();
         mAdapter.setItems(mItems);
@@ -167,7 +170,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         getShoppingCartList();
     }
 
-    @Event(value = {R.id.ll_all_selected, R.id.tv_settlement})
+    @Event(value = {R.id.ll_all_selected, R.id.tv_settlement, R.id.rl_right_title, R.id.tv_delete})
     private void onClick(View view) {
         if (view.getId() == R.id.ll_all_selected) {
             view.setTag(view.getTag().equals("selected") ? "unSelected" : "selected");
@@ -189,9 +192,45 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             }
             mAdapter.notifyDataSetChanged();
             onCommodityOrShopSelected();
+        } else if (view.getId() == R.id.rl_right_title) {
+            //编辑
+            mSelectedCommodityList.clear();
+            onCommodityOrShopSelected();
+            mIsEdit = !mIsEdit;
+            if (mIsEdit)
+                rightVisible("完成");
+            else
+                rightVisible("管理");
+            tv_delete.setVisibility(mIsEdit ? View.VISIBLE : View.GONE);
+        } else if (view.getId() == R.id.tv_delete) {
+            //删除
+            if (mSelectedCommodityList.isEmpty()) {
+                ToastUtils.showToast("请选择要删除的商品");
+                return;
+            }
+            String[] shoppingCartIdArray = new String[mSelectedCommodityList.size()];
+            for (int i = 0; i < mSelectedCommodityList.size(); i++) {
+                shoppingCartIdArray[i] = String.valueOf(mSelectedCommodityList.get(i).getCartId());
+            }
+            NetworkUtils.getNetworkUtils().deleteShoppingCarCommodity(shoppingCartIdArray, new CommonCallBack<String>() {
+                @Override
+                protected void onSuccess(String data) {
+                    ToastUtils.showToast("删除成功");
+                    mIsEdit = false;
+                    tv_delete.setVisibility(View.GONE);
+                    mSelectedCommodityList.clear();
+                    mItems.clear();
+                    getShoppingCartList();
+                }
+            });
+
         } else {
-            if(mSelectedCommodityList.isEmpty()){
+            if (mSelectedCommodityList.isEmpty()) {
                 ToastUtils.showToast("请选择商品");
+                return;
+            }
+            if (mIsEdit) {
+                ToastUtils.showToast("请完成编辑");
                 return;
             }
             //结算
@@ -206,7 +245,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 orderGoodsBeanList.add(goodsBean);
             }
 
-            CreateOrderUI.start(this,null, JSON.toJSONString(orderGoodsBeanList));
+            CreateOrderUI.start(this, null, JSON.toJSONString(orderGoodsBeanList));
         }
     }
 

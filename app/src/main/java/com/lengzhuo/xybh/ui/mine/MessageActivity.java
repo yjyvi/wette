@@ -1,6 +1,8 @@
 package com.lengzhuo.xybh.ui.mine;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +15,13 @@ import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.mine.multitype.MessageItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
+import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -47,6 +53,8 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
     private MultiTypeAdapter mAdapter;
 
     int mPageIndex = 1;
+
+    private AlertDialog mDeleteMessageDialog;
 
     @Override
     protected void back() {
@@ -87,6 +95,46 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, MessageActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessageEvent(final BaseEvent<MessageBean> event) {
+        new AlertDialog.Builder(this)
+                .setMessage("确定要删除?")
+                .setTitle("提示")
+                .setPositiveButton("", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        NetworkUtils.getNetworkUtils().deleteMessage(event.getData().getMessageId(), new CommonCallBack<String>() {
+                            @Override
+                            protected void onSuccess(String data) {
+                                ToastUtils.showToast("删除成功!");
+                                mItems.remove(event.getData());
+                                mAdapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override

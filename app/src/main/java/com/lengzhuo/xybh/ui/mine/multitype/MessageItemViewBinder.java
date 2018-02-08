@@ -10,6 +10,9 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.MessageBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.mine.MessageDetailActivity;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -38,6 +41,13 @@ public class MessageItemViewBinder extends ItemViewBinder<MessageBean, BaseViewH
             @Override
             public void onClick(View v) {
                 MessageDetailActivity.toActivity(v.getContext(), item);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                EventBus.getDefault().post(new BaseEvent<MessageBean>().setData(item).setEventType(1));
+                return true;
             }
         });
     }
