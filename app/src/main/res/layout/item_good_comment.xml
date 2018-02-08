@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.risenb.wette.views.CircleImageView
+        <com.lengzhuo.xybh.views.CircleImageView
             android:id="@+id/iv_user_icon"
             android:layout_width="80px"
             android:src="@color/gray"

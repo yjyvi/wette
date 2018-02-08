@@ -9,7 +9,7 @@
               android:orientation="horizontal">
 
 
-    <com.risenb.wette.views.CircleImageView
+    <com.lengzhuo.xybh.views.CircleImageView
         android:id="@+id/iv_user_icon"
         android:layout_width="100px"
         android:src="@color/gray"

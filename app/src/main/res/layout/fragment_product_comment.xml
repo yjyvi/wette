@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.risenb.wette.views.refreshlayout.MyRefreshLayout
+    <com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout
         android:id="@+id/rv_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,5 +13,5 @@
             android:id="@+id/rv_goods_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.risenb.wette.views.refreshlayout.MyRefreshLayout>
+    </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
 </LinearLayout>

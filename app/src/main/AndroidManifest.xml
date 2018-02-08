@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.risenb.wette">
+    package="com.lengzhuo.xybh">
 
     <!-- 可用网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -93,7 +93,7 @@
 
 
     <application
-        android:name="com.risenb.wette.MyApplication"
+        android:name="com.lengzhuo.xybh.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -106,7 +106,7 @@
         <!-- 兼容android 7.0 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.risenb.wette.provider"
+            android:authorities="com.lengzhuo.xybh.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -123,7 +123,7 @@
             android:value="1334" />
 
         <!--启动界面-->
-        <activity android:name=".ui.HomeTableUI"
+        <activity android:name="com.lengzhuo.xybh.ui.HomeTableUI"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTask"
                   android:windowSoftInputMode="adjustPan">
@@ -138,56 +138,56 @@
         <!--<activity android:name=".ui.HomeTableUI" android:launchMode="singleTask"/>-->
 
         <!--向导界面-->
-        <activity android:name=".ui.GuideUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.GuideUI"/>
         <!--商品列表-->
-        <activity android:name=".ui.home.GoodListUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.GoodListUI"/>
         <!--商品详情-->
-        <activity android:name=".ui.home.GoodDetailsUI" />
+        <activity android:name="com.lengzhuo.xybh.ui.home.GoodDetailsUI" />
         <!--提交订单-->
-        <activity android:name=".ui.home.CreateOrderUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.CreateOrderUI"/>
         <!--评论商品-->
-        <activity android:name=".ui.home.CommentOrderUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.CommentOrderUI"/>
 
         <!-- 登录 -->
-        <activity android:name=".ui.mine.LoginActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.LoginActivity"/>
         <!-- 注册 -->
-        <activity android:name=".ui.mine.RegisterActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.RegisterActivity"/>
         <!-- 找回密码 -->
-        <activity android:name=".ui.mine.GetBackPwdActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.GetBackPwdActivity"/>
         <!-- 绑定手机 -->
-        <activity android:name=".ui.mine.BindPhoneNumberActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.BindPhoneNumberActivity"/>
         <!-- 账户设置 -->
-        <activity android:name=".ui.mine.AccountSettingActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.AccountSettingActivity"/>
         <!-- 个人信息 -->
-        <activity android:name=".ui.mine.PersonalInformationActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.PersonalInformationActivity"/>
         <!-- 修改昵称 -->
-        <activity android:name=".ui.mine.ModifyNickNameActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.ModifyNickNameActivity"/>
         <!-- 修改手机号 -->
-        <activity android:name=".ui.mine.ModifyPhoneNumberActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.ModifyPhoneNumberActivity"/>
         <!-- 修改密码 -->
-        <activity android:name=".ui.mine.ModifyPwdActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.ModifyPwdActivity"/>
         <!-- 反馈 -->
-        <activity android:name=".ui.mine.FeedbackActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.FeedbackActivity"/>
         <!-- 收货地址 -->
-        <activity android:name=".ui.mine.AddressListActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.AddressListActivity"/>
         <!-- 消息 -->
-        <activity android:name=".ui.mine.MessageActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.MessageActivity"/>
         <!-- 消息详情 -->
-        <activity android:name=".ui.mine.MessageDetailActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.MessageDetailActivity"/>
         <!-- 收藏 -->
-        <activity android:name=".ui.mine.CollectionActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.CollectionActivity"/>
         <!-- 我的订单 -->
-        <activity android:name=".ui.mine.OrderActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.OrderActivity"/>
         <!-- 购物车 -->
-        <activity android:name=".ui.mine.ShoppingCartActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.ShoppingCartActivity"/>
         <!-- 支付方式 -->
-        <activity android:name=".ui.mine.PaymentMethodActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.PaymentMethodActivity"/>
 
-        <activity android:name=".ui.mine.EditAddressActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.EditAddressActivity"/>
         <!--店铺-->
-        <activity android:name=".ui.home.ShopDetailUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.ShopDetailUI"/>
         <!--商品搜索结果-->
-        <activity android:name=".ui.home.SearchResultUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"/>
 
     </application>
 

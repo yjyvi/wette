@@ -5,7 +5,7 @@
              android:background="@color/transparent"
               android:orientation="vertical">
     <!--主页面-->
-    <com.risenb.wette.views.MyViewPager
+    <com.lengzhuo.xybh.views.MyViewPager
         android:id="@+id/tab_pager"
         android:layout_width="match_parent"
         android:layout_marginBottom="98px"
