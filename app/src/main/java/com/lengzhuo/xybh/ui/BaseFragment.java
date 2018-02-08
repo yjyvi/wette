@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
+import com.lengzhuo.xybh.ui.mine.LoginActivity;
+import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.UserManager;
 
 import org.xutils.x;
 
@@ -155,5 +158,18 @@ public abstract class BaseFragment extends Fragment {
             iv_right.setVisibility(View.VISIBLE);
             iv_right.setImageResource(drawable);
         }
+    }
+
+    /**
+     * 是否登录
+     * @return
+     */
+    public boolean isLoginClick() {
+        if (!UserManager.isLogin()) {
+            ToastUtils.showToast(getResources().getString(R.string.login_hint));
+            LoginActivity.toActivity(getActivity());
+            return true;
+        }
+        return false;
     }
 }

@@ -25,7 +25,6 @@ import com.lengzhuo.xybh.ui.home.AddCartP;
 import com.lengzhuo.xybh.ui.home.CreateOrderUI;
 import com.lengzhuo.xybh.ui.home.GoodsSkuP;
 import com.lengzhuo.xybh.ui.mine.AddressListActivity;
-import com.lengzhuo.xybh.ui.mine.LoginActivity;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
@@ -200,6 +199,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 stylePop();
                 break;
             case R.id.ll_selected_address:
+                if (isLoginClick()) return;
                 //选择地址
                 AddressListActivity.toActivity(view.getContext());
                 break;
@@ -213,6 +213,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 break;
         }
     }
+
+
+
 
 
     /**
@@ -260,6 +263,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 }
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
+                stylePop();
+                break;
+            case GoodDetailsEvent.SELECTED_STYLE_ADD_CART:
                 isAddCart = true;
                 stylePop();
                 break;
@@ -300,7 +306,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 for (AddressBean datum : data) {
                     if (1 == datum.getIsDefault()) {
                         mAddressBean = datum;
-                        mAddressId=datum.getAddressId();
+                        mAddressId = datum.getAddressId();
                         tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
                         tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
                         tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
@@ -316,11 +322,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             return;
         }
 
-        if (!UserManager.isLogin()) {
-            ToastUtils.showToast("未登录，请求登录");
-            LoginActivity.toActivity(getActivity());
-            return;
-        }
+        if (isLoginClick()) return;
 
         if (isAddCart) {
             if (mDataBean != null) {
@@ -350,11 +352,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
     @Override
     public void addCartSuccess() {
-
+        ToastUtils.showToast("添加成功");
     }
 
     @Override
     public void addCartField() {
-
     }
 }

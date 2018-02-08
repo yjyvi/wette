@@ -94,6 +94,16 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        mGoodsId = getIntent().getStringExtra("goodsId");
+        mShopId = getIntent().getStringExtra("shopId");
+
+        mProductDetailP.setProductDetailsData(mGoodsId);
+    }
+
+    @Override
     protected void prepareData() {
 
         mGoodsId = getIntent().getStringExtra("goodsId");
@@ -183,18 +193,24 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
             R.id.tv_pay
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
+
+
+
         switch (view.getId()) {
             case R.id.iv_back:
                 back();
                 break;
             case R.id.iv_cart:
                 //购物车
+                if (isLoginClick()) return;
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
             case R.id.ll_shop:
                 ShopDetailUI.start(view.getContext(), mShopId);
                 break;
             case R.id.ll_collection:
+                if (isLoginClick()) return;
+
                 if (!ll_collection.isSelected()) {
                     ll_collection.setSelected(true);
                     operation = "1";
@@ -205,7 +221,11 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
                 mCollectionP.setCollection(operation, mGoodsId, "1");
                 break;
             case R.id.tv_join_cart:
+                if (isLoginClick()) return;
+                EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.SELECTED_STYLE_ADD_CART));
+                break;
             case R.id.tv_pay:
+                if (isLoginClick()) return;
                 EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.SELECTED_STYLE));
                 break;
             default:
