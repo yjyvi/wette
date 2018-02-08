@@ -97,11 +97,13 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
 
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
 
         mProductDetailP.setProductDetailsData(mGoodsId);
+
     }
 
     @Override
