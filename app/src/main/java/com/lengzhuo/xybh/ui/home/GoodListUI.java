@@ -19,7 +19,6 @@ import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +41,6 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
     private RelativeLayout common_title_back;
 
     public GoodListAdapter mGoodListAdapter;
-    private ArrayList<String> mLeftData;
     public GoodsListP mGoodsListP;
     private int page = 1;
     private int limit = 10;
@@ -75,7 +73,8 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
         mGoodListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodDetailsUI.start(view.getContext(), String.valueOf(mGoodsList.get(position).getGoodsId()), String.valueOf(mGoodsList.get(position).getShopId()));
+                List<GoodsListBean.DataBean> data = mGoodListAdapter.getData();
+                GoodDetailsUI.start(view.getContext(), String.valueOf(data.get(position).getGoodsId()), String.valueOf(data.get(position).getShopId()));
             }
         });
 
@@ -94,12 +93,11 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
 
     @Override
     public void resultGoodsListData(GoodsListBean result) {
-        mGoodsList = result.getData();
         refreshLayout.refreshComplete();
         refreshLayout.loadMoreComplete();
 
         if (page == 1) {
-            mGoodListAdapter.setNewData(mGoodsList);
+            mGoodListAdapter.setNewData(result.getData());
         } else {
             if (result.getData().size() > 0) {
                 mGoodListAdapter.addData(result.getData());
