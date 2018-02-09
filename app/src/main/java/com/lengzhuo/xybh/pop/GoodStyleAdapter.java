@@ -62,7 +62,7 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
                         mAttrList.put(item.getAttrId(), view);
                         view.setSelected(true);
                         if (item.getAttrList() != null && item.getAttrList().size() > 0) {
-                            mValueAttrListener.valueResult(item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
+                            mValueAttrListener.valueResult(item.getAttrId(), item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
                         }
                     }
                 }
@@ -73,7 +73,7 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
 
 
     public interface ValueAttrListener {
-        void valueResult(String result);
+        void valueResult(int id, String result);
     }
 
 

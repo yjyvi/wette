@@ -49,7 +49,7 @@ public class MineFragment extends LazyLoadFragment {
     @Override
     public void onResume() {
         super.onResume();
-        isLoginClick();
+        isLogin();
     }
 
     @Override

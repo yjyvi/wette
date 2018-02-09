@@ -19,6 +19,9 @@ import com.lengzhuo.xybh.views.AutoFlowLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 
 /**
@@ -32,6 +35,8 @@ public class PopUtils {
      */
     public static String selectedColorStyleResult = "";
     public static String selectedSizeStyleResult = "";
+
+    public static Map<Integer, String> valueList = new TreeMap();
     public static String valueId = "";
 
     public static void showGoodsStyle(final Activity context, View contentView, GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
@@ -94,12 +99,8 @@ public class PopUtils {
 
         GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), new GoodStyleAdapter.ValueAttrListener() {
             @Override
-            public void valueResult(String result) {
-                if (TextUtils.isEmpty(valueId)) {
-                    valueId = result;
-                } else {
-                    valueId = valueId + ";" + result;
-                }
+            public void valueResult(int id, String result) {
+                valueList.put(id, result);
             }
         });
         rv_style.setAdapter(goodStyleAdapter);
@@ -108,7 +109,18 @@ public class PopUtils {
         tv_commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickListener.selectedResult("[" + valueId + "]");
+
+                Set<Map.Entry<Integer, String>> entries = valueList.entrySet();
+
+                for (Map.Entry<Integer, String> integerStringEntry : valueList.entrySet()) {
+                    integerStringEntry.getValue();
+                    integerStringEntry.getKey();
+                    valueId = valueId + ";" + valueList.get(integerStringEntry.getKey());
+                }
+
+
+                clickListener.selectedResult("[" + valueId.substring(1, valueId.length()) + "]");
+                valueList.clear();
                 valueId = "";
                 popupWindow.dismiss();
             }
