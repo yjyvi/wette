@@ -1,6 +1,8 @@
 package com.lengzhuo.xybh.ui.mine;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -82,6 +84,7 @@ public class MineFragment extends LazyLoadFragment {
             R.id.iv_shopping_cart,
             R.id.fl_collection_commodity,
             R.id.fl_collection_shop,
+            R.id.fl_customer_service
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
 
@@ -131,8 +134,13 @@ public class MineFragment extends LazyLoadFragment {
             case R.id.iv_shopping_cart:
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
+            case R.id.fl_customer_service:
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15117934180"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
             case R.id.tv_exit_login:
-                if(mExitLoginDialog == null) {
+                if (mExitLoginDialog == null) {
                     mExitLoginDialog = new AlertDialog.Builder(getContext())
                             .setTitle("提示")
                             .setMessage("确定要退出登录？")
@@ -141,7 +149,7 @@ public class MineFragment extends LazyLoadFragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     UserManager.clearUser();
                                     isLogin();
-                                    sv_mine.smoothScrollTo(0,0);
+                                    sv_mine.smoothScrollTo(0, 0);
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {

@@ -307,6 +307,7 @@
                         android:orientation="horizontal">
 
                     <FrameLayout
+                            android:id="@+id/fl_customer_service"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
