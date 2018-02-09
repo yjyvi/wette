@@ -86,17 +86,27 @@
     </FrameLayout>
 
 
-    <com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout
-        android:id="@+id/rv_refresh"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="129px"
+        android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_home"
+        <com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout
+            android:id="@+id/rv_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-    </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
+            android:layout_marginTop="129px"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+        </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
+
+        <include layout="@layout/common_no_data_list"/>
+
+    </LinearLayout>
+
 
 </FrameLayout>

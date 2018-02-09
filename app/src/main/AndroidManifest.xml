@@ -189,6 +189,7 @@
         <!--商品搜索结果-->
         <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"/>
         <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
+        <activity android:name=".ui.home.AddressSelectedUi"/>
 
     </application>
 

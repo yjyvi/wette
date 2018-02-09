@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.SearchGoodsListAdapter;
 import com.lengzhuo.xybh.beans.SearchBean;
@@ -37,6 +38,9 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     @ViewInject(R.id.common_title_back)
     private RelativeLayout title_back;
 
+    @ViewInject(R.id.tv_num)
+    private TextView tv_num;
+
     @ViewInject(R.id.et_search)
     private EditText et_search;
 
@@ -46,6 +50,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     public List<SearchBean.DataBean.GoodsListBean> mGoodsList;
     private int page = 1;
     private int limit = 10;
+    public String mSearchContent;
 
 
     @Override
@@ -73,10 +78,9 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
 
 
         Intent intent = getIntent();
-        String searchContent = intent.getStringExtra("searchContent");
-        if (!TextUtils.isEmpty(searchContent)) {
-            et_search.setText(searchContent);
-            mSearchP.setSearchData(searchContent, page, limit);
+        mSearchContent = intent.getStringExtra("searchContent");
+        if (!TextUtils.isEmpty(mSearchContent)) {
+            mSearchP.setSearchData(mSearchContent, page, limit);
         }
 
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -86,6 +90,8 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
                     ToastUtils.showToast("请输入搜索关键字");
                 } else {
                     //搜索接口
+
+                    mSearchP.setSearchData(mSearchContent, page, limit);
                     et_search.setText("");
                 }
                 return true;
@@ -97,6 +103,14 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
         rv_search_list.setLayoutManager(layout);
         mSearchGoodsListAdapter = new SearchGoodsListAdapter(R.layout.item_good_list, mGoodsList);
         rv_search_list.setAdapter(mSearchGoodsListAdapter);
+        mSearchGoodsListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodDetailsUI.start(view.getContext(),
+                        String.valueOf(mGoodsList.get(position).getGoodsId()),
+                        String.valueOf(mGoodsList.get(position).getShopId()));
+            }
+        });
     }
 
     public static void start(Context context, String searchContent) {
@@ -109,6 +123,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     public void searchData(SearchBean.DataBean searchBean) {
         mGoodsList = searchBean.getGoodsList();
         mSearchGoodsListAdapter.setNewData(mGoodsList);
+        tv_num.setText(String.valueOf(searchBean.getGoodsList().size() + "个结果"));
     }
 
     @Override

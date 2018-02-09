@@ -45,6 +45,7 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
     private int page = 1;
     private int limit = 10;
     private List<GoodsListBean.DataBean> mGoodsList;
+    public int mCategoryId;
 
     @Override
     protected void back() {
@@ -62,10 +63,12 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
     @Override
     protected void prepareData() {
 
+        mCategoryId = getIntent().getIntExtra("categoryId", 0);
+
         refreshLayout.setMyRefreshLayoutListener(this);
 
         mGoodsListP = new GoodsListP( this);
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(mCategoryId, page, limit);
 
         rv_good_list.setLayoutManager(new GridLayoutManager(this, 2));
         mGoodListAdapter = new GoodListAdapter(R.layout.item_good_list, mGoodsList);
@@ -86,8 +89,9 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
         });
     }
 
-    public static void start(Context context) {
+    public static void start(Context context, int categoryId) {
         Intent starter = new Intent(context, GoodListUI.class);
+        starter.putExtra("categoryId",categoryId);
         context.startActivity(starter);
     }
 

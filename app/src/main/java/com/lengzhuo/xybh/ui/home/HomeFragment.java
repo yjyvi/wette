@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,7 +28,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 /**
- *
  * @author yjyvi
  * @date 2018/1/30
  * 首页
@@ -46,6 +46,9 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @ViewInject(R.id.rl_right)
     private RelativeLayout rl_cart;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
 
     @ViewInject(R.id.et_search)
     private EditText et_search;
@@ -69,6 +72,9 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
         rl_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLoginClick()) {
+                    return;
+                }
                 ShoppingCartActivity.toActivity(view.getContext());
             }
         });
@@ -76,7 +82,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
         refreshLayout.setMyRefreshLayoutListener(this);
 
         mHomeP = new HomeP(getActivity(), this);
-        mGoodsListP = new GoodsListP( this);
+        mGoodsListP = new GoodsListP(this);
         mHomeP.setHomeData();
         mGoodsListP.setGoodsList(0, page, limit);
     }
@@ -149,10 +155,10 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
             if (result.getData().size() > 0) {
                 goodsListBean.addAll(result.getData());
                 mHomeAdapter.setGoodsListBean(goodsListBean);
-            }else {
+                mHomeAdapter.notifyDataSetChanged();
+            } else {
                 ToastUtils.showToast("没有更多数据了");
             }
-            mHomeAdapter.notifyDataSetChanged();
         }
     }
 

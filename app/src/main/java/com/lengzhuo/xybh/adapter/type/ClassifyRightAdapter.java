@@ -32,7 +32,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean
 
 
     @Override
-    protected void convert(com.lengzhuo.xybh.ui.BaseViewHolder helper, ClassifyBean.DataBean.ListBeanX item) {
+    protected void convert(com.lengzhuo.xybh.ui.BaseViewHolder helper, final ClassifyBean.DataBean.ListBeanX item) {
         RecyclerView rv_goods = helper.getView(R.id.rv_goods);
         GridLayoutManager layout = new GridLayoutManager(helper.itemView.getContext(), 3);
         layout.setAutoMeasureEnabled(true);
@@ -58,7 +58,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ToastUtils.showToast(String.valueOf(position));
-                GoodListUI.start(view.getContext());
+                GoodListUI.start(view.getContext(),item.getCategoryId());
             }
         });
 

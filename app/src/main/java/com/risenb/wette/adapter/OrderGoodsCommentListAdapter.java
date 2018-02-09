@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lengzhuo.xybh.R;
-import com.lengzhuo.xybh.beans.OrderGoodsCommentLisBean;
+import com.lengzhuo.xybh.beans.OrderGoodsBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.CommentOrderUI;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
@@ -20,14 +20,14 @@ import java.util.List;
  * @data 2018/2/8.
  */
 
-public class OrderGoodsCommentListAdapter extends BaseQuickAdapter<OrderGoodsCommentLisBean.DataBean, BaseViewHolder> {
+public class OrderGoodsCommentListAdapter extends BaseQuickAdapter<OrderGoodsBean.DataBean, BaseViewHolder> {
 
-    public OrderGoodsCommentListAdapter(int layoutResId, @Nullable List<OrderGoodsCommentLisBean.DataBean> data) {
+    public OrderGoodsCommentListAdapter(int layoutResId, @Nullable List<OrderGoodsBean.DataBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final OrderGoodsCommentLisBean.DataBean item) {
+    protected void convert(BaseViewHolder helper, final OrderGoodsBean.DataBean item) {
         helper.setText(R.id.tv_goods_name, item.getGoodsName());
         GlideImgUtils.loadImg(helper.itemView.getContext(), item.getCover(), (ImageView) helper.getView(R.id.iv_good_img));
         TextView tv_state = helper.getView(R.id.tv_state);
