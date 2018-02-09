@@ -18,7 +18,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/1
  * 评价订单
@@ -50,6 +49,10 @@ public class CommentOrderUI extends BaseUI implements CommentOrderP.CommentOrder
     @Override
     protected void prepareData() {
 
+
+        final String goodsId = getIntent().getStringExtra("goodsId");
+        final String orderGid = getIntent().getStringExtra("orderGid");
+
         mCommentOrderP = new CommentOrderP(this);
 
         common_title_back.setOnClickListener(new View.OnClickListener() {
@@ -73,19 +76,21 @@ public class CommentOrderUI extends BaseUI implements CommentOrderP.CommentOrder
             @Override
             public void onClick(View view) {
                 String content = et_content.getText().toString().trim();
-//                mCommentOrderP.setCommentOrder();
+                mCommentOrderP.setCommentOrder(goodsId, orderGid, content);
             }
         });
     }
 
-    public static void start(Context context) {
+    public static void start(Context context, String goodsId, String orderGid) {
         Intent starter = new Intent(context, CommentOrderUI.class);
+        starter.putExtra("goodsId", goodsId);
+        starter.putExtra("orderGid", orderGid);
         context.startActivity(starter);
     }
 
     @Override
     public void commentSuccess() {
-
+        finish();
     }
 
     @Override

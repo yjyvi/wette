@@ -32,17 +32,17 @@ public class OrderGoodsCommentListAdapter extends BaseQuickAdapter<OrderGoodsBea
         GlideImgUtils.loadImg(helper.itemView.getContext(), item.getCover(), (ImageView) helper.getView(R.id.iv_good_img));
         TextView tv_state = helper.getView(R.id.tv_state);
         if (1 == item.getIsEvaluate()) {
-            tv_state.setText("评价");
-        } else {
             tv_state.setText("查看");
+        } else {
+            tv_state.setText("评价");
         }
         tv_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (1 == item.getIsEvaluate()) {
-                    CommentOrderUI.start(view.getContext());
-                }else {
-                    GoodDetailsUI.start(view.getContext(),item.getGoodsId(),item.getShopId(),3);
+                    GoodDetailsUI.start(view.getContext(), item.getGoodsId(), item.getShopId(), 3);
+                } else {
+                    CommentOrderUI.start(view.getContext(),item.getGoodsId(), String.valueOf(item.getOrderGid()));
                 }
             }
         });
