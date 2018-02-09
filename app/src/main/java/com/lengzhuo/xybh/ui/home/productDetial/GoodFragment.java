@@ -215,9 +215,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     }
 
 
-
-
-
     /**
      * 选择商品规格样式
      */
@@ -263,6 +260,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 }
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
+                isAddCart = false;
                 stylePop();
                 break;
             case GoodDetailsEvent.SELECTED_STYLE_ADD_CART:
@@ -347,7 +345,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
     @Override
     public void requestSkuField() {
-
+        ToastUtils.showToast("查询库存失败");
     }
 
     @Override
@@ -357,5 +355,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
     @Override
     public void addCartField() {
+        ToastUtils.showToast("添加购物车失败");
     }
 }

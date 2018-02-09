@@ -21,6 +21,7 @@ public class OrderGoodsCommentListUI extends BaseUI {
 
     @ViewInject(R.id.rv_order_goods_list)
     private RecyclerView rv_order_goods_list;
+    public OrderGoodsCommentListAdapter mOrderGoodsCommentListAdapter;
 
     @Override
     protected void back() {
@@ -36,8 +37,9 @@ public class OrderGoodsCommentListUI extends BaseUI {
 
     @Override
     protected void prepareData() {
-        OrderGoodsCommentListAdapter orderGoodsCommentListAdapter = new OrderGoodsCommentListAdapter(R.layout.item_order_goods_comment_list, null);
-        rv_order_goods_list.setAdapter(orderGoodsCommentListAdapter);
+        mOrderGoodsCommentListAdapter = new OrderGoodsCommentListAdapter(R.layout.item_order_goods_comment_list, null);
+        rv_order_goods_list.setAdapter(mOrderGoodsCommentListAdapter);
+
     }
 
 

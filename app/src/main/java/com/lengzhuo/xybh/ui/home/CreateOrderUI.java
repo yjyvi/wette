@@ -56,6 +56,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     public CreateOrderP mCreateOrderP;
     public String mGoods;
     private String mOrderNo;
+    private int mAddressId;
 
     @Override
     protected void back() {
@@ -79,7 +80,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
         if (mAddressBean != null) {
             initViewData();
-        }else {
+        } else {
             getAddressList();
         }
 
@@ -111,6 +112,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 for (AddressBean datum : data) {
                     if (1 == datum.getIsDefault()) {
                         mAddressBean = datum;
+                        mAddressId = datum.getAddressId();
                         initViewData();
                     }
                 }
@@ -122,13 +124,12 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
      * 生成订单
      */
     private void createOrder() {
-        if (mAddressBean != null) {
-            mCreateOrderP.setCreateOrder(mGoods, String.valueOf(mAddressBean.getAddressId()));
-        }
+        mCreateOrderP.setCreateOrder(mGoods, String.valueOf(mAddressId));
     }
 
     /**
      * 跳转界面
+     *
      * @param context
      * @param addressBean
      * @param goods

@@ -69,6 +69,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     private GoodDetailsBean.DataBean mGoodDetailsBean;
     public AddressBean mAddressData;
     private String webDataUrl;
+    private int mType = 1;
 
     @Override
     protected void back() {
@@ -96,11 +97,13 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
 
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
 
         mProductDetailP.setProductDetailsData(mGoodsId);
+
     }
 
     @Override
@@ -108,6 +111,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
+        mType = getIntent().getIntExtra("type", 0);
 
         mProductDetailP.setProductDetailsData(mGoodsId);
 
@@ -117,6 +121,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
         vp_content.setOffscreenPageLimit(3);
+        vp_content.setCurrentItem(mType);
         vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -183,6 +188,14 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         context.startActivity(starter);
     }
 
+    public static void start(Context context, String goodsId, String shopId, int type) {
+        Intent starter = new Intent(context, GoodDetailsUI.class);
+        starter.putExtra("goodsId", goodsId);
+        starter.putExtra("shopId", shopId);
+        starter.putExtra("type", type);
+        context.startActivity(starter);
+    }
+
     @Event(value = {
             R.id.iv_back,
             R.id.iv_cart,
@@ -193,9 +206,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
             R.id.tv_pay
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
-
-
-
         switch (view.getId()) {
             case R.id.iv_back:
                 back();
