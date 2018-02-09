@@ -49,7 +49,7 @@ public class MineFragment extends LazyLoadFragment {
     @Override
     public void onResume() {
         super.onResume();
-        isLoginClick();
+        isLogin();
     }
 
     @Override
@@ -140,7 +140,7 @@ public class MineFragment extends LazyLoadFragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     UserManager.clearUser();
-                                    isLoginClick();
+                                    isLogin();
                                     sv_mine.smoothScrollTo(0,0);
                                 }
                             })

@@ -12,6 +12,7 @@ import com.lengzhuo.xybh.ui.PayOrderP;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.pay.PayUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -122,6 +123,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     private void payHint() {
         ToastUtils.showToast("支付成功");
+        EventBus.getDefault().post("paySuccess");
         finish();
     }
 
