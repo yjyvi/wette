@@ -1,15 +1,24 @@
 package com.lengzhuo.xybh.ui.mine;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
+import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.beans.order.OrderListBean;
+import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
+import com.lengzhuo.xybh.ui.home.CreateOrderUI;
+import com.lengzhuo.xybh.ui.home.OrderGoodsCommentListUI;
 import com.lengzhuo.xybh.ui.mine.multitype.OrderItemViewBinder;
+import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
@@ -59,9 +68,23 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     private MyOrderP myOrderP;
     List<OrderListBean.DataBean> orderList = new ArrayList<>();
     private boolean isRefresh;
+
+
     @Override
     protected void back() {
         finish();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -119,8 +142,6 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
         }
         isRefresh = false;
         myOrderP.loadList(orderState,page,10);
-
-
     }
 
     @Override
@@ -146,29 +167,71 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
         refreshLayout.loadMoreComplete();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
     @Subscribe
-    public void onMessageEvent(BaseEvent<OrderListBean.DataBean> event){
+    public void onMessageEvent(final BaseEvent<OrderListBean.DataBean> event){
         switch (event.getEventType()){
             case 1:
+                //待支付
+                PaymentMethodActivity.toActivity(this, String.valueOf(event.getData().getOrderId()));
                 break;
             case 2:
+                //再次购买
+                List<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(event.getData().getGoodList().size());
+                for (OrderListBean.DataBean.GoodListBean goodListBean : event.getData().getGoodList()) {
+                    CreateOrderGoodsBean goodsBean = new CreateOrderGoodsBean();
+                    goodsBean.setGoodsId(String.valueOf(goodListBean.getGoodsId()));
+                    goodsBean.setGoodsAmount(String.valueOf(goodListBean.getAmount()));
+                    goodsBean.setShopId(goodListBean.getShopId());
+                    goodsBean.setSkuId(String.valueOf(goodListBean.getSkuId()));
+                    orderGoodsBeanList.add(goodsBean);
+                }
+                CreateOrderUI.start(this, null, JSON.toJSONString(orderGoodsBeanList));
                 break;
             case 3:
+                //确认收货
+                new AlertDialog.Builder(this)
+                        .setTitle("提示")
+                        .setMessage("是否确认收货？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                NetworkUtils.getNetworkUtils().finishOrder(String.valueOf(event.getData().getOrderId()),new CommonCallBack<String>() {
+                                    @Override
+                                    protected void onSuccess(String data) {
+                                        ToastUtils.showToast("收货成功。");
+                                        mItems.clear();
+                                        page = 1;
+                                        myOrderP.loadList(orderState,1,10);
+                                    }
+                                });
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
                 break;
             case 4:
+                //待评价
+                OrderGoodsCommentListUI.start(this, String.valueOf(event.getData().getOrderId()));
                 break;
+        }
+    }
+
+    /**
+     * 支付成功回调
+     * @param event
+     */
+    @Subscribe
+    public void onMessageEvent(String event) {
+        if(event.equals("paySuccess")){
+            mItems.clear();
+            page = 1;
+            myOrderP.loadList(orderState,1,10);
         }
     }
 

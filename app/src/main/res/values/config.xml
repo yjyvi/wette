@@ -81,6 +81,8 @@
     <string name="shopping_cart_list">/cart/list</string>
     <!-- 删除购物车商品 -->
     <string name="shopping_cart_delete">/cart/delCart</string>
+    <!-- 完成 or 取消 订单 -->
+    <string name="order_update_status">/order/cancelOrder</string>
 
 
 </resources>

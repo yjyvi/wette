@@ -43,6 +43,7 @@
             android:paddingRight="20px">
 
         <TextView
+                android:id="@+id/tv_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="100px"
                 android:text="清除本地缓存"
@@ -52,12 +53,12 @@
                 android:paddingRight="20px"/>
 
         <TextView
+                android:id="@+id/tv_cache_size"
                 android:layout_width="112px"
                 android:layout_height="48px"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_gravity="right|center_vertical"
-                android:text="233M"
                 android:background="@drawable/account_setting_cache"
                 android:textSize="28px"/>
 
@@ -81,6 +82,7 @@
             style="@style/common_line"/>
 
     <TextView
+            android:id="@+id/tv_score"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:text="给我们程序评分"

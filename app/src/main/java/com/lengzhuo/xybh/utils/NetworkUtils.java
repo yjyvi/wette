@@ -71,7 +71,7 @@ public class NetworkUtils {
     /**
      * 搜索商品
      */
-    public void getSearch(String keyword,String page,String limit, OKHttpManager.StringCallBack httpBack) {
+    public void getSearch(String keyword, String page, String limit, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("keyword", keyword);
         params.put(PAGE, page);
@@ -91,8 +91,6 @@ public class NetworkUtils {
 
     /**
      * 商品详情
-     * @param goodsId
-     * @param httpBack
      */
     public void getGoodDetails(String goodsId, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = getParams();
@@ -127,11 +125,6 @@ public class NetworkUtils {
 
     /**
      * 商品、店铺收藏与取消收藏
-     *
-     * @param operation
-     * @param dataId
-     * @param type
-     * @param httpBack
      */
     public void getCollection(String operation, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = getParams();
@@ -144,11 +137,8 @@ public class NetworkUtils {
 
     /**
      * 查询库存
-     * @param goodsId
-     * @param properties
-     * @param httpBack
      */
-    public void goodsSku(String goodsId, String properties,  OKHttpManager.StringCallBack httpBack) {
+    public void goodsSku(String goodsId, String properties, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         params.put("goodsId", goodsId);
         params.put("properties", properties);
@@ -158,13 +148,6 @@ public class NetworkUtils {
 
     /**
      * 添加到购物车
-     *
-     * @param shopId
-     * @param goodsId
-     * @param skuId
-     * @param addressId
-     * @param amount
-     * @param stringCallBack
      */
     public void addCart(String shopId, String goodsId, String skuId, String addressId, String amount, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -180,10 +163,6 @@ public class NetworkUtils {
 
     /**
      * 创建订单
-     *
-     * @param goods
-     * @param addressId
-     * @param stringCallBack
      */
     public void createOrder(String goods, String addressId, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -195,10 +174,6 @@ public class NetworkUtils {
 
     /**
      * 支付订单
-     *
-     * @param orderId
-     * @param payChannel
-     * @param stringCallBack
      */
     public void payOrder(String orderId, String payChannel, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -210,8 +185,6 @@ public class NetworkUtils {
 
     /**
      * 评价晒单
-     * @param orderId
-     * @param stringCallBack
      */
     public void orderGoods(String orderId, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -222,8 +195,6 @@ public class NetworkUtils {
 
     /**
      * 查看商品评价
-     * @param orderGid
-     * @param stringCallBack
      */
     public void viewEvaluate(String orderGid, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -233,11 +204,6 @@ public class NetworkUtils {
 
     /**
      * 评价商品
-     *
-     * @param goodsId
-     * @param orderGid
-     * @param content
-     * @param stringCallBack
      */
     public void goodComment(String goodsId, String orderGid, String content, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
@@ -287,12 +253,12 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.user_login), params, callBack);
     }
 
-    public void getBackPassword(String phone, String code, String password, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put("phone",phone);
-        params.put("code",code);
-        params.put("password",password);
-        params.put("passwordTwo",password);
+    public void getBackPassword(String phone, String code, String password, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("phone", phone);
+        params.put("code", code);
+        params.put("password", password);
+        params.put("passwordTwo", password);
         OKHttpManager.postAsync(getUrl(R.string.user_get_back_password), params, callBack);
     }
 
@@ -339,9 +305,9 @@ public class NetworkUtils {
     }
 
     public void updateAddress(String addressId, String isDel, OKHttpManager.StringCallBack callBack) {
-        Map<String,String> params = getParams();
-        params.put("addressId",addressId);
-        params.put("isDel",isDel);
+        Map<String, String> params = getParams();
+        params.put("addressId", addressId);
+        params.put("isDel", isDel);
         OKHttpManager.postAsync(getUrl(R.string.address_del), params, callBack);
     }
 
@@ -357,98 +323,113 @@ public class NetworkUtils {
     }
 
     public void feedback(String content, OKHttpManager.StringCallBack callBack) {
-        Map<String,String> params = getParams();
-        params.put("content",content);
-        OKHttpManager.postAsync(getUrl(R.string.feed_back),params,callBack);
+        Map<String, String> params = getParams();
+        params.put("content", content);
+        OKHttpManager.postAsync(getUrl(R.string.feed_back), params, callBack);
     }
 
-    public void updateNickName(String nickName, OKHttpManager.StringCallBack callBack){
-        updateUser("1",nickName,"","","","",callBack);
+    public void updateNickName(String nickName, OKHttpManager.StringCallBack callBack) {
+        updateUser("1", nickName, "", "", "", "", callBack);
     }
 
-    public void updatePhoneNumber(String phoneNumber, String code, OKHttpManager.StringCallBack callBack){
-        updateUser("2","",phoneNumber,code,"","",callBack);
+    public void updatePhoneNumber(String phoneNumber, String code, OKHttpManager.StringCallBack callBack) {
+        updateUser("2", "", phoneNumber, code, "", "", callBack);
     }
 
     public void updatePassword(String password, String passwordNew, OKHttpManager.StringCallBack callBack) {
-        updateUser("3","","","",password,passwordNew,callBack);
+        updateUser("3", "", "", "", password, passwordNew, callBack);
     }
 
-    public void updateUser(String type, String nickName, String phone, String code, String password, String passwordNew, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put("type",type);
-        if(!TextUtils.isEmpty(nickName))params.put("nickname",nickName);
-        if(!TextUtils.isEmpty(phone))params.put("phone",phone);
-        if(!TextUtils.isEmpty(code))params.put("code",code);
-        if(!TextUtils.isEmpty(password))params.put("password",password);
-        if(!TextUtils.isEmpty(passwordNew))params.put("passwordNew",passwordNew);
-        if(!TextUtils.isEmpty(passwordNew))params.put("passwordNewTwo",passwordNew);
-        OKHttpManager.postAsync(getUrl(R.string.user_update),params,callBack);
+    public void updateUser(String type, String nickName, String phone, String code, String password, String passwordNew, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("type", type);
+        if (!TextUtils.isEmpty(nickName)) params.put("nickname", nickName);
+        if (!TextUtils.isEmpty(phone)) params.put("phone", phone);
+        if (!TextUtils.isEmpty(code)) params.put("code", code);
+        if (!TextUtils.isEmpty(password)) params.put("password", password);
+        if (!TextUtils.isEmpty(passwordNew)) params.put("passwordNew", passwordNew);
+        if (!TextUtils.isEmpty(passwordNew)) params.put("passwordNewTwo", passwordNew);
+        OKHttpManager.postAsync(getUrl(R.string.user_update), params, callBack);
     }
 
-    public void getMessageList(String pageNo, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put(LIMIT,"10");
-        params.put(PAGE,pageNo);
-        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
+    public void getMessageList(String pageNo, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put(LIMIT, "10");
+        params.put(PAGE, pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.message_list), params, callBack);
 
     }
 
-    public void deleteMessage(String messageId, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put("isDel","1");
-        params.put("userMsgId",messageId);
-        OKHttpManager.postAsync(getUrl(R.string.message_list),params,callBack);
+    public void deleteMessage(String messageId, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("isDel", "1");
+        params.put("userMsgId", messageId);
+        OKHttpManager.postAsync(getUrl(R.string.message_list), params, callBack);
     }
 
-    public void getShoppingCartList(String pageNo, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put(LIMIT,"10");
-        params.put(PAGE,pageNo);
-        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_list),params,callBack);
+    public void getShoppingCartList(String pageNo, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put(LIMIT, "10");
+        params.put(PAGE, pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_list), params, callBack);
     }
 
-    public void deleteShoppingCarCommodity(String [] shoppingCarIdArray, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
+    public void deleteShoppingCarCommodity(String[] shoppingCarIdArray, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
         StringBuffer stringBuffer = new StringBuffer("[");
         for (int i = 0; i < shoppingCarIdArray.length; i++) {
             stringBuffer.append(shoppingCarIdArray[i]);
-            if(i!=shoppingCarIdArray.length)stringBuffer.append(",");
+            if (i != shoppingCarIdArray.length) stringBuffer.append(",");
         }
         stringBuffer.append("]");
-        params.put("cartIds",stringBuffer.toString());
-        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_delete),params,callBack);
+        params.put("cartIds", stringBuffer.toString());
+        OKHttpManager.postAsync(getUrl(R.string.shopping_cart_delete), params, callBack);
     }
 
-    public void bindPhoneNumber(String phoneNumber, String password,String authorize, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("phone",phoneNumber);
-        params.put("password",password);
-        params.put("authorize",authorize);
-        params.put("type","1");
-        OKHttpManager.postAsync(getUrl(R.string.user_bind_phone_number),params,callBack);
+    public void bindPhoneNumber(String phoneNumber, String password, String authorize, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("phone", phoneNumber);
+        params.put("password", password);
+        params.put("authorize", authorize);
+        params.put("type", "1");
+        OKHttpManager.postAsync(getUrl(R.string.user_bind_phone_number), params, callBack);
     }
 
 
-    public void getCollectionCommodityList(String pageNo, OKHttpManager.StringCallBack callBack){
-        getCollectionList("1",pageNo,callBack);
+    public void getCollectionCommodityList(String pageNo, OKHttpManager.StringCallBack callBack) {
+        getCollectionList("1", pageNo, callBack);
     }
 
     public void getCollectionShopList(String pageNo, OKHttpManager.StringCallBack callBack) {
-        getCollectionList("2",pageNo,callBack);
+        getCollectionList("2", pageNo, callBack);
     }
 
-    public void getCollectionList(String type, String pageNo, OKHttpManager.StringCallBack callBack){
-        Map<String,String> params = getParams();
-        params.put("type",type);
-        params.put(LIMIT,"10");
-        params.put(PAGE,pageNo);
-        OKHttpManager.postAsync(getUrl(R.string.user_get_collection_list),params,callBack);
+    public void getCollectionList(String type, String pageNo, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("type", type);
+        params.put(LIMIT, "10");
+        params.put(PAGE, pageNo);
+        OKHttpManager.postAsync(getUrl(R.string.user_get_collection_list), params, callBack);
+    }
+
+    public void finishOrder(String orderId, OKHttpManager.StringCallBack callBack) {
+        updateOrderStatus(orderId,"4",callBack);
+    }
+
+    public void cancelOrder(String orderId, OKHttpManager.StringCallBack callBack) {
+        updateOrderStatus(orderId,"2",callBack);
+    }
+
+    public void updateOrderStatus(String orderId, String orderStatus, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("orderId", orderId);
+        params.put("orderStatus", orderStatus);
+        OKHttpManager.postAsync(getUrl(R.string.order_update_status), params, callBack);
     }
 
     public Map<String, String> getParams() {
         Map<String, String> params = new HashMap();
-        if(!UserManager.isLogin())
+        if (!UserManager.isLogin())
             return params;
         params.put("c", UserManager.getUser().getC());
         return params;

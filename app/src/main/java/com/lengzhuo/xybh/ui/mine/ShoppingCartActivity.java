@@ -220,6 +220,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                     tv_delete.setVisibility(View.GONE);
                     mSelectedCommodityList.clear();
                     mItems.clear();
+                    mPageIndex = 1;
                     getShoppingCartList();
                 }
             });
