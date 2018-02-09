@@ -18,6 +18,7 @@ import com.lengzhuo.xybh.ui.home.productDetial.GoodDetailFragment;
 import com.lengzhuo.xybh.ui.home.productDetial.GoodFragment;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.evntBusBean.GoodDetailsEvent;
 import com.lengzhuo.xybh.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -68,7 +69,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     private GoodDetailP mProductDetailP;
     private GoodDetailsBean.DataBean mGoodDetailsBean;
     public AddressBean mAddressData;
-    private String webDataUrl;
     private int mType = 1;
 
     @Override
@@ -113,10 +113,15 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mShopId = getIntent().getStringExtra("shopId");
         mType = getIntent().getIntExtra("type", 0);
 
+        String webUrl = getResources().getString(R.string.service_host_address)
+                .concat(getResources().getString(R.string.detailHtm))
+                .concat(".do?c=")
+                .concat(UserManager.getUser().getC()).concat("&goodsId=").concat(mGoodsId);
+
         mProductDetailP.setProductDetailsData(mGoodsId);
 
         mFragmentLists.add(GoodFragment.newInstance());
-        mFragmentLists.add(GoodDetailFragment.newInstance(webDataUrl));
+        mFragmentLists.add(GoodDetailFragment.newInstance(webUrl));
         mFragmentLists.add(GoodCommentFragment.newInstance(mGoodsId));
 
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
@@ -254,12 +259,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     }
 
-
-    @Subscribe
-    public void goodsEvent(GoodDetailsEvent goodDetailsEvent) {
-    }
-
-
     @Override
     public void addCartSuccess() {
         ToastUtils.showToast("添加成功");
@@ -274,7 +273,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     public void goodsData(GoodDetailsBean.DataBean dataBean) {
 
         this.mGoodDetailsBean = dataBean;
-        this.webDataUrl = dataBean.getGoodsDetail();
+
         //收藏按扭回显
         if (1 == dataBean.getIsCollection()) {
             ll_collection.setSelected(true);
@@ -292,5 +291,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     }
 
+    @Subscribe
+    public void goodsEvent(GoodDetailsEvent goodDetailsEvent) {
+    }
 
 }

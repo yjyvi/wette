@@ -44,7 +44,6 @@
     <string name="goodsSku">/goods/goodsSku</string>
     <!--商品评价列表-->
     <string name="evaluateList">/goods/evaluateList</string>
-    <string name="evaluate">/goods/evaluate</string>
     <!--店铺详情-->
     <string name="shopDetail">/goods/shopDetail</string>
 
@@ -60,6 +59,10 @@
     <string name="orderGoods">/order/orderGoods</string>
     <!--查看评价-->
     <string name="viewEvaluate">/order/viewEvaluate</string>
+    <!--评价订单商品-->
+    <string name="evaluate">/order/evaluate</string>
+    <!--商品详情界面的H5页面-->
+    <string name="detailHtm">/goods/detailHtm</string>
 
 
     <!-- 收货地址 -->
