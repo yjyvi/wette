@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.MessageBean;
@@ -16,6 +17,7 @@ import com.lengzhuo.xybh.ui.mine.multitype.MessageItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.Utils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
@@ -48,13 +50,15 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
     @ViewInject(R.id.rl_message)
     private MyRefreshLayout rl_message;
 
+
+    @ViewInject(R.id.fl_empty_data)
+    private FrameLayout fl_empty_data;
+
     private Items mItems;
 
     private MultiTypeAdapter mAdapter;
 
     int mPageIndex = 1;
-
-    private AlertDialog mDeleteMessageDialog;
 
     @Override
     protected void back() {
@@ -82,6 +86,7 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
         NetworkUtils.getNetworkUtils().getMessageList(String.valueOf(mPageIndex), new CommonCallBack<List<MessageBean>>() {
             @Override
             protected void onSuccess(List<MessageBean> data) {
+                if (Utils.isShowEmptyLayout(data, rl_message, fl_empty_data)) return;
                 if (data.size() < 10)
                     rl_message.setIsLoadingMoreEnabled(false);
                 rl_message.refreshComplete();

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.CollectionBean;
@@ -13,6 +14,7 @@ import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.mine.multitype.collection.ShopItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
+import com.lengzhuo.xybh.utils.Utils;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
 
@@ -37,8 +39,11 @@ public class CollectionShopFragment extends LazyLoadFragment implements MyRefres
     @ViewInject(R.id.rv_collection_shop)
     private RecyclerView rv_collection_shop;
 
-    @ViewInject(R.id.rl_collection_commodity)
-    private MyRefreshLayout rl_collection_commodity;
+    @ViewInject(R.id.rl_collection_shop)
+    private MyRefreshLayout rl_collection_shop;
+
+    @ViewInject(R.id.fl_empty_data)
+    private FrameLayout fl_empty_data;
 
     private Items mItems;
 
@@ -60,7 +65,7 @@ public class CollectionShopFragment extends LazyLoadFragment implements MyRefres
         rv_collection_shop.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter.setItems(mItems);
         rv_collection_shop.setAdapter(mAdapter);
-        rl_collection_commodity.setMyRefreshLayoutListener(this);
+        rl_collection_shop.setMyRefreshLayoutListener(this);
     }
 
 
@@ -73,7 +78,7 @@ public class CollectionShopFragment extends LazyLoadFragment implements MyRefres
     public void onRefresh(View view) {
         mPageIndex = 1;
         mItems.clear();
-        rl_collection_commodity.setIsLoadingMoreEnabled(true);
+        rl_collection_shop.setIsLoadingMoreEnabled(true);
         getCollectionShopList();
     }
 
@@ -87,10 +92,11 @@ public class CollectionShopFragment extends LazyLoadFragment implements MyRefres
         NetworkUtils.getNetworkUtils().getCollectionShopList(String.valueOf(mPageIndex), new CommonCallBack<List<CollectionBean>>() {
             @Override
             protected void onSuccess(List<CollectionBean> data) {
+                if (Utils.isShowEmptyLayout(data, rl_collection_shop, fl_empty_data)) return;
                 if(data.size() < 10)
-                    rl_collection_commodity.setIsLoadingMoreEnabled(false);
-                rl_collection_commodity.refreshComplete();
-                rl_collection_commodity.loadMoreComplete();
+                    rl_collection_shop.setIsLoadingMoreEnabled(false);
+                rl_collection_shop.refreshComplete();
+                rl_collection_shop.loadMoreComplete();
                 mItems.addAll(data);
                 mAdapter.notifyDataSetChanged();
             }

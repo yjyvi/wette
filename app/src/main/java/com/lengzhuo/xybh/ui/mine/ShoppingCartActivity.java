@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.lengzhuo.xybh.ui.mine.multitype.shoppingcart.CommodityItemViewBinder;
 import com.lengzhuo.xybh.ui.mine.multitype.shoppingcart.ShopItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.Utils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
@@ -75,6 +77,9 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
 
     @ViewInject(R.id.tv_delete)
     private TextView tv_delete;
+
+    @ViewInject(R.id.fl_empty_data)
+    private FrameLayout fl_empty_data;
 
     //已选中的商品
     List<CommodityBean> mSelectedCommodityList = new ArrayList<>();
@@ -151,6 +156,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         NetworkUtils.getNetworkUtils().getShoppingCartList(String.valueOf(mPageIndex), new CommonCallBack<List<ShopBean>>() {
             @Override
             protected void onSuccess(List<ShopBean> data) {
+                if (Utils.isShowEmptyLayout(data, rl_shopping_cart, fl_empty_data)) return;
                 if (data.size() < 10) rl_shopping_cart.setIsLoadingMoreEnabled(false);
                 rl_shopping_cart.refreshComplete();
                 rl_shopping_cart.loadMoreComplete();
@@ -194,6 +200,14 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             onCommodityOrShopSelected();
         } else if (view.getId() == R.id.rl_right_title) {
             //编辑
+            for (Object item : mItems) {
+                if(item instanceof ShopBean){
+                    ((ShopBean) item).setSelected(false);
+                }else if(item instanceof CommodityBean){
+                    ((CommodityBean) item).setSelected(false);
+                }
+            }
+            iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
             mSelectedCommodityList.clear();
             onCommodityOrShopSelected();
             mIsEdit = !mIsEdit;

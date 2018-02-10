@@ -34,6 +34,27 @@
 
     </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
 
+    <FrameLayout
+            android:id="@+id/fl_empty_data"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#999999"
+                android:textSize="32px"
+                android:layout_gravity="center_horizontal"
+                android:text="暂无商品"
+                android:layout_marginTop="220px"
+                android:drawableTop="@drawable/common_empty_data"
+                android:drawablePadding="30dp"
+                android:gravity="center_horizontal"/>
+
+    </FrameLayout>
+
 
     <View
             style="@style/common_line"/>

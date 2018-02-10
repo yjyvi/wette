@@ -1,8 +1,11 @@
 package com.lengzhuo.xybh.utils;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -34,5 +37,12 @@ public class Utils {
     public static String getText(TextView textview){
         return textview.getText().toString().trim();
     }
+
+    public static  boolean isShowEmptyLayout(List data, View dataLayout,View emptyLayout){
+        dataLayout.setVisibility(data.isEmpty()?View.GONE: View.VISIBLE);
+        emptyLayout.setVisibility(!data.isEmpty()?View.GONE: View.VISIBLE);
+        return data.isEmpty();
+    }
+
 
 }

@@ -40,6 +40,9 @@ public class MineFragment extends LazyLoadFragment {
     @ViewInject(R.id.iv_message)
     ImageView iv_message;
 
+    @ViewInject(R.id.tv_exit_login)
+    TextView tv_exit_login;
+
     AlertDialog mExitLoginDialog;
 
     @Override
@@ -170,10 +173,13 @@ public class MineFragment extends LazyLoadFragment {
             GlideApp.with(this).load(UserManager.getUser().getHeadImg()).loadAvatar().into(iv_avatar);
             tv_nick_name.setText(UserManager.getUser().getNickname());
             iv_message.setVisibility(View.VISIBLE);
+            tv_exit_login.setVisibility(View.VISIBLE);
+
         } else {
             iv_avatar.setImageResource(R.drawable.mine_no_login_head_image);
             tv_nick_name.setText("请登录/注册");
             iv_message.setVisibility(View.GONE);
+            tv_exit_login.setVisibility(View.GONE);
         }
     }
 

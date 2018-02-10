@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
@@ -21,6 +22,7 @@ import com.lengzhuo.xybh.ui.mine.multitype.OrderItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.PaddingItemDecoration;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.Utils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
@@ -64,11 +66,10 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     private MyRefreshLayout refreshLayout;
     @ViewInject(R.id.rv_order)
     private RecyclerView rv_order;
-    private int page = 1;
+    @ViewInject(R.id.fl_empty_data)
+    private FrameLayout fl_empty_data;
+    private int mPage = 1;
     private MyOrderP myOrderP;
-    List<OrderListBean.DataBean> orderList = new ArrayList<>();
-    private boolean isRefresh;
-
 
     @Override
     protected void back() {
@@ -90,11 +91,11 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     @Override
     protected void setControlBasis() {
         setTitle("我的订单");
-        orderState = getIntent().getIntExtra(KEY_ORDER_STATE,ORDER_STATE_ALL);
+        orderState = getIntent().getIntExtra(KEY_ORDER_STATE, ORDER_STATE_ALL);
         mItems = new Items();
         mAdapter = new MultiTypeAdapter();
         mAdapter.setItems(mItems);
-        mAdapter.register(OrderListBean.DataBean.class,new OrderItemViewBinder());
+        mAdapter.register(OrderListBean.DataBean.class, new OrderItemViewBinder());
         rv_order.addItemDecoration(new PaddingItemDecoration().setDividerHeight(12).setColor("#f5f5f5"));
         rv_order.setLayoutManager(new LinearLayoutManager(this));
         rv_order.setAdapter(mAdapter);
@@ -103,61 +104,42 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     protected void prepareData() {
-        mItems.addAll(orderList);
         myOrderP = new MyOrderP(this);
-        //刷新加载数据
-        refreshLayout.beginRefreshing();
+        myOrderP.loadList(orderState, mPage, 10);
     }
 
     /**
-     *
-     * @param context
      * @param orderState 订单状态
      */
-    public static void toActivity(Context context,int orderState) {
+    public static void toActivity(Context context, int orderState) {
         Intent intent = new Intent(context, OrderActivity.class);
-        intent.putExtra(KEY_ORDER_STATE,orderState);
+        intent.putExtra(KEY_ORDER_STATE, orderState);
         context.startActivity(intent);
     }
 
     @Override
     public void onRefresh(View view) {
-        isRefresh = true;
-        myOrderP.loadList(orderState,1,10);
+        mPage = 1;
+        mItems.clear();
+        refreshLayout.setIsLoadingMoreEnabled(true);
+        myOrderP.loadList(orderState, mPage, 10);
     }
 
     @Override
     public void onLoadMore(View view) {
-        //判断条目数 如果条目加载完全 禁止上拉加载 延时2000 更友好
-        if (myOrderP.getTotal()<=orderList.size()){
-            rv_order.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    refreshLayout.loadMoreComplete();
-                    refreshLayout.setIsLoadingMoreEnabled(false);
-                }
-            },2000);
-            ToastUtils.showToast(getString(R.string.no_more_data));
-            return;
-        }
-        isRefresh = false;
-        myOrderP.loadList(orderState,page,10);
+        mPage++;
+        myOrderP.loadList(orderState, mPage, 10);
     }
 
     @Override
     public void loadListSuccess(List<OrderListBean.DataBean> orderList) {
+        if (Utils.isShowEmptyLayout(mItems, refreshLayout, fl_empty_data)) return;
+        if (orderList.size() < 10) {
+            refreshLayout.setIsLoadingMoreEnabled(false);
+        }
         refreshLayout.refreshComplete();
         refreshLayout.loadMoreComplete();
-        if (isRefresh){
-            this.orderList = orderList;
-            mItems.clear();
-            mItems.addAll(orderList);
-            page=2;
-        }
-        else {
-            this.orderList.addAll(orderList);
-            page++;
-        }
+        mItems.addAll(orderList);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -168,8 +150,8 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     }
 
     @Subscribe
-    public void onMessageEvent(final BaseEvent<OrderListBean.DataBean> event){
-        switch (event.getEventType()){
+    public void onMessageEvent(final BaseEvent<OrderListBean.DataBean> event) {
+        switch (event.getEventType()) {
             case 1:
                 //待支付
                 PaymentMethodActivity.toActivity(this, String.valueOf(event.getData().getOrderId()));
@@ -195,13 +177,13 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                NetworkUtils.getNetworkUtils().finishOrder(String.valueOf(event.getData().getOrderId()),new CommonCallBack<String>() {
+                                NetworkUtils.getNetworkUtils().finishOrder(String.valueOf(event.getData().getOrderId()), new CommonCallBack<String>() {
                                     @Override
                                     protected void onSuccess(String data) {
                                         ToastUtils.showToast("收货成功。");
                                         mItems.clear();
-                                        page = 1;
-                                        myOrderP.loadList(orderState,1,10);
+                                        mPage = 1;
+                                        myOrderP.loadList(orderState, mPage, 10);
                                     }
                                 });
                                 dialog.dismiss();
@@ -224,14 +206,13 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     /**
      * 支付成功回调
-     * @param event
      */
     @Subscribe
     public void onMessageEvent(String event) {
-        if(event.equals("paySuccess")){
+        if (event.equals("paySuccess")) {
             mItems.clear();
-            page = 1;
-            myOrderP.loadList(orderState,1,10);
+            mPage = 1;
+            myOrderP.loadList(orderState, mPage, 10);
         }
     }
 

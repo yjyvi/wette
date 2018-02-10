@@ -2,9 +2,12 @@ package com.lengzhuo.xybh.ui.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.network.CommonCallBack;
@@ -27,10 +30,13 @@ import org.xutils.view.annotation.ViewInject;
  * </pre>
  */
 @ContentView(R.layout.activity_feedback)
-public class FeedbackActivity extends BaseUI {
+public class FeedbackActivity extends BaseUI implements TextWatcher {
 
     @ViewInject(R.id.et_content)
     private EditText et_content;
+
+    @ViewInject(R.id.tv_hint)
+    private TextView tv_hint;
 
     @Override
     protected void back() {
@@ -40,16 +46,17 @@ public class FeedbackActivity extends BaseUI {
     @Override
     protected void setControlBasis() {
         setTitle("意见反馈");
+        et_content.addTextChangedListener(this);
     }
 
     @Override
     protected void prepareData() {
     }
 
-    @Event(value = {R.id.tv_commit},type = View.OnClickListener.class)
-    private void onClick(View view){
+    @Event(value = {R.id.tv_commit}, type = View.OnClickListener.class)
+    private void onClick(View view) {
         String content = Utils.getText(et_content);
-        if(TextUtils.isEmpty(content)){
+        if (TextUtils.isEmpty(content)) {
             ToastUtils.showToast("请输入您要反馈的内容");
             return;
         }
@@ -61,9 +68,24 @@ public class FeedbackActivity extends BaseUI {
             }
         });
     }
-    
+
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, FeedbackActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        tv_hint.setText("还可以输入(" + (200 - s.length()) + "字");
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
