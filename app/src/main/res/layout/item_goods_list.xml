@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:gravity="center_horizontal"
-              android:layout_width="wrap_content"
+              android:layout_width="180px"
               android:layout_height="wrap_content">
     
     <ImageView
         android:id="@+id/iv_good_img"
-        android:layout_width="175px"
+        android:layout_width="170px"
         android:src="@color/gray"
-        android:layout_height="175px"/>
+        android:layout_height="170px"/>
 
     <TextView
         android:id="@+id/tv_good_name"
+        android:lines="1"
+        android:ellipsize="end"
+        android:maxLength="5"
         android:layout_marginTop="10px"
         android:layout_width="wrap_content"
         style="@style/text_gray_24"

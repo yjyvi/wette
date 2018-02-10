@@ -95,6 +95,7 @@ public class LoginActivity extends BaseUI {
             protected void onSuccess(User data) {
                 ToastUtils.showToast("登录成功");
                 UserManager.saveUser(data);
+
                 finish();
             }
         });

@@ -9,46 +9,60 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "0.01"
-
+        versionName "0.02"
         multiDexEnabled true
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64","mips","mips64","x86_64"
         }
     }
 
 
-//    signingConfigs {
-//        release {
-//            keyAlias "要学就学"
-//            keyPassword "123456"
-//            storeFile file("C:/workProject/ZXAndroid/zxueApp.jks")
-//            storePassword "123456"
-//        }
-//    }
+    signingConfigs {
+        release {
+            keyAlias "xybh"
+            keyPassword "123456"
+            storeFile file("C:/my/privateProject/wette/xybh.jks")
+            storePassword "123456"
+        }
+    }
 
-    //打包后自动生成文件
+
+//    //打包后自动生成文件
 //    applicationVariants.all { variant ->
 //        variant.outputs.each { output ->
 //            def oldFile = output.outputFile
 //            if (variant.buildType.name.equals('release')) {
-//                def currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//                def releaseApkName = "wette_" + defaultConfig.versionName + "_" + currentDate + '.apk'
+//                def currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date())
+//                def releaseApkName = "xybh_" + defaultConfig.versionName + "_" + currentDate + '.apk'
 //                output.outputFile = new File(oldFile.parent, releaseApkName)
 //            }
 //        }
 //    }
-//    useLibrary 'org.apache.http.legacy'
+
+
+    buildTypes {
+        debug {
+            debuggable = true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled = false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':mylibrary')
     compile 'com.android.support:multidex:1.0.2'
-    compile "com.github.bumptech.glide:okhttp3-integration:4.0.0"
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
-
 }

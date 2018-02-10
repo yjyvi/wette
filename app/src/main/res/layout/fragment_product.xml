@@ -232,6 +232,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <ImageView
+        android:id="@+id/iv_address_line"
         android:layout_width="match_parent"
         android:src="@mipmap/address_line"
         android:layout_height="wrap_content"/>

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.type.ClassifyRightAdapter;
@@ -17,7 +18,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author yjyvi
  * @date 2018/2/1
  * 右侧二级分类界面
@@ -27,6 +27,9 @@ public class TwoClassifyFragment extends LazyLoadFragment {
 
     @ViewInject(R.id.rv_category)
     private RecyclerView rv_category;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
 
     public ClassifyRightAdapter mGoodsListAdapter;
     public List<ClassifyBean.DataBean.ListBeanX> mClassifyData;
@@ -44,11 +47,17 @@ public class TwoClassifyFragment extends LazyLoadFragment {
     @Override
     protected void prepareData() {
         mClassifyData = (List<ClassifyBean.DataBean.ListBeanX>) getArguments().getSerializable("classifyData");
-        LinearLayoutManager layout = new LinearLayoutManager(getActivity());
-        layout.setAutoMeasureEnabled(true);
-        rv_category.setLayoutManager(layout);
-        mGoodsListAdapter = new ClassifyRightAdapter(R.layout.item_classify_right, mClassifyData);
-        rv_category.setAdapter(mGoodsListAdapter);
+
+        if (mClassifyData != null) {
+            LinearLayoutManager layout = new LinearLayoutManager(getActivity());
+            layout.setAutoMeasureEnabled(true);
+            rv_category.setLayoutManager(layout);
+            mGoodsListAdapter = new ClassifyRightAdapter(R.layout.item_classify_right, mClassifyData);
+            rv_category.setAdapter(mGoodsListAdapter);
+
+            showEmptyView(mClassifyData,ll_empty_view);
+        }
+
     }
 
     /**
@@ -63,5 +72,7 @@ public class TwoClassifyFragment extends LazyLoadFragment {
         twoClassifyFragment.setArguments(bundle);
         return twoClassifyFragment;
     }
+
+
 
 }

@@ -12,12 +12,14 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
-import com.lengzhuo.xybh.ui.mine.AddressListActivity;
 import com.lengzhuo.xybh.ui.mine.PaymentMethodActivity;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.UserManager;
+import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -57,6 +59,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     public String mGoods;
     private String mOrderNo;
     private int mAddressId;
+    private boolean isFirst;
 
     @Override
     protected void back() {
@@ -65,9 +68,16 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
     @Override
     protected void setControlBasis() {
+        EventBus.getDefault().register(this);
         leftVisible(R.mipmap.back);
         setImgTitle(R.mipmap.home_logo);
         rightVisible(R.mipmap.home_cart);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -79,29 +89,21 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         mCreateOrderP = new CreateOrderP(this);
 
         if (mAddressBean != null) {
-            initViewData();
+            initShowAddressText(mAddressBean);
         } else {
-            getAddressList();
+            if (!isFirst) {
+                getAddressList();
+            }
         }
 
         createOrder();
     }
 
-
-    /**
-     * 显示地址
-     */
-    private void initViewData() {
-        tv_name.setText(String.format(getResources().getString(R.string.default_name), mAddressBean.getAddressee()));
-        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), mAddressBean.getTelephone()));
-        tv_address.setText(String.format(getResources().getString(R.string.default_address), mAddressBean.getProvinceName() + mAddressBean.getCityName() + mAddressBean.getAreaName() + mAddressBean.getAddress()));
-    }
-
-
     /**
      * 获取地址
      */
     private void getAddressList() {
+        isFirst = true;
         if (!UserManager.isLogin()) {
             return;
         }
@@ -113,7 +115,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                     if (1 == datum.getIsDefault()) {
                         mAddressBean = datum;
                         mAddressId = datum.getAddressId();
-                        initViewData();
+                        initShowAddressText(datum);
                     }
                 }
             }
@@ -154,7 +156,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 break;
             case R.id.ll_selected_address:
                 //选择地址
-                AddressListActivity.toActivity(view.getContext());
+                AddressSelectedUi.start(view.getContext());
                 break;
             case R.id.rl_right:
                 //购物车
@@ -177,5 +179,26 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Override
     public void createField() {
 
+    }
+
+    @Subscribe
+    public void addressEvent(AddressEvent addressEvent) {
+        if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
+            AddressBean data = (AddressBean) addressEvent.getData();
+            initShowAddressText(data);
+        }
+    }
+
+    /**
+     * 显示地址信息
+     *
+     * @param datum
+     */
+    private void initShowAddressText(AddressBean datum) {
+        mAddressBean = datum;
+        mAddressId = datum.getAddressId();
+        tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
+        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
+        tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
     }
 }

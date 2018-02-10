@@ -22,13 +22,14 @@ import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.pop.PopUtils;
 import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.home.AddCartP;
+import com.lengzhuo.xybh.ui.home.AddressSelectedUi;
 import com.lengzhuo.xybh.ui.home.CreateOrderUI;
 import com.lengzhuo.xybh.ui.home.GoodsSkuP;
-import com.lengzhuo.xybh.ui.mine.AddressListActivity;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
+import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 import com.lengzhuo.xybh.utils.evntBusBean.GoodDetailsEvent;
 import com.lengzhuo.xybh.views.MyViewPagerIndicator;
 
@@ -54,6 +55,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     //选择地址
     @ViewInject(R.id.ll_selected_address)
     private LinearLayout ll_selected_address;
+    //选择地址线
+    @ViewInject(R.id.iv_address_line)
+    private View iv_address_line;
 
     @ViewInject(R.id.iv_reduce)
     private ImageView iv_reduce;
@@ -107,6 +111,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private boolean isAddCart;
     private int mAddressId;
     private AddCartP mAddCartP;
+    private static boolean isFirst = false;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -124,6 +129,17 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirst) {
+            ll_selected_address.setVisibility(View.VISIBLE);
+            iv_address_line.setVisibility(View.VISIBLE);
+            getAddressList();
+        }
+
     }
 
     @Override
@@ -196,12 +212,13 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private void onClick(final View view) {
         switch (view.getId()) {
             case R.id.iv_selected_style:
-                stylePop();
+                stylePop("立即购买");
                 break;
             case R.id.ll_selected_address:
                 if (isLoginClick()) return;
+                isFirst = false;
                 //选择地址
-                AddressListActivity.toActivity(view.getContext());
+                AddressSelectedUi.start(view.getContext());
                 break;
             case R.id.iv_reduce:
                 numAddOrReduce(false);
@@ -218,8 +235,8 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     /**
      * 选择商品规格样式
      */
-    private void stylePop() {
-        PopUtils.showGoodsStyle2(getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
+    private void stylePop(String buttonText) {
+        PopUtils.showGoodsStyle2(buttonText,getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
             @Override
             public void selectedResult(String result) {
                 mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
@@ -261,16 +278,25 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
                 isAddCart = false;
-                stylePop();
+                stylePop("立即购买");
                 break;
             case GoodDetailsEvent.SELECTED_STYLE_ADD_CART:
                 isAddCart = true;
-                stylePop();
+                stylePop("加入购物车");
                 break;
             default:
                 break;
         }
 
+    }
+
+
+    @Subscribe
+    public void addressEvent(AddressEvent addressEvent) {
+        if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
+            AddressBean data = (AddressBean) addressEvent.getData();
+            initShowAddressText(data);
+        }
     }
 
 
@@ -294,7 +320,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     }
 
     private void getAddressList() {
+        isFirst = true;
         if (!UserManager.isLogin()) {
+            ll_selected_address.setVisibility(View.GONE);
+            iv_address_line.setVisibility(View.GONE);
             return;
         }
         NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
@@ -303,15 +332,24 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 //获取到默认地址
                 for (AddressBean datum : data) {
                     if (1 == datum.getIsDefault()) {
-                        mAddressBean = datum;
-                        mAddressId = datum.getAddressId();
-                        tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
-                        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
-                        tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
+                        initShowAddressText(datum);
                     }
                 }
             }
         });
+    }
+
+    /**
+     * 显示地址信息
+     *
+     * @param datum
+     */
+    private void initShowAddressText(AddressBean datum) {
+        mAddressBean = datum;
+        mAddressId = datum.getAddressId();
+        tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
+        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
+        tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
     }
 
     @Override

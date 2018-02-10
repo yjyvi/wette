@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.GoodCommentAdapter;
@@ -32,6 +33,9 @@ public class GoodCommentFragment extends LazyLoadFragment implements GoodComment
 
     @ViewInject(R.id.rv_goods_comment)
     private RecyclerView rv_goods_comment;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
 
     public String mGoodsId;
     public GoodCommentListP mGoodCommentListP;
@@ -85,6 +89,7 @@ public class GoodCommentFragment extends LazyLoadFragment implements GoodComment
         this.mDataBean = dataBean;
 
         if (1==page) {
+            showEmptyView(dataBean,ll_empty_view);
             mProductCommentAdapter.setNewData(dataBean);
         }else {
             if (dataBean.size()>0) {
@@ -94,6 +99,8 @@ public class GoodCommentFragment extends LazyLoadFragment implements GoodComment
             }
         }
     }
+
+
 
     @Override
     public void getCommentDataField() {

@@ -36,22 +36,22 @@
 
     <!--************************************************ 联系人 ***********************************************-->
     <!-- 读联系人 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!-- 写联系人 -->
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
+    <!--&lt;!&ndash; 写联系人 &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.WRITE_CONTACTS" />-->
     <!--************************************************ 联系人 end ***********************************************-->
 
 
     <!--************************************************ 位置 ***********************************************-->
     <!-- 访问CellID或WiFi热点来获取粗略的位置 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 获取精确位置 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!--&lt;!&ndash; 获取精确位置 &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
     <!--************************************************ 位置 end ***********************************************-->
 
     <!--************************************************ 使用麦克风 ***********************************************-->
     <!-- 使用麦克风 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
     <!--************************************************ 使用麦克风 end ***********************************************-->
 
     <!--************************************************ 电话 ***********************************************-->
@@ -64,32 +64,32 @@
 
     <!--************************************************ 传感器 ***********************************************-->
     <!-- 传感器信息 -->
-    <uses-permission android:name="android.permission.SENSOR_INFO" />
-    <!-- 调用传感器 -->
-    <uses-permission android:name="android.permission.SENSOR_ENABLE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <!--<uses-permission android:name="android.permission.SENSOR_INFO" />-->
+    <!--&lt;!&ndash; 调用传感器 &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.SENSOR_ENABLE" />-->
+    <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--<uses-permission android:name="android.permission.BODY_SENSORS" />-->
     <!--************************************************ 传感器 end ***********************************************-->
 
 
     <!--************************************************ 短信 ***********************************************-->
     <!--  发送消息-->
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <!--  阅读消息-->
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <!--  写入消息-->
-    <uses-permission android:name="android.permission.WRITE_SMS" />
-    <!-- 接收消息 -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
+    <!--&lt;!&ndash;  阅读消息&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
+    <!--&lt;!&ndash;  写入消息&ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.WRITE_SMS" />-->
+    <!--&lt;!&ndash; 接收消息 &ndash;&gt;-->
+    <!--<uses-permission android:name="android.permission.RECEIVE_SMS" />-->
     <!--************************************************ 短信 end ***********************************************-->
 
 
     <!-- 振动-->
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--<uses-permission android:name="android.permission.VIBRATE" />-->
 
     <!-- 录音-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
 
 
     <application
@@ -123,9 +123,8 @@
             android:value="1334" />
 
         <!--启动界面-->
-        <activity android:name="com.lengzhuo.xybh.ui.HomeTableUI"
+        <activity android:name="com.lengzhuo.xybh.ui.SplashUI"
                   android:screenOrientation="portrait"
-                  android:launchMode="singleTask"
                   android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -135,7 +134,10 @@
         </activity>
 
         <!--主界面-->
-        <!--<activity android:name=".ui.HomeTableUI" android:launchMode="singleTask"/>-->
+        <activity android:name=".ui.HomeTableUI"
+                  android:launchMode="singleTask"
+                  android:windowSoftInputMode="adjustPan"
+            />
 
         <!--向导界面-->
         <activity android:name="com.lengzhuo.xybh.ui.GuideUI"/>
@@ -146,7 +148,9 @@
         <!--提交订单-->
         <activity android:name="com.lengzhuo.xybh.ui.home.CreateOrderUI"/>
         <!--评论商品-->
-        <activity android:name="com.lengzhuo.xybh.ui.home.CommentOrderUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.CommentOrderUI"
+                  android:windowSoftInputMode="adjustPan"
+            />
 
         <!-- 登录 -->
         <activity android:name="com.lengzhuo.xybh.ui.mine.LoginActivity"/>
@@ -187,7 +191,9 @@
         <!--店铺-->
         <activity android:name="com.lengzhuo.xybh.ui.home.ShopDetailUI"/>
         <!--商品搜索结果-->
-        <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"/>
+        <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"
+                  android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
         <activity android:name=".ui.home.AddressSelectedUi"/>
 

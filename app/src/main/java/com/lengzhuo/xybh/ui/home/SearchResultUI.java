@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.lengzhuo.xybh.utils.ToastUtils;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +44,9 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     @ViewInject(R.id.et_search)
     private EditText et_search;
 
-    private ArrayList<String> mLeftData;
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
+
     public SearchP mSearchP;
     public SearchGoodsListAdapter mSearchGoodsListAdapter;
     public List<SearchBean.DataBean.GoodsListBean> mGoodsList;
@@ -90,7 +92,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
                     ToastUtils.showToast("请输入搜索关键字");
                 } else {
                     //搜索接口
-
+                    mSearchContent=textView.getText().toString().trim();
                     mSearchP.setSearchData(mSearchContent, page, limit);
                     et_search.setText("");
                 }
@@ -122,8 +124,13 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     @Override
     public void searchData(SearchBean.DataBean searchBean) {
         mGoodsList = searchBean.getGoodsList();
-        mSearchGoodsListAdapter.setNewData(mGoodsList);
-        tv_num.setText(String.valueOf(searchBean.getGoodsList().size() + "个结果"));
+        mSearchGoodsListAdapter.setNewData(searchBean.getGoodsList());
+        showEmptyView(searchBean.getGoodsList(), ll_empty_view);
+        if (0 == searchBean.getGoodsList().size()) {
+            tv_num.setVisibility(View.GONE);
+        } else {
+            tv_num.setText(String.valueOf(searchBean.getGoodsList().size() + "个结果"));
+        }
     }
 
     @Override

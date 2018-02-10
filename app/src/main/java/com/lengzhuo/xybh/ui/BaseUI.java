@@ -21,6 +21,7 @@ import com.zhy.autolayout.AutoLayoutActivity;
 import org.xutils.x;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * 描述：自定义Activity
@@ -88,17 +89,32 @@ public abstract class BaseUI extends AutoLayoutActivity {
      * 设置透明状态栏
      */
     protected void setTranslucentStatus() {
+
+        //沉浸式布局
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+           getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
+//        StatusBarUtils.setStatusBarColor(this, getResources().getColor(R.color.black));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(Color.BLACK);
+            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
             try {
                 Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
                 Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
                 field.setAccessible(true);
                 //改为透明
-                field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);
+                field.setInt(getWindow().getDecorView(), Color.BLACK);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -218,5 +234,18 @@ public abstract class BaseUI extends AutoLayoutActivity {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 显示空布局
+     *
+     * @param dataBean
+     */
+    public void showEmptyView(List<?> dataBean, View  emptyView) {
+        if (dataBean.size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 }
