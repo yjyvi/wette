@@ -7,11 +7,13 @@
     <com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout
         android:id="@+id/rv_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_goods_comment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
+
+    <include layout="@layout/common_no_data_list"/>
 </LinearLayout>

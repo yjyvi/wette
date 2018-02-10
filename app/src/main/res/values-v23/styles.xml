@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!--<item name="colorPrimary">@color/normal_color</item>-->
+        <!--<item name="colorPrimaryDark">@color/normal_color</item>-->
+        <!--<item name="colorAccent">@color/normal_color</item>-->
+        <!--&lt;!&ndash; 隐藏状态栏 &ndash;&gt;-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!-- 隐藏标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:titleTextColor">@color/black</item>
+        <!-- API 21 theme customizations can go here. -->
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+</resources>

@@ -17,6 +17,8 @@ import com.lengzhuo.xybh.utils.UserManager;
 
 import org.xutils.x;
 
+import java.util.List;
+
 /**
  * 描述：自定义Fragment
  *
@@ -162,6 +164,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 是否登录
+     *
      * @return
      */
     public boolean isLoginClick() {
@@ -171,5 +174,19 @@ public abstract class BaseFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 显示空布局
+     *
+     * @param dataBean
+     */
+    public void showEmptyView(List<?> dataBean, View  emptyView) {
+        if (dataBean.size() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+        }
     }
 }

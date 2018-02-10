@@ -6,9 +6,8 @@ import com.lengzhuo.xybh.utils.SPUtils;
 
 import org.xutils.view.annotation.ContentView;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -36,25 +35,11 @@ public class SplashUI extends BaseUI {
     public void intoApp() {
 
 
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-        executorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                //do something
-                if (SPUtils.getBooleanToken(getApplicationContext(), CommonConstant.Common
-                        .FIRST_LAUNCHER)) {
-                    HomeTableUI.startHomeTableView(SplashUI.this, 0);
-                } else {
-                    GuideUI.startGuideActivity(SplashUI.this);
-                }
-                finish();
-            }
-        },0,2, TimeUnit.SECONDS);
-
-//        Timer timer = new Timer();
-//        TimerTask task = new TimerTask() {
+//        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+//        executorService.scheduleAtFixedRate(new Runnable() {
 //            @Override
 //            public void run() {
+//                //do something
 //                if (SPUtils.getBooleanToken(getApplicationContext(), CommonConstant.Common
 //                        .FIRST_LAUNCHER)) {
 //                    HomeTableUI.startHomeTableView(SplashUI.this, 0);
@@ -63,8 +48,22 @@ public class SplashUI extends BaseUI {
 //                }
 //                finish();
 //            }
-//        };
-//        timer.schedule(task, 2000);
+//        },0,2, TimeUnit.SECONDS);
+
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if (SPUtils.getBooleanToken(getApplicationContext(), CommonConstant.Common
+                        .FIRST_LAUNCHER)) {
+                    HomeTableUI.startHomeTableView(SplashUI.this, 0);
+                } else {
+                    GuideUI.startGuideActivity(SplashUI.this);
+                }
+                finish();
+            }
+        };
+        timer.schedule(task, 2000);
 
 
     }

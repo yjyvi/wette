@@ -15,7 +15,6 @@ import com.lengzhuo.xybh.beans.HomeBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
-import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.MyViewPagerIndicator;
 
 import java.util.List;
@@ -91,7 +90,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 public void onClick(View v) {
                                     //跳转事件
                                     if (homeDataBean.getRecommendGoods().get(0).getCover() != null && !TextUtils.isEmpty(homeDataBean.getRecommendGoods().get(0).getCover())) {
-                                        ToastUtils.showToast(homeDataBean.getRecommendGoods().get(0).getCover());
+//                                        ToastUtils.showToast(homeDataBean.getRecommendGoods().get(0).getCover());
                                     }
                                 }
                             });
@@ -106,7 +105,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 public void onItemClickListener(HomeBean.DataBean.RecommendGoodsBean data, View view) {
                                     //跳转事件
                                     if (data.getCover() != null && !TextUtils.isEmpty(data.getCover().trim())) {
-                                        ToastUtils.showToast(data.getCover());
+//                                        ToastUtils.showToast(data.getCover());
                                     }
                                 }
                             });

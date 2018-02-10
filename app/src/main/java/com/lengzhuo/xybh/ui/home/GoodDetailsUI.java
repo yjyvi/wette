@@ -83,6 +83,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         EventBus.getDefault().unregister(this);
     }
 
+
+
     @Override
     protected void setControlBasis() {
 
@@ -112,11 +114,16 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
         mType = getIntent().getIntExtra("type", 0);
+        String webUrl = "";
+        if (UserManager.getUser() != null) {
 
-        String webUrl = getResources().getString(R.string.service_host_address)
-                .concat(getResources().getString(R.string.detailHtm))
-                .concat(".do?c=")
-                .concat(UserManager.getUser().getC()).concat("&goodsId=").concat(mGoodsId);
+            webUrl = getResources().getString(R.string.service_host_address)
+                    .concat(getResources().getString(R.string.detailHtm))
+                    .concat(".do?c=")
+                    .concat(UserManager.getUser().getC())
+                    .concat("&goodsId=")
+                    .concat(mGoodsId);
+        }
 
         mProductDetailP.setProductDetailsData(mGoodsId);
 

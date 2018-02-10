@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,6 +13,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.GoodListAdapter;
 import com.lengzhuo.xybh.beans.GoodsListBean;
 import com.lengzhuo.xybh.ui.BaseUI;
+import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
@@ -22,7 +24,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 /**
- *
  * @author yjyvi
  * @date 2018/1/31
  * 商品列表
@@ -39,6 +40,12 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
 
     @ViewInject(R.id.common_title_back)
     private RelativeLayout common_title_back;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
+
+    @ViewInject(R.id.rl_right)
+    private RelativeLayout rl_right;
 
     public GoodListAdapter mGoodListAdapter;
     public GoodsListP mGoodsListP;
@@ -67,7 +74,7 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
 
         refreshLayout.setMyRefreshLayoutListener(this);
 
-        mGoodsListP = new GoodsListP( this);
+        mGoodsListP = new GoodsListP(this);
         mGoodsListP.setGoodsList(mCategoryId, page, limit);
 
         rv_good_list.setLayoutManager(new GridLayoutManager(this, 2));
@@ -87,11 +94,21 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
                 back();
             }
         });
+
+        rl_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isLoginClick()) {
+                    return;
+                }
+                ShoppingCartActivity.toActivity(view.getContext());
+            }
+        });
     }
 
     public static void start(Context context, int categoryId) {
         Intent starter = new Intent(context, GoodListUI.class);
-        starter.putExtra("categoryId",categoryId);
+        starter.putExtra("categoryId", categoryId);
         context.startActivity(starter);
     }
 
@@ -101,11 +118,12 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
         refreshLayout.loadMoreComplete();
 
         if (page == 1) {
+            showEmptyView(result.getData(), ll_empty_view);
             mGoodListAdapter.setNewData(result.getData());
         } else {
             if (result.getData().size() > 0) {
                 mGoodListAdapter.addData(result.getData());
-            }else {
+            } else {
                 ToastUtils.showToast("没有更多数据了");
             }
         }

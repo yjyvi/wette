@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -48,6 +49,9 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
     @ViewInject(R.id.iv_is_collection)
     private ImageView iv_is_collection;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
 
     private GoodsListP mGoodsListP;
     private int page = 1;
@@ -115,6 +119,11 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
                 back();
                 break;
             case R.id.iv_is_collection:
+
+                if (isLoginClick()) {
+                    return;
+                }
+
                 if (!iv_is_collection.isSelected()) {
                     iv_is_collection.setSelected(true);
                     isCollection = "1";
@@ -128,6 +137,11 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
                 SearchResultUI.start(view.getContext(), "");
                 break;
             case R.id.rl_cart:
+
+                if (isLoginClick()) {
+                    return;
+                }
+
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
             default:
@@ -144,6 +158,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
         refreshLayout.refreshComplete();
 
         if (1 == page) {
+            showEmptyView(result.getData(),ll_empty_view);
             mProductListAdapter.setNewData(result.getData());
         } else {
             if (result.getData().size() > 0) {
@@ -196,11 +211,11 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
     @Override
     public void collectionSuccess() {
-
+        ToastUtils.showToast("收藏成功");
     }
 
     @Override
     public void collectionField() {
-
+        ToastUtils.showToast("收藏失败");
     }
 }

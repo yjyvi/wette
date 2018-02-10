@@ -13,7 +13,6 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.ClassifyBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodListUI;
-import com.lengzhuo.xybh.utils.ToastUtils;
 
 import java.util.List;
 
@@ -43,6 +42,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean
         LinearLayout.LayoutParams titleLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tv_title.setLayoutParams(titleLayoutParams);
         tv_title.setText(item.getName());
+        tv_title.setTextSize(16);
         tv_title.setPadding(0, 34, 0, 34);
 
 
@@ -57,7 +57,6 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean
         goodsListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ToastUtils.showToast(String.valueOf(position));
                 GoodListUI.start(view.getContext(),item.getCategoryId());
             }
         });

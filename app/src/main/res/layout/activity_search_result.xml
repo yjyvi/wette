@@ -38,18 +38,19 @@
 
     <View
         android:layout_width="match_parent"
+        android:layout_marginTop="20px"
         android:layout_height="1px"
+        android:layout_marginBottom="20px"
         android:background="@color/gray_line"/>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="20px"
         android:id="@+id/rv_search_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:paddingLeft="10px"
         android:paddingRight="10px"/>
 
-    <include layout="@layout/common_no_data_list"/>
+    <include  layout="@layout/common_no_data_list"/>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import com.lengzhuo.xybh.adapter.home.HomeTableViewPagerAdapter;
 import com.lengzhuo.xybh.ui.classify.ClassifyFragment;
 import com.lengzhuo.xybh.ui.home.HomeFragment;
 import com.lengzhuo.xybh.ui.mine.MineFragment;
+import com.lengzhuo.xybh.utils.StatusBarUtils;
 import com.lengzhuo.xybh.views.MyViewPager;
 
 import org.xutils.view.annotation.ContentView;
@@ -55,13 +56,12 @@ public class HomeTableUI extends BaseUI {
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        EventBus.getDefault().unregister(this);
     }
 
 
     @Override
     protected void setControlBasis() {
-//        EventBus.getDefault().register(this);
+        StatusBarUtils.transparencyBar(this);
     }
 
 

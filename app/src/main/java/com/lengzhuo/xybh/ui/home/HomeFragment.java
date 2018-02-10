@@ -72,7 +72,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
         rl_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isLoginClick()) {
+                if (isLoginClick()) {
                     return;
                 }
                 ShoppingCartActivity.toActivity(view.getContext());
@@ -115,6 +115,18 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
             }
         });
 
+        rv_home.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (RecyclerView.SCROLL_STATE_DRAGGING==newState) {
+                    //改变EditText的布局显示
+                    et_search.setText("");
+                    et_search.setVisibility(View.GONE);
+                    rl_title_search.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
     }
 

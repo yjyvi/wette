@@ -17,7 +17,6 @@ import com.lengzhuo.xybh.beans.ClassifyBean;
 import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.home.SearchResultUI;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
-import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.SmoothScrollLayoutManager;
 
 import org.xutils.view.annotation.ViewInject;
@@ -40,7 +39,7 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
     private RelativeLayout rl_search;
 
     @ViewInject(R.id.rl_right)
-    private RelativeLayout rl_cart;
+    private RelativeLayout rl_right;
 
     public ClassifyP mClassifyP;
     public ClassifyLeftAdapter mClassifyLeftAdapter;
@@ -62,7 +61,7 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         mClassifyP.setClassifyData();
 
         rl_search.setOnClickListener(this);
-        rl_cart.setOnClickListener(this);
+        rl_right.setOnClickListener(this);
     }
 
     @Override
@@ -84,7 +83,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
                 if (mClassifyData != null && mClassifyData.size() > 0) {
                     initRightData(mClassifyData.get(position).getList());
                 }
-                ToastUtils.showToast(String.valueOf(position));
             }
 
         });
@@ -187,6 +185,11 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
                 break;
 
             case R.id.rl_right:
+
+                if (isLoginClick()) {
+                    return;
+                }
+
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
             default:

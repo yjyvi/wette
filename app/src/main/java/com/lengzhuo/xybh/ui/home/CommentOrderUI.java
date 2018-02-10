@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.evntBusBean.OrderEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -41,7 +44,14 @@ public class CommentOrderUI extends BaseUI implements CommentOrderP.CommentOrder
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected void setControlBasis() {
+        EventBus.getDefault().register(this);
         leftVisible(R.mipmap.back);
         setTitle("评价");
     }
@@ -90,11 +100,18 @@ public class CommentOrderUI extends BaseUI implements CommentOrderP.CommentOrder
 
     @Override
     public void commentSuccess() {
+        ToastUtils.showToast("评价成功");
+        EventBus.getDefault().post(new OrderEvent().setEventType(OrderEvent.COMMENT_SUCCESS));
         finish();
     }
 
     @Override
     public void commentField() {
+
+    }
+
+    @Subscribe
+    public void orderEvent(OrderEvent orderEvent) {
 
     }
 }

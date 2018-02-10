@@ -85,13 +85,14 @@ public class PopUtils {
     }
 
 
-    public static void showGoodsStyle2(final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
+    public static void showGoodsStyle2(String buttonText, final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.fragment_selected_style, null);
         final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
 
         RecyclerView rv_style = (RecyclerView) layoutView.findViewById(R.id.rv_style);
         TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
+        tv_commit.setText(buttonText);
 
         LinearLayoutManager layout = new LinearLayoutManager(context);
         layout.setAutoMeasureEnabled(true);
