@@ -110,6 +110,7 @@
     <orderEntry type="library" name="com.squareup.okio:okio:1.8.0@jar" level="project" />
     <orderEntry type="library" name="com.alibaba:fastjson:1.2.31@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-25.3.1" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\mylibrary\libs\wechat-sdk-android-with-mta-1.1.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-25.3.1" level="project" />
     <orderEntry type="library" name="com.github.CymChad:BaseRecyclerViewAdapterHelper-2.9.27" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.0.0@jar" level="project" />
@@ -122,10 +123,10 @@
     <orderEntry type="library" name="com.yanzhenjie:recyclerview-swipe-1.1.2" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-25.3.1" level="project" />
     <orderEntry type="library" name="org.xutils:xutils-3.5.0" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\mylibrary\libs\alipaySdk-20170922.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-25.3.1" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.3.1@jar" level="project" />
-    <orderEntry type="library" name="__local_aars__:E.\Work\Project\wette\mylibrary\libs\alipaySdk-20170922.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:glide:4.0.0@jar" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:gifdecoder:4.0.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-25.0.0" level="project" />
@@ -136,7 +137,6 @@
     <orderEntry type="library" name="com.github.dfqin:grantor-2.1.0" level="project" />
     <orderEntry type="library" name="com.contrarywind:Android-PickerView-3.2.6" level="project" />
     <orderEntry type="library" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
-    <orderEntry type="library" name="__local_aars__:E.\Work\Project\wette\mylibrary\libs\wechat-sdk-android-with-mta-1.1.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.hackware1993:MagicIndicator-1.5.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:25.3.1@jar" level="project" />
