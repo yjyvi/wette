@@ -90,23 +90,14 @@ public abstract class BaseUI extends AutoLayoutActivity {
      */
     protected void setTranslucentStatus() {
 
-        //沉浸式布局
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
-
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-//        StatusBarUtils.setStatusBarColor(this, getResources().getColor(R.color.black));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(Color.BLACK);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
             getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
             try {
@@ -114,7 +105,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
                 Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
                 field.setAccessible(true);
                 //改为透明
-                field.setInt(getWindow().getDecorView(), Color.BLACK);
+                field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);
             } catch (Exception e) {
                 e.printStackTrace();
             }

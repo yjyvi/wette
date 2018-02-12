@@ -19,6 +19,7 @@ import com.lengzhuo.xybh.beans.GoodsListBean;
 import com.lengzhuo.xybh.beans.HomeBean;
 import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
+import com.lengzhuo.xybh.utils.KeyboardUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayoutListener;
@@ -119,11 +120,12 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (RecyclerView.SCROLL_STATE_DRAGGING==newState) {
+                if (RecyclerView.SCROLL_STATE_DRAGGING == newState) {
                     //改变EditText的布局显示
                     et_search.setText("");
                     et_search.setVisibility(View.GONE);
                     rl_title_search.setVisibility(View.VISIBLE);
+                    KeyboardUtils.hideKeyBoard(view.getContext(), view);
                 }
             }
         });
