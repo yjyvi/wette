@@ -79,6 +79,7 @@
             <EditText
                     android:id="@+id/et_password"
                     android:textSize="30px"
+                    android:maxLength="16"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="密码为6~16位字符，由数字和字母组成"
                     android:inputType="textPassword"
@@ -93,6 +94,7 @@
                     android:textSize="30px"
                     android:drawableLeft="@drawable/login_pwd"
                     android:hint="确认密码"
+                    android:maxLength="16"
                     android:inputType="textPassword"
                     style="@style/edit_text_login"
                     />

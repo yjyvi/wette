@@ -23,8 +23,8 @@ public final class MyAppGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         builder.setDefaultRequestOptions(new RequestOptions()
-                .error(R.mipmap.ic_launcher)
-                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.no_img)
+                .placeholder(R.mipmap.no_img)
                 .centerCrop()
         );
     }
