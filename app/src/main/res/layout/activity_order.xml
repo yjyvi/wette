@@ -30,9 +30,9 @@
                 android:textColor="#999999"
                 android:textSize="32px"
                 android:layout_gravity="center_horizontal"
-                android:text="暂无消息"
+                android:text="暂无订单"
                 android:layout_marginTop="220px"
-                android:drawableTop="@drawable/message_empty_data"
+                android:drawableTop="@drawable/common_empty_data"
                 android:drawablePadding="30dp"
                 android:gravity="center_horizontal"/>
 
