@@ -194,6 +194,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
      * 选择商品规格样式
      */
     private void stylePop(String buttonText) {
+        if (mDataBean == null) {
+            return;
+        }
         PopUtils.showGoodsStyle2(buttonText, getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
             @Override
             public void selectedResult(String result) {
