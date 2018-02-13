@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -37,6 +38,10 @@ public class AddressSelectedUi extends BaseUI {
 
     @ViewInject(R.id.tv_add_address)
     private TextView tv_add_address;
+
+    @ViewInject(R.id.ll_empty_view)
+    private LinearLayout ll_empty_view;
+
     private List<AddressBean> mAddressBean;
     public SelectedAddressAdapter mSelectedAddressAdapter;
 
@@ -67,6 +72,7 @@ public class AddressSelectedUi extends BaseUI {
             @Override
             protected void onSuccess(List<AddressBean> data) {
                 mSelectedAddressAdapter.setNewData(data);
+                showEmptyView(data, ll_empty_view);
             }
         });
         rv_address_list.setLayoutManager(new LinearLayoutManager(this));

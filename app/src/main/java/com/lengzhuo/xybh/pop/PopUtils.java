@@ -20,7 +20,6 @@ import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 
@@ -111,18 +110,17 @@ public class PopUtils {
             @Override
             public void onClick(View view) {
 
-                Set<Map.Entry<Integer, String>> entries = valueList.entrySet();
-
                 for (Map.Entry<Integer, String> integerStringEntry : valueList.entrySet()) {
                     integerStringEntry.getValue();
                     integerStringEntry.getKey();
                     valueId = valueId + ";" + valueList.get(integerStringEntry.getKey());
                 }
 
-
-                clickListener.selectedResult("[" + valueId.substring(1, valueId.length()) + "]");
-                valueList.clear();
-                valueId = "";
+                if (valueId.length() > 1) {
+                    clickListener.selectedResult("[" + valueId.substring(1, valueId.length()) + "]");
+                    valueList.clear();
+                    valueId = "";
+                }
                 popupWindow.dismiss();
             }
         });
