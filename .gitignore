@@ -10,3 +10,11 @@ build.gradle
 /gradle
 /mylibrary/mylibrary.iml
 mylibrary/mylibrary.iml
+.idea/gradle.xml
+.idea/gradle.xml
+.idea/modules.xml
+app/app.iml
+lib-arl/lib-arl.iml
+mylibrary/mylibrary.iml
+release/app-release.apk
+release/app-release.apk

@@ -1,7 +1,6 @@
 package com.lengzhuo.xybh.ui.home.productDetial;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
-import com.lengzhuo.xybh.adapter.home.BannerViewPagerAdapter;
 import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.beans.BannerBean;
 import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
@@ -25,7 +23,6 @@ import com.lengzhuo.xybh.ui.home.AddCartP;
 import com.lengzhuo.xybh.ui.home.AddressSelectedUi;
 import com.lengzhuo.xybh.ui.home.CreateOrderUI;
 import com.lengzhuo.xybh.ui.home.GoodsSkuP;
-import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
@@ -40,6 +37,8 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import yjyvi.lib.arl.AutoRollLayout;
 
 /**
  * Created by yjyvi on 2018/1/31.
@@ -90,7 +89,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private TextView tv_total_page;
 
     @ViewInject(R.id.vp_item_banner)
-    private ViewPager vp_item_banner;
+    private AutoRollLayout vp_item_banner;
 
     @ViewInject(R.id.vpi_item_banner_indicator)
     private MyViewPagerIndicator vpi_item_banner_indicator;
@@ -149,47 +148,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         getAddressList();
     }
 
-    private void bannerInit() {
-        if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
-            if (mResultBannerBean.size() == 1) {
-                iv_item_banner.setVisibility(View.VISIBLE);
-                GlideImgUtils.loadImg(getActivity(), mResultBannerBean.get(0).getBanner_Url(), iv_item_banner);
-                iv_item_banner.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //跳转事件
-                        if (mResultBannerBean.get(0).getBanner_Url() != null && !TextUtils.isEmpty(mResultBannerBean.get(0).getBanner_Url())) {
-                            ToastUtils.showToast(mResultBannerBean.get(0).getBanner_Url());
-                        }
-                    }
-                });
-            } else {
-                vp_item_banner.setAdapter(new BannerViewPagerAdapter<BannerBean.ResultdataBean>(mResultBannerBean) {
-                    @Override
-                    public String getImageUrl(int position) {
-                        return mResultBannerBean.get(position).getBanner_Url();
-                    }
-
-                    @Override
-                    public void onItemClickListener(BannerBean.ResultdataBean data, View view) {
-                        //跳转事件
-                        if (data.getBanner_LinkUrl() != null && !TextUtils.isEmpty(data.getBanner_LinkUrl().trim())) {
-                            ToastUtils.showToast(data.getBanner_LinkUrl());
-                        }
-                    }
-                });
-                vpi_item_banner_indicator.bindBannerViewPager(vp_item_banner, mResultBannerBean.size());
-                tv_total_page.setText(String.valueOf("/" + mResultBannerBean.size()));
-                vpi_item_banner_indicator.setCurrentPositionListener(new MyViewPagerIndicator.CurrentPositionListener() {
-                    @Override
-                    public void currentPosition(int position) {
-                        tv_current_page.setText(String.valueOf(position & mResultBannerBean.size()));
-                    }
-                });
-            }
-        }
-    }
-
 
     /**
      * 初始化实例
@@ -236,7 +194,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
      * 选择商品规格样式
      */
     private void stylePop(String buttonText) {
-        PopUtils.showGoodsStyle2(buttonText,getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
+        PopUtils.showGoodsStyle2(buttonText, getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
             @Override
             public void selectedResult(String result) {
                 mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
@@ -291,6 +249,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     }
 
 
+    /**
+     * 地址列表的EvenBus事件
+     *
+     * @param addressEvent
+     */
     @Subscribe
     public void addressEvent(AddressEvent addressEvent) {
         if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
@@ -307,6 +270,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         String carousel = mDataBean.getCarousel();
         if (!TextUtils.isEmpty(carousel)) {
             mResultBannerBean = new ArrayList<>();
+            List<String> banners2 = new ArrayList<>();
 
             String[] banners = carousel.split(",");
 
@@ -314,11 +278,74 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 BannerBean.ResultdataBean banner = new BannerBean.ResultdataBean();
                 banner.setBanner_Url(banners[i]);
                 mResultBannerBean.add(banner);
+                banners2.add(banners[i]);
             }
-            bannerInit();
+
+//            bannerInit();
+            vp_item_banner.setAutoRoll(true);
+            vp_item_banner.setPhotoPre(true);
+            vp_item_banner.setItems(banners2);
+            tv_total_page.setText(String.valueOf("/" + banners2.size()));
+            vp_item_banner.setCurrentItemListener(new AutoRollLayout.CurrentItemListener() {
+                @Override
+                public void currentItemPosition(int position) {
+
+                    tv_current_page.setText(String.valueOf(position));
+                }
+            });
+
         }
     }
 
+
+    /**
+     * 初始化轮播图
+     */
+    private void bannerInit() {
+//        if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
+//            if (mResultBannerBean.size() == 1) {
+//                iv_item_banner.setVisibility(View.VISIBLE);
+//                GlideImgUtils.loadImg(getActivity(), mResultBannerBean.get(0).getBanner_Url(), iv_item_banner);
+//                iv_item_banner.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //跳转事件
+//                        if (mResultBannerBean.get(0).getBanner_Url() != null && !TextUtils.isEmpty(mResultBannerBean.get(0).getBanner_Url())) {
+//                            ToastUtils.showToast(mResultBannerBean.get(0).getBanner_Url());
+//                        }
+//                    }
+//                });
+//            } else {
+//                vp_item_banner.setAdapter(new BannerViewPagerAdapter<BannerBean.ResultdataBean>(mResultBannerBean) {
+//                    @Override
+//                    public String getImageUrl(int position) {
+//                        return mResultBannerBean.get(position).getBanner_Url();
+//                    }
+//
+//                    @Override
+//                    public void onItemClickListener(BannerBean.ResultdataBean data, View view) {
+//                        //跳转事件
+//                        if (data.getBanner_LinkUrl() != null && !TextUtils.isEmpty(data.getBanner_LinkUrl().trim())) {
+//                            ToastUtils.showToast(data.getBanner_LinkUrl());
+//                        }
+//                    }
+//                });
+//                vpi_item_banner_indicator.bindBannerViewPager(vp_item_banner, mResultBannerBean.size());
+//                tv_total_page.setText(String.valueOf("/" + mResultBannerBean.size()));
+//                vpi_item_banner_indicator.setCurrentPositionListener(new MyViewPagerIndicator.CurrentPositionListener() {
+//                    @Override
+//                    public void currentPosition(int position) {
+//                        tv_current_page.setText(String.valueOf(position & mResultBannerBean.size()));
+//                    }
+//                });
+//            }
+//        }
+    }
+
+
+    /**
+     * 获取地址列表
+     */
     private void getAddressList() {
         isFirst = true;
         if (!UserManager.isLogin()) {

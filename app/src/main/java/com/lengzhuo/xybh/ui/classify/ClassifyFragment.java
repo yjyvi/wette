@@ -24,7 +24,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 /**
- *
  * @author yjyvi
  * @date 2018/1/30
  * 分类界面
@@ -108,6 +107,14 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
     private View lastView;
 
+
+    /**
+     * 将选择的目录滑动到中间
+     *
+     * @param position
+     * @param adapter
+     * @param view
+     */
     private void scroll(int position, BaseQuickAdapter adapter, View view) {
 
         //改变选中状态
@@ -115,7 +122,14 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
             //去除上一次控件的状态
             if (lastView != null) {
                 lastView.setSelected(false);
+            }else {
+                //将默认的第1个条目为未选中状态
+                View viewByPosition = adapter.getViewByPosition(rv_left,0, R.id.v_line);
+                if (viewByPosition != null) {
+                    viewByPosition.setSelected(false);
+                }
             }
+
             lastView = view;
             view.setSelected(true);
         }

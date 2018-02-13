@@ -89,8 +89,8 @@ public class GoodCommentFragment extends LazyLoadFragment implements GoodComment
         this.mDataBean = dataBean;
 
         if (1==page) {
-            showEmptyView(dataBean,ll_empty_view);
             mProductCommentAdapter.setNewData(dataBean);
+            showEmptyView(dataBean,ll_empty_view);
         }else {
             if (dataBean.size()>0) {
                 mProductCommentAdapter.addData(dataBean);

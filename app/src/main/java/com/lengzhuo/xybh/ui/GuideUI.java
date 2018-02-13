@@ -46,8 +46,7 @@ public class GuideUI extends BaseUI implements View.OnClickListener,
     //引导图片资源
     private static final int[] pics = {
             R.mipmap.gride01,
-            R.mipmap.gride02,
-            R.mipmap.gride03};
+            R.mipmap.gride02};
     //底部小店图片
 //    private ImageView[] dots ;
 

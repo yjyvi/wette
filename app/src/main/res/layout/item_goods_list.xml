@@ -6,6 +6,7 @@
               android:layout_height="wrap_content">
     
     <ImageView
+        android:layout_marginTop="22px"
         android:id="@+id/iv_good_img"
         android:layout_width="170px"
         android:src="@color/gray"
@@ -16,7 +17,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:maxLength="5"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="22px"
         android:layout_width="wrap_content"
         style="@style/text_gray_24"
         android:text="商品名称"
