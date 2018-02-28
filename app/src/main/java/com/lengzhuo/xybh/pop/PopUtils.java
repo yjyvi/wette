@@ -39,6 +39,8 @@ public class PopUtils {
     public static Map<Integer, String> valueList = new TreeMap();
     public static String valueId = "";
     private static GoodsSelectedStyleListener mClickListener;
+    private static Map<Integer, Integer> lastAttrId = new HashMap<>();
+    private static Map<Integer, String> AttrName = new HashMap<>();
 
     public static void showGoodsStyle(final Activity context, View contentView, GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
@@ -97,8 +99,7 @@ public class PopUtils {
     }
 
 
-    private static Map<Integer, Integer> lastAttrId = new HashMap<>();
-    private static Map<Integer, String> AttrName = new HashMap<>();
+
 
     public static void showGoodsStyle2(final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
@@ -258,11 +259,18 @@ public class PopUtils {
                 backgroundAlpha(1f, context);
                 reData();
 //                lastAttrId.clear();
-                AttrName.clear();
+//                AttrName.clear();
             }
         });
     }
 
+    /**
+     * 清除数据
+     */
+    public static void clearData(){
+        lastAttrId.clear();
+        AttrName.clear();
+    }
 
     /**
      * 默认弹窗的回调

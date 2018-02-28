@@ -88,6 +88,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean, this);
         rv_good_list.setAdapter(createOrderGoodsListAdapter);
 
+        showTotalMoney();
 
         mCreateOrderP = new CreateOrderP(this);
 
@@ -169,8 +170,8 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 AddressSelectedUi.start(view.getContext());
                 break;
             case R.id.bt_pay:
+                mGoods = JSON.toJSONString(mGoodsDataBean);
                 createOrder();
-
                 break;
             default:
                 break;
@@ -213,10 +214,15 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
     @Override
     public void addOrReduce(int num, int position) {
-
         mGoodsDataBean.get(position).setGoodsAmount(String.valueOf(num));
-        mGoods = JSON.toJSONString(mGoodsDataBean);
+        showTotalMoney();
+    }
 
+
+    /**
+     * 显示总金额
+     */
+    private void showTotalMoney() {
         float maxMoney = 0;
         for (CreateOrderGoodsBean createOrderGoodsBean : mGoodsDataBean) {
             maxMoney += Float.parseFloat(createOrderGoodsBean.getGoodsPrice()) * Float.parseFloat(createOrderGoodsBean.getGoodsAmount());

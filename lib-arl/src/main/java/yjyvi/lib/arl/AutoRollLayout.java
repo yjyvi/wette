@@ -96,9 +96,9 @@ public class AutoRollLayout extends AutoFrameLayout {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             Log.d("OnGestureListener", "onSingleTapUp");
-            if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem());
-            }
+//            if (mOnItemClickListener != null) {
+//                mOnItemClickListener.onItemClick(mViewPager.getCurrentItem());
+//            }
 
             return true;
         }
@@ -121,8 +121,9 @@ public class AutoRollLayout extends AutoFrameLayout {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Log.d("OnGestureListener", "onFling");
-            mCurrentItemListener.currentItemPosition(mViewPager.getCurrentItem()+1);
-            autoRoll = true;
+            Log.d("OnGestureListener", e1.getRawX()+"");
+            mCurrentItemListener.currentItemPosition(mViewPager.getCurrentItem());
+//            autoRoll = true;
             return true;
         }
     };
@@ -337,7 +338,7 @@ public class AutoRollLayout extends AutoFrameLayout {
         } else {
             targetIndex = currentIndex - 1;
         }
-        mCurrentItemListener.currentItemPosition(targetIndex+1);
+        mCurrentItemListener.currentItemPosition(targetIndex);
 
         mViewPager.setCurrentItem(targetIndex);
     }

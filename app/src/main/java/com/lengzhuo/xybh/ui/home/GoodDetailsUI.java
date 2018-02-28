@@ -12,6 +12,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.GoodTableAdapter;
 import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.beans.GoodDetailsBean;
+import com.lengzhuo.xybh.pop.PopUtils;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.home.productDetial.GoodCommentFragment;
 import com.lengzhuo.xybh.ui.home.productDetial.GoodDetailFragment;
@@ -64,7 +65,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     public CollectionP mCollectionP;
     private String userId;
     private String isCollection;
-    private String operation;
+    private int operation;
     public AddCartP mAddCartP;
     private GoodDetailP mProductDetailP;
     private GoodDetailsBean.DataBean mGoodDetailsBean;
@@ -81,6 +82,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        PopUtils.clearData();
     }
 
 
@@ -240,10 +242,10 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
                 if (!ll_collection.isSelected()) {
                     ll_collection.setSelected(true);
-                    operation = "1";
+                    operation = 1;
                 } else {
                     ll_collection.setSelected(false);
-                    operation = "2";
+                    operation = 2;
                 }
                 mCollectionP.setCollection(operation, mGoodsId, "1");
                 break;

@@ -17,6 +17,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.SearchGoodsListAdapter;
 import com.lengzhuo.xybh.beans.SearchBean;
 import com.lengzhuo.xybh.ui.BaseUI;
+import com.lengzhuo.xybh.utils.KeyboardUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 
 import org.xutils.view.annotation.ContentView;
@@ -92,9 +93,10 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
                     ToastUtils.showToast("请输入搜索关键字");
                 } else {
                     //搜索接口
-                    mSearchContent=textView.getText().toString().trim();
+                    mSearchContent = textView.getText().toString().trim();
                     mSearchP.setSearchData(mSearchContent, page, limit);
                     et_search.setText("");
+                    KeyboardUtils.hideKeyBoard(getActivity(), textView);
                 }
                 return true;
             }

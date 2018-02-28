@@ -36,6 +36,7 @@ public class LoginActivity extends BaseUI {
     @ViewInject(R.id.et_password)
     EditText et_password;
 
+
     @Override
     protected void back() {
         finish();
@@ -49,7 +50,6 @@ public class LoginActivity extends BaseUI {
 
     @Override
     protected void prepareData() {
-
     }
 
     @Event(value = {

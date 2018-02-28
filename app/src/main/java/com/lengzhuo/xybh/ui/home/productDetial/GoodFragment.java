@@ -227,11 +227,13 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 for (Map.Entry<Integer, String> integerStringEntry : result.entrySet()) {
                     if (integerStringEntry.getKey() == 1) {
                         colorName.append(integerStringEntry.getValue());
-                    }
-                    if (integerStringEntry.getKey() == 4) {
+                    } else if (integerStringEntry.getKey() == 4) {
                         sizeName.append(integerStringEntry.getValue());
+                    } else {
+                        colorName.append(integerStringEntry.getValue());
                     }
                 }
+
                 colorName.append(sizeName);
                 tv_style.setText(colorName.toString());
             }
@@ -363,15 +365,15 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 banners2.add(banners[i]);
             }
 
-            vp_item_banner.setPhotoPre(true);
             vp_item_banner.setItems(banners2);
             tv_total_page.setText(String.valueOf("/" + banners2.size()));
             vp_item_banner.setCurrentItemListener(new AutoRollLayout.CurrentItemListener() {
                 @Override
                 public void currentItemPosition(int position) {
-                    tv_current_page.setText(String.valueOf(position));
+                    tv_current_page.setText(String.valueOf(position+1));
                 }
             });
+
 
         }
     }

@@ -147,9 +147,9 @@ public class NetworkUtils {
     /**
      * 商品、店铺收藏与取消收藏
      */
-    public void getCollection(String operation, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
+    public void getCollection(int operation, String dataId, String type, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = getParams();
-        params.put("operation", operation);
+        params.put("operation", String.valueOf(operation));
         params.put("dataId", dataId);
         params.put("type", type);
 

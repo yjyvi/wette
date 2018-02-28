@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.lengzhuo.xybh.CommonConstant;
 import com.lengzhuo.xybh.R;
@@ -35,6 +36,9 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
     @ViewInject(R.id.iv_zfb)
     private ImageView iv_zfb;
 
+    @ViewInject(R.id.ll_pay_wx)
+    private LinearLayout ll_pay_wx;
+
     private String payChannel = "1";
     public String mOrderNo;
     public PayOrderP mPayOrderP;
@@ -58,6 +62,11 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         mPayUtils.setPayCallBack(this);
         mOrderNo = getIntent().getStringExtra("orderNo");
         mPayOrderP = new PayOrderP(this);
+
+        //隐藏后默认勾选支付宝
+        ll_pay_wx.setVisibility(View.GONE);
+        iv_zfb.setSelected(true);
+        payChannel = CommonConstant.Common.PAY_METHOD_ZFB;
     }
 
     @Event(value = {

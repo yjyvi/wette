@@ -61,7 +61,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     public String mShopId;
     public ShopDetailP mShopDetailP;
     public CollectionP mCollectionP;
-    private String isCollection;
+    private int isCollection;
 
     @Override
     protected void back() {
@@ -126,9 +126,9 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
                 if (!iv_is_collection.isSelected()) {
                     iv_is_collection.setSelected(true);
-                    isCollection = "1";
+                    isCollection = 1;
                 } else {
-                    isCollection = "2";
+                    isCollection = 2;
                     iv_is_collection.setSelected(false);
                 }
                 mCollectionP.setCollection(isCollection, mShopId, "2");

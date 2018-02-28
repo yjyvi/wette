@@ -27,7 +27,7 @@ public class CollectionP extends PresenterBase {
         this.mCollectionListener = collectionListener;
     }
 
-    public void setCollection(final String operation, String dataId, String type){
+    public void setCollection(final int operation, String dataId, String type){
         NetworkUtils.getNetworkUtils().getCollection( operation, dataId, type, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
@@ -39,7 +39,7 @@ public class CollectionP extends PresenterBase {
                 NetBaseBean netBaseBean = JSON.parseObject(result,NetBaseBean.class);
                 if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
                     mCollectionListener.collectionSuccess();
-                    if (TextUtils.equals("1",operation)) {
+                    if (TextUtils.equals("1",String.valueOf(operation))) {
                         ToastUtils.showToast("收藏成功");
                     }else {
                         ToastUtils.showToast("取消收藏");

@@ -75,6 +75,7 @@
                 android:layout_weight="1"/>
 
         <LinearLayout
+            android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -108,6 +109,7 @@
         </LinearLayout>
 
         <ImageView
+            android:visibility="gone"
                 android:id="@+id/iv_wechat_login"
                 android:layout_width="80px"
                 android:layout_height="80px"
