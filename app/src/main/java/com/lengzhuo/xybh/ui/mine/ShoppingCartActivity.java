@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.beans.shoppingcart.CommodityBean;
@@ -249,7 +248,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 return;
             }
             //结算
-            List<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(mSelectedCommodityList.size());
+            ArrayList<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(mSelectedCommodityList.size());
 
             for (CommodityBean commodityBean : mSelectedCommodityList) {
                 CreateOrderGoodsBean goodsBean = new CreateOrderGoodsBean();
@@ -257,10 +256,15 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 goodsBean.setGoodsAmount(String.valueOf(commodityBean.getAmount()));
                 goodsBean.setShopId(commodityBean.getShopId());
                 goodsBean.setSkuId(String.valueOf(commodityBean.getSkuId()));
+                goodsBean.setGoodsPrice(String.valueOf(commodityBean.getPrice()));
+                goodsBean.setGoodsImageUrl(commodityBean.getCover());
+                goodsBean.setGoodsSkuContent(commodityBean.getPropertiesName());
+                goodsBean.setGoodsTitle(commodityBean.getGoodsName());
+
                 orderGoodsBeanList.add(goodsBean);
             }
 
-            CreateOrderUI.start(this, null, JSON.toJSONString(orderGoodsBeanList));
+            CreateOrderUI.start(this, null, orderGoodsBeanList);
         }
     }
 

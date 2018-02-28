@@ -86,7 +86,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
 
         mShopDetailP.setShopData(mShopId, page, limit);
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(0, mShopId, page, limit);
 
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
@@ -158,7 +158,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
         refreshLayout.refreshComplete();
 
         if (1 == page) {
-            showEmptyView(result.getData(),ll_empty_view);
+            showEmptyView(result.getData(), ll_empty_view);
             mProductListAdapter.setNewData(result.getData());
         } else {
             if (result.getData().size() > 0) {
@@ -178,14 +178,14 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     @Override
     public void onRefresh(View view) {
         page = 1;
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(0, mShopId, page, limit);
         mShopDetailP.setShopData(mShopId, page, limit);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(0,  mShopId,page, limit);
     }
 
     @Override

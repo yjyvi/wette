@@ -57,13 +57,32 @@ public class NetworkUtils {
 
 
     /**
-     * 获取首页数据
+     * 获取商品列表
      */
     public void getGoodList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         if (categoryTid != 0) {
             params.put("categoryTid", String.valueOf(categoryTid));
         }
+        params.put(PAGE, String.valueOf(pageNo));
+        params.put(LIMIT, String.valueOf(pageSize));
+        OKHttpManager.postAsync(getUrl(R.string.goodsList), params, httpBack);
+    }
+
+    /**
+     * 获取店铺商品列表
+     * @param categoryTid
+     * @param shopId
+     * @param pageSize
+     * @param pageNo
+     * @param httpBack
+     */
+    public void getGoodList(int categoryTid, String  shopId, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
+        Map<String, String> params = new TreeMap<>();
+        if (categoryTid != 0) {
+            params.put("categoryTid", String.valueOf(categoryTid));
+        }
+        params.put("shopId", shopId);
         params.put(PAGE, String.valueOf(pageNo));
         params.put(LIMIT, String.valueOf(pageSize));
         OKHttpManager.postAsync(getUrl(R.string.goodsList), params, httpBack);

@@ -1,14 +1,11 @@
 package com.lengzhuo.xybh.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -37,17 +34,7 @@ public class HotWebUI extends BaseUI {
     @ViewInject(R.id.pb_loading)
     private ProgressBar pb_loading;
 
-    //分享
-    @ViewInject(R.id.rl_right)
-    private RelativeLayout rl_right;
 
-    private String con = "&UserInfo_Id=";
-    //表单的数据信息
-    private ValueCallback<Uri> mUploadMessage;
-    private ValueCallback<Uri[]> mUploadCallbackAboveL;
-    // 表单的结果回调
-    private final static int FILECHOOSER_RESULTCODE = 1;
-    private Uri imageUri;
     private String title;
 
     public static void starter(Context activity, String urlPath, String title) {
@@ -69,7 +56,7 @@ public class HotWebUI extends BaseUI {
         setTitle(title);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void prepareData() {
 
@@ -83,14 +70,11 @@ public class HotWebUI extends BaseUI {
             }
         });
 
-        WebSettings settings = wb_content.getSettings();
-        settings.setSupportZoom(false);
-        //设置是否使用WebView推荐使用的窗口
-        settings.setUseWideViewPort(true);
-
-        settings.setJavaScriptEnabled(true);
-        wb_content.addJavascriptInterface(new JsOperation(), "goodsDetail()");
-
+        WebSettings webSettings = wb_content.getSettings();
+        //设置WebView支持JavaScript
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
         wb_content.setWebChromeClient(new WebChromeClient() {
 
             @Override
@@ -109,27 +93,24 @@ public class HotWebUI extends BaseUI {
             }
         });
 
-        settings.setDefaultTextEncodingName("utf-8");
+        wb_content.addJavascriptInterface(new JsInterface(this), "android");
+
         wb_content.loadUrl(url);
-        wb_content.evaluateJavascript("javascript:goodsDetail()", new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String s) {
-                Log.d("HotWebUI", "result=" + s);
-            }
-        });
+
     }
 
+    private class JsInterface {
+        private Context mContext;
 
-    private class JsOperation {
+        public JsInterface(Context context) {
+            this.mContext = context;
+        }
+
+        //在js中调用javascript:window.android.goodsDetail(obj);便会触发此方法。
         @JavascriptInterface
-        public void goodsDetail(final String content) {
-            Log.d("HotWebUI", content);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-//                    GoodDetailsUI.start(getActivity(),);
-                }
-            });
+        public void goodsDetail(String name) {
+            GoodDetailsUI.start(mContext, String.valueOf(name));
         }
     }
+
 }

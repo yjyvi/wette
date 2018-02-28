@@ -104,7 +104,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     /**
      * 商品添加最大数量
      */
-    private int GOODS_NUM_MAX = 100;
+    private int goodsNumMax = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
     public AddressBean mAddressBean;
     public GoodDetailsBean.DataBean mDataBean;
@@ -233,7 +233,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                     }
                 }
                 colorName.append(sizeName);
-
                 tv_style.setText(colorName.toString());
             }
         });
@@ -248,7 +247,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private void numAddOrReduce(boolean isAdd) {
         String num = tv_goods_num.getText().toString().trim();
         int i = Integer.parseInt(num);
-        if (isAdd && i < GOODS_NUM_MAX) {
+        if (isAdd && i < goodsNumMax) {
             i++;
         } else if (i > 1) {
             i--;
@@ -272,6 +271,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
                     showInitStyle();
                     initBannerData();
+
+
+                    if (!TextUtils.isEmpty(mDataBean.getSkuStock())) {
+                        goodsNumMax = Integer.parseInt(mDataBean.getSkuStock());
+                    }
                 }
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
@@ -302,7 +306,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             colorName = new StringBuilder("规格  " + attrList.get(0).getAttrName() + ":");
             if (attrList1 != null && attrList1.size() > 0) {
                 colorName.append(attrList1.get(0).getAttrName());
-                mSkuContent += attrList.get(0).getAttrId() +":"+ attrList1.get(0).getAttrId() + ";";
+                mSkuContent += attrList.get(0).getAttrId() + ":" + attrList1.get(0).getAttrId() + ";";
             }
         } else {
             return;
@@ -315,9 +319,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
             if (attrList2 != null && attrList2.size() > 0) {
                 sizeName.append(attrList2.get(0).getAttrName());
-                mSkuContent +=attrList.get(1).getAttrId() +":"+  attrList2.get(0).getAttrId();
+                mSkuContent += attrList.get(1).getAttrId() + ":" + attrList2.get(0).getAttrId();
             }
             colorName.append(sizeName);
+        } else {
+            mSkuContent = mSkuContent.substring(0, mSkuContent.length() - 1);
         }
 
         mSkuContent += "]";
@@ -433,7 +439,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
             createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
             createOrderGoodsBean.setSkuId(String.valueOf(data.getSkuId()));
-
+            createOrderGoodsBean.setGoodsImageUrl(mDataBean.getCover());
+            createOrderGoodsBean.setGoodsTitle(mDataBean.getGoodsName());
+            createOrderGoodsBean.setGoodsPrice(String.valueOf(mDataBean.getPrice()));
+            createOrderGoodsBean.setGoodsSkuContent(data.getPropertiesName());
             orderGoodsBeanList.add(createOrderGoodsBean);
             CreateOrderUI.start(getActivity(), mAddressBean, orderGoodsBeanList);
         }

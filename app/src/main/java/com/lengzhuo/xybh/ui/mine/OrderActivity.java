@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.beans.order.OrderListBean;
@@ -158,16 +157,20 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
                 break;
             case 2:
                 //再次购买
-                List<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(event.getData().getGoodList().size());
+                ArrayList<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>(event.getData().getGoodList().size());
                 for (OrderListBean.DataBean.GoodListBean goodListBean : event.getData().getGoodList()) {
                     CreateOrderGoodsBean goodsBean = new CreateOrderGoodsBean();
                     goodsBean.setGoodsId(String.valueOf(goodListBean.getGoodsId()));
                     goodsBean.setGoodsAmount(String.valueOf(goodListBean.getAmount()));
                     goodsBean.setShopId(goodListBean.getShopId());
                     goodsBean.setSkuId(String.valueOf(goodListBean.getSkuId()));
+                    goodsBean.setGoodsImageUrl(goodListBean.getCover());
+                    goodsBean.setGoodsTitle(goodListBean.getGoodsName());
+                    goodsBean.setGoodsSkuContent(goodListBean.getPropertiesName());
+                    goodsBean.setGoodsPrice(String.valueOf(goodListBean.getPrice()));
                     orderGoodsBeanList.add(goodsBean);
                 }
-                CreateOrderUI.start(this, null, JSON.toJSONString(orderGoodsBeanList));
+                CreateOrderUI.start(this, null, orderGoodsBeanList);
                 break;
             case 3:
                 //确认收货
@@ -200,6 +203,8 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
             case 4:
                 //待评价
                 OrderGoodsCommentListUI.start(this, String.valueOf(event.getData().getOrderId()));
+                break;
+            default:
                 break;
         }
     }

@@ -84,7 +84,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     }
 
 
-
     @Override
     protected void setControlBasis() {
 
@@ -200,6 +199,12 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         context.startActivity(starter);
     }
 
+    public static void start(Context context, String goodsId) {
+        Intent starter = new Intent(context, GoodDetailsUI.class);
+        starter.putExtra("goodsId", goodsId);
+        context.startActivity(starter);
+    }
+
     public static void start(Context context, String goodsId, String shopId, int type) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
         starter.putExtra("goodsId", goodsId);
@@ -288,6 +293,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
             ll_collection.setSelected(false);
         }
 
+        mShopId = String.valueOf(dataBean.getShopId());
         //传递商品数据
         EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
 

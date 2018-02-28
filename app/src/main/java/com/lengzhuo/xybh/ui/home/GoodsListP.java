@@ -47,6 +47,27 @@ public class GoodsListP extends PresenterBase {
 
     }
 
+    public void setGoodsList(int categoryTid, String  shopId, int pageNo, int pageSize) {
+        NetworkUtils.getNetworkUtils().getGoodList(categoryTid, shopId,pageSize, pageNo, new OKHttpManager.StringCallBack() {
+            @Override
+            public void requestSuccess(String result) {
+                GoodsListBean goodsListBean = JSON.parseObject(result, GoodsListBean.class);
+                if (TextUtils.equals(REQUEST_SUCCESS, goodsListBean.getStatus())) {
+                    mGoodsListListener.resultGoodsListData(goodsListBean);
+                } else {
+                    ToastUtils.showToast(goodsListBean.getErrorMsg());
+                    mGoodsListListener.goodsListField();
+                }
+            }
+
+            @Override
+            public void requestFailure(Call call, IOException e) {
+                mGoodsListListener.goodsListField();
+            }
+        });
+
+    }
+
     public interface GoodsListListener {
         void resultGoodsListData(GoodsListBean result);
 

@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -18,8 +15,8 @@ import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.mine.PaymentMethodActivity;
-import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
 import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 
@@ -38,13 +35,7 @@ import java.util.List;
  * 预览订单界面
  */
 @ContentView(R.layout.activity_pay_order)
-public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener {
-
-    @ViewInject(R.id.common_title_back)
-    private RelativeLayout common_title_back;
-
-    @ViewInject(R.id.ll_selected_address)
-    private LinearLayout ll_selected_address;
+public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener, CreateOrderGoodsListAdapter.GoodsNumListener {
 
     @ViewInject(R.id.rv_good_list)
     private RecyclerView rv_good_list;
@@ -58,11 +49,9 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @ViewInject(R.id.tv_address)
     private TextView tv_address;
 
-    @ViewInject(R.id.rl_right)
-    private RelativeLayout rl_right;
+    @ViewInject(R.id.tv_money)
+    private TextView tv_money;
 
-    @ViewInject(R.id.bt_pay)
-    private Button bt_pay;
     private AddressBean mAddressBean;
     public CreateOrderP mCreateOrderP;
     public String mGoods;
@@ -80,8 +69,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     protected void setControlBasis() {
         EventBus.getDefault().register(this);
         leftVisible(R.mipmap.back);
-        setImgTitle(R.mipmap.home_logo);
-        rightVisible(R.mipmap.home_cart);
+        setTitle("订单确认");
     }
 
     @Override
@@ -94,12 +82,12 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     protected void prepareData() {
 
         mAddressBean = getIntent().getParcelableExtra("addressBean");
-        mGoodsDataBean =getIntent().getParcelableExtra("goodsDataBean");
-        mGoods = getIntent().getStringExtra("goods");
+        mGoodsDataBean = getIntent().getParcelableArrayListExtra("goodsDataBean");
 
         rv_good_list.setLayoutManager(new LinearLayoutManager(this));
-        CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean);
+        CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean, this);
         rv_good_list.setAdapter(createOrderGoodsListAdapter);
+
 
         mCreateOrderP = new CreateOrderP(this);
 
@@ -111,8 +99,9 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
             }
         }
 
-        createOrder();
+
     }
+
 
     /**
      * 获取地址
@@ -158,18 +147,16 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         context.startActivity(starter);
     }
 
-    public static void start(Context context, AddressBean addressBean,ArrayList<CreateOrderGoodsBean> orderGoodsBeanList) {
+    public static void start(Context context, AddressBean addressBean, ArrayList<CreateOrderGoodsBean> orderGoodsBeanList) {
         Intent starter = new Intent(context, CreateOrderUI.class);
         starter.putExtra("addressBean", addressBean);
-        starter.putExtra("goods", JSON.toJSONString(orderGoodsBeanList));
-        starter.putParcelableArrayListExtra("goodsDataBean",  orderGoodsBeanList);
+        starter.putParcelableArrayListExtra("goodsDataBean", orderGoodsBeanList);
         context.startActivity(starter);
     }
 
     @Event(value = {
             R.id.common_title_back,
             R.id.ll_selected_address,
-            R.id.rl_right,
             R.id.bt_pay
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
@@ -181,27 +168,26 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 //选择地址
                 AddressSelectedUi.start(view.getContext());
                 break;
-            case R.id.rl_right:
-                //购物车
-                ShoppingCartActivity.toActivity(view.getContext());
-                break;
             case R.id.bt_pay:
-                PaymentMethodActivity.toActivity(view.getContext(), mOrderNo);
-                finish();
+                createOrder();
+
                 break;
             default:
                 break;
         }
     }
 
+
     @Override
     public void createSuccess(String orderNo) {
         this.mOrderNo = orderNo;
+        PaymentMethodActivity.toActivity(getApplicationContext(), mOrderNo);
+        finish();
     }
 
     @Override
     public void createField() {
-
+        ToastUtils.showToast("创建订单失败");
     }
 
     @Subscribe
@@ -223,5 +209,18 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
         tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
         tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
+    }
+
+    @Override
+    public void addOrReduce(int num, int position) {
+
+        mGoodsDataBean.get(position).setGoodsAmount(String.valueOf(num));
+        mGoods = JSON.toJSONString(mGoodsDataBean);
+
+        float maxMoney = 0;
+        for (CreateOrderGoodsBean createOrderGoodsBean : mGoodsDataBean) {
+            maxMoney += Float.parseFloat(createOrderGoodsBean.getGoodsPrice()) * Float.parseFloat(createOrderGoodsBean.getGoodsAmount());
+        }
+        tv_money.setText("" + maxMoney);
     }
 }

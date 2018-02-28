@@ -17,9 +17,43 @@ public class CreateOrderGoodsBean implements Parcelable {
     private String skuId;
     private String goodsImageUrl;
     private String goodsTitle;
-    private String goodsIntroduce;
+    private String goodsSkuContent;
+    private String goodsPrice;
+
 
     public CreateOrderGoodsBean() {
+    }
+
+    public String getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public String getGoodsImageUrl() {
+        return goodsImageUrl;
+    }
+
+    public void setGoodsImageUrl(String goodsImageUrl) {
+        this.goodsImageUrl = goodsImageUrl;
+    }
+
+    public String getGoodsTitle() {
+        return goodsTitle;
+    }
+
+    public void setGoodsTitle(String goodsTitle) {
+        this.goodsTitle = goodsTitle;
+    }
+
+    public String getGoodsSkuContent() {
+        return goodsSkuContent;
+    }
+
+    public void setGoodsSkuContent(String goodsSkuContent) {
+        this.goodsSkuContent = goodsSkuContent;
     }
 
     public CreateOrderGoodsBean(String goodsId, String goodsAmount, String shopId, String skuId) {
@@ -71,6 +105,7 @@ public class CreateOrderGoodsBean implements Parcelable {
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -82,6 +117,10 @@ public class CreateOrderGoodsBean implements Parcelable {
         dest.writeString(this.goodsAmount);
         dest.writeString(this.shopId);
         dest.writeString(this.skuId);
+        dest.writeString(this.goodsImageUrl);
+        dest.writeString(this.goodsTitle);
+        dest.writeString(this.goodsSkuContent);
+        dest.writeString(this.goodsPrice);
     }
 
     protected CreateOrderGoodsBean(Parcel in) {
@@ -89,6 +128,10 @@ public class CreateOrderGoodsBean implements Parcelable {
         this.goodsAmount = in.readString();
         this.shopId = in.readString();
         this.skuId = in.readString();
+        this.goodsImageUrl = in.readString();
+        this.goodsTitle = in.readString();
+        this.goodsSkuContent = in.readString();
+        this.goodsPrice = in.readString();
     }
 
     public static final Creator<CreateOrderGoodsBean> CREATOR = new Creator<CreateOrderGoodsBean>() {

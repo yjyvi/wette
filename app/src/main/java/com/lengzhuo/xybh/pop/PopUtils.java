@@ -257,7 +257,7 @@ public class PopUtils {
             public void onDismiss() {
                 backgroundAlpha(1f, context);
                 reData();
-                lastAttrId.clear();
+//                lastAttrId.clear();
                 AttrName.clear();
             }
         });
