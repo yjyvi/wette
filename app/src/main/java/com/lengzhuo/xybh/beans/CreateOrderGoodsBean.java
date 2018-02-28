@@ -15,6 +15,9 @@ public class CreateOrderGoodsBean implements Parcelable {
     private String goodsAmount;
     private String shopId;
     private String skuId;
+    private String goodsImageUrl;
+    private String goodsTitle;
+    private String goodsIntroduce;
 
     public CreateOrderGoodsBean() {
     }
