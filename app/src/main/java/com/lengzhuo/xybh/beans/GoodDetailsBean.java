@@ -1,5 +1,6 @@
 package com.lengzhuo.xybh.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -72,7 +73,7 @@ public class GoodDetailsBean {
         this.total = total;
     }
 
-    public static class DataBean {
+    public static class DataBean  implements Serializable {
         /**
          * amount :
          * attrIds : 1,4
@@ -396,6 +397,8 @@ public class GoodDetailsBean {
         public void setAttrList(List<AttrListBeanX> attrList) {
             this.attrList = attrList;
         }
+
+
 
         public static class AttrListBeanX {
             /**

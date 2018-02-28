@@ -49,13 +49,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/assets" type="java-test-resource" />
@@ -63,6 +56,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
@@ -111,16 +111,17 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/transforms" />
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/reports" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.yanzhenjie:loading-1.0.2" level="project" />
     <orderEntry type="library" name="com.android.support:multidex-1.0.2" level="project" />
-    <orderEntry type="library" name="__local_aars__:E.\Work\Project\wette\lib-arl\libs\uk-co-senab-photoview-source.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.squareup.okio:okio:1.8.0@jar" level="project" />
     <orderEntry type="library" name="com.alibaba:fastjson:1.2.31@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-25.3.1" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\mylibrary\libs\wechat-sdk-android-with-mta-1.1.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-25.3.1" level="project" />
     <orderEntry type="library" name="com.github.CymChad:BaseRecyclerViewAdapterHelper-2.9.27" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.0.0@jar" level="project" />
@@ -130,13 +131,14 @@
     <orderEntry type="library" name="cn.bingoogolapple:bga-refreshlayout-1.1.7" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-25.0.0" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\lib-arl\libs\uk-co-senab-photoview-source.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.yanzhenjie:recyclerview-swipe-1.1.2" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-25.3.1" level="project" />
     <orderEntry type="library" name="org.xutils:xutils-3.5.0" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\mylibrary\libs\alipaySdk-20170922.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-media-compat-25.3.1" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.3.1@jar" level="project" />
-    <orderEntry type="library" name="__local_aars__:E.\Work\Project\wette\mylibrary\libs\alipaySdk-20170922.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:okhttp3-integration:4.0.0@jar" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:glide:4.0.0@jar" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:gifdecoder:4.0.0@jar" level="project" />
@@ -149,7 +151,6 @@
     <orderEntry type="library" scope="TEST" name="com.android.support:multidex-instrumentation-1.0.2" level="project" />
     <orderEntry type="library" name="com.contrarywind:Android-PickerView-3.2.6" level="project" />
     <orderEntry type="library" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
-    <orderEntry type="library" name="__local_aars__:E.\Work\Project\wette\mylibrary\libs\wechat-sdk-android-with-mta-1.1.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.hackware1993:MagicIndicator-1.5.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:25.3.1@jar" level="project" />

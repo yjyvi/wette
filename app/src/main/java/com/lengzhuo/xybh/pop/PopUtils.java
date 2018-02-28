@@ -18,6 +18,7 @@ import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.AutoFlowLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -37,6 +38,7 @@ public class PopUtils {
 
     public static Map<Integer, String> valueList = new TreeMap();
     public static String valueId = "";
+    private static GoodsSelectedStyleListener mClickListener;
 
     public static void showGoodsStyle(final Activity context, View contentView, GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
@@ -50,22 +52,7 @@ public class PopUtils {
 
         StringBuilder colors = new StringBuilder();
         StringBuilder sizes = new StringBuilder();
-        List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
-        for (int i = 0; i < attrList.size(); i++) {
-            if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
-                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                for (int j = 0; j < attrList1.size(); j++) {
-                    colors.append(attrList1.get(j).getAttrName() + ",");
-                }
-            }
-
-            if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
-                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
-                for (int j = 0; j < attrList1.size(); j++) {
-                    sizes.append(attrList1.get(j).getAttrName() + ",");
-                }
-            }
-        }
+        forData(dataBean, colors, sizes);
 
 
         showItems(alf_color_type, context, colors.toString(), 1);
@@ -83,56 +70,86 @@ public class PopUtils {
         showPoPNormal(context, contentView, popupWindow, Gravity.BOTTOM);
     }
 
+    /**
+     * 遍历数据
+     *
+     * @param dataBean
+     * @param colors
+     * @param sizes
+     */
+    private static void forData(GoodDetailsBean.DataBean dataBean, StringBuilder colors, StringBuilder sizes) {
+        List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = dataBean.getAttrList();
+        for (int i = 0; i < attrList.size(); i++) {
+            if (attrList.get(i) != null && "颜色".equals(attrList.get(i).getAttrName())) {
+                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                for (int j = 0; j < attrList1.size(); j++) {
+                    colors.append(attrList1.get(j).getAttrName() + ",");
+                }
+            }
 
-    public static void showGoodsStyle2(String buttonText, final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
+            if (attrList.get(i) != null && "尺码".equals(attrList.get(i).getAttrName())) {
+                List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(i).getAttrList();
+                for (int j = 0; j < attrList1.size(); j++) {
+                    sizes.append(attrList1.get(j).getAttrName() + ",");
+                }
+            }
+        }
+    }
+
+
+    private static Map<Integer, Integer> lastAttrId = new HashMap<>();
+    private static Map<Integer, String> AttrName = new HashMap<>();
+
+    public static void showGoodsStyle2(final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
+
+        mClickListener = clickListener;
+
 
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.fragment_selected_style, null);
         final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
 
         RecyclerView rv_style = (RecyclerView) layoutView.findViewById(R.id.rv_style);
-        TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
-        tv_commit.setText(buttonText);
 
         LinearLayoutManager layout = new LinearLayoutManager(context);
         layout.setAutoMeasureEnabled(true);
         rv_style.setLayoutManager(layout);
-
-        GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), new GoodStyleAdapter.ValueAttrListener() {
+        GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), lastAttrId, new GoodStyleAdapter.ValueAttrListener() {
             @Override
             public void valueResult(int id, String result) {
                 valueList.put(id, result);
             }
+
+            @Override
+            public void showNameResult(int parentAttrId, int attrId, String name) {
+                lastAttrId.put(parentAttrId, attrId);
+                AttrName.put(parentAttrId, name);
+                clickListener.selectedName(AttrName);
+            }
         });
+
+
         rv_style.setAdapter(goodStyleAdapter);
-
-
-        tv_commit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                for (Map.Entry<Integer, String> integerStringEntry : valueList.entrySet()) {
-                    integerStringEntry.getValue();
-                    integerStringEntry.getKey();
-                    valueId = valueId + ";" + valueList.get(integerStringEntry.getKey());
-                }
-
-                if (valueId.length() > 1) {
-                    clickListener.selectedResult("[" + valueId.substring(1, valueId.length()) + "]");
-                    valueList.clear();
-                    valueId = "";
-                }
-                popupWindow.dismiss();
-            }
-        });
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                valueId = "";
-            }
-        });
-
+        popupWindow.setTouchable(true);
         showPoPNormal(context, contentView, popupWindow, Gravity.BOTTOM);
+
+    }
+
+
+    /**
+     * 准备数据
+     */
+    private static void reData() {
+        for (Map.Entry<Integer, String> integerStringEntry : valueList.entrySet()) {
+            integerStringEntry.getValue();
+            integerStringEntry.getKey();
+            valueId = valueId + ";" + valueList.get(integerStringEntry.getKey());
+        }
+
+        if (valueId.length() > 1) {
+            mClickListener.selectedResult("[" + valueId.substring(1, valueId.length()) + "]");
+            valueList.clear();
+            valueId = "";
+        }
     }
 
 
@@ -239,6 +256,9 @@ public class PopUtils {
             @Override
             public void onDismiss() {
                 backgroundAlpha(1f, context);
+                reData();
+                lastAttrId.clear();
+                AttrName.clear();
             }
         });
     }
@@ -253,6 +273,8 @@ public class PopUtils {
 
     public interface GoodsSelectedStyleListener {
         void selectedResult(String result);
+
+        void selectedName(Map<Integer, String> result);
     }
 
 

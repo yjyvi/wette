@@ -138,12 +138,12 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
     @Override
     public void onRefresh(View view) {
         page = 1;
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(mCategoryId, page, limit);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        mGoodsListP.setGoodsList(0, page, limit);
+        mGoodsListP.setGoodsList(mCategoryId, page, limit);
     }
 }

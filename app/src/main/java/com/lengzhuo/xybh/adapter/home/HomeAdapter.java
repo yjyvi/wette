@@ -14,6 +14,7 @@ import com.lengzhuo.xybh.beans.GoodsListBean;
 import com.lengzhuo.xybh.beans.HomeBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
+import com.lengzhuo.xybh.ui.home.HotWebUI;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.lengzhuo.xybh.views.MyViewPagerIndicator;
 
@@ -76,7 +77,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         switch (getItemViewType(position)) {
             case BANNER:
                 if (holder instanceof HomeBannerViewHolder) {
@@ -84,13 +85,14 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     if (homeDataBean != null && homeDataBean.getRecommendGoods().size() > 0) {
                         if (homeDataBean.getRecommendGoods().size() == 1) {
                             bannerViewHolder.iv_item_banner.setVisibility(View.VISIBLE);
-                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(), homeDataBean.getRecommendGoods().get(0).getCover(), bannerViewHolder.iv_item_banner);
+                            final HomeBean.DataBean.RecommendGoodsBean recommendGoodsBean = homeDataBean.getRecommendGoods().get(0);
+                            GlideImgUtils.loadImg(bannerViewHolder.itemView.getContext(), recommendGoodsBean.getCover(), bannerViewHolder.iv_item_banner);
                             bannerViewHolder.iv_item_banner.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     //跳转事件
-                                    if (homeDataBean.getRecommendGoods().get(0).getCover() != null && !TextUtils.isEmpty(homeDataBean.getRecommendGoods().get(0).getCover())) {
-//                                        ToastUtils.showToast(homeDataBean.getRecommendGoods().get(0).getCover());
+                                    if (recommendGoodsBean.getCover() != null && !TextUtils.isEmpty(recommendGoodsBean.getCover())) {
+                                        GoodDetailsUI.start(v.getContext(),String.valueOf(recommendGoodsBean.getGoodsId()), String.valueOf(recommendGoodsBean.getShopId()));
                                     }
                                 }
                             });
@@ -105,7 +107,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 public void onItemClickListener(HomeBean.DataBean.RecommendGoodsBean data, View view) {
                                     //跳转事件
                                     if (data.getCover() != null && !TextUtils.isEmpty(data.getCover().trim())) {
-//                                        ToastUtils.showToast(data.getCover());
+                                        GoodDetailsUI.start(view.getContext(),String.valueOf(data.getGoodsId()), String.valueOf(data.getShopId()));
                                     }
                                 }
                             });
@@ -122,6 +124,29 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSales().getCover(), hotViewHolder.iv_hot_right);
                         GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getActity().getCover(), hotViewHolder.iv_new_client_share);
                         hotViewHolder.tv_activity.setText(homeDataBean.getActity().getTitle());
+
+                        hotViewHolder.iv_hot_left.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HotWebUI.starter(view.getContext(),homeDataBean.getSpecial().getClickUrl(),homeDataBean.getSpecial().getTitle());
+                            }
+                        });
+
+                        hotViewHolder.iv_hot_right.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HotWebUI.starter(view.getContext(),homeDataBean.getSales().getClickUrl(),homeDataBean.getSales().getTitle());
+
+                            }
+                        });
+
+                        hotViewHolder.iv_new_client_share.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                HotWebUI.starter(view.getContext(),homeDataBean.getActity().getClickUrl(),homeDataBean.getActity().getTitle());
+
+                            }
+                        });
                     }
 
                 }

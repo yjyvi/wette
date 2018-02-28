@@ -57,7 +57,7 @@ public class ClassifyRightAdapter extends BaseQuickAdapter<ClassifyBean.DataBean
         goodsListAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodListUI.start(view.getContext(),item.getCategoryId());
+                GoodListUI.start(view.getContext(),item.getList().get(position).getCategoryId());
             }
         });
 

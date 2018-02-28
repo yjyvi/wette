@@ -15,7 +15,7 @@
         android:paddingRight="10px"
         android:id="@+id/rv_good_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
     </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
 
     <include layout="@layout/common_no_data_list"/>

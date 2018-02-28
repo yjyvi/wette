@@ -196,6 +196,7 @@
             />
         <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
         <activity android:name=".ui.home.AddressSelectedUi"/>
+        <activity android:name=".ui.home.HotWebUI"/>
 
     </application>
 

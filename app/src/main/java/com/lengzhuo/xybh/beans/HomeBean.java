@@ -143,6 +143,15 @@ public class HomeBean  {
             private String title;
             private int type;
 
+            private String clickUrl;
+            public String getClickUrl() {
+                return clickUrl;
+            }
+
+            public void setClickUrl(String clickUrl) {
+                this.clickUrl = clickUrl;
+            }
+
             public String getCover() {
                 return cover;
             }
@@ -249,6 +258,15 @@ public class HomeBean  {
             private String title;
             private int type;
 
+            private String clickUrl;
+            public String getClickUrl() {
+                return clickUrl;
+            }
+
+            public void setClickUrl(String clickUrl) {
+                this.clickUrl = clickUrl;
+            }
+
             public String getCover() {
                 return cover;
             }
@@ -354,6 +372,15 @@ public class HomeBean  {
             private int status;
             private String title;
             private int type;
+
+            private String clickUrl;
+            public String getClickUrl() {
+                return clickUrl;
+            }
+
+            public void setClickUrl(String clickUrl) {
+                this.clickUrl = clickUrl;
+            }
 
             public String getCover() {
                 return cover;

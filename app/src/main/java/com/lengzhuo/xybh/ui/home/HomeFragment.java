@@ -171,7 +171,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                 mHomeAdapter.setGoodsListBean(goodsListBean);
                 mHomeAdapter.notifyDataSetChanged();
             } else {
-                ToastUtils.showToast("没有更多数据了");
+//                ToastUtils.showToast("没有更多数据了");
             }
         }
     }

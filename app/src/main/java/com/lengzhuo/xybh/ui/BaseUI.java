@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.mine.LoginActivity;
+import com.lengzhuo.xybh.utils.StatusBarUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -90,15 +91,16 @@ public abstract class BaseUI extends AutoLayoutActivity {
      */
     protected void setTranslucentStatus() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-           getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        StatusBarUtils.transparencyBar(this);
+
+        StatusBarUtils.MIUISetStatusBarLightMode(this, true);
+        StatusBarUtils.FlymeSetStatusBarLightMode(getWindow(), true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
             try {
                 Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
@@ -216,6 +218,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
 
     /**
      * 是否登录
+     *
      * @return
      */
     public boolean isLoginClick() {
@@ -232,7 +235,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
      *
      * @param dataBean
      */
-    public void showEmptyView(List<?> dataBean, View  emptyView) {
+    public void showEmptyView(List<?> dataBean, View emptyView) {
         if (dataBean.size() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {

@@ -1,58 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:background="@color/white"
-              android:paddingLeft="20px"
-              android:paddingRight="20px"
-              android:layout_marginTop="60px"
               android:layout_height="wrap_content"
-              android:orientation="horizontal">
+              android:layout_marginTop="60px"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:paddingLeft="20px"
+              android:paddingRight="20px">
 
-
-    <com.lengzhuo.xybh.views.CircleImageView
-        android:id="@+id/iv_user_icon"
-        android:layout_width="100px"
-        android:src="@color/gray"
-        android:layout_height="100px"/>
 
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="29px"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/text_blue_32"
+
+        <com.lengzhuo.xybh.views.CircleImageView
+            android:id="@+id/iv_user_icon"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:src="@color/gray"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="产品标题"/>
+            android:layout_marginLeft="29px"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/text_blue_32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产品标题"/>
+
+            <TextView
+                android:id="@+id/tv_introduce"
+                style="@style/text_gray_28"
+                android:layout_width="350px"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25px"
+                android:lineSpacingExtra="25px"
+                android:text="产品描述产品描述产品描述产产品描述产品描述产品描述产品描述产品描述产品描述产品描述品描述产品描述产品描述产品描述"/>
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="350px"
+                android:layout_height="350px"
+                android:layout_marginTop="28px"
+                android:src="@color/gray"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_introduce"
-            style="@style/text_gray_28"
+            android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25px"
-            android:lineSpacingExtra="25px"
-            android:text="产品描述产品描述产品描述产产品描述产品描述产品描述产品描述产品描述产品描述产品描述品描述产品描述产品描述产品描述"/>
-        
-        <ImageView
-            android:id="@+id/iv_img"
-            android:layout_marginTop="28px"
-            android:src="@color/gray"
-            android:layout_width="350px"
-            android:layout_height="350px"/>
+            android:layout_gravity="bottom"
+            android:text="￥968"
+            android:textColor="@color/red"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_gravity="bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="￥968"
-        android:textColor="@color/red"/>
+    <View
+        android:layout_marginTop="30px"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray_line"/>
 
 </LinearLayout>

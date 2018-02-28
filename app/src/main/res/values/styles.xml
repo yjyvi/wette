@@ -9,7 +9,7 @@
         <!--&lt;!&ndash; 隐藏状态栏 &ndash;&gt;-->
         <!--<item name="android:windowFullscreen">true</item>-->
         <!-- 隐藏标题栏 -->
-        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowNoTitle">true</item>-->
         <!-- API 21 theme customizations can go here. -->
         <item name="android:windowBackground">@color/white</item>
     </style>
@@ -17,7 +17,7 @@
 
     <!--主菜单栏-->
     <style name="Main_RadioGroup">
-        <!--<item name="android:layout_marginBottom">9px</item>-->
+        <item name="android:layout_marginBottom">9px</item>
         <item name="android:layout_marginTop">12px</item>
         <item name="android:textSize">28px</item>
         <item name="android:layout_height">wrap_content</item>

@@ -61,7 +61,9 @@ public class NetworkUtils {
      */
     public void getGoodList(int categoryTid, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
-//        params.put("categoryTid", String.valueOf(""));
+        if (categoryTid != 0) {
+            params.put("categoryTid", String.valueOf(categoryTid));
+        }
         params.put(PAGE, String.valueOf(pageNo));
         params.put(LIMIT, String.valueOf(pageSize));
         OKHttpManager.postAsync(getUrl(R.string.goodsList), params, httpBack);
@@ -413,11 +415,11 @@ public class NetworkUtils {
     }
 
     public void finishOrder(String orderId, OKHttpManager.StringCallBack callBack) {
-        updateOrderStatus(orderId,"4",callBack);
+        updateOrderStatus(orderId, "4", callBack);
     }
 
     public void cancelOrder(String orderId, OKHttpManager.StringCallBack callBack) {
-        updateOrderStatus(orderId,"2",callBack);
+        updateOrderStatus(orderId, "2", callBack);
     }
 
     public void updateOrderStatus(String orderId, String orderStatus, OKHttpManager.StringCallBack callBack) {

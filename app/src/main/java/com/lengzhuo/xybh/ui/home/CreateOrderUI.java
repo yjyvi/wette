@@ -2,14 +2,19 @@ package com.lengzhuo.xybh.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
+import com.lengzhuo.xybh.adapter.home.CreateOrderGoodsListAdapter;
 import com.lengzhuo.xybh.beans.AddressBean;
+import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.mine.PaymentMethodActivity;
@@ -24,6 +29,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +45,9 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
     @ViewInject(R.id.ll_selected_address)
     private LinearLayout ll_selected_address;
+
+    @ViewInject(R.id.rv_good_list)
+    private RecyclerView rv_good_list;
 
     @ViewInject(R.id.tv_name)
     private TextView tv_name;
@@ -60,6 +69,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     private String mOrderNo;
     private int mAddressId;
     private boolean isFirst;
+    public List<CreateOrderGoodsBean> mGoodsDataBean;
 
     @Override
     protected void back() {
@@ -84,7 +94,12 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     protected void prepareData() {
 
         mAddressBean = getIntent().getParcelableExtra("addressBean");
+        mGoodsDataBean =getIntent().getParcelableExtra("goodsDataBean");
         mGoods = getIntent().getStringExtra("goods");
+
+        rv_good_list.setLayoutManager(new LinearLayoutManager(this));
+        CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean);
+        rv_good_list.setAdapter(createOrderGoodsListAdapter);
 
         mCreateOrderP = new CreateOrderP(this);
 
@@ -140,6 +155,14 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         Intent starter = new Intent(context, CreateOrderUI.class);
         starter.putExtra("addressBean", addressBean);
         starter.putExtra("goods", goods);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, AddressBean addressBean,ArrayList<CreateOrderGoodsBean> orderGoodsBeanList) {
+        Intent starter = new Intent(context, CreateOrderUI.class);
+        starter.putExtra("addressBean", addressBean);
+        starter.putExtra("goods", JSON.toJSONString(orderGoodsBeanList));
+        starter.putParcelableArrayListExtra("goodsDataBean",  orderGoodsBeanList);
         context.startActivity(starter);
     }
 

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.beans.BannerBean;
@@ -37,6 +36,7 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import yjyvi.lib.arl.AutoRollLayout;
 
@@ -97,13 +97,15 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     @ViewInject(R.id.iv_item_banner)
     private ImageView iv_item_banner;
 
+    @ViewInject(R.id.tv_style)
+    private TextView tv_style;
+
+
     /**
      * 商品添加最大数量
      */
     private int GOODS_NUM_MAX = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
-    public String mColorContent = "";
-    public String mSizeContent = "";
     public AddressBean mAddressBean;
     public GoodDetailsBean.DataBean mDataBean;
     private GoodsSkuP mGoodsSkuP;
@@ -168,6 +170,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             R.id.iv_add
     }, type = View.OnClickListener.class)
     private void onClick(final View view) {
+
         switch (view.getId()) {
             case R.id.iv_selected_style:
                 stylePop("立即购买");
@@ -190,6 +193,8 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     }
 
 
+    public String mSkuContent;
+
     /**
      * 选择商品规格样式
      */
@@ -197,10 +202,39 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         if (mDataBean == null) {
             return;
         }
-        PopUtils.showGoodsStyle2(buttonText, getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
+        PopUtils.showGoodsStyle2(getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
             @Override
             public void selectedResult(String result) {
-                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
+                mSkuContent = result;
+            }
+
+            @Override
+            public void selectedName(Map<Integer, String> result) {
+                StringBuilder colorName;
+                StringBuilder sizeName;
+                if (mDataBean.getAttrList().size() > 0) {
+                    colorName = new StringBuilder("规格  " + mDataBean.getAttrList().get(0).getAttrName() + ":");
+                } else {
+                    return;
+                }
+
+                if (mDataBean.getAttrList().size() > 1) {
+                    sizeName = new StringBuilder(";" + mDataBean.getAttrList().get(1).getAttrName() + ":");
+                } else {
+                    sizeName = new StringBuilder();
+                }
+
+                for (Map.Entry<Integer, String> integerStringEntry : result.entrySet()) {
+                    if (integerStringEntry.getKey() == 1) {
+                        colorName.append(integerStringEntry.getValue());
+                    }
+                    if (integerStringEntry.getKey() == 4) {
+                        sizeName.append(integerStringEntry.getValue());
+                    }
+                }
+                colorName.append(sizeName);
+
+                tv_style.setText(colorName.toString());
             }
         });
     }
@@ -234,21 +268,58 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 if (mDataBean != null) {
                     tv_good_name.setText(mDataBean.getGoodsName());
                     tv_good_price.setText("¥" + mDataBean.getPrice());
+
+
+                    showInitStyle();
                     initBannerData();
                 }
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
                 isAddCart = false;
-                stylePop("立即购买");
+                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), mSkuContent);
                 break;
             case GoodDetailsEvent.SELECTED_STYLE_ADD_CART:
                 isAddCart = true;
-                stylePop("加入购物车");
+//                stylePop("加入购物车");
+                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), mSkuContent);
                 break;
             default:
                 break;
         }
 
+    }
+
+
+    /**
+     * 显示规格默认第1个
+     */
+    private void showInitStyle() {
+        List<GoodDetailsBean.DataBean.AttrListBeanX> attrList = mDataBean.getAttrList();
+        StringBuilder colorName;
+        StringBuilder sizeName;
+
+        if (attrList != null && attrList.size() > 0) {
+            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(0).getAttrList();
+            colorName = new StringBuilder("规格  " + attrList.get(0).getAttrName() + ":");
+            if (attrList1 != null && attrList1.size() > 0) {
+                colorName.append(attrList1.get(0).getAttrName());
+            }
+        } else {
+            return;
+        }
+
+
+        if (attrList.size() > 1) {
+            List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList2 = attrList.get(1).getAttrList();
+            sizeName = new StringBuilder(";" + attrList.get(1).getAttrName() + ":");
+
+            if (attrList2 != null && attrList2.size() > 0) {
+                sizeName.append(attrList2.get(0).getAttrName());
+            }
+            colorName.append(sizeName);
+        }
+
+        tv_style.setText(colorName.toString());
     }
 
 
@@ -284,65 +355,17 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 banners2.add(banners[i]);
             }
 
-//            bannerInit();
-            vp_item_banner.setAutoRoll(true);
             vp_item_banner.setPhotoPre(true);
             vp_item_banner.setItems(banners2);
             tv_total_page.setText(String.valueOf("/" + banners2.size()));
             vp_item_banner.setCurrentItemListener(new AutoRollLayout.CurrentItemListener() {
                 @Override
                 public void currentItemPosition(int position) {
-
                     tv_current_page.setText(String.valueOf(position));
                 }
             });
 
         }
-    }
-
-
-    /**
-     * 初始化轮播图
-     */
-    private void bannerInit() {
-//        if (mResultBannerBean != null && mResultBannerBean.size() > 0) {
-//            if (mResultBannerBean.size() == 1) {
-//                iv_item_banner.setVisibility(View.VISIBLE);
-//                GlideImgUtils.loadImg(getActivity(), mResultBannerBean.get(0).getBanner_Url(), iv_item_banner);
-//                iv_item_banner.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //跳转事件
-//                        if (mResultBannerBean.get(0).getBanner_Url() != null && !TextUtils.isEmpty(mResultBannerBean.get(0).getBanner_Url())) {
-//                            ToastUtils.showToast(mResultBannerBean.get(0).getBanner_Url());
-//                        }
-//                    }
-//                });
-//            } else {
-//                vp_item_banner.setAdapter(new BannerViewPagerAdapter<BannerBean.ResultdataBean>(mResultBannerBean) {
-//                    @Override
-//                    public String getImageUrl(int position) {
-//                        return mResultBannerBean.get(position).getBanner_Url();
-//                    }
-//
-//                    @Override
-//                    public void onItemClickListener(BannerBean.ResultdataBean data, View view) {
-//                        //跳转事件
-//                        if (data.getBanner_LinkUrl() != null && !TextUtils.isEmpty(data.getBanner_LinkUrl().trim())) {
-//                            ToastUtils.showToast(data.getBanner_LinkUrl());
-//                        }
-//                    }
-//                });
-//                vpi_item_banner_indicator.bindBannerViewPager(vp_item_banner, mResultBannerBean.size());
-//                tv_total_page.setText(String.valueOf("/" + mResultBannerBean.size()));
-//                vpi_item_banner_indicator.setCurrentPositionListener(new MyViewPagerIndicator.CurrentPositionListener() {
-//                    @Override
-//                    public void currentPosition(int position) {
-//                        tv_current_page.setText(String.valueOf(position & mResultBannerBean.size()));
-//                    }
-//                });
-//            }
-//        }
     }
 
 
@@ -401,12 +424,15 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 );
             }
         } else {
+            ArrayList<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>();
+
             CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
             createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
             createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
             createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
             createOrderGoodsBean.setSkuId(String.valueOf(data.getSkuId()));
-            CreateOrderUI.start(getActivity(), mAddressBean, "[" + JSON.toJSONString(createOrderGoodsBean) + "]");
+            orderGoodsBeanList.add(createOrderGoodsBean);
+            CreateOrderUI.start(getActivity(), mAddressBean, orderGoodsBeanList);
         }
 
     }
