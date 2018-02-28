@@ -60,6 +60,14 @@
         android:layout_height="match_parent"/>
 
 
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_line"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="99px"
+        android:layout_height="1px"/>
     <!--底部功能-->
     <LinearLayout
         android:background="@color/white"
@@ -93,8 +101,8 @@
 
         <View
             android:layout_width="1px"
-            android:paddingTop="18px"
-            android:paddingBottom="18px"
+             android:layout_marginTop="28px"
+            android:layout_marginBottom="28px"
             android:background="@color/gray_line"
             android:layout_height="match_parent"/>
 

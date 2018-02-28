@@ -105,7 +105,8 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
     //实际列表是否超出屏幕
     private boolean isOut = true;
 
-    private View lastView;
+    private View lastTextView;
+    private View lastLineView;
 
 
     /**
@@ -120,17 +121,25 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         //改变选中状态
         if (!view.isSelected()) {
             //去除上一次控件的状态
-            if (lastView != null) {
-                lastView.setSelected(false);
-            }else {
+            if (lastLineView != null) {
+                lastLineView.setSelected(false);
+//                lastTextView.setSelected(false);
+            } else {
                 //将默认的第1个条目为未选中状态
-                View viewByPosition = adapter.getViewByPosition(rv_left,0, R.id.v_line);
-                if (viewByPosition != null) {
-                    viewByPosition.setSelected(false);
+                View v_line = adapter.getViewByPosition(rv_left, 0, R.id.v_line);
+                View tv_name = adapter.getViewByPosition(rv_left, 0, R.id.tv_name);
+                if (v_line != null) {
+                    v_line.setSelected(false);
                 }
+
+                if (tv_name != null) {
+                    tv_name.setSelected(false);
+                }
+//                lastTextView = tv_name;
             }
 
-            lastView = view;
+            lastLineView = view;
+
             view.setSelected(true);
         }
 

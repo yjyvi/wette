@@ -75,7 +75,22 @@ public class AutoRollLayout extends AutoFrameLayout {
         mViewPager.setOnPageChangeListener(mPageListener);
         mGestureDetector = new GestureDetector(getContext(), mOnGestureListener);
         mViewPager.setOnTouchListener(mOnTouchListener);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mCurrentItemListener.currentItemPosition(position);
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private GestureDetector.OnGestureListener mOnGestureListener = new GestureDetector.OnGestureListener() {
@@ -122,7 +137,8 @@ public class AutoRollLayout extends AutoFrameLayout {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             Log.d("OnGestureListener", "onFling");
             Log.d("OnGestureListener", e1.getRawX()+"");
-            mCurrentItemListener.currentItemPosition(mViewPager.getCurrentItem());
+
+
 //            autoRoll = true;
             return true;
         }

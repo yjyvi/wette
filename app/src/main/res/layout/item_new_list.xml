@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="60px"
+              android:layout_marginTop="30px"
               android:background="@color/white"
               android:orientation="vertical"
               android:paddingLeft="20px"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25px"
                 android:lineSpacingExtra="25px"
-                android:text="产品描述产品描述产品描述产产品描述产品描述产品描述产品描述产品描述产品描述产品描述品描述产品描述产品描述产品描述"/>
+                android:text="产品描述"/>
 
             <ImageView
                 android:id="@+id/iv_img"
@@ -54,11 +54,12 @@
         </LinearLayout>
 
         <TextView
+            style="@style/text_gray_32"
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="￥968"
+            android:text="¥0"
             android:textColor="@color/red"/>
 
     </LinearLayout>

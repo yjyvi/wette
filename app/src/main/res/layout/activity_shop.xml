@@ -130,6 +130,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/shop_collection_selected"/>
     </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_line"
+        android:layout_height="10px"/>
 
     <TextView
         style="@style/text_back_32"

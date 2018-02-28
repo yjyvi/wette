@@ -120,8 +120,8 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 if (holder instanceof HomeHotViewHolder) {
                     HomeHotViewHolder hotViewHolder = (HomeHotViewHolder) holder;
                     if (homeDataBean != null) {
-                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_left);
-                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSales().getCover(), hotViewHolder.iv_hot_right);
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSales().getCover(), hotViewHolder.iv_hot_left);
+                        GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getSpecial().getCover(), hotViewHolder.iv_hot_right);
                         GlideImgUtils.loadImg(hotViewHolder.itemView.getContext(), homeDataBean.getActity().getCover(), hotViewHolder.iv_new_client_share);
                         hotViewHolder.tv_activity.setText(homeDataBean.getActity().getTitle());
 

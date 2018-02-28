@@ -42,7 +42,7 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean,BaseVi
         holder.<TextView>getView(R.id.tv_price).setText("¥"+item.getPrice());
         holder.<TextView>getView(R.id.tv_count).setText("x"+item.getAmount());
         GlideApp.with(holder.itemView.getContext())
-                .load(item.getLogo())
+                .load(item.getCover())
                 .into(holder.<ImageView>getView(R.id.iv_cover));
 
         holder.getView(R.id.fl_is_selected).setOnClickListener(new View.OnClickListener() {

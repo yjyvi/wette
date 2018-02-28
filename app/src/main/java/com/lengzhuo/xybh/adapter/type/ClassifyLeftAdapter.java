@@ -26,6 +26,7 @@ public class ClassifyLeftAdapter extends BaseQuickAdapter<ClassifyBean.DataBean,
         helper.setText(R.id.tv_name, item.getName());
         if (helper.getLayoutPosition() == 0) {
             helper.getView(R.id.v_line).setSelected(true);
+            helper.getView(R.id.tv_name).setSelected(true);
         }
     }
 }

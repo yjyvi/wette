@@ -83,7 +83,7 @@
         android:paddingRight="22px"
         style="@style/text_back_32"
         android:layout_width="wrap_content"
-        android:text="商品标题xxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxx商品标题xxxxxxxxxxxxxxxxxxxxxx"
+        android:text=""
         android:layout_height="wrap_content"/>
 
     <LinearLayout
@@ -99,7 +99,7 @@
             android:id="@+id/tv_good_price"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:text="¥998"
+            android:text=""
             style="@style/text_gray_34"
             android:textColor="@color/red"
             android:layout_height="wrap_content"/>
@@ -176,6 +176,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </LinearLayout>
+
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray_line"
+        android:layout_height="1px"/>
 
     <!--地址-->
     <LinearLayout

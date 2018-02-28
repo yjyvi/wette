@@ -364,7 +364,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 mResultBannerBean.add(banner);
                 banners2.add(banners[i]);
             }
-
             vp_item_banner.setItems(banners2);
             tv_total_page.setText(String.valueOf("/" + banners2.size()));
             vp_item_banner.setCurrentItemListener(new AutoRollLayout.CurrentItemListener() {
