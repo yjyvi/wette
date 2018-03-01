@@ -126,11 +126,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     @Override
     public void onResume() {
         super.onResume();
-        if (isFirst) {
-            ll_selected_address.setVisibility(View.VISIBLE);
-            iv_address_line.setVisibility(View.VISIBLE);
-            getAddressList();
-        }
+//        if (isFirst) {
+//            ll_selected_address.setVisibility(View.VISIBLE);
+//            iv_address_line.setVisibility(View.VISIBLE);
+//            getAddressList();
+//        }
 
     }
 
@@ -138,7 +138,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     protected void prepareData() {
         mGoodsSkuP = new GoodsSkuP(this);
         mAddCartP = new AddCartP(this);
-        getAddressList();
+//        getAddressList();
     }
 
 
@@ -328,10 +328,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
      */
     @Subscribe
     public void addressEvent(AddressEvent addressEvent) {
-        if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
-            AddressBean data = (AddressBean) addressEvent.getData();
-            initShowAddressText(data);
-        }
+//        if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
+//            AddressBean data = (AddressBean) addressEvent.getData();
+//            initShowAddressText(data);
+//        }
     }
 
 

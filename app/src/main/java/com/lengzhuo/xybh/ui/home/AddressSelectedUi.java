@@ -16,12 +16,14 @@ import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
+import com.lengzhuo.xybh.ui.mine.EditAddressActivity;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
@@ -67,13 +69,7 @@ public class AddressSelectedUi extends BaseUI {
     @Override
     protected void prepareData() {
 
-        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
-            @Override
-            protected void onSuccess(List<AddressBean> data) {
-                mSelectedAddressAdapter.setNewData(data);
-                showEmptyView(data, ll_empty_view);
-            }
-        });
+        getAddressList();
         rv_address_list.setLayoutManager(new LinearLayoutManager(this));
         mSelectedAddressAdapter = new SelectedAddressAdapter(R.layout.item_address_list, null);
         rv_address_list.setAdapter(mSelectedAddressAdapter);
@@ -88,9 +84,30 @@ public class AddressSelectedUi extends BaseUI {
         });
     }
 
+
+    /**
+     * 获取地址列表
+     */
+    private void getAddressList() {
+        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
+            @Override
+            protected void onSuccess(List<AddressBean> data) {
+                mSelectedAddressAdapter.setNewData(data);
+                showEmptyView(data, ll_empty_view);
+            }
+        });
+    }
+
     public static void start(Context context) {
         Intent starter = new Intent(context, AddressSelectedUi.class);
         context.startActivity(starter);
+    }
+
+    @Event(value = {R.id.tv_add_address},type = View.OnClickListener.class)
+    private void onClick(View view){
+        if(view.getId() == R.id.tv_add_address){
+            EditAddressActivity.toAddAddressActivity(this);
+        }
     }
 
 
@@ -109,6 +126,14 @@ public class AddressSelectedUi extends BaseUI {
             holder.<TextView>getView(R.id.tv_address).setText("收货地址：" + item.getAddress());
             holder.<TextView>getView(R.id.tv_postal_code).setText("邮政编码：" + item.getPostalcode());
             holder.<ImageView>getView(R.id.iv_is_default).setImageResource(item.getIsDefault() == 0 ? R.drawable.address_list_unselected : R.drawable.address_list_selected);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode == 1){
+            getAddressList();
         }
     }
 
