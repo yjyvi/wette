@@ -97,9 +97,8 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
         mProductListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mGoodsList != null) {
-                    GoodDetailsUI.start(view.getContext(), String.valueOf(mGoodsList.get(position).getGoodsId()), String.valueOf(mGoodsList.get(position).getShopId()));
-                }
+                mGoodsList = adapter.getData();
+                GoodDetailsUI.start(view.getContext(), String.valueOf(mGoodsList.get(position).getGoodsId()), String.valueOf(mGoodsList.get(position).getShopId()));
 
             }
         });
@@ -168,7 +167,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
             if (result.getData().size() > 0) {
                 mProductListAdapter.addData(result.getData());
             } else {
-                ToastUtils.showToast("没有更多数据了");
+//                ToastUtils.showToast("没有更多数据了");
             }
         }
     }
@@ -189,7 +188,7 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     @Override
     public void onLoadMore(View view) {
         page++;
-        mGoodsListP.setGoodsList(0,  mShopId,page, limit);
+        mGoodsListP.setGoodsList(0, mShopId, page, limit);
     }
 
     @Override

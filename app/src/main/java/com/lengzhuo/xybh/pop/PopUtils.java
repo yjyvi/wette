@@ -99,9 +99,7 @@ public class PopUtils {
     }
 
 
-
-
-    public static void showGoodsStyle2(final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
+    public static void showGoodsStyle2(final boolean isOne, final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
         mClickListener = clickListener;
 
@@ -118,6 +116,9 @@ public class PopUtils {
             @Override
             public void valueResult(int id, String result) {
                 valueList.put(id, result);
+                if (isOne) {
+                    reData();
+                }
             }
 
             @Override
@@ -258,8 +259,6 @@ public class PopUtils {
             public void onDismiss() {
                 backgroundAlpha(1f, context);
                 reData();
-//                lastAttrId.clear();
-//                AttrName.clear();
             }
         });
     }
@@ -267,7 +266,7 @@ public class PopUtils {
     /**
      * 清除数据
      */
-    public static void clearData(){
+    public static void clearData() {
         lastAttrId.clear();
         AttrName.clear();
     }
