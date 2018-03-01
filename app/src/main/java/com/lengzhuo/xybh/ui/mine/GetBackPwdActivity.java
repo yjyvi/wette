@@ -95,7 +95,7 @@ public class GetBackPwdActivity extends BaseUI {
 
     private void sendValidateCode() {
         String phoneNumber = Utils.getText(et_phone_number);
-        NetworkUtils.getNetworkUtils().sendValidateCode(phoneNumber, "1", new CommonCallBack<String>() {
+        NetworkUtils.getNetworkUtils().sendValidateCode(phoneNumber, "2", new CommonCallBack<String>() {
             @Override
             protected void onSuccess(String data) {
                 ToastUtils.showToast("验证码发送成功");
