@@ -187,6 +187,10 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 AddressSelectedUi.start(view.getContext());
                 break;
             case R.id.bt_pay:
+                if (mAddressId == 0) {
+                    ToastUtils.showToast("请选择地址");
+                    return;
+                }
                 mGoods = JSON.toJSONString(mGoodsDataBean);
                 createOrder();
                 break;
