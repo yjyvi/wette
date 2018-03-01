@@ -56,7 +56,6 @@ public class AddressSelectedUi extends BaseUI {
     protected void setControlBasis() {
         setTitle("选择地址");
         EventBus.getDefault().register(this);
-//        tv_add_address.setVisibility(View.GONE);
     }
 
 

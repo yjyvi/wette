@@ -30,6 +30,15 @@
             android:layout_height="10px"/>
 
 
+        <TextView
+            android:id="@+id/tv_add_address"
+            style="@style/text_gray_30"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:paddingTop="80px"
+            android:paddingBottom="80px"
+            android:text="添加地址"
+            android:layout_height="wrap_content"/>
         <!--地址-->
         <LinearLayout
             android:id="@+id/ll_selected_address"

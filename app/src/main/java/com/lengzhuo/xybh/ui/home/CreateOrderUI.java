@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -51,6 +52,12 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
     @ViewInject(R.id.tv_money)
     private TextView tv_money;
+
+    @ViewInject(R.id.tv_add_address)
+    private TextView tv_add_address;
+
+    @ViewInject(R.id.ll_selected_address)
+    private LinearLayout ll_selected_address;
 
     private AddressBean mAddressBean;
     public CreateOrderP mCreateOrderP;
@@ -115,12 +122,20 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
             @Override
             protected void onSuccess(List<AddressBean> data) {
-                //获取到默认地址
-                for (AddressBean datum : data) {
-                    if (1 == datum.getIsDefault()) {
-                        mAddressBean = datum;
-                        mAddressId = datum.getAddressId();
-                        initShowAddressText(datum);
+
+                if (data.size() == 0) {
+                    tv_add_address.setVisibility(View.VISIBLE);
+                    ll_selected_address.setVisibility(View.GONE);
+                } else {
+                    ll_selected_address.setVisibility(View.VISIBLE);
+                    tv_add_address.setVisibility(View.GONE);
+                    //获取到默认地址
+                    for (AddressBean datum : data) {
+                        if (1 == datum.getIsDefault()) {
+                            mAddressBean = datum;
+                            mAddressId = datum.getAddressId();
+                            initShowAddressText(datum);
+                        }
                     }
                 }
             }
@@ -158,6 +173,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Event(value = {
             R.id.common_title_back,
             R.id.ll_selected_address,
+            R.id.tv_add_address,
             R.id.bt_pay
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
@@ -166,6 +182,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 back();
                 break;
             case R.id.ll_selected_address:
+            case R.id.tv_add_address:
                 //选择地址
                 AddressSelectedUi.start(view.getContext());
                 break;
@@ -182,7 +199,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Override
     public void createSuccess(String orderNo) {
         this.mOrderNo = orderNo;
-        PaymentMethodActivity.toActivity(getApplicationContext(), mOrderNo);
+        PaymentMethodActivity.toActivity(this, mOrderNo);
         finish();
     }
 
@@ -194,8 +211,13 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Subscribe
     public void addressEvent(AddressEvent addressEvent) {
         if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
+
             AddressBean data = (AddressBean) addressEvent.getData();
-            initShowAddressText(data);
+            if (data != null) {
+                ll_selected_address.setVisibility(View.VISIBLE);
+                tv_add_address.setVisibility(View.GONE);
+                initShowAddressText(data);
+            }
         }
     }
 
