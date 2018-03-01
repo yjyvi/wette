@@ -26,7 +26,7 @@ public class SearchGoodsListAdapter extends BaseQuickAdapter<SearchBean.DataBean
     @Override
     protected void convert(BaseViewHolder helper, SearchBean.DataBean.GoodsListBean item) {
         helper.setText(R.id.tv_good_name,item.getGoodsName());
-        helper.setText(R.id.tv_good_price, String.valueOf(item.getPrice()));
+        helper.setText(R.id.tv_good_price, "¥"+item.getPrice());
         GlideImgUtils.loadImg(helper.itemView.getContext(),item.getCover(),(ImageView) helper.getView(R.id.iv_good_img));
     }
 }

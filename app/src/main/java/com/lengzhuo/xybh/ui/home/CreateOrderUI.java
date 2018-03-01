@@ -249,10 +249,10 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
      * 显示总金额
      */
     private void showTotalMoney() {
-        float maxMoney = 0;
+        float maxMoney = 0.0f;
         for (CreateOrderGoodsBean createOrderGoodsBean : mGoodsDataBean) {
             maxMoney += Float.parseFloat(createOrderGoodsBean.getGoodsPrice()) * Float.parseFloat(createOrderGoodsBean.getGoodsAmount());
         }
-        tv_money.setText(String.valueOf(maxMoney));
+        tv_money.setText("¥"+maxMoney);
     }
 }

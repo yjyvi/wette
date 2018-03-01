@@ -152,7 +152,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_goods_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
             android:paddingLeft="10px"
             android:paddingRight="10px"/>

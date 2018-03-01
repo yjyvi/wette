@@ -40,7 +40,6 @@ import java.util.Map;
 
 
 /**
- *
  * @author yjyvi
  * @date 2018/1/31
  * 商品属性
@@ -104,6 +103,13 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private AddCartP mAddCartP;
     private static boolean isFirst = false;
     private String mSkuContent;
+    private int mSkuId;
+    private String mPropertiesName;
+    private float mGoodsPrice;
+    /**
+     * 是否只有一个属性选择
+     */
+    private boolean mIsOne;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -189,10 +195,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         if (mDataBean == null) {
             return;
         }
-        PopUtils.showGoodsStyle2(getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
+        PopUtils.showGoodsStyle2(mIsOne, getActivity(), iv_selected_style, mDataBean, new PopUtils.GoodsSelectedStyleListener() {
             @Override
             public void selectedResult(String result) {
                 mSkuContent = result;
+                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
             }
 
             @Override
@@ -270,7 +277,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 break;
             case GoodDetailsEvent.SELECTED_STYLE:
                 isAddCart = false;
-                mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), mSkuContent);
+                createOrder();
                 break;
             case GoodDetailsEvent.SELECTED_STYLE_ADD_CART:
                 isAddCart = true;
@@ -280,6 +287,27 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 break;
         }
 
+    }
+
+
+    /**
+     * 创建订单
+     */
+    private void createOrder() {
+        ArrayList<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>();
+
+        CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
+
+        createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
+        createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
+        createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
+        createOrderGoodsBean.setSkuId(String.valueOf(mSkuId));
+        createOrderGoodsBean.setGoodsImageUrl(mDataBean.getCover());
+        createOrderGoodsBean.setGoodsTitle(mDataBean.getGoodsName());
+        createOrderGoodsBean.setGoodsPrice(String.valueOf(mGoodsPrice));
+        createOrderGoodsBean.setGoodsSkuContent(mPropertiesName);
+        orderGoodsBeanList.add(createOrderGoodsBean);
+        CreateOrderUI.start(getActivity(), mAddressBean, orderGoodsBeanList);
     }
 
 
@@ -313,6 +341,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             }
             colorName.append(sizeName);
         } else {
+            mIsOne = true;
             mSkuContent = mSkuContent.substring(0, mSkuContent.length() - 1);
         }
 
@@ -357,7 +386,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             vp_item_banner.setCurrentItemListener(new AutoRollLayout.CurrentItemListener() {
                 @Override
                 public void currentItemPosition(int position) {
-                    tv_current_page.setText(String.valueOf(position+1));
+                    tv_current_page.setText(String.valueOf(position + 1));
                 }
             });
 
@@ -421,19 +450,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 );
             }
         } else {
-            ArrayList<CreateOrderGoodsBean> orderGoodsBeanList = new ArrayList<>();
-
-            CreateOrderGoodsBean createOrderGoodsBean = new CreateOrderGoodsBean();
-            createOrderGoodsBean.setGoodsId(String.valueOf(mDataBean.getGoodsId()));
-            createOrderGoodsBean.setGoodsAmount(tv_goods_num.getText().toString().trim());
-            createOrderGoodsBean.setShopId(String.valueOf(mDataBean.getShopId()));
-            createOrderGoodsBean.setSkuId(String.valueOf(data.getSkuId()));
-            createOrderGoodsBean.setGoodsImageUrl(mDataBean.getCover());
-            createOrderGoodsBean.setGoodsTitle(mDataBean.getGoodsName());
-            createOrderGoodsBean.setGoodsPrice(String.valueOf(mDataBean.getPrice()));
-            createOrderGoodsBean.setGoodsSkuContent(data.getPropertiesName());
-            orderGoodsBeanList.add(createOrderGoodsBean);
-            CreateOrderUI.start(getActivity(), mAddressBean, orderGoodsBeanList);
+            mSkuId = data.getSkuId();
+            mPropertiesName = data.getPropertiesName();
+            mGoodsPrice = data.getCostPrice();
+            tv_good_price.setText("¥" + mGoodsPrice);
         }
 
     }
