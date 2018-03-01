@@ -105,7 +105,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private String mSkuContent;
     private int mSkuId;
     private String mPropertiesName;
-    private float mGoodsPrice;
+    private double mGoodsPrice;
     /**
      * 是否只有一个属性选择
      */
@@ -268,7 +268,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
                     showInitStyle();
                     initBannerData();
-
+                    mGoodsPrice = mDataBean.getPrice();
 
                     if (!TextUtils.isEmpty(mDataBean.getSkuStock())) {
                         goodsNumMax = Integer.parseInt(mDataBean.getSkuStock());

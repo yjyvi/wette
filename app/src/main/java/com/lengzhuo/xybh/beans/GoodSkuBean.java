@@ -85,7 +85,7 @@ public class GoodSkuBean {
          * skuSurplus : 33
          */
 
-        private float costPrice;
+        private double costPrice;
         private int goodsId;
         private String goodsNo;
         private String properties;
@@ -95,11 +95,11 @@ public class GoodSkuBean {
         private int skuStock;
         private int skuSurplus;
 
-        public float getCostPrice() {
+        public double getCostPrice() {
             return costPrice;
         }
 
-        public void setCostPrice(float costPrice) {
+        public void setCostPrice(double costPrice) {
             this.costPrice = costPrice;
         }
 
