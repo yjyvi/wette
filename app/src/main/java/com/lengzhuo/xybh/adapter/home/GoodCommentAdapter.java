@@ -24,7 +24,7 @@ public  class GoodCommentAdapter extends BaseQuickAdapter<GoodCommentListBean.Da
     @Override
     protected void convert(BaseViewHolder helper, GoodCommentListBean.DataBean item) {
         helper.setText(R.id.tv_user_name,item.getNickname());
-        helper.setText(R.id.tv_time, TimeUtils.date2String(item.getCreateTime(),"YYYY-MM-dd"));
+        helper.setText(R.id.tv_time, TimeUtils.date2String(item.getCreateTime(),"yyyy-MM-dd"));
         helper.setText(R.id.tv_content,item.getContent());
 
         GlideImgUtils.loadImg(helper.itemView.getContext(),item.getHeadImg(),(ImageView)helper.getView(R.id.iv_user_icon));

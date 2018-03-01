@@ -177,7 +177,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
             String fileName = "err-" + time + "-" + timestamp + ".log";
-            String path = Environment.getExternalStorageDirectory().getPath() + "/TaskHelperErrLog/";
+            String path = Environment.getExternalStorageDirectory().getPath() + "/ErrLog/";
             new File(path).mkdirs();
 
             File dir = new File(path);

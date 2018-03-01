@@ -19,7 +19,6 @@ import com.lengzhuo.xybh.ui.home.productDetial.GoodDetailFragment;
 import com.lengzhuo.xybh.ui.home.productDetial.GoodFragment;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
-import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.evntBusBean.GoodDetailsEvent;
 import com.lengzhuo.xybh.views.AutoMagicIndicator;
 import com.zhy.autolayout.utils.AutoUtils;
@@ -115,16 +114,12 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mGoodsId = getIntent().getStringExtra("goodsId");
         mShopId = getIntent().getStringExtra("shopId");
         mType = getIntent().getIntExtra("type", 0);
-        String webUrl = "";
-        if (UserManager.getUser() != null) {
 
-            webUrl = getResources().getString(R.string.service_host_address)
-                    .concat(getResources().getString(R.string.detailHtm))
-                    .concat(".do?c=")
-                    .concat(UserManager.getUser().getC())
-                    .concat("&goodsId=")
-                    .concat(mGoodsId);
-        }
+        String webUrl = getResources().getString(R.string.service_host_address)
+                .concat(getResources().getString(R.string.detailHtm))
+                .concat(".do?")
+                .concat("goodsId=")
+                .concat(mGoodsId);
 
         mProductDetailP.setProductDetailsData(mGoodsId);
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.mine.LoginActivity;
+import com.lengzhuo.xybh.utils.CrashHandler;
 import com.lengzhuo.xybh.utils.StatusBarUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
@@ -65,6 +66,10 @@ public abstract class BaseUI extends AutoLayoutActivity {
                 }
             });
         }
+
+        //捕获日志
+        CrashHandler.getInstance().init(this);
+
         //沉浸式布局
         setTranslucentStatus();
         setControlBasis();
