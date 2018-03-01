@@ -11,19 +11,11 @@
         android:layout_height="380px">
 
         <!-- ViewPager -->
-        <yjyvi.lib.arl.AutoRollLayout
+        <com.lengzhuo.xybh.views.arl.AutoRollLayout
             android:background="@color/gray"
             android:id="@+id/vp_item_banner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-        <!--一张图的时候-->
-        <!--<ImageView-->
-            <!--android:id="@+id/iv_item_banner"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:visibility="gone"/>-->
 
         <FrameLayout
             android:layout_width="match_parent"

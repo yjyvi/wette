@@ -22,11 +22,13 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 /**
- * Created by yjyvi on 2018/1/31.
+ *
+ * @author yjyvi
+ * @date 2018/1/31
+ * 商品评论
  */
 
 public class GoodCommentFragment extends LazyLoadFragment implements GoodCommentListP.GoodCommentListener, MyRefreshLayoutListener {
-
 
     @ViewInject(R.id.rv_refresh)
     private MyRefreshLayout refreshLayout;

@@ -42,7 +42,6 @@ public class AddressSelectedUi extends BaseUI {
     @ViewInject(R.id.ll_empty_view)
     private LinearLayout ll_empty_view;
 
-    private List<AddressBean> mAddressBean;
     public SelectedAddressAdapter mSelectedAddressAdapter;
 
     @Override
@@ -55,7 +54,7 @@ public class AddressSelectedUi extends BaseUI {
     protected void setControlBasis() {
         setTitle("选择地址");
         EventBus.getDefault().register(this);
-        tv_add_address.setVisibility(View.GONE);
+//        tv_add_address.setVisibility(View.GONE);
     }
 
 
@@ -76,7 +75,7 @@ public class AddressSelectedUi extends BaseUI {
             }
         });
         rv_address_list.setLayoutManager(new LinearLayoutManager(this));
-        mSelectedAddressAdapter = new SelectedAddressAdapter(R.layout.item_address_list, mAddressBean);
+        mSelectedAddressAdapter = new SelectedAddressAdapter(R.layout.item_address_list, null);
         rv_address_list.setAdapter(mSelectedAddressAdapter);
 
         mSelectedAddressAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

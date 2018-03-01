@@ -197,7 +197,7 @@
         <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
         <activity android:name=".ui.home.AddressSelectedUi"/>
         <activity android:name=".ui.home.HotWebUI"/>
-
+        <activity android:name=".views.arl.PhotoViewActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package yjyvi.lib.arl;
+package com.lengzhuo.xybh.views.arl;
 
 /**
  Created by Teacher on 2016/7/19.

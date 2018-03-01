@@ -1,7 +1,6 @@
 package com.lengzhuo.xybh.ui.home.productDetial;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,10 @@ import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import org.xutils.view.annotation.ViewInject;
 
 /**
- * Created by yjyvi on 2018/1/31.
+ *
+ * @author yjyvi
+ * @date 2018/1/31
+ * 商品详情展示
  */
 
 public class GoodDetailFragment extends LazyLoadFragment {
@@ -76,12 +78,7 @@ public class GoodDetailFragment extends LazyLoadFragment {
             }
         });
 
-
-        if (TextUtils.isEmpty(webDataUrl)) {
-            webDataUrl="http://www.baidu.com";
-        }
         wb_content.loadUrl(webDataUrl);
-
     }
 
 

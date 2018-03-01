@@ -1,4 +1,4 @@
-package yjyvi.lib.arl;
+package com.lengzhuo.xybh.views.arl;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,12 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.lengzhuo.xybh.R;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class PhotoViewActivity extends AutoLayoutActivity {
 
@@ -106,7 +108,7 @@ public class PhotoViewActivity extends AutoLayoutActivity {
         @SuppressLint("ResourceType")
         @Override
         public View instantiateItem(ViewGroup container, final int position) {
-            View view = View.inflate(PhotoViewActivity.this, R.layout.item_photo_view, null);
+            View view = View.inflate(PhotoViewActivity.this,R.layout.item_photo_view, null);
             mPhotoView = (PhotoView) view.findViewById(R.id.photo);
 
             Glide.with(container.getContext())

@@ -1,4 +1,4 @@
-package yjyvi.lib.arl;
+package com.lengzhuo.xybh.views.arl;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,11 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.lengzhuo.xybh.R;
+import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.zhy.autolayout.AutoFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * perfromClick View的方法
@@ -225,6 +227,7 @@ public class AutoRollLayout extends AutoFrameLayout {
 
     private boolean isPhotoPre = false;
 
+
     public void setPhotoPre(boolean photoPre) {
         isPhotoPre = photoPre;
     }
@@ -250,16 +253,8 @@ public class AutoRollLayout extends AutoFrameLayout {
                 cache.add(imageView);
             }
             ImageView imageView = cache.remove(0);
-            // 用Picasso imageView 显示图片
-            String imagePath = items.get(position);
-            if (!imagePath.startsWith("http")) {
-//                imagePath = Url.ip + imagePath;
 
-            }
-            Glide.with(container.getContext())
-                    .load(imagePath)
-                    .into(imageView);
-
+            GlideImgUtils.loadImg(container.getContext(),items.get(position),imageView);
 
             if (isPhotoPre) {
                 imageView.setOnClickListener(new OnClickListener() {

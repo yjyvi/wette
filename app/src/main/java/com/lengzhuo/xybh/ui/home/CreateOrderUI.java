@@ -227,6 +227,6 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         for (CreateOrderGoodsBean createOrderGoodsBean : mGoodsDataBean) {
             maxMoney += Float.parseFloat(createOrderGoodsBean.getGoodsPrice()) * Float.parseFloat(createOrderGoodsBean.getGoodsAmount());
         }
-        tv_money.setText("" + maxMoney);
+        tv_money.setText(String.valueOf(maxMoney));
     }
 }

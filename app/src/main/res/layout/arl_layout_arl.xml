@@ -14,7 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="30px"
         android:layout_gravity="bottom"
 
         >
@@ -24,7 +24,7 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="8px"
             android:text=""
             android:singleLine="true"
             android:ellipsize="end"

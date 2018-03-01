@@ -40,9 +40,17 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
     @ViewInject(R.id.rl_right)
     private RelativeLayout rl_right;
 
-    public ClassifyP mClassifyP;
-    public ClassifyLeftAdapter mClassifyLeftAdapter;
+    private ClassifyP mClassifyP;
+    private ClassifyLeftAdapter mClassifyLeftAdapter;
     private List<ClassifyBean.DataBean> mClassifyData;
+    //可见列表项的数量
+    private int visibleCount = 0;
+    //上次点击的位置
+    private int lastPosition = 0;
+    private int ce = 0;
+    //实际列表是否超出屏幕
+    private boolean isOut = true;
+    private View lastLineView;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -65,9 +73,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
 
     @Override
     protected void prepareData() {
-
-//        leftData();
-
         //左侧列表
         SmoothScrollLayoutManager layout = new SmoothScrollLayoutManager(getActivity());
         layout.setAutoMeasureEnabled(true);
@@ -87,6 +92,10 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         });
     }
 
+    /**
+     * 初始化右则数据
+     * @param classifyData
+     */
     private void initRightData(List<ClassifyBean.DataBean.ListBeanX> classifyData) {
         //模拟右侧标签页
         TwoClassifyFragment fragment = TwoClassifyFragment.newInstance(classifyData);
@@ -95,19 +104,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
         ft.replace(R.id.ll_right_main, fragment, "c0").commit();
 
     }
-
-
-    //可见列表项的数量
-    private int visibleCount = 0;
-    //上次点击的位置
-    private int lastPosition = 0;
-    private int ce = 0;
-    //实际列表是否超出屏幕
-    private boolean isOut = true;
-
-    private View lastTextView;
-    private View lastLineView;
-
 
     /**
      * 将选择的目录滑动到中间
@@ -123,7 +119,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
             //去除上一次控件的状态
             if (lastLineView != null) {
                 lastLineView.setSelected(false);
-//                lastTextView.setSelected(false);
             } else {
                 //将默认的第1个条目为未选中状态
                 View v_line = adapter.getViewByPosition(rv_left, 0, R.id.v_line);
@@ -135,7 +130,6 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
                 if (tv_name != null) {
                     tv_name.setSelected(false);
                 }
-//                lastTextView = tv_name;
             }
 
             lastLineView = view;
@@ -206,13 +200,10 @@ public class ClassifyFragment extends LazyLoadFragment implements ClassifyP.Clas
             case R.id.common_title_back:
                 SearchResultUI.start(view.getContext(), "");
                 break;
-
             case R.id.rl_right:
-
                 if (isLoginClick()) {
                     return;
                 }
-
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
             default:

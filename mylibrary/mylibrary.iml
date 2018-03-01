@@ -117,6 +117,7 @@
     <orderEntry type="library" name="com.zhy:autolayout-1.4.5" level="project" />
     <orderEntry type="library" name="com.flyco.tablayout:FlycoTabLayout_Lib-2.1.2" level="project" />
     <orderEntry type="library" name="com.android.support:design-25.0.0" level="project" />
+    <orderEntry type="library" name="__local_aars__:C.\my\privateProject\wette\mylibrary\libs\uk-co-senab-photoview-source.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="cn.bingoogolapple:bga-refreshlayout-1.1.7" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-25.3.1" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-25.0.0" level="project" />

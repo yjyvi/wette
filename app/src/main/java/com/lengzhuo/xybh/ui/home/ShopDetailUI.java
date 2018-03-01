@@ -112,7 +112,11 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     }
 
 
-    @Event(value = {R.id.rl_title_back, R.id.iv_is_collection, R.id.rl_search, R.id.rl_cart}, type = View.OnClickListener.class)
+    @Event(value = {
+            R.id.rl_title_back,
+            R.id.iv_is_collection,
+            R.id.rl_search,
+            R.id.rl_cart}, type = View.OnClickListener.class)
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_title_back:

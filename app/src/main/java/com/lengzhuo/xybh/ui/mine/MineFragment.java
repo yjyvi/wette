@@ -3,8 +3,10 @@ package com.lengzhuo.xybh.ui.mine;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +59,15 @@ public class MineFragment extends LazyLoadFragment {
         isLogin();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void setControlBasis() {
-
+//        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+//        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+//        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        //设置状态栏颜色
+//        getActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Override

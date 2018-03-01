@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.adapter.home.GoodTableAdapter;
-import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.beans.GoodDetailsBean;
 import com.lengzhuo.xybh.pop.PopUtils;
 import com.lengzhuo.xybh.ui.BaseUI;
@@ -57,18 +56,13 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     @ViewInject(R.id.ll_collection)
     private LinearLayout ll_collection;
 
-    public static String[] mTitles = {"商品", "详情", "评论"};
+    private static String[] mTitles = {"商品", "详情", "评论"};
     private List<Fragment> mFragmentLists = new ArrayList<>();
     private String mGoodsId;
     private String mShopId;
-    public CollectionP mCollectionP;
-    private String userId;
-    private String isCollection;
+    private CollectionP mCollectionP;
     private int operation;
-    public AddCartP mAddCartP;
     private GoodDetailP mProductDetailP;
-    private GoodDetailsBean.DataBean mGoodDetailsBean;
-    public AddressBean mAddressData;
     private int mType = 1;
 
     @Override
@@ -280,9 +274,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void goodsData(GoodDetailsBean.DataBean dataBean) {
-
-        this.mGoodDetailsBean = dataBean;
-
         //收藏按扭回显
         if (1 == dataBean.getIsCollection()) {
             ll_collection.setSelected(true);

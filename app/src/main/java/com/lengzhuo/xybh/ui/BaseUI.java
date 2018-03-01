@@ -22,7 +22,6 @@ import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.xutils.x;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -102,20 +101,24 @@ public abstract class BaseUI extends AutoLayoutActivity {
         StatusBarUtils.FlymeSetStatusBarLightMode(getWindow(), true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-            try {
-                Class decorViewClazz = Class.forName("com.android.internal.policy.DecorView");
-                Field field = decorViewClazz.getDeclaredField("mSemiTransparentStatusBarColor");
-                field.setAccessible(true);
-                //改为透明
-                field.setInt(getWindow().getDecorView(), Color.TRANSPARENT);
-            } catch (Exception e) {
-                e.printStackTrace();
+            //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //设置状态栏颜色
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+
+            //改变状态栏文字为黑色
+            View decor = getWindow().getDecorView();
+            int ui = decor.getSystemUiVisibility();
+            if (true) {
+                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            } else {
+                ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             }
+            decor.setSystemUiVisibility(ui);
         }
     }
 

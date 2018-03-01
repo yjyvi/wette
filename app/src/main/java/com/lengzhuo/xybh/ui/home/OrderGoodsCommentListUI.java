@@ -89,7 +89,6 @@ public class OrderGoodsCommentListUI extends BaseUI implements OrderGoodsComment
 
     @Subscribe
     public void orderEvent(OrderEvent orderEvent) {
-
         if (OrderEvent.COMMENT_SUCCESS == orderEvent.getEventType()) {
             mOrderId = getIntent().getStringExtra("orderId");
             mOrderGoodsCommentListP.setOrderGoodsCommentList(mOrderId);

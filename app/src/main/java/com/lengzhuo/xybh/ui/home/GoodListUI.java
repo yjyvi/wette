@@ -51,7 +51,6 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
     public GoodsListP mGoodsListP;
     private int page = 1;
     private int limit = 10;
-    private List<GoodsListBean.DataBean> mGoodsList;
     public int mCategoryId;
 
     @Override
@@ -78,7 +77,7 @@ public class GoodListUI extends BaseUI implements GoodsListP.GoodsListListener, 
         mGoodsListP.setGoodsList(mCategoryId, page, limit);
 
         rv_good_list.setLayoutManager(new GridLayoutManager(this, 2));
-        mGoodListAdapter = new GoodListAdapter(R.layout.item_good_list, mGoodsList);
+        mGoodListAdapter = new GoodListAdapter(R.layout.item_good_list, null);
         rv_good_list.setAdapter(mGoodListAdapter);
         mGoodListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

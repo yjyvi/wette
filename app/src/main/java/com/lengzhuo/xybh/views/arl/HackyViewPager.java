@@ -1,4 +1,4 @@
-package yjyvi.lib.arl;
+package com.lengzhuo.xybh.views.arl;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

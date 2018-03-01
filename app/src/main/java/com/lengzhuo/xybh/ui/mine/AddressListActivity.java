@@ -55,7 +55,7 @@ public class AddressListActivity extends BaseUI {
     @Override
     protected void setControlBasis() {
         EventBus.getDefault().register(this);
-        setTitle("收获地址");
+        setTitle("收货地址");
         rightVisible(R.mipmap.home_cart);
         mAdapter = new MultiTypeAdapter();
         mItems = new Items();

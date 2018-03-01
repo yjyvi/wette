@@ -27,7 +27,7 @@ import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 import com.lengzhuo.xybh.utils.evntBusBean.GoodDetailsEvent;
-import com.lengzhuo.xybh.views.MyViewPagerIndicator;
+import com.lengzhuo.xybh.views.arl.AutoRollLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,10 +38,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import yjyvi.lib.arl.AutoRollLayout;
 
 /**
- * Created by yjyvi on 2018/1/31.
+ *
+ * @author yjyvi
+ * @date 2018/1/31
+ * 商品属性
  */
 
 public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSkuListener, AddCartP.AddCartListener {
@@ -57,12 +59,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     //选择地址线
     @ViewInject(R.id.iv_address_line)
     private View iv_address_line;
-
-    @ViewInject(R.id.iv_reduce)
-    private ImageView iv_reduce;
-
-    @ViewInject(R.id.iv_add)
-    private ImageView iv_add;
 
     @ViewInject(R.id.tv_goods_num)
     private TextView tv_goods_num;
@@ -91,12 +87,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     @ViewInject(R.id.vp_item_banner)
     private AutoRollLayout vp_item_banner;
 
-    @ViewInject(R.id.vpi_item_banner_indicator)
-    private MyViewPagerIndicator vpi_item_banner_indicator;
-
-    @ViewInject(R.id.iv_item_banner)
-    private ImageView iv_item_banner;
-
     @ViewInject(R.id.tv_style)
     private TextView tv_style;
 
@@ -106,13 +96,14 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
      */
     private int goodsNumMax = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
-    public AddressBean mAddressBean;
-    public GoodDetailsBean.DataBean mDataBean;
+    private AddressBean mAddressBean;
+    private GoodDetailsBean.DataBean mDataBean;
     private GoodsSkuP mGoodsSkuP;
     private boolean isAddCart;
     private int mAddressId;
     private AddCartP mAddCartP;
     private static boolean isFirst = false;
+    private String mSkuContent;
 
     @Override
     protected void loadViewLayout(LayoutInflater inflater, ViewGroup container) {
@@ -170,7 +161,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             R.id.iv_add
     }, type = View.OnClickListener.class)
     private void onClick(final View view) {
-
         switch (view.getId()) {
             case R.id.iv_selected_style:
                 stylePop();
@@ -192,9 +182,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         }
     }
 
-
-    public String mSkuContent;
-
     /**
      * 选择商品规格样式
      */
@@ -210,6 +197,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
             @Override
             public void selectedName(Map<Integer, String> result) {
+                //TODO  此处规格显示需要优化*******************
                 StringBuilder colorName;
                 StringBuilder sizeName;
                 if (mDataBean.getAttrList().size() > 0) {

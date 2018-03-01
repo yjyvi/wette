@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import com.lengzhuo.xybh.R;
 
 /**
- * Created by yjyvi on 2017/9/27.
+ *
+ * @author yjyvi
+ * @date 2017/9/27
  */
 
 public class GlideImgUtils {
@@ -27,8 +29,7 @@ public class GlideImgUtils {
 
         GlideApp.with(context)
                 .load(IconUtils.getPicUrl(context, url))
-//                .placeholder(loadDrawable)
-//                .error(imgDrawable)
+                .fitCenter()
                 .into(imageView);
     }
 
@@ -46,8 +47,9 @@ public class GlideImgUtils {
 
         GlideApp.with(context)
                 .load(resourceId)
-                .placeholder(loadDrawable)
-                .error(imgDrawable)
+                .fitCenter()
+//                .placeholder(loadDrawable)
+//                .error(imgDrawable)
                 .into(imageView);
     }
 
@@ -65,8 +67,9 @@ public class GlideImgUtils {
 
         GlideApp.with(context)
                 .load(localFilePath)
-                .placeholder(loadDrawable)
-                .error(imgDrawable)
+                .fitCenter()
+//                .placeholder(loadDrawable)
+//                .error(imgDrawable)
                 .into(imageView);
     }
 

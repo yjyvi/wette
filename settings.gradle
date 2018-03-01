@@ -1,1 +1,1 @@
-include ':app', ':mylibrary', ":lib-arl"
+include ':app', ':mylibrary'

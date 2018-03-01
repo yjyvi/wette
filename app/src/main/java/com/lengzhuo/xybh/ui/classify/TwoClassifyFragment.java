@@ -54,7 +54,6 @@ public class TwoClassifyFragment extends LazyLoadFragment {
             rv_category.setLayoutManager(layout);
             mGoodsListAdapter = new ClassifyRightAdapter(R.layout.item_classify_right, mClassifyData);
             rv_category.setAdapter(mGoodsListAdapter);
-
             showEmptyView(mClassifyData,ll_empty_view);
         }
 
@@ -72,7 +71,4 @@ public class TwoClassifyFragment extends LazyLoadFragment {
         twoClassifyFragment.setArguments(bundle);
         return twoClassifyFragment;
     }
-
-
-
 }
