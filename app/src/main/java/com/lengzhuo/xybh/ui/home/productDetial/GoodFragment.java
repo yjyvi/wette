@@ -346,6 +346,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         }
 
         mSkuContent += "]";
+
+        mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()),mSkuContent);
+
         tv_style.setText(colorName.toString());
     }
 
@@ -389,7 +392,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                     tv_current_page.setText(String.valueOf(position + 1));
                 }
             });
-
 
         }
     }

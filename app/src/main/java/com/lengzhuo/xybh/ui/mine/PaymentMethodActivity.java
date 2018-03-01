@@ -133,12 +133,15 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
     private void payHint() {
         ToastUtils.showToast("支付成功");
         EventBus.getDefault().post("paySuccess");
+        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_SENDING_GOODS);
         finish();
     }
 
     @Override
     public void aliPayFailure() {
         ToastUtils.showToast("支付失败");
+        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_WAITING_PAY);
+        finish();
     }
 
     @Override
