@@ -16,60 +16,74 @@
 
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_user_icon"
             android:layout_width="100px"
             android:layout_height="100px"
+            android:scaleType="fitXY"
             android:src="@color/gray"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="29px"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/text_blue_32"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="产品标题"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_introduce"
-                style="@style/text_gray_28"
-                android:layout_width="350px"
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/text_blue_32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="产品标题"/>
+
+                <TextView
+                    android:id="@+id/tv_introduce"
+                    style="@style/text_gray_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25px"
+                    android:lineSpacingExtra="25px"
+                    android:text="产品描述"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25px"
-                android:lineSpacingExtra="25px"
-                android:text="产品描述"/>
+                android:orientation="horizontal">
 
-            <ImageView
-                android:scaleType="fitXY"
-                android:id="@+id/iv_img"
-                android:layout_width="350px"
-                android:layout_height="350px"
-                android:layout_marginTop="28px"
-                android:src="@color/gray"/>
+                <ImageView
+                    android:id="@+id/iv_img"
+                    android:layout_width="350px"
+                    android:layout_height="350px"
+                    android:layout_marginTop="28px"
+                    android:scaleType="fitXY"
+                    android:src="@color/gray"/>
 
+                <TextView
+                    android:gravity="right"
+                    android:id="@+id/tv_price"
+                    style="@style/text_gray_32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="¥0"
+                    android:textColor="@color/red"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            style="@style/text_gray_32"
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="¥0"
-            android:textColor="@color/red"/>
 
     </LinearLayout>
 
     <View
-        android:layout_marginTop="30px"
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_marginTop="30px"
         android:background="@color/gray_line"/>
 
 </LinearLayout>

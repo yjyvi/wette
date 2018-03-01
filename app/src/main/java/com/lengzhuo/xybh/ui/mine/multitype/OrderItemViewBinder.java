@@ -41,7 +41,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
     static {
         ORDER_STATUS_MAP.put(1, new String[]{"待支付", "完成支付"});
         ORDER_STATUS_MAP.put(2, new String[]{"已取消", "再次购买"});
-        ORDER_STATUS_MAP.put(3, new String[]{"发货中", "完成"});
+        ORDER_STATUS_MAP.put(3, new String[]{"待发货", "完成"});
         ORDER_STATUS_MAP.put(4, new String[]{"已完成", "评价"});
     }
 

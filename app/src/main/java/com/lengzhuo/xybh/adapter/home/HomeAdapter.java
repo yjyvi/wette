@@ -128,14 +128,14 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         hotViewHolder.iv_hot_left.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                HotWebUI.starter(view.getContext(),homeDataBean.getSpecial().getClickUrl(),homeDataBean.getSpecial().getTitle());
+                                HotWebUI.starter(view.getContext(),homeDataBean.getSales().getClickUrl(),homeDataBean.getSales().getTitle());
                             }
                         });
 
                         hotViewHolder.iv_hot_right.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                HotWebUI.starter(view.getContext(),homeDataBean.getSales().getClickUrl(),homeDataBean.getSales().getTitle());
+                                HotWebUI.starter(view.getContext(),homeDataBean.getSpecial().getClickUrl(),homeDataBean.getSpecial().getTitle());
 
                             }
                         });

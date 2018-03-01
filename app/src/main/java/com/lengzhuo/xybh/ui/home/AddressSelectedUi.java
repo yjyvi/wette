@@ -54,7 +54,7 @@ public class AddressSelectedUi extends BaseUI {
 
     @Override
     protected void setControlBasis() {
-        setTitle("选择地址");
+        setTitle("我的地址");
         EventBus.getDefault().register(this);
     }
 
