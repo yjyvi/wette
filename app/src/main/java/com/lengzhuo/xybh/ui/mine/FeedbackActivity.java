@@ -14,6 +14,7 @@ import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
+import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.Utils;
 
 import org.xutils.view.annotation.ContentView;
@@ -60,6 +61,13 @@ public class FeedbackActivity extends BaseUI implements TextWatcher {
             ToastUtils.showToast("请输入您要反馈的内容");
             return;
         }
+
+        if (!UserManager.isLogin()) {
+            ToastUtils.showToast("请先登录！");
+            LoginActivity.toActivity(view.getContext());
+            return;
+        }
+
         NetworkUtils.getNetworkUtils().feedback(content, new CommonCallBack<String>() {
             @Override
             protected void onSuccess(String data) {

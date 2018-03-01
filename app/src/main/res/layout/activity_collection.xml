@@ -23,6 +23,7 @@
                 android:layout_height="100px">
 
             <FrameLayout
+                    android:id="@+id/fl_commodity"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
@@ -54,6 +55,7 @@
             </FrameLayout>
 
             <FrameLayout
+                    android:id="@+id/fl_shop"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1">

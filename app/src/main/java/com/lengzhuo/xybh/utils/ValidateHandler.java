@@ -17,7 +17,7 @@ public class ValidateHandler extends Handler {
 
     private TextView mTextView;
 
-    private int mTime = 300;
+    private int mTime = 60;
 
     public ValidateHandler(TextView textView){
         this.mTextView = textView;
@@ -28,7 +28,7 @@ public class ValidateHandler extends Handler {
         mTextView.setClickable(false);
         mTextView.setText(--mTime+"S后重试");
         if(mTime == 0){
-            mTime = 300;
+            mTime = 60;
             mTextView.setText("发送验证码");
             mTextView.setClickable(true);
             return;
@@ -40,7 +40,7 @@ public class ValidateHandler extends Handler {
         sendEmptyMessage(1);
     }
 
-    public void onDestory(){
+    public void onDestroy(){
         removeMessages(1);
     }
 

@@ -62,8 +62,7 @@
             android:paddingRight="20px"
             android:textColor="#333333"
             android:textSize="28px"
-            android:layout_marginTop="36px"
-            android:text="共1件商品 合计¥233(含运费¥0.00)"/>
+            android:layout_marginTop="36px"/>
 
 
     <TextView

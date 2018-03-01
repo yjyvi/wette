@@ -13,6 +13,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.BaseUI;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 /**
@@ -50,9 +51,9 @@ public class CollectionActivity extends BaseUI implements ViewPager.OnPageChange
 
     @Override
     protected void setControlBasis() {
-        mType = getIntent().getIntExtra(KEY_TYPE,0);
+        mType = getIntent().getIntExtra(KEY_TYPE, 0);
         setTitle("我的收藏");
-        getIntent().getIntExtra(KEY_TYPE,TYPE_ALL);
+        getIntent().getIntExtra(KEY_TYPE, TYPE_ALL);
         vp_collection.addOnPageChangeListener(this);
         vp_collection.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -65,7 +66,7 @@ public class CollectionActivity extends BaseUI implements ViewPager.OnPageChange
                 return 2;
             }
         });
-        switch (mType){
+        switch (mType) {
             case TYPE_GOODS:
                 vp_collection.setCurrentItem(0);
                 break;
@@ -82,10 +83,15 @@ public class CollectionActivity extends BaseUI implements ViewPager.OnPageChange
     protected void prepareData() {
 
     }
-    
-    public static void toActivity(Context context,int type) {
+
+    @Event(value = {R.id.fl_commodity, R.id.fl_shop}, type = View.OnClickListener.class)
+    private void onClick(View view) {
+        changeTab(view.getId() == R.id.fl_commodity ? 0 : 1);
+    }
+
+    public static void toActivity(Context context, int type) {
         Intent intent = new Intent(context, CollectionActivity.class);
-        intent.putExtra(KEY_TYPE,type);
+        intent.putExtra(KEY_TYPE, type);
         context.startActivity(intent);
     }
 
@@ -105,12 +111,12 @@ public class CollectionActivity extends BaseUI implements ViewPager.OnPageChange
     }
 
     private void changeTab(int position) {
-        if(position == 0){
+        if (position == 0) {
             tv_commodity_selected.setTextColor(Color.parseColor("#ee4617"));
             tv_shop_selected.setTextColor(Color.parseColor("#666666"));
             findViewById(R.id.v_shop_selected).setVisibility(View.GONE);
             findViewById(R.id.v_commodity_selected).setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tv_commodity_selected.setTextColor(Color.parseColor("#666666"));
             tv_shop_selected.setTextColor(Color.parseColor("#ee4617"));
             findViewById(R.id.v_shop_selected).setVisibility(View.VISIBLE);

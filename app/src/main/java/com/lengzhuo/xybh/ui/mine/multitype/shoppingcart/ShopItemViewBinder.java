@@ -40,7 +40,6 @@ public class ShopItemViewBinder extends ItemViewBinder<ShopBean,BaseViewHolder> 
         holder.<TextView>getView(R.id.tv_name).setText(item.getShopName());
         GlideApp.with(holder.itemView.getContext())
                 .load(item.getLogo())
-                .loadAvatar()
                 .into(holder.<ImageView>getView(R.id.iv_logo));
         holder.getView(R.id.fl_is_selected).setOnClickListener(new View.OnClickListener() {
             @Override

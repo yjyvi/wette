@@ -62,7 +62,7 @@ public class ModifyPhoneNumberActivity extends BaseUI {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandler.onDestory();
+        mHandler.onDestroy();
     }
 
     @Event(value = {R.id.tv_validate_code,R.id.tv_finish},type = View.OnClickListener.class)

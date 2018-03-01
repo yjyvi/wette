@@ -131,16 +131,19 @@
                     android:layout_height="wrap_content"
                     android:textSize="24px"
                     android:textColor="#999999"
-                    android:text="不含运费，不含进口税"/>
+                    android:text="含运费"/>
 
         </LinearLayout>
+
+
+        <!-- #ee4716 or #aaaaaa -->
 
         <TextView
                 android:id="@+id/tv_settlement"
                 android:layout_width="200px"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:background="#ee4716"
+                android:background="#aaaaaa"
                 android:textSize="30px"
                 android:textColor="@color/white"
                 android:text="结算(0)"/>

@@ -126,6 +126,6 @@ public class RegisterActivity extends BaseUI {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandler.onDestory();
+        mHandler.onDestroy();
     }
 }

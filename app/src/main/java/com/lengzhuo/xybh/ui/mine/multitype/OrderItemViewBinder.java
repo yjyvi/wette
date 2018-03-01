@@ -39,7 +39,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
     private static final SparseArray<String[]> ORDER_STATUS_MAP = new SparseArray<>();
 
     static {
-        ORDER_STATUS_MAP.put(1, new String[]{"待支付", "支付"});
+        ORDER_STATUS_MAP.put(1, new String[]{"待支付", "完成支付"});
         ORDER_STATUS_MAP.put(2, new String[]{"已取消", "再次购买"});
         ORDER_STATUS_MAP.put(3, new String[]{"发货中", "完成"});
         ORDER_STATUS_MAP.put(4, new String[]{"已完成", "评价"});
@@ -60,7 +60,6 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         recyclerView.setAdapter(adapter);
         GlideApp.with(holder.itemView.getContext())
                 .load(item.getLogo())
-                .loadAvatar()
                 .into(holder.<ImageView>getView(R.id.iv_shop_img));
         ((TextView) holder.getView(R.id.tv_shop_name)).setText(item.getShopName());
         ((TextView) holder.getView(R.id.tv_order_des)).setText("共" + item.getGoodsAmount() + "件商品 合计¥" + item.getTotalFee() + "(含运费¥" +

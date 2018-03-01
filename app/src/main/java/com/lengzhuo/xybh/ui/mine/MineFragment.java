@@ -85,7 +85,7 @@ public class MineFragment extends LazyLoadFragment {
             R.id.bt_sending_good,
             R.id.bt_waiting_evaluation,
             R.id.bt_waiting_pay,
-            R.id.ll_login_or_register,
+            R.id.tv_nick_name,
             R.id.ll_account_setting,
             R.id.fl_feedback,
             R.id.tv_collection,
@@ -99,21 +99,32 @@ public class MineFragment extends LazyLoadFragment {
     }, type = View.OnClickListener.class)
     private void onClick(View view) {
 
-        if (view.getId() != R.id.ll_login_or_register && !UserManager.isLogin()) {
+        //反馈
+        if(view.getId() == R.id.fl_feedback){
+            FeedbackActivity.toActivity(view.getContext());
+            return;
+        }
+
+        //拨打客服电话
+        if(view.getId() == R.id.fl_customer_service){
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15117934180"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return;
+        }
+
+        if (view.getId() != R.id.tv_nick_name && !UserManager.isLogin()) {
             ToastUtils.showToast("请先登录！");
             return;
         }
 
         switch (view.getId()) {
-            case R.id.ll_login_or_register:
+            case R.id.tv_nick_name:
                 if (!UserManager.isLogin())
                     LoginActivity.toActivity(view.getContext());
                 break;
             case R.id.ll_account_setting:
                 AccountSettingActivity.toActivity(view.getContext());
-                break;
-            case R.id.fl_feedback:
-                FeedbackActivity.toActivity(view.getContext());
                 break;
             case R.id.tv_collection:
                 CollectionActivity.toActivity(view.getContext(), CollectionActivity.TYPE_ALL);
@@ -145,11 +156,6 @@ public class MineFragment extends LazyLoadFragment {
             case R.id.iv_shopping_cart:
                 ShoppingCartActivity.toActivity(view.getContext());
                 break;
-            case R.id.fl_customer_service:
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15117934180"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                break;
             case R.id.tv_exit_login:
                 if (mExitLoginDialog == null) {
                     mExitLoginDialog = new AlertDialog.Builder(getContext())
@@ -175,6 +181,7 @@ public class MineFragment extends LazyLoadFragment {
                 break;
         }
     }
+
 
     private void isLogin() {
         if (UserManager.isLogin()) {

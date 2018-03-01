@@ -63,7 +63,7 @@ public class GetBackPwdActivity extends BaseUI {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mHandler.onDestory();
+        mHandler.onDestroy();
     }
 
     @Override

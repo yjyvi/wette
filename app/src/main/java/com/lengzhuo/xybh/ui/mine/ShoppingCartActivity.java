@@ -146,6 +146,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         });
         rv_shopping_cart.setLayoutManager(new LinearLayoutManager(this));
         rv_shopping_cart.setAdapter(mAdapter);
+        rl_shopping_cart.setPullDownRefreshEnable(false);
         rl_shopping_cart.setMyRefreshLayoutListener(this);
     }
 
@@ -200,9 +201,9 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         } else if (view.getId() == R.id.rl_right_title) {
             //编辑
             for (Object item : mItems) {
-                if(item instanceof ShopBean){
+                if (item instanceof ShopBean) {
                     ((ShopBean) item).setSelected(false);
-                }else if(item instanceof CommodityBean){
+                } else if (item instanceof CommodityBean) {
                     ((CommodityBean) item).setSelected(false);
                 }
             }
@@ -232,6 +233,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                     mIsEdit = false;
                     tv_delete.setVisibility(View.GONE);
                     mSelectedCommodityList.clear();
+                    onCommodityOrShopSelected();
                     mItems.clear();
                     mPageIndex = 1;
                     getShoppingCartList();
@@ -286,8 +288,11 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             event.getData().setSelected(!event.getData().isSelected());
             if (event.getData().isSelected())
                 addSelectedCommodity(event.getData());
-            else
+            else {
                 mSelectedCommodityList.remove(event.getData());
+                iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
+            }
+
             onCommodityOrShopSelected();
             mAdapter.notifyDataSetChanged();
         }
@@ -303,8 +308,11 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             for (CommodityBean commodityBean : event.getData().getGoodList()) {
                 if (isSelected)
                     addSelectedCommodity(commodityBean);
-                else
+                else {
                     mSelectedCommodityList.remove(commodityBean);
+
+                }
+
             }
             event.getData().setSelected(isSelected);
             onCommodityOrShopSelected();
@@ -318,6 +326,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     }
 
     private void onCommodityOrShopSelected() {
+        tv_settlement.setBackgroundColor(mSelectedCommodityList.isEmpty() ? Color.parseColor("#aaaaaa") : Color.parseColor("#ee4716"));
         double totalPrice = 0;
         for (CommodityBean commodityBean : mSelectedCommodityList) {
             double commodityTotalPrice = commodityBean.getPrice() * commodityBean.getAmount();

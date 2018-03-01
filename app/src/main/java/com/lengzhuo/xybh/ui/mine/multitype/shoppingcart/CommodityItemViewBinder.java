@@ -27,20 +27,21 @@ import me.drakeet.multitype.ItemViewBinder;
  *     version: 1.0
  * </pre>
  */
-public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean,BaseViewHolder> {
+public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseViewHolder> {
 
     @NonNull
     @Override
     protected BaseViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        return new BaseViewHolder(inflater.inflate(R.layout.item_shopping_cart_commodity,parent,false));
+        return new BaseViewHolder(inflater.inflate(R.layout.item_shopping_cart_commodity, parent, false));
     }
 
     @Override
     protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull final CommodityBean item) {
-        holder.<ImageView>getView(R.id.iv_is_selected).setImageResource(item.isSelected()?R.drawable.shopping_cart_selected :R.drawable.shopping_cart_unselected);
+        holder.<ImageView>getView(R.id.iv_is_selected).setImageResource(item.isSelected() ? R.drawable.shopping_cart_selected : R.drawable.shopping_cart_unselected);
         holder.<TextView>getView(R.id.tv_name).setText(item.getGoodsName());
-        holder.<TextView>getView(R.id.tv_price).setText("¥"+item.getPrice());
-        holder.<TextView>getView(R.id.tv_count).setText("x"+item.getAmount());
+        holder.<TextView>getView(R.id.tv_price).setText("¥" + item.getPrice());
+        holder.<TextView>getView(R.id.tv_count).setText("x" + item.getAmount());
+        holder.<TextView>getView(R.id.tv_format).setText(item.getPropertiesName());
         GlideApp.with(holder.itemView.getContext())
                 .load(item.getCover())
                 .into(holder.<ImageView>getView(R.id.iv_cover));
@@ -56,7 +57,7 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean,BaseVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodDetailsUI.start(v.getContext(),String.valueOf(item.getGoodsId()),item.getShopId());
+                GoodDetailsUI.start(v.getContext(), String.valueOf(item.getGoodsId()), item.getShopId());
             }
         });
 
