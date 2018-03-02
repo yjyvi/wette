@@ -82,7 +82,9 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
 
         Intent intent = getIntent();
         mSearchContent = intent.getStringExtra("searchContent");
+
         if (!TextUtils.isEmpty(mSearchContent)) {
+            et_search.setText(mSearchContent);
             mSearchP.setSearchData(mSearchContent, page, limit);
         }
 
@@ -93,7 +95,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
                     ToastUtils.showToast("请输入搜索关键字");
                 } else {
                     //搜索接口
-                    mSearchContent = textView.getText().toString().trim();
+//                    mSearchContent = textView.getText().toString().trim();
                     mSearchP.setSearchData(mSearchContent, page, limit);
 //                    et_search.setText("");
                     KeyboardUtils.hideKeyBoard(getActivity(), textView);

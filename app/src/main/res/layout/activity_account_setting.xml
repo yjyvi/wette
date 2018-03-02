@@ -27,7 +27,7 @@
             android:id="@+id/tv_address_list"
             android:layout_width="match_parent"
             android:layout_height="100px"
-            android:text="收获地址管理"
+            android:text="收货地址管理"
             android:gravity="center_vertical"
             style="@style/text_view_title_3"
             android:paddingLeft="24px"

@@ -439,9 +439,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             return;
         }
 
-        if (isLoginClick()) return;
-
         if (isAddCart) {
+
+            if (isLoginClick()) return;
+
             if (mDataBean != null) {
                 mAddCartP.setAddCart(
                         String.valueOf(mDataBean.getShopId()),

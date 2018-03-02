@@ -39,9 +39,9 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
     private static final SparseArray<String[]> ORDER_STATUS_MAP = new SparseArray<>();
 
     static {
-        ORDER_STATUS_MAP.put(1, new String[]{"待支付", "完成支付"});
+        ORDER_STATUS_MAP.put(1, new String[]{"待支付", "支付"});
         ORDER_STATUS_MAP.put(2, new String[]{"已取消", "再次购买"});
-        ORDER_STATUS_MAP.put(3, new String[]{"待发货", "完成"});
+        ORDER_STATUS_MAP.put(3, new String[]{"待收货", "确认收货"});
         ORDER_STATUS_MAP.put(4, new String[]{"已完成", "评价"});
     }
 
