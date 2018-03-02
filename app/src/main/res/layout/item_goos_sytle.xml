@@ -3,15 +3,10 @@
           android:id="@+id/tv_content"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_margin="15px"
-          android:lines="1"
-          android:ellipsize="middle"
-          android:paddingLeft="20px"
-          android:paddingRight="20px"
-          android:paddingTop="10px"
-          android:paddingBottom="10px"
-          android:textSize="26px"
-          android:textColor="@color/color_goods_style"
+          android:layout_margin="10px"
           android:background="@drawable/selector_goods_style"
-          android:gravity="center_vertical">
+          android:gravity="center_vertical"
+          android:padding="10px"
+          android:textColor="@color/color_goods_style"
+          android:textSize="26px">
 </TextView>

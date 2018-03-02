@@ -47,6 +47,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     @Override
     protected void back() {
+        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_WAITING_PAY);
         finish();
     }
 
@@ -57,6 +58,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     @Override
     protected void prepareData() {
+
         iv_wx.setSelected(true);
         mPayUtils = new PayUtils(this);
         mPayUtils.setPayCallBack(this);
@@ -75,6 +77,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
             R.id.common_title_back,
             R.id.tv_commit
     }, type = View.OnClickListener.class)
+
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_pay_wx:

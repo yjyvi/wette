@@ -41,7 +41,7 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
 
 
 //        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
         layout.setOrientation(StaggeredGridLayoutManager.VERTICAL);
         layout.setAutoMeasureEnabled(true);
 
