@@ -107,6 +107,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                         } else {
                             SearchResultUI.start(view.getContext(), et_search.getText().toString().trim());
                             et_search.setVisibility(View.GONE);
+                            et_search.setText("");
                             rl_title_search.setVisibility(View.VISIBLE);
                         }
                         return true;
