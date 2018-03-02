@@ -221,6 +221,8 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 ll_selected_address.setVisibility(View.VISIBLE);
                 tv_add_address.setVisibility(View.GONE);
                 initShowAddressText(data);
+            }else {
+                getAddressList();
             }
         }
     }

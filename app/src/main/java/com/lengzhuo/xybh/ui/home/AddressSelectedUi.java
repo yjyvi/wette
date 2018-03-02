@@ -48,8 +48,8 @@ public class AddressSelectedUi extends BaseUI {
 
     @Override
     protected void back() {
+        EventBus.getDefault().post(new AddressEvent().setEventType(AddressEvent.SELECTED_ADDESS));
         finish();
-
     }
 
     @Override
