@@ -110,17 +110,15 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
             textView.setSelected(true);
 
             if (item.getAttrList() != null && item.getAttrList().size() > 0) {
-                mValueAttrListener.valueResult(item.getAttrId(), item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
-                mValueAttrListener.showNameResult(item.getAttrId(), item.getAttrList().get(position).getAttrId(), item.getAttrList().get(position).getAttrName());
+                mValueAttrListener.valueResult(item.getAttrId(), item.getAttrList().get(position).getAttrId(),item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
             }
         }
     }
 
 
     public interface ValueAttrListener {
-        void valueResult(int id, String result);
+        void valueResult(int parentAttrId, int attrId, String result);
 
-        void showNameResult(int parentAttrId, int attrId, String name);
     }
 
 }

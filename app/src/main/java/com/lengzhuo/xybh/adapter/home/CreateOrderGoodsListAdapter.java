@@ -9,6 +9,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CreateOrderGoodsListAdapter extends BaseQuickAdapter<CreateOrderGoo
         ImageView iv_add = helper.getView(R.id.iv_add);
 
         helper.setText(R.id.tv_goods_name, item.getGoodsTitle());
-        helper.setText(R.id.tv_price, "¥"+item.getGoodsPrice());
+        helper.setText(R.id.tv_price, PlaceholderUtils.pricePlaceholder(item.getGoodsPrice()));
         helper.setText(R.id.tv_goods_properties_Name, item.getGoodsSkuContent());
         GlideImgUtils.loadImg(helper.itemView.getContext(), item.getGoodsImageUrl(), (ImageView) helper.getView(R.id.iv_cover));
         tv_goods_num.setText(item.getGoodsAmount());

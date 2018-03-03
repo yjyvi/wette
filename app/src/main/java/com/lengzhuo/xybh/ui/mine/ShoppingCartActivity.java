@@ -23,6 +23,7 @@ import com.lengzhuo.xybh.ui.home.CreateOrderUI;
 import com.lengzhuo.xybh.ui.mine.multitype.shoppingcart.CommodityItemViewBinder;
 import com.lengzhuo.xybh.ui.mine.multitype.shoppingcart.ShopItemViewBinder;
 import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.Utils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
@@ -261,7 +262,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 goodsBean.setGoodsAmount(String.valueOf(commodityBean.getAmount()));
                 goodsBean.setShopId(String.valueOf(commodityBean.getShopId()));
                 goodsBean.setSkuId(String.valueOf(commodityBean.getSkuId()));
-                goodsBean.setGoodsPrice(String.valueOf(commodityBean.getPrice()));
+                goodsBean.setGoodsPrice(commodityBean.getPrice());
                 goodsBean.setGoodsImageUrl(commodityBean.getCover());
                 goodsBean.setGoodsSkuContent(commodityBean.getPropertiesName());
                 goodsBean.setGoodsTitle(commodityBean.getGoodsName());
@@ -395,7 +396,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             BigDecimal b2 = new BigDecimal(Double.toString(commodityTotalPrice));
             totalPrice = b1.add(b2).doubleValue();
         }
-        tv_total_price.setText(String.valueOf("¥" + totalPrice));
+        tv_total_price.setText(PlaceholderUtils.pricePlaceholder(totalPrice));
         tv_settlement.setText("结算(" + mSelectedCommodityList.size() + ")");
     }
 

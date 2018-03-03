@@ -175,7 +175,7 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
                     goodsBean.setGoodsImageUrl(goodListBean.getCover());
                     goodsBean.setGoodsTitle(goodListBean.getGoodsName());
                     goodsBean.setGoodsSkuContent(goodListBean.getPropertiesName());
-                    goodsBean.setGoodsPrice(String.valueOf(goodListBean.getPrice()));
+                    goodsBean.setGoodsPrice(goodListBean.getPrice());
                     orderGoodsBeanList.add(goodsBean);
                 }
                 CreateOrderUI.start(this, null, orderGoodsBeanList);

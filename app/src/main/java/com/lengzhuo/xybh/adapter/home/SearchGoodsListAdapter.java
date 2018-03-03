@@ -8,6 +8,7 @@ import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.SearchBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SearchGoodsListAdapter extends BaseQuickAdapter<SearchBean.DataBean
     @Override
     protected void convert(BaseViewHolder helper, SearchBean.DataBean.GoodsListBean item) {
         helper.setText(R.id.tv_good_name,item.getGoodsName());
-        helper.setText(R.id.tv_good_price, "¥"+item.getPrice());
+        helper.setText(R.id.tv_good_price, PlaceholderUtils.pricePlaceholder(item.getPrice()));
         GlideImgUtils.loadImg(helper.itemView.getContext(),item.getCover(),(ImageView) helper.getView(R.id.iv_good_img));
     }
 }
