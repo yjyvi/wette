@@ -8,7 +8,7 @@
     <!--轮播图-->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="380px">
+        android:layout_height="480px">
 
         <!-- ViewPager -->
         <com.lengzhuo.xybh.views.arl.AutoRollLayout

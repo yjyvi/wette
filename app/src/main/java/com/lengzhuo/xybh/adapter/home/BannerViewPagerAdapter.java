@@ -21,7 +21,7 @@ public abstract class BannerViewPagerAdapter<T> extends PagerAdapter {
     public int getCount() {
         //关于无限轮播
         //https://github.com/alibaba/UltraViewPager/issues/4
-        return 1000;
+        return 30000;
     }
 
     @Override

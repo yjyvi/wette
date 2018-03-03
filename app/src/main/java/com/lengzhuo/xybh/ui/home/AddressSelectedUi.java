@@ -48,13 +48,13 @@ public class AddressSelectedUi extends BaseUI {
 
     @Override
     protected void back() {
+        EventBus.getDefault().post(new AddressEvent().setEventType(AddressEvent.SELECTED_ADDESS));
         finish();
-
     }
 
     @Override
     protected void setControlBasis() {
-        setTitle("选择地址");
+        setTitle("我的地址");
         EventBus.getDefault().register(this);
     }
 

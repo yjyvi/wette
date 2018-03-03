@@ -1,7 +1,7 @@
 package com.lengzhuo.xybh.pop;
 
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,8 +35,17 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
     @Override
     protected void convert(final BaseViewHolder helper, final GoodDetailsBean.DataBean.AttrListBeanX item) {
         final RecyclerView rv_attrList = helper.getView(R.id.rv_attrList);
-        LinearLayoutManager layout = new LinearLayoutManager(helper.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        int itemSize = item.getAttrList().size();
+
+        int i = itemSize % 2;
+
+
+//        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
+        layout.setOrientation(StaggeredGridLayoutManager.VERTICAL);
         layout.setAutoMeasureEnabled(true);
+
+
         rv_attrList.setLayoutManager(layout);
         GoodsAttrListAdapter goodsAttrListAdapter = new GoodsAttrListAdapter(R.layout.item_goos_sytle, item.getAttrList());
         rv_attrList.setAdapter(goodsAttrListAdapter);
@@ -57,7 +66,10 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
                     //关闭所有按扭
                     int itemCount = adapter.getItemCount();
                     for (int i = 0; i < itemCount; i++) {
-                        adapter.getViewByPosition(rv_attrList, i, R.id.tv_content).setSelected(false);
+                        View viewByPosition = adapter.getViewByPosition(rv_attrList, i, R.id.tv_content);
+                        if (viewByPosition != null) {
+                            viewByPosition.setSelected(false);
+                        }
                     }
 
 
@@ -112,8 +124,6 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
                     view.setSelected(true);
                 }
             }
-
-
         }
     }
 }

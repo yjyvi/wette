@@ -94,7 +94,7 @@
                                 android:drawablePadding="8dp"
                                 android:drawableTop="@drawable/mine_pending_payment"
                                 android:textColor="@color/black"
-                                android:text="待付款"/>
+                                android:text="待支付"/>
 
 
                     </FrameLayout>
@@ -381,7 +381,7 @@
                             android:layout_marginRight="20px"
                             android:textSize="26px"
                             android:textColor="#999999"
-                            android:text="开通消息提醒，管理收获地址"/>
+                            android:text="开通消息提醒，管理收货地址"/>
 
                     <ImageView
                             android:layout_width="14px"

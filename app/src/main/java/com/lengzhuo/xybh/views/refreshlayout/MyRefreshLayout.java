@@ -1,9 +1,9 @@
 package com.lengzhuo.xybh.views.refreshlayout;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 
-import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -19,7 +19,6 @@ public class MyRefreshLayout extends BGARefreshLayout {
 
     boolean isLoadingMore = true;
 
-
     public MyRefreshLayout(Context context) {
         super(context);
     }
@@ -28,13 +27,18 @@ public class MyRefreshLayout extends BGARefreshLayout {
         super(context, attrs);
     }
 
+
+
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
-        setRefreshViewHolder(new BGANormalRefreshViewHolder(getContext(), true));
+
+        MyRefreshViewHolder refreshViewHolder = new MyRefreshViewHolder(getContext(), true);
+        setRefreshViewHolder(refreshViewHolder);
         setDelegate(new BGARefreshLayoutDelegate() {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+
                 if (mListener != null) {
                     setIsLoadingMoreEnabled(true);
                     mListener.onRefresh(refreshLayout);
@@ -42,17 +46,36 @@ public class MyRefreshLayout extends BGARefreshLayout {
             }
 
             @Override
-            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-                if(!isLoadingMore){
-                    return false;
-                }else{
-                    if (mListener != null) {
-                        mListener.onLoadMore(refreshLayout);
-                    }
-                    return true;
-                }
-            }
+            public boolean onBGARefreshLayoutBeginLoadingMore(final BGARefreshLayout refreshLayout) {
 
+
+                // 在这里加载最新数据
+                if (!isLoadingMore) {
+                    return false;
+                } else {
+                    new AsyncTask<Void, Void, Void>() {
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            // 加载完毕后在 UI 线程结束下拉刷新
+                            if (mListener != null) {
+                                mListener.onLoadMore(refreshLayout);
+                            }
+                        }
+                    }.execute();
+                }
+                return true;
+            }
         });
     }
 
@@ -76,6 +99,7 @@ public class MyRefreshLayout extends BGARefreshLayout {
 
     /**
      * 设置是否可以使用上拉加载
+     *
      * @param isLoadingMoreEnabled false 为不能上拉加载
      */
     public void setIsLoadingMoreEnabled(boolean isLoadingMoreEnabled) {

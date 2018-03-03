@@ -208,7 +208,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 StringBuilder colorName;
                 StringBuilder sizeName;
                 if (mDataBean.getAttrList().size() > 0) {
-                    colorName = new StringBuilder("规格  " + mDataBean.getAttrList().get(0).getAttrName() + ":");
+                    colorName = new StringBuilder("已选  " + mDataBean.getAttrList().get(0).getAttrName() + ":");
                 } else {
                     return;
                 }
@@ -321,7 +321,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         mSkuContent = "[";
         if (attrList != null && attrList.size() > 0) {
             List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(0).getAttrList();
-            colorName = new StringBuilder("规格  " + attrList.get(0).getAttrName() + ":");
+            colorName = new StringBuilder("已选  " + attrList.get(0).getAttrName() + ":");
             if (attrList1 != null && attrList1.size() > 0) {
                 colorName.append(attrList1.get(0).getAttrName());
                 mSkuContent += attrList.get(0).getAttrId() + ":" + attrList1.get(0).getAttrId() + ";";
@@ -439,9 +439,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             return;
         }
 
-        if (isLoginClick()) return;
-
         if (isAddCart) {
+
+            if (isLoginClick()) return;
+
             if (mDataBean != null) {
                 mAddCartP.setAddCart(
                         String.valueOf(mDataBean.getShopId()),

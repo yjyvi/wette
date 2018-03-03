@@ -106,8 +106,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                             ToastUtils.showToast("请输入搜索关键字");
                         } else {
                             SearchResultUI.start(view.getContext(), et_search.getText().toString().trim());
-                            et_search.setText("");
                             et_search.setVisibility(View.GONE);
+                            et_search.setText("");
                             rl_title_search.setVisibility(View.VISIBLE);
                         }
                         return true;

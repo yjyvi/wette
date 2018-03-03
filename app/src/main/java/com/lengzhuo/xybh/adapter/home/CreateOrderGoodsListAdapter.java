@@ -1,7 +1,6 @@
 package com.lengzhuo.xybh.adapter.home;
 
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,19 +39,19 @@ public class CreateOrderGoodsListAdapter extends BaseQuickAdapter<CreateOrderGoo
         tv_goods_num.setText(item.getGoodsAmount());
 
 
-        iv_reduce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                numAddOrReduce(tv_goods_num, false, helper.getLayoutPosition());
-            }
-        });
-
-        iv_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                numAddOrReduce(tv_goods_num, true, helper.getLayoutPosition());
-            }
-        });
+//        iv_reduce.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                numAddOrReduce(tv_goods_num, false, helper.getLayoutPosition());
+//            }
+//        });
+//
+//        iv_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                numAddOrReduce(tv_goods_num, true, helper.getLayoutPosition());
+//            }
+//        });
     }
 
 
@@ -71,8 +70,6 @@ public class CreateOrderGoodsListAdapter extends BaseQuickAdapter<CreateOrderGoo
         }
         goodsNum.setText(String.valueOf(i));
         mGoodsNumListener.addOrReduce(Integer.parseInt(goodsNum.getText().toString().trim()),position);
-//        EventBus.getDefault().post(new OrderEvent().setEventType(OrderEvent.ORDER_GOODS_ADD_REDUCE).setData(goodsNum.getText().toString().trim()) + "," + position);
-
     }
 
 
