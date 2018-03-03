@@ -57,7 +57,7 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodDetailsUI.start(v.getContext(), String.valueOf(item.getGoodsId()), item.getShopId());
+                GoodDetailsUI.start(v.getContext(), String.valueOf(item.getGoodsId()), String.valueOf(item.getShopId()));
             }
         });
 

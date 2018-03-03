@@ -178,10 +178,10 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
 
     @Event(value = {R.id.ll_all_selected, R.id.tv_settlement, R.id.rl_right_title, R.id.tv_delete})
     private void onClick(View view) {
+        //全选
         if (view.getId() == R.id.ll_all_selected) {
             view.setTag(view.getTag().equals("selected") ? "unSelected" : "selected");
             boolean isSelected = view.getTag().equals("selected");
-            iv_all_selected.setImageResource(isSelected ? R.drawable.shopping_cart_selected : R.drawable.shopping_cart_unselected);
             for (Object item : mItems) {
                 if (item instanceof CommodityBean) {
                     ((CommodityBean) item).setSelected(isSelected);
@@ -256,13 +256,12 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 CreateOrderGoodsBean goodsBean = new CreateOrderGoodsBean();
                 goodsBean.setGoodsId(String.valueOf(commodityBean.getGoodsId()));
                 goodsBean.setGoodsAmount(String.valueOf(commodityBean.getAmount()));
-                goodsBean.setShopId(commodityBean.getShopId());
+                goodsBean.setShopId(String.valueOf(commodityBean.getShopId()));
                 goodsBean.setSkuId(String.valueOf(commodityBean.getSkuId()));
                 goodsBean.setGoodsPrice(String.valueOf(commodityBean.getPrice()));
                 goodsBean.setGoodsImageUrl(commodityBean.getCover());
                 goodsBean.setGoodsSkuContent(commodityBean.getPropertiesName());
                 goodsBean.setGoodsTitle(commodityBean.getGoodsName());
-
                 orderGoodsBeanList.add(goodsBean);
             }
 
@@ -284,13 +283,25 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
 
     @Subscribe
     public void onSelectedCommodityEvent(BaseEvent<CommodityBean> event) {
+        CommodityBean commodityBean = event.getData();
         if (event.getEventType() == 1) {
-            event.getData().setSelected(!event.getData().isSelected());
-            if (event.getData().isSelected())
-                addSelectedCommodity(event.getData());
-            else {
-                mSelectedCommodityList.remove(event.getData());
-                iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
+            commodityBean.setSelected(!commodityBean.isSelected());
+
+            //商品和店铺的联动
+            ShopBean shopBean = getShopByCommodity(commodityBean);
+            boolean result = true;
+            for (CommodityBean bean : shopBean.getGoodList()) {
+                if (!bean.isSelected()) {
+                    result = !result;
+                    break;
+                }
+            }
+            shopBean.setSelected(result);
+
+            if (commodityBean.isSelected()) {
+                addSelectedCommodity(commodityBean);
+            } else {
+                mSelectedCommodityList.remove(commodityBean);
             }
 
             onCommodityOrShopSelected();
@@ -310,7 +321,6 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                     addSelectedCommodity(commodityBean);
                 else {
                     mSelectedCommodityList.remove(commodityBean);
-
                 }
 
             }
@@ -320,12 +330,59 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         }
     }
 
+    private ShopBean getShopByCommodity(CommodityBean commodityBean) {
+        ShopBean result = null;
+        for (Object item : mItems) {
+            if (item instanceof ShopBean) {
+                for (CommodityBean bean : ((ShopBean) item).getGoodList()) {
+                    if (bean.equals(commodityBean)) {
+                        result = (ShopBean) item;
+                        break;
+                    }
+                }
+            }
+            if (result != null) break;
+        }
+        return result;
+    }
+
     private void addSelectedCommodity(CommodityBean commodityBean) {
         if (!mSelectedCommodityList.contains(commodityBean))
             mSelectedCommodityList.add(commodityBean);
     }
 
+    private boolean isAllSelected() {
+        boolean isAllSelected = true;
+        for (Object item : mItems) {
+            if (item instanceof ShopBean) {
+                if (!((ShopBean) item).isSelected()) {
+                    isAllSelected = !isAllSelected;
+                    break;
+                }
+            } else if (item instanceof CommodityBean) {
+                if (!((CommodityBean) item).isSelected()) {
+                    isAllSelected = !isAllSelected;
+                    break;
+                }
+            }
+        }
+        return isAllSelected;
+    }
+
+    private void setAllSecltedImageView(boolean isSelected){
+        if(isSelected){
+            iv_all_selected.setImageResource(R.drawable.shopping_cart_selected);
+            iv_all_selected.setTag("selected");
+        }else{
+            iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
+            iv_all_selected.setTag("unSelected");
+        }
+    }
+
     private void onCommodityOrShopSelected() {
+        if (mIsEdit) return;
+        boolean isAllSelected = isAllSelected();
+        setAllSecltedImageView(isAllSelected);
         tv_settlement.setBackgroundColor(mSelectedCommodityList.isEmpty() ? Color.parseColor("#aaaaaa") : Color.parseColor("#ee4716"));
         double totalPrice = 0;
         for (CommodityBean commodityBean : mSelectedCommodityList) {

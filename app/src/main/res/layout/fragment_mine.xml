@@ -121,7 +121,7 @@
                                 android:drawablePadding="8dp"
                                 android:drawableTop="@drawable/mine_shipping"
                                 android:textColor="@color/black"
-                                android:text="发货中"/>
+                                android:text="待收货"/>
 
                     </FrameLayout>
 
@@ -145,7 +145,7 @@
                                 android:drawablePadding="8dp"
                                 android:drawableTop="@drawable/mine_wait_comment"
                                 android:textColor="@color/black"
-                                android:text="待评价"/>
+                                android:text="已完成"/>
 
                     </FrameLayout>
 

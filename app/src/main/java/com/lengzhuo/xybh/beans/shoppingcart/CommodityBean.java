@@ -13,39 +13,12 @@ public class CommodityBean {
 
     private boolean isSelected;
     /**
-     * amount : 2
-     * attrIds :
-     * attrList :
-     * carousel :
-     * cartId : 9
-     * categoryFid :
-     * categorySid :
-     * categoryTid :
-     * collectionId :
-     * cover : https://ss0.bdstatic.com/6ONWsjip0QIZ8tyhnq/it/u=3545401083,2251952841&fm=77&w_h=121_75&cs=2008984878,1171842780
-     * createTime :
-     * goodsDetail :
-     * goodsId : 1
-     * goodsIntroduce :
-     * goodsName : 雅诗兰黛1
-     * isCollection : 0
-     * isDel :
-     * isRecommend :
-     * lastUpdateTime :
-     * logo :
-     * price : 100.01
-     * propertiesName : 颜色：蓝色；尺码：33
-     * shopId :
-     * shopName :
-     * skuId : 2
-     * skuStock : 61
-     * skuSurplus : 2
-     * sort :
-     * status :
-     * stock :
-     * surplus :
-     * type :
-     * video :
+     * amount : 2 attrIds : attrList : carousel : cartId : 9 categoryFid : categorySid : categoryTid
+     * : collectionId : cover : https://ss0.bdstatic.com/6ONWsjip0QIZ8tyhnq/it/u=3545401083,2251952841&fm=77&w_h=121_75&cs=2008984878,1171842780
+     * createTime : goodsDetail : goodsId : 1 goodsIntroduce : goodsName : 雅诗兰黛1 isCollection : 0
+     * isDel : isRecommend : lastUpdateTime : logo : price : 100.01 propertiesName : 颜色：蓝色；尺码：33
+     * shopId : shopName : skuId : 2 skuStock : 61 skuSurplus : 2 sort : status : stock : surplus :
+     * type : video :
      */
 
     private int amount;
@@ -70,7 +43,7 @@ public class CommodityBean {
     private String logo;
     private double price;
     private String propertiesName;
-    private String shopId;
+    private int shopId;
     private String shopName;
     private int skuId;
     private int skuStock;
@@ -267,11 +240,11 @@ public class CommodityBean {
         this.propertiesName = propertiesName;
     }
 
-    public String getShopId() {
+    public int getShopId() {
         return shopId;
     }
 
-    public void setShopId(String shopId) {
+    public void setShopId(int shopId) {
         this.shopId = shopId;
     }
 
@@ -371,6 +344,7 @@ public class CommodityBean {
         if (skuId != that.skuId) return false;
         if (skuStock != that.skuStock) return false;
         if (skuSurplus != that.skuSurplus) return false;
+        if (shopId != that.shopId) return false;
         if (attrIds != null ? !attrIds.equals(that.attrIds) : that.attrIds != null) return false;
         if (attrList != null ? !attrList.equals(that.attrList) : that.attrList != null)
             return false;
@@ -401,7 +375,6 @@ public class CommodityBean {
         if (logo != null ? !logo.equals(that.logo) : that.logo != null) return false;
         if (propertiesName != null ? !propertiesName.equals(that.propertiesName) : that.propertiesName != null)
             return false;
-        if (shopId != null ? !shopId.equals(that.shopId) : that.shopId != null) return false;
         if (shopName != null ? !shopName.equals(that.shopName) : that.shopName != null)
             return false;
         if (sort != null ? !sort.equals(that.sort) : that.sort != null) return false;
@@ -440,7 +413,7 @@ public class CommodityBean {
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (propertiesName != null ? propertiesName.hashCode() : 0);
-        result = 31 * result + (shopId != null ? shopId.hashCode() : 0);
+        result = 31 * result + shopId;
         result = 31 * result + (shopName != null ? shopName.hashCode() : 0);
         result = 31 * result + skuId;
         result = 31 * result + skuStock;
