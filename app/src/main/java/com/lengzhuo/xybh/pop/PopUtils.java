@@ -111,6 +111,7 @@ public class PopUtils {
 
         LinearLayoutManager layout = new LinearLayoutManager(context);
         layout.setAutoMeasureEnabled(true);
+
         rv_style.setLayoutManager(layout);
         GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), lastAttrId, new GoodStyleAdapter.ValueAttrListener() {
             @Override
