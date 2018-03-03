@@ -181,7 +181,8 @@
         <!-- 收藏 -->
         <activity android:name="com.lengzhuo.xybh.ui.mine.CollectionActivity"/>
         <!-- 我的订单 -->
-        <activity android:name="com.lengzhuo.xybh.ui.mine.OrderActivity"/>
+        <activity android:name="com.lengzhuo.xybh.ui.mine.OrderActivity"
+                android:launchMode="singleTask"/>
         <!-- 购物车 -->
         <activity android:name="com.lengzhuo.xybh.ui.mine.ShoppingCartActivity"/>
         <!-- 支付方式 -->

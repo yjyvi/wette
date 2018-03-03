@@ -76,6 +76,13 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPage = 1;
+        myOrderP.loadList(orderState, mPage, 10);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
@@ -89,8 +96,8 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     protected void setControlBasis() {
-        setTitle("我的订单");
         orderState = getIntent().getIntExtra(KEY_ORDER_STATE, ORDER_STATE_ALL);
+        setTitle(orderState == ORDER_STATE_WAITING_PAY ? "待支付":"我的订单");
         mItems = new Items();
         mAdapter = new MultiTypeAdapter();
         mAdapter.setItems(mItems);
