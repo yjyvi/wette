@@ -46,6 +46,19 @@
     <View
             style="@style/common_line"/>
 
+    <TextView
+            android:id="@+id/tv_order_number"
+            android:layout_width="match_parent"
+            android:layout_height="80px"
+            android:paddingLeft="20px"
+            android:paddingRight="20px"
+            android:textColor="#333333"
+            android:textSize="28px"
+            android:gravity="center_vertical"/>
+
+    <View
+            style="@style/common_line"/>
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/goods_rv"
             android:layout_width="match_parent"

@@ -66,6 +66,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
                 item.getFreight() + ")");
         ((TextView) holder.getView(R.id.bt_order_state)).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[1]);
         holder.<TextView>getView(R.id.tv_status).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[0]);
+        holder.<TextView>getView(R.id.tv_order_number).setText("订单编号：" + item.getOrderNo());
         holder.getView(R.id.bt_order_state).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +103,8 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         @Override
         protected void convert(BaseViewHolder helper, final OrderListBean.DataBean.GoodListBean item) {
             helper.setText(R.id.tv_goods_name, item.getGoodsName());
-            helper.setText(R.id.tv_price, "￥" + item.getPrice());
+            helper.setText(R.id.tv_format, item.getPropertiesName());
+            helper.setText(R.id.tv_price, "¥" + item.getPrice());
             helper.setText(R.id.tv_count, "x" + item.getAmount());
             GlideApp.with(helper.itemView.getContext())
                     .load(item.getCover())

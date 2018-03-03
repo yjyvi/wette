@@ -85,6 +85,8 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
 
     boolean mIsEdit = false;
 
+    boolean mIsSubmitOrder = false;
+
     @Override
     protected void back() {
         finish();
@@ -207,6 +209,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                     ((CommodityBean) item).setSelected(false);
                 }
             }
+            mAdapter.notifyDataSetChanged();
             iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
             mSelectedCommodityList.clear();
             onCommodityOrShopSelected();
@@ -266,6 +269,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             }
 
             CreateOrderUI.start(this, null, orderGoodsBeanList);
+            mIsSubmitOrder = true;
         }
     }
 
@@ -369,11 +373,11 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         return isAllSelected;
     }
 
-    private void setAllSecltedImageView(boolean isSelected){
-        if(isSelected){
+    private void setAllSecltedImageView(boolean isSelected) {
+        if (isSelected) {
             iv_all_selected.setImageResource(R.drawable.shopping_cart_selected);
             iv_all_selected.setTag("selected");
-        }else{
+        } else {
             iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
             iv_all_selected.setTag("unSelected");
         }
@@ -413,5 +417,17 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     public void onLoadMore(View view) {
         mPageIndex++;
         getShoppingCartList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mIsSubmitOrder) {
+            mItems.clear();
+            mSelectedCommodityList.clear();
+            mPageIndex = 1;
+            rl_shopping_cart.setIsLoadingMoreEnabled(true);
+            mIsSubmitOrder = !mIsSubmitOrder;
+        }
     }
 }

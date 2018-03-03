@@ -2,6 +2,7 @@ package com.lengzhuo.xybh.ui.mine.multitype.collection;
 
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.CollectionBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
+import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.utils.GlideApp;
 
 import me.drakeet.multitype.ItemViewBinder;
@@ -32,11 +34,17 @@ public class CommodityItemViewBinder extends ItemViewBinder<CollectionBean,BaseV
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull CollectionBean item) {
+    protected void onBindViewHolder(@NonNull final BaseViewHolder holder, @NonNull final CollectionBean item) {
         holder.<TextView>getView(R.id.tv_good_name).setText(item.getName());
         holder.<TextView>getView(R.id.tv_good_price).setText("¥"+item.getPrice());
         GlideApp.with(holder.itemView.getContext())
-                .load(item.getPrice())
+                .load(item.getImage())
                 .into(holder.<ImageView>getView(R.id.iv_good_img));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodDetailsUI.start(holder.itemView.getContext(),String.valueOf(item.getDataId()));
+            }
+        });
     }
 }

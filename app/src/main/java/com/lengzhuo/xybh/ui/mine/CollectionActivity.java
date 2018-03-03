@@ -116,12 +116,12 @@ public class CollectionActivity extends BaseUI implements ViewPager.OnPageChange
             tv_shop_selected.setTextColor(Color.parseColor("#666666"));
             findViewById(R.id.v_shop_selected).setVisibility(View.GONE);
             findViewById(R.id.v_commodity_selected).setVisibility(View.VISIBLE);
-            vp_collection.setCurrentItem(position);
         } else {
             tv_commodity_selected.setTextColor(Color.parseColor("#666666"));
             tv_shop_selected.setTextColor(Color.parseColor("#ee4617"));
             findViewById(R.id.v_shop_selected).setVisibility(View.VISIBLE);
             findViewById(R.id.v_commodity_selected).setVisibility(View.GONE);
         }
+        vp_collection.setCurrentItem(position);
     }
 }
