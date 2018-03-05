@@ -37,11 +37,13 @@ public class GoodDetailP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 GoodDetailsBean goodDetailsBean = JSON.parseObject(result, GoodDetailsBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, goodDetailsBean.getStatus())) {
-                    mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
-                } else {
-                    ToastUtils.showToast(goodDetailsBean.getErrorMsg());
-                    mGoodsDetailsListener.requestGoodsDataField();
+                if (goodDetailsBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, goodDetailsBean.getStatus())) {
+                        mGoodsDetailsListener.goodsData(goodDetailsBean.getData());
+                    } else {
+                        ToastUtils.showToast(goodDetailsBean.getErrorMsg());
+                        mGoodsDetailsListener.requestGoodsDataField();
+                    }
                 }
             }
         });

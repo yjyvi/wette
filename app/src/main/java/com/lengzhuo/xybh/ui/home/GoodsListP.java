@@ -31,11 +31,13 @@ public class GoodsListP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 GoodsListBean goodsListBean = JSON.parseObject(result, GoodsListBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, goodsListBean.getStatus())) {
-                    mGoodsListListener.resultGoodsListData(goodsListBean);
-                } else {
-                    ToastUtils.showToast(goodsListBean.getErrorMsg());
-                    mGoodsListListener.goodsListField();
+                if (goodsListBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, goodsListBean.getStatus())) {
+                        mGoodsListListener.resultGoodsListData(goodsListBean);
+                    } else {
+                        ToastUtils.showToast(goodsListBean.getErrorMsg());
+                        mGoodsListListener.goodsListField();
+                    }
                 }
             }
 
@@ -47,8 +49,8 @@ public class GoodsListP extends PresenterBase {
 
     }
 
-    public void setGoodsList(int categoryTid, String  shopId, int pageNo, int pageSize) {
-        NetworkUtils.getNetworkUtils().getGoodList(categoryTid, shopId,pageSize, pageNo, new OKHttpManager.StringCallBack() {
+    public void setGoodsList(int categoryTid, String shopId, int pageNo, int pageSize) {
+        NetworkUtils.getNetworkUtils().getGoodList(categoryTid, shopId, pageSize, pageNo, new OKHttpManager.StringCallBack() {
             @Override
             public void requestSuccess(String result) {
                 GoodsListBean goodsListBean = JSON.parseObject(result, GoodsListBean.class);

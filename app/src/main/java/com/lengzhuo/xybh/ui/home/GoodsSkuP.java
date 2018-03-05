@@ -36,11 +36,13 @@ public class GoodsSkuP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 GoodSkuBean goodSkuBean = JSON.parseObject(result, GoodSkuBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, goodSkuBean.getStatus())) {
-                    mGoodsSkuListener.requestSkuSuccess(goodSkuBean.getData());
-                } else {
-                    ToastUtils.showToast(goodSkuBean.getErrorMsg());
-                    mGoodsSkuListener.requestSkuField();
+                if (goodSkuBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, goodSkuBean.getStatus())) {
+                        mGoodsSkuListener.requestSkuSuccess(goodSkuBean.getData());
+                    } else {
+                        ToastUtils.showToast(goodSkuBean.getErrorMsg());
+                        mGoodsSkuListener.requestSkuField();
+                    }
                 }
 
             }

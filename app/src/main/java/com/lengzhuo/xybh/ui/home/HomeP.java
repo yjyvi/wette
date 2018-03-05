@@ -39,14 +39,14 @@ public class HomeP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-
                 HomeBean homeBean = JSON.parseObject(result, HomeBean.class);
-
-                if (TextUtils.equals(REQUEST_SUCCESS, homeBean.getStatus())) {
-                    mHomeListener.homeDataSuccess(homeBean.getData());
-                } else {
-                    ToastUtils.showToast(homeBean.getErrorMsg());
-                    mHomeListener.requestField();
+                if (homeBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, homeBean.getStatus())) {
+                        mHomeListener.homeDataSuccess(homeBean.getData());
+                    } else {
+                        ToastUtils.showToast(homeBean.getErrorMsg());
+                        mHomeListener.requestField();
+                    }
                 }
             }
 

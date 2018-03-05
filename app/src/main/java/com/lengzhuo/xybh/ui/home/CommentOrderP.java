@@ -38,11 +38,13 @@ public class CommentOrderP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 NetBaseBean netBaseBean = JSON.parseObject(result, NetBaseBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, netBaseBean.getStatus())) {
-                    mCommentOrderListener.commentSuccess();
-                } else {
-                    ToastUtils.showToast(netBaseBean.errorMsg);
-                    mCommentOrderListener.commentField();
+                if (netBaseBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, netBaseBean.getStatus())) {
+                        mCommentOrderListener.commentSuccess();
+                    } else {
+                        ToastUtils.showToast(netBaseBean.errorMsg);
+                        mCommentOrderListener.commentField();
+                    }
                 }
             }
         });

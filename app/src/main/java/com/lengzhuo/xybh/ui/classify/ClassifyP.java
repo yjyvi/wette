@@ -40,12 +40,13 @@ public class ClassifyP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 ClassifyBean classifyBean = JSON.parseObject(result, ClassifyBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, classifyBean.getStatus())) {
-
-                    mClassifyListener.classifyData(classifyBean.getData());
-                } else {
-                    ToastUtils.showToast(classifyBean.getErrorMsg());
-                    mClassifyListener.getDataField();
+                if (classifyBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, classifyBean.getStatus())) {
+                        mClassifyListener.classifyData(classifyBean.getData());
+                    } else {
+                        ToastUtils.showToast(classifyBean.getErrorMsg());
+                        mClassifyListener.getDataField();
+                    }
                 }
             }
         });
