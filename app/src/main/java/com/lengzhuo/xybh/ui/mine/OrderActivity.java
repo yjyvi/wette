@@ -140,7 +140,7 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     public void loadListSuccess(List<OrderListBean.DataBean> data) {
-        if (Utils.isShowEmptyLayout(data, refreshLayout, fl_empty_data)) return;
+        if (Utils.isShowEmptyLayout(mPage,data, refreshLayout, fl_empty_data)) return;
         if (data.size() < 10) {
             refreshLayout.setIsLoadingMoreEnabled(false);
         }

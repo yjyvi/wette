@@ -86,7 +86,7 @@ public class MessageActivity extends BaseUI implements MyRefreshLayoutListener {
         NetworkUtils.getNetworkUtils().getMessageList(String.valueOf(mPageIndex), new CommonCallBack<List<MessageBean>>() {
             @Override
             protected void onSuccess(List<MessageBean> data) {
-                if (Utils.isShowEmptyLayout(data, rl_message, fl_empty_data)) return;
+                if (Utils.isShowEmptyLayout(mPageIndex,data, rl_message, fl_empty_data)) return;
                 if (data.size() < 10)
                     rl_message.setIsLoadingMoreEnabled(false);
                 rl_message.refreshComplete();

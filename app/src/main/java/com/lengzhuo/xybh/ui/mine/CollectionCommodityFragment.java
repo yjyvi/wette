@@ -76,7 +76,7 @@ public class CollectionCommodityFragment extends LazyLoadFragment implements MyR
         NetworkUtils.getNetworkUtils().getCollectionCommodityList(String.valueOf(mPageIndex), new CommonCallBack<List<CollectionBean>>() {
             @Override
             protected void onSuccess(List<CollectionBean> data) {
-                if (Utils.isShowEmptyLayout(data, rl_collection_commodity, fl_empty_data)) return;
+                if (Utils.isShowEmptyLayout(mPageIndex,data, rl_collection_commodity, fl_empty_data)) return;
                 if(data.size()<10)
                     rl_collection_commodity.setIsLoadingMoreEnabled(false);
                 rl_collection_commodity.refreshComplete();

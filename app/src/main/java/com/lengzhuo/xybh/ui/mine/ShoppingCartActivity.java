@@ -158,7 +158,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         NetworkUtils.getNetworkUtils().getShoppingCartList(String.valueOf(mPageIndex), new CommonCallBack<List<ShopBean>>() {
             @Override
             protected void onSuccess(List<ShopBean> data) {
-                if (Utils.isShowEmptyLayout(data, rl_shopping_cart, fl_empty_data)) return;
+                if (Utils.isShowEmptyLayout(mPageIndex,data, rl_shopping_cart, fl_empty_data)) return;
                 if (data.size() < 10) rl_shopping_cart.setIsLoadingMoreEnabled(false);
                 rl_shopping_cart.refreshComplete();
                 rl_shopping_cart.loadMoreComplete();
@@ -234,6 +234,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 protected void onSuccess(String data) {
                     ToastUtils.showToast("删除成功");
                     mIsEdit = false;
+                    rightVisible("管理");
                     tv_delete.setVisibility(View.GONE);
                     mSelectedCommodityList.clear();
                     onCommodityOrShopSelected();
@@ -373,7 +374,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         return isAllSelected;
     }
 
-    private void setAllSecltedImageView(boolean isSelected) {
+    private void setAllSelectedImageView(boolean isSelected) {
         if (isSelected) {
             iv_all_selected.setImageResource(R.drawable.shopping_cart_selected);
             iv_all_selected.setTag("selected");
@@ -384,9 +385,10 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     }
 
     private void onCommodityOrShopSelected() {
-        if (mIsEdit) return;
         boolean isAllSelected = isAllSelected();
-        setAllSecltedImageView(isAllSelected);
+        setAllSelectedImageView(isAllSelected);
+        if (mIsEdit) return;
+        //设置结算按钮和设置结算金额
         tv_settlement.setBackgroundColor(mSelectedCommodityList.isEmpty() ? Color.parseColor("#aaaaaa") : Color.parseColor("#ee4716"));
         double totalPrice = 0;
         for (CommodityBean commodityBean : mSelectedCommodityList) {
