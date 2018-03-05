@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -64,6 +65,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     private int operation;
     private GoodDetailP mProductDetailP;
     private int mType = 1;
+    public static final String GOODS_ID = "goodsId";
+    public static final String SHOP_ID = "shopId";
 
     @Override
     protected void back() {
@@ -95,8 +98,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         super.onNewIntent(intent);
         setIntent(intent);
 
-        mGoodsId = getIntent().getStringExtra("goodsId");
-        mShopId = getIntent().getStringExtra("shopId");
+        mGoodsId = getIntent().getStringExtra(GOODS_ID);
+        mShopId = getIntent().getStringExtra(SHOP_ID);
 
         mProductDetailP.setProductDetailsData(mGoodsId);
 
@@ -105,8 +108,9 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     @Override
     protected void prepareData() {
 
-        mGoodsId = getIntent().getStringExtra("goodsId");
-        mShopId = getIntent().getStringExtra("shopId");
+
+        mGoodsId = getIntent().getStringExtra(GOODS_ID);
+        mShopId = getIntent().getStringExtra(SHOP_ID);
         mType = getIntent().getIntExtra("type", 0);
 
         String webUrl = getResources().getString(R.string.service_host_address)
@@ -124,22 +128,6 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
         vp_content.setOffscreenPageLimit(3);
         vp_content.setCurrentItem(mType);
-        vp_content.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
@@ -152,8 +140,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
             public IPagerTitleView getTitleView(Context context, final int index) {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setNormalColor(Color.BLACK);
-                colorTransitionPagerTitleView.setSelectedColor(context.getResources().getColor(R.color.normal_color));
-                colorTransitionPagerTitleView.setTextSize(18);
+                colorTransitionPagerTitleView.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.normal_color));
+                colorTransitionPagerTitleView.setTextSize(AutoUtils.getPercentHeightSize(13));
 
                 colorTransitionPagerTitleView.setText(mTitles[index]);
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -169,8 +157,8 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setColors(context.getResources().getColor(R.color.normal_color));
-                indicator.setLineHeight(4);
+                indicator.setColors(ContextCompat.getColor(getActivity(), R.color.normal_color));
+                indicator.setLineHeight(AutoUtils.getPercentHeightSize(4));
                 indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 indicator.setYOffset(AutoUtils.getPercentHeightSize(2));
                 return indicator;
@@ -185,21 +173,21 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     public static void start(Context context, String goodsId, String shopId) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
-        starter.putExtra("goodsId", goodsId);
-        starter.putExtra("shopId", shopId);
+        starter.putExtra(GOODS_ID, goodsId);
+        starter.putExtra(SHOP_ID, shopId);
         context.startActivity(starter);
     }
 
     public static void start(Context context, String goodsId) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
-        starter.putExtra("goodsId", goodsId);
+        starter.putExtra(GOODS_ID, goodsId);
         context.startActivity(starter);
     }
 
     public static void start(Context context, String goodsId, String shopId, int type) {
         Intent starter = new Intent(context, GoodDetailsUI.class);
-        starter.putExtra("goodsId", goodsId);
-        starter.putExtra("shopId", shopId);
+        starter.putExtra(GOODS_ID, goodsId);
+        starter.putExtra(SHOP_ID, shopId);
         starter.putExtra("type", type);
         context.startActivity(starter);
     }
@@ -254,12 +242,12 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void collectionSuccess() {
-
+        ToastUtils.showToast("收藏成功");
     }
 
     @Override
     public void collectionField() {
-
+        ToastUtils.showToast("收藏失败");
     }
 
     @Override
@@ -269,11 +257,14 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void addCartField() {
-
+        ToastUtils.showToast("添加失败");
     }
 
     @Override
     public void goodsData(GoodDetailsBean.DataBean dataBean) {
+        //传递商品数据
+        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
+
         //收藏按扭回显
         if (1 == dataBean.getIsCollection()) {
             ll_collection.setSelected(true);
@@ -282,14 +273,12 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         }
 
         mShopId = String.valueOf(dataBean.getShopId());
-        //传递商品数据
-        EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
 
     }
 
     @Override
     public void requestGoodsDataField() {
-
+        ToastUtils.showToast("加载失败");
     }
 
     @Subscribe

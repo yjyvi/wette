@@ -19,13 +19,13 @@ import okhttp3.Call;
  */
 
 public class ShopDetailP extends PresenterBase {
-    private  ShopDataListener mShopDataListener;
+    private ShopDataListener mShopDataListener;
 
-    public ShopDetailP(ShopDataListener shopDataListener){
+    public ShopDetailP(ShopDataListener shopDataListener) {
         this.mShopDataListener = shopDataListener;
     }
 
-    public void setShopData(String shopId,int page,int limit){
+    public void setShopData(String shopId, int page, int limit) {
         NetworkUtils.getNetworkUtils().getShopDetail(shopId, String.valueOf(page), String.valueOf(limit), new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
@@ -34,20 +34,23 @@ public class ShopDetailP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-                ShopDetailBean shopDetailBean= JSON.parseObject(result,ShopDetailBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS,shopDetailBean.getStatus())) {
-                    mShopDataListener.getDataSuccess(shopDetailBean.getData());
-                }else {
-                    ToastUtils.showToast(shopDetailBean.getErrorMsg());
-                    mShopDataListener.getDataField();
+                ShopDetailBean shopDetailBean = JSON.parseObject(result, ShopDetailBean.class);
+                if (shopDetailBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, shopDetailBean.getStatus())) {
+                        mShopDataListener.getDataSuccess(shopDetailBean.getData());
+                    } else {
+                        ToastUtils.showToast(shopDetailBean.getErrorMsg());
+                        mShopDataListener.getDataField();
+                    }
                 }
             }
         });
     }
 
 
-    public interface ShopDataListener{
+    public interface ShopDataListener {
         void getDataSuccess(ShopDetailBean.DataBean data);
+
         void getDataField();
     }
 }

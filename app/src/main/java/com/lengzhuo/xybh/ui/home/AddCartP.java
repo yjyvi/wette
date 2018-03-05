@@ -27,9 +27,9 @@ public class AddCartP extends PresenterBase {
         this.mAddCartListener = addCartListener;
     }
 
-    public void setAddCart(String shopId, String goodsId, String skuId, String addressId, String amount) {
+    public void setAddCart(String shopId, String goodsId, String skuId, String amount) {
 
-        NetworkUtils.getNetworkUtils().addCart(shopId, goodsId, skuId, addressId, amount, new OKHttpManager.StringCallBack() {
+        NetworkUtils.getNetworkUtils().addCart(shopId, goodsId, skuId, amount, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 mAddCartListener.addCartField();
@@ -38,11 +38,13 @@ public class AddCartP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 NetBaseBean netBaseBean = JSON.parseObject(result, NetBaseBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, netBaseBean.getStatus())) {
-                    mAddCartListener.addCartSuccess();
-                } else {
-                    ToastUtils.showToast(netBaseBean.getErrorMsg());
-                    mAddCartListener.addCartField();
+                if (netBaseBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, netBaseBean.getStatus())) {
+                        mAddCartListener.addCartSuccess();
+                    } else {
+                        ToastUtils.showToast(netBaseBean.getErrorMsg());
+                        mAddCartListener.addCartField();
+                    }
                 }
             }
         });

@@ -7,6 +7,7 @@ import com.lengzhuo.xybh.beans.OrderGoodsBean;
 import com.lengzhuo.xybh.network.OKHttpManager;
 import com.lengzhuo.xybh.ui.PresenterBase;
 import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.ToastUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,14 +21,14 @@ import okhttp3.Call;
 
 public class OrderGoodsCommentListP extends PresenterBase {
 
-    private  OrderGoodsListener mOrderGoodsListener;
+    private OrderGoodsListener mOrderGoodsListener;
 
-    public OrderGoodsCommentListP(OrderGoodsListener orderGoodsListener){
+    public OrderGoodsCommentListP(OrderGoodsListener orderGoodsListener) {
         this.mOrderGoodsListener = orderGoodsListener;
     }
 
 
-    public void setOrderGoodsCommentList(final String orderId){
+    public void setOrderGoodsCommentList(final String orderId) {
 
         NetworkUtils.getNetworkUtils().orderGoods(orderId, new OKHttpManager.StringCallBack() {
             @Override
@@ -37,17 +38,24 @@ public class OrderGoodsCommentListP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-                OrderGoodsBean  orderGoodsBean = JSON.parseObject(result,OrderGoodsBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS,orderGoodsBean.getStatus())) {
-                    mOrderGoodsListener.orderGoodsListSuccess(orderGoodsBean.getData());
+                OrderGoodsBean orderGoodsBean = JSON.parseObject(result, OrderGoodsBean.class);
+                if (orderGoodsBean != null) {
+
+                    if (TextUtils.equals(REQUEST_SUCCESS, orderGoodsBean.getStatus())) {
+                        mOrderGoodsListener.orderGoodsListSuccess(orderGoodsBean.getData());
+                    } else {
+                        mOrderGoodsListener.orderGoodsListField();
+                        ToastUtils.showToast(orderGoodsBean.getErrorMsg());
+                    }
                 }
 
             }
         });
     }
 
-    public interface OrderGoodsListener{
+    public interface OrderGoodsListener {
         void orderGoodsListSuccess(List<OrderGoodsBean.DataBean> dataBeans);
+
         void orderGoodsListField();
     }
 

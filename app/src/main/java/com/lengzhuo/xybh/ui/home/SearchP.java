@@ -36,14 +36,14 @@ public class SearchP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-
                 SearchBean searchBean = JSON.parseObject(result, SearchBean.class);
-
-                if (TextUtils.equals(REQUEST_SUCCESS, searchBean.getStatus())) {
-                    mSearchGoodsListener.searchData(searchBean.getData());
-                } else {
-                    ToastUtils.showToast(searchBean.getErrorMsg());
-                    mSearchGoodsListener.searchField();
+                if (searchBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, searchBean.getStatus())) {
+                        mSearchGoodsListener.searchData(searchBean.getData());
+                    } else {
+                        ToastUtils.showToast(searchBean.getErrorMsg());
+                        mSearchGoodsListener.searchField();
+                    }
                 }
             }
 

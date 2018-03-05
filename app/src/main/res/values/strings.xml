@@ -72,6 +72,8 @@
     <string name="default_address">收货地址：%1$s</string>
     <string name="default_name">收货人：%1$s</string>
     <string name="default_tel">联系方式：%1$s</string>
+    <string name="sku_selected">已选 %1$s</string>
+    <string name="money_icon">¥%1$2.2f</string>
     <string name="login_hint">请先登录!</string>
 
 </resources>

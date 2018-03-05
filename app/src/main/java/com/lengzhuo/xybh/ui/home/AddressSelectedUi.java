@@ -102,9 +102,9 @@ public class AddressSelectedUi extends BaseUI {
         context.startActivity(starter);
     }
 
-    @Event(value = {R.id.tv_add_address},type = View.OnClickListener.class)
-    private void onClick(View view){
-        if(view.getId() == R.id.tv_add_address){
+    @Event(value = {R.id.tv_add_address}, type = View.OnClickListener.class)
+    private void onClick(View view) {
+        if (view.getId() == R.id.tv_add_address) {
             EditAddressActivity.toAddAddressActivity(this);
         }
     }
@@ -114,24 +114,46 @@ public class AddressSelectedUi extends BaseUI {
      * 地址选择Adapter
      */
     private class SelectedAddressAdapter extends BaseQuickAdapter<AddressBean, BaseViewHolder> {
+        private ImageView lastView;
+
         public SelectedAddressAdapter(int layoutResId, @Nullable List<AddressBean> data) {
             super(layoutResId, data);
         }
 
         @Override
         protected void convert(final BaseViewHolder holder, final AddressBean item) {
-            holder.<TextView>getView(R.id.tv_addressee).setText("收货人：" + item.getAddressee());
-            holder.<TextView>getView(R.id.tv_phone_number).setText("联系方式：" + item.getTelephone());
-            holder.<TextView>getView(R.id.tv_address).setText("收货地址：" + item.getAddress());
-            holder.<TextView>getView(R.id.tv_postal_code).setText("邮政编码：" + item.getPostalcode());
-            holder.<ImageView>getView(R.id.iv_is_default).setImageResource(item.getIsDefault() == 0 ? R.drawable.address_list_unselected : R.drawable.address_list_selected);
+            holder.<TextView>getView(R.id.tv_addressee).setText(String.format(getResources().getString(R.string.default_name), item.getAddressee()));
+            holder.<TextView>getView(R.id.tv_phone_number).setText(String.format(getResources().getString(R.string.default_tel), item.getTelephone()));
+            holder.<TextView>getView(R.id.tv_address).setText(String.format(getResources().getString(R.string.default_address), item.getAddress()));
+            holder.<TextView>getView(R.id.tv_postal_code).setText(String.format("邮政编码：%1$s", item.getPostalcode()));
+            final ImageView ivIsDefault = holder.getView(R.id.iv_is_default);
+
+
+            if (item.getIsDefault() == 0) {
+                ivIsDefault.setImageResource(R.drawable.address_list_unselected);
+            } else {
+                lastView = ivIsDefault;
+                ivIsDefault.setImageResource(R.drawable.address_list_selected);
+            }
+
+            ivIsDefault.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!view.isSelected()) {
+                        //后面需要增加修改默认地址的
+                        lastView.setImageResource(R.drawable.address_list_unselected);
+                        ivIsDefault.setImageResource(R.drawable.address_list_selected);
+                        lastView = (ImageView) view;
+                    }
+                }
+            });
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && resultCode == 1){
+        if (requestCode == 2 && resultCode == 1) {
             getAddressList();
         }
     }

@@ -70,12 +70,12 @@
 
     <TextView
         android:id="@+id/tv_good_name"
+        android:textStyle="bold"
         android:layout_marginTop="20px"
         android:paddingLeft="22px"
         android:paddingRight="22px"
         style="@style/text_back_32"
         android:layout_width="wrap_content"
-        android:text=""
         android:layout_height="wrap_content"/>
 
     <LinearLayout

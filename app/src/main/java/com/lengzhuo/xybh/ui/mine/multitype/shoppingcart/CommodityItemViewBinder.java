@@ -12,6 +12,7 @@ import com.lengzhuo.xybh.beans.shoppingcart.CommodityBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.utils.GlideApp;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +40,7 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseV
     protected void onBindViewHolder(@NonNull BaseViewHolder holder, @NonNull final CommodityBean item) {
         holder.<ImageView>getView(R.id.iv_is_selected).setImageResource(item.isSelected() ? R.drawable.shopping_cart_selected : R.drawable.shopping_cart_unselected);
         holder.<TextView>getView(R.id.tv_name).setText(item.getGoodsName());
-        holder.<TextView>getView(R.id.tv_price).setText("¥" + item.getPrice());
+        holder.<TextView>getView(R.id.tv_price).setText(PlaceholderUtils.pricePlaceholder(item.getPrice()));
         holder.<TextView>getView(R.id.tv_count).setText("x" + item.getAmount());
         holder.<TextView>getView(R.id.tv_format).setText(item.getPropertiesName());
         GlideApp.with(holder.itemView.getContext())

@@ -36,11 +36,13 @@ public class CreateOrderP extends PresenterBase {
             @Override
             public void requestSuccess(String result) {
                 CreateOrderBean createOrderBean = JSON.parseObject(result, CreateOrderBean.class);
-                if (TextUtils.equals(REQUEST_SUCCESS, createOrderBean.getStatus())) {
-                    mCreateOrderListener.createSuccess(String.valueOf(createOrderBean.getData().getOrderId()));
-                } else {
-                    ToastUtils.showToast(createOrderBean.getErrorMsg());
-                    mCreateOrderListener.createField();
+                if (createOrderBean != null) {
+                    if (TextUtils.equals(REQUEST_SUCCESS, createOrderBean.getStatus())) {
+                        mCreateOrderListener.createSuccess(String.valueOf(createOrderBean.getData().getOrderId()));
+                    } else {
+                        ToastUtils.showToast(createOrderBean.getErrorMsg());
+                        mCreateOrderListener.createField();
+                    }
                 }
             }
         });

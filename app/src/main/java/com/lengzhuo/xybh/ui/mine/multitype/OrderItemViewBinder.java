@@ -17,6 +17,7 @@ import com.lengzhuo.xybh.beans.order.OrderListBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.mine.OrderActivity;
 import com.lengzhuo.xybh.utils.GlideApp;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,8 +63,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
                 .load(item.getLogo())
                 .into(holder.<ImageView>getView(R.id.iv_shop_img));
         ((TextView) holder.getView(R.id.tv_shop_name)).setText(item.getShopName());
-        ((TextView) holder.getView(R.id.tv_order_des)).setText("共" + item.getGoodsAmount() + "件商品 合计¥" + item.getTotalFee() + "(含运费¥" +
-                item.getFreight() + ")");
+        ((TextView) holder.getView(R.id.tv_order_des)).setText("共" + item.getGoodsAmount() + "件商品 合计"+PlaceholderUtils.pricePlaceholder(item.getTotalFee()) + "(含运费"+PlaceholderUtils.pricePlaceholder(item.getFreight()) + ")");
         ((TextView) holder.getView(R.id.bt_order_state)).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[1]);
         holder.<TextView>getView(R.id.tv_status).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[0]);
         holder.<TextView>getView(R.id.tv_order_number).setText("订单编号：" + item.getOrderNo());
@@ -104,7 +104,7 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         protected void convert(BaseViewHolder helper, final OrderListBean.DataBean.GoodListBean item) {
             helper.setText(R.id.tv_goods_name, item.getGoodsName());
             helper.setText(R.id.tv_format, item.getPropertiesName());
-            helper.setText(R.id.tv_price, "¥" + item.getPrice());
+            helper.setText(R.id.tv_price, PlaceholderUtils.pricePlaceholder(item.getPrice()));
             helper.setText(R.id.tv_count, "x" + item.getAmount());
             GlideApp.with(helper.itemView.getContext())
                     .load(item.getCover())

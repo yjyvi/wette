@@ -18,17 +18,17 @@ public class CreateOrderGoodsBean implements Parcelable {
     private String goodsImageUrl;
     private String goodsTitle;
     private String goodsSkuContent;
-    private String goodsPrice;
+    private double goodsPrice;
 
 
     public CreateOrderGoodsBean() {
     }
 
-    public String getGoodsPrice() {
+    public double getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(String goodsPrice) {
+    public void setGoodsPrice(double goodsPrice) {
         this.goodsPrice = goodsPrice;
     }
 
@@ -120,7 +120,7 @@ public class CreateOrderGoodsBean implements Parcelable {
         dest.writeString(this.goodsImageUrl);
         dest.writeString(this.goodsTitle);
         dest.writeString(this.goodsSkuContent);
-        dest.writeString(this.goodsPrice);
+        dest.writeDouble(this.goodsPrice);
     }
 
     protected CreateOrderGoodsBean(Parcel in) {
@@ -131,7 +131,7 @@ public class CreateOrderGoodsBean implements Parcelable {
         this.goodsImageUrl = in.readString();
         this.goodsTitle = in.readString();
         this.goodsSkuContent = in.readString();
-        this.goodsPrice = in.readString();
+        this.goodsPrice = in.readDouble();
     }
 
     public static final Creator<CreateOrderGoodsBean> CREATOR = new Creator<CreateOrderGoodsBean>() {

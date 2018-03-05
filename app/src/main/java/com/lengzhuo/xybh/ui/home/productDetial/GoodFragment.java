@@ -6,26 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lengzhuo.xybh.R;
-import com.lengzhuo.xybh.beans.AddressBean;
 import com.lengzhuo.xybh.beans.BannerBean;
 import com.lengzhuo.xybh.beans.CreateOrderGoodsBean;
 import com.lengzhuo.xybh.beans.GoodDetailsBean;
 import com.lengzhuo.xybh.beans.GoodSkuBean;
-import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.pop.PopUtils;
 import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.home.AddCartP;
-import com.lengzhuo.xybh.ui.home.AddressSelectedUi;
 import com.lengzhuo.xybh.ui.home.CreateOrderUI;
 import com.lengzhuo.xybh.ui.home.GoodsSkuP;
-import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
-import com.lengzhuo.xybh.utils.UserManager;
-import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
 import com.lengzhuo.xybh.utils.evntBusBean.GoodDetailsEvent;
 import com.lengzhuo.xybh.views.arl.AutoRollLayout;
 
@@ -36,7 +30,6 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -47,29 +40,11 @@ import java.util.Map;
 
 public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSkuListener, AddCartP.AddCartListener {
 
-
-    //样式选择
     @ViewInject(R.id.iv_selected_style)
     private ImageView iv_selected_style;
 
-    //选择地址
-    @ViewInject(R.id.ll_selected_address)
-    private LinearLayout ll_selected_address;
-    //选择地址线
-    @ViewInject(R.id.iv_address_line)
-    private View iv_address_line;
-
     @ViewInject(R.id.tv_goods_num)
     private TextView tv_goods_num;
-
-    @ViewInject(R.id.tv_name)
-    private TextView tv_name;
-
-    @ViewInject(R.id.tv_tel)
-    private TextView tv_tel;
-
-    @ViewInject(R.id.tv_address)
-    private TextView tv_address;
 
     @ViewInject(R.id.tv_good_name)
     private TextView tv_good_name;
@@ -95,13 +70,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
      */
     private int goodsNumMax = 100;
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
-    private AddressBean mAddressBean;
     private GoodDetailsBean.DataBean mDataBean;
     private GoodsSkuP mGoodsSkuP;
     private boolean isAddCart;
-    private int mAddressId;
     private AddCartP mAddCartP;
-    private static boolean isFirst = false;
     private String mSkuContent;
     private int mSkuId;
     private String mPropertiesName;
@@ -129,22 +101,11 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        if (isFirst) {
-//            ll_selected_address.setVisibility(View.VISIBLE);
-//            iv_address_line.setVisibility(View.VISIBLE);
-//            getAddressList();
-//        }
-
-    }
 
     @Override
     protected void prepareData() {
         mGoodsSkuP = new GoodsSkuP(this);
         mAddCartP = new AddCartP(this);
-//        getAddressList();
     }
 
 
@@ -162,7 +123,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
     @Event(value = {
             R.id.iv_selected_style,
-            R.id.ll_selected_address,
             R.id.iv_reduce,
             R.id.iv_add
     }, type = View.OnClickListener.class)
@@ -170,12 +130,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         switch (view.getId()) {
             case R.id.iv_selected_style:
                 stylePop();
-                break;
-            case R.id.ll_selected_address:
-                if (isLoginClick()) return;
-                isFirst = false;
-                //选择地址
-                AddressSelectedUi.start(view.getContext());
                 break;
             case R.id.iv_reduce:
                 numAddOrReduce(false);
@@ -200,37 +154,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             public void selectedResult(String result) {
                 mSkuContent = result;
                 mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), result);
-            }
-
-            @Override
-            public void selectedName(Map<Integer, String> result) {
-                //TODO  此处规格显示需要优化*******************
-                StringBuilder colorName;
-                StringBuilder sizeName;
-                if (mDataBean.getAttrList().size() > 0) {
-                    colorName = new StringBuilder("已选  " + mDataBean.getAttrList().get(0).getAttrName() + ":");
-                } else {
-                    return;
-                }
-
-                if (mDataBean.getAttrList().size() > 1) {
-                    sizeName = new StringBuilder(";" + mDataBean.getAttrList().get(1).getAttrName() + ":");
-                } else {
-                    sizeName = new StringBuilder();
-                }
-
-                for (Map.Entry<Integer, String> integerStringEntry : result.entrySet()) {
-                    if (integerStringEntry.getKey() == 1) {
-                        colorName.append(integerStringEntry.getValue());
-                    } else if (integerStringEntry.getKey() == 4) {
-                        sizeName.append(integerStringEntry.getValue());
-                    } else {
-                        colorName.append(integerStringEntry.getValue());
-                    }
-                }
-
-                colorName.append(sizeName);
-                tv_style.setText(colorName.toString());
             }
         });
     }
@@ -263,7 +186,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                 mDataBean = (GoodDetailsBean.DataBean) goodDetailsEvent.getData();
                 if (mDataBean != null) {
                     tv_good_name.setText(mDataBean.getGoodsName());
-                    tv_good_price.setText("¥" + mDataBean.getPrice());
+                    tv_good_price.setText(String.format(getResources().getString(R.string.money_icon), mDataBean.getPrice()));
 
 
                     showInitStyle();
@@ -304,10 +227,10 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         createOrderGoodsBean.setSkuId(String.valueOf(mSkuId));
         createOrderGoodsBean.setGoodsImageUrl(mDataBean.getCover());
         createOrderGoodsBean.setGoodsTitle(mDataBean.getGoodsName());
-        createOrderGoodsBean.setGoodsPrice(String.valueOf(mGoodsPrice));
+        createOrderGoodsBean.setGoodsPrice(mGoodsPrice);
         createOrderGoodsBean.setGoodsSkuContent(mPropertiesName);
         orderGoodsBeanList.add(createOrderGoodsBean);
-        CreateOrderUI.start(getActivity(), mAddressBean, orderGoodsBeanList);
+        CreateOrderUI.start(getActivity(), null, orderGoodsBeanList);
     }
 
 
@@ -321,7 +244,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         mSkuContent = "[";
         if (attrList != null && attrList.size() > 0) {
             List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList1 = attrList.get(0).getAttrList();
-            colorName = new StringBuilder("已选  " + attrList.get(0).getAttrName() + ":");
+            colorName = new StringBuilder(PlaceholderUtils.skuPlaceholder(attrList.get(0).getAttrName()) + ":");
             if (attrList1 != null && attrList1.size() > 0) {
                 colorName.append(attrList1.get(0).getAttrName());
                 mSkuContent += attrList.get(0).getAttrId() + ":" + attrList1.get(0).getAttrId() + ";";
@@ -347,23 +270,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
         mSkuContent += "]";
 
-        mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()),mSkuContent);
+        mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), mSkuContent);
 
         tv_style.setText(colorName.toString());
-    }
-
-
-    /**
-     * 地址列表的EvenBus事件
-     *
-     * @param addressEvent
-     */
-    @Subscribe
-    public void addressEvent(AddressEvent addressEvent) {
-//        if (addressEvent.getEventType() == AddressEvent.SELECTED_ADDESS) {
-//            AddressBean data = (AddressBean) addressEvent.getData();
-//            initShowAddressText(data);
-//        }
     }
 
 
@@ -396,43 +305,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
         }
     }
 
-
-    /**
-     * 获取地址列表
-     */
-    private void getAddressList() {
-        isFirst = true;
-        if (!UserManager.isLogin()) {
-            ll_selected_address.setVisibility(View.GONE);
-            iv_address_line.setVisibility(View.GONE);
-            return;
-        }
-        NetworkUtils.getNetworkUtils().getAddressList(new CommonCallBack<List<AddressBean>>() {
-            @Override
-            protected void onSuccess(List<AddressBean> data) {
-                //获取到默认地址
-                for (AddressBean datum : data) {
-                    if (1 == datum.getIsDefault()) {
-                        initShowAddressText(datum);
-                    }
-                }
-            }
-        });
-    }
-
-    /**
-     * 显示地址信息
-     *
-     * @param datum
-     */
-    private void initShowAddressText(AddressBean datum) {
-        mAddressBean = datum;
-        mAddressId = datum.getAddressId();
-        tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
-        tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
-        tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
-    }
-
     @Override
     public void requestSkuSuccess(GoodSkuBean.DataBean data) {
         if (data == null) {
@@ -448,7 +320,6 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
                         String.valueOf(mDataBean.getShopId()),
                         String.valueOf(mDataBean.getGoodsId()),
                         String.valueOf(data.getSkuId()),
-                        String.valueOf(mAddressId),
                         tv_goods_num.getText().toString().trim()
                 );
             }
@@ -456,7 +327,9 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
             mSkuId = data.getSkuId();
             mPropertiesName = data.getPropertiesName();
             mGoodsPrice = data.getCostPrice();
-            tv_good_price.setText("¥" + mGoodsPrice);
+            tv_good_price.setText(PlaceholderUtils.pricePlaceholder(data.getCostPrice()));
+            goodsNumMax = data.getSkuStock();
+            tv_style.setText(PlaceholderUtils.skuPlaceholder(data.getPropertiesName()));
         }
 
     }

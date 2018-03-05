@@ -170,12 +170,11 @@ public class NetworkUtils {
     /**
      * 添加到购物车
      */
-    public void addCart(String shopId, String goodsId, String skuId, String addressId, String amount, OKHttpManager.StringCallBack stringCallBack) {
+    public void addCart(String shopId, String goodsId, String skuId, String amount, OKHttpManager.StringCallBack stringCallBack) {
         Map<String, String> params = getParams();
         params.put("shopId", shopId);
         params.put("goodsId", goodsId);
         params.put("skuId", skuId);
-        params.put("addressId", addressId);
         params.put("amount", amount);
 
         OKHttpManager.postAsync(getUrl(R.string.addCart), params, stringCallBack);

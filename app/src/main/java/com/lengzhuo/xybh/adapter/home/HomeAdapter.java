@@ -16,6 +16,7 @@ import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.ui.home.HotWebUI;
 import com.lengzhuo.xybh.utils.GlideImgUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.views.MyViewPagerIndicator;
 
 import java.util.List;
@@ -159,7 +160,7 @@ public class HomeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         if (goods != null) {
                             newListViewHolder.tv_title.setText(goods.getGoodsName());
                             newListViewHolder.tv_introduce.setText(goods.getGoodsIntroduce());
-                            newListViewHolder.tv_price.setText("¥" + goods.getPrice());
+                            newListViewHolder.tv_price.setText(PlaceholderUtils.pricePlaceholder(goods.getPrice()));
                             GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getLogo(), newListViewHolder.iv_user_icon);
                             GlideImgUtils.loadImg(newListViewHolder.itemView.getContext(), goods.getCover(), newListViewHolder.iv_img);
 

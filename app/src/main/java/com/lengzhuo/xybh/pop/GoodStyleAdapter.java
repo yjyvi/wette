@@ -1,7 +1,6 @@
 package com.lengzhuo.xybh.pop;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.GoodDetailsBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
+import com.lengzhuo.xybh.views.AutoFlowLayout;
 
 import java.util.List;
 import java.util.Map;
@@ -34,21 +34,36 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
 
     @Override
     protected void convert(final BaseViewHolder helper, final GoodDetailsBean.DataBean.AttrListBeanX item) {
-        final RecyclerView rv_attrList = helper.getView(R.id.rv_attrList);
-        int itemSize = item.getAttrList().size();
+        final AutoFlowLayout ll_attr_content = helper.getView(R.id.alf_color_type);
 
-        int i = itemSize % 2;
+        for (int position = 0; position < item.getAttrList().size(); position++) {
+            TextView textView = (TextView) LayoutInflater.from(helper.itemView.getContext()).inflate(R.layout.item_goos_sytle, ll_attr_content, false);
+            textView.setText(item.getAttrList().get(position).getAttrName());
+
+            //默认选中第一个
+            if (mLastAttrIds.size() == 0 && position == 0) {
+                textView.setSelected(true);
+            }else {
+                //回显上一次记录的控件为选中状态
+                for (Map.Entry<Integer, Integer> integerStringEntry : mLastAttrIds.entrySet()) {
+                    if (item.getAttrList().get(position).getAttrId() == integerStringEntry.getValue()) {
+                        textView.setSelected(true);
+                    }
+                }
+            }
+
+            ll_attr_content.addView(textView);
+
+            final int finalPosition = position;
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectedChildView(item, ll_attr_content, view, finalPosition);
+                }
+            });
 
 
-//        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-        StaggeredGridLayoutManager layout = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
-        layout.setOrientation(StaggeredGridLayoutManager.VERTICAL);
-        layout.setAutoMeasureEnabled(true);
-
-
-        rv_attrList.setLayoutManager(layout);
-        GoodsAttrListAdapter goodsAttrListAdapter = new GoodsAttrListAdapter(R.layout.item_goos_sytle, item.getAttrList());
-        rv_attrList.setAdapter(goodsAttrListAdapter);
+        }
 
         helper.setText(R.id.tv_type_name, item.getAttrName());
 
@@ -56,74 +71,54 @@ class GoodStyleAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrLis
             helper.getView(R.id.v_line).setVisibility(View.GONE);
         }
 
-
-        goodsAttrListAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                if (!view.isSelected()) {
-
-                    //关闭所有按扭
-                    int itemCount = adapter.getItemCount();
-                    for (int i = 0; i < itemCount; i++) {
-                        View viewByPosition = adapter.getViewByPosition(rv_attrList, i, R.id.tv_content);
-                        if (viewByPosition != null) {
-                            viewByPosition.setSelected(false);
-                        }
-                    }
+    }
 
 
-                    if (mAttrList.size() > 0) {
-                        for (Map.Entry<Integer, View> integerViewEntry : mAttrList.entrySet()) {
-                            Integer key = integerViewEntry.getKey();
-                            View value = integerViewEntry.getValue();
-                            if (item.getAttrId() == key) {
-                                value.setSelected(false);
-                                mAttrList.remove(key);
-                                break;
-                            }
-                        }
-                    }
+    /**
+     * 点击事件的属性记录
+     * @param item
+     * @param linearLayout
+     * @param textView
+     * @param position
+     */
+    private void selectedChildView(GoodDetailsBean.DataBean.AttrListBeanX item, AutoFlowLayout linearLayout, View textView, int position) {
+        if (!textView.isSelected()) {
 
-                    mAttrList.put(item.getAttrId(), view);
-                    view.setSelected(true);
-                    if (item.getAttrList() != null && item.getAttrList().size() > 0) {
-                        mValueAttrListener.valueResult(item.getAttrId(), item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
-                        mValueAttrListener.showNameResult(item.getAttrId(), item.getAttrList().get(position).getAttrId(), item.getAttrList().get(position).getAttrName());
+            //关闭所有按扭
+            int itemCount = linearLayout.getChildCount();
+            for (int i = 0; i < itemCount; i++) {
+                View viewByPosition = linearLayout.getChildAt(i);
+                if (viewByPosition != null) {
+                    viewByPosition.setSelected(false);
+                }
+            }
+
+
+            if (mAttrList.size() > 0) {
+                for (Map.Entry<Integer, View> integerViewEntry : mAttrList.entrySet()) {
+                    Integer key = integerViewEntry.getKey();
+                    View value = integerViewEntry.getValue();
+                    if (item.getAttrId() == key) {
+                        value.setSelected(false);
+                        mAttrList.remove(key);
+                        break;
                     }
                 }
             }
-        });
+
+            mAttrList.put(item.getAttrId(), textView);
+            textView.setSelected(true);
+
+            if (item.getAttrList() != null && item.getAttrList().size() > 0) {
+                mValueAttrListener.valueResult(item.getAttrId(), item.getAttrList().get(position).getAttrId(),item.getAttrId() + ":" + String.valueOf(item.getAttrList().get(position).getAttrId()));
+            }
+        }
     }
 
 
     public interface ValueAttrListener {
-        void valueResult(int id, String result);
+        void valueResult(int parentAttrId, int attrId, String result);
 
-        void showNameResult(int parentAttrId, int attrId, String name);
     }
 
-
-    private class GoodsAttrListAdapter extends BaseQuickAdapter<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean, BaseViewHolder> {
-        public GoodsAttrListAdapter(int item_goos_sytle, List<GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean> attrList) {
-            super(item_goos_sytle, attrList);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, GoodDetailsBean.DataBean.AttrListBeanX.AttrListBean item) {
-
-            TextView view = helper.getView(R.id.tv_content);
-
-            view.setText(item.getAttrName());
-            if (mLastAttrIds.size() == 0 && helper.getLayoutPosition() == 0) {
-                view.setSelected(true);
-            }
-
-            for (Map.Entry<Integer, Integer> integerStringEntry : mLastAttrIds.entrySet()) {
-                if (item.getAttrId() == integerStringEntry.getValue()) {
-                    view.setSelected(true);
-                }
-            }
-        }
-    }
 }

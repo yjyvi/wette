@@ -17,6 +17,7 @@ import com.lengzhuo.xybh.network.CommonCallBack;
 import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.mine.PaymentMethodActivity;
 import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 @ContentView(R.layout.activity_pay_order)
 public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener, CreateOrderGoodsListAdapter.GoodsNumListener {
+
 
     @ViewInject(R.id.rv_good_list)
     private RecyclerView rv_good_list;
@@ -67,6 +69,9 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     private boolean isFirst;
     public List<CreateOrderGoodsBean> mGoodsDataBean;
 
+    public static String sAddressBean = "addressBean";
+    public static String mGoodsDataBeanStr = "goodsDataBean";
+
     @Override
     protected void back() {
         finish();
@@ -88,8 +93,8 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Override
     protected void prepareData() {
 
-        mAddressBean = getIntent().getParcelableExtra("addressBean");
-        mGoodsDataBean = getIntent().getParcelableArrayListExtra("goodsDataBean");
+        mAddressBean = getIntent().getParcelableExtra(sAddressBean);
+        mGoodsDataBean = getIntent().getParcelableArrayListExtra(mGoodsDataBeanStr);
 
         rv_good_list.setLayoutManager(new LinearLayoutManager(this));
         CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean, this);
@@ -165,8 +170,9 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
 
     public static void start(Context context, AddressBean addressBean, ArrayList<CreateOrderGoodsBean> orderGoodsBeanList) {
         Intent starter = new Intent(context, CreateOrderUI.class);
-        starter.putExtra("addressBean", addressBean);
-        starter.putParcelableArrayListExtra("goodsDataBean", orderGoodsBeanList);
+
+        starter.putExtra(sAddressBean, addressBean);
+        starter.putParcelableArrayListExtra(mGoodsDataBeanStr, orderGoodsBeanList);
         context.startActivity(starter);
     }
 
@@ -251,10 +257,10 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
      * 显示总金额
      */
     private void showTotalMoney() {
-        float maxMoney = 0.0f;
+        double maxMoney = 0.0;
         for (CreateOrderGoodsBean createOrderGoodsBean : mGoodsDataBean) {
-            maxMoney += Float.parseFloat(createOrderGoodsBean.getGoodsPrice()) * Float.parseFloat(createOrderGoodsBean.getGoodsAmount());
+            maxMoney += (createOrderGoodsBean.getGoodsPrice() * Integer.parseInt(createOrderGoodsBean.getGoodsAmount()));
         }
-        tv_money.setText("¥"+maxMoney);
+        tv_money.setText(PlaceholderUtils.pricePlaceholder(maxMoney));
     }
 }

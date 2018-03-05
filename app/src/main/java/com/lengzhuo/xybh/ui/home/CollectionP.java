@@ -21,14 +21,14 @@ import okhttp3.Call;
 
 public class CollectionP extends PresenterBase {
 
-    private  CollectionListener mCollectionListener;
+    private CollectionListener mCollectionListener;
 
-    public CollectionP( CollectionListener collectionListener){
+    public CollectionP(CollectionListener collectionListener) {
         this.mCollectionListener = collectionListener;
     }
 
-    public void setCollection(final int operation, String dataId, String type){
-        NetworkUtils.getNetworkUtils().getCollection( operation, dataId, type, new OKHttpManager.StringCallBack() {
+    public void setCollection(final int operation, String dataId, String type) {
+        NetworkUtils.getNetworkUtils().getCollection(operation, dataId, type, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
                 mCollectionListener.collectionField();
@@ -36,25 +36,28 @@ public class CollectionP extends PresenterBase {
 
             @Override
             public void requestSuccess(String result) {
-                NetBaseBean netBaseBean = JSON.parseObject(result,NetBaseBean.class);
-                if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
-                    mCollectionListener.collectionSuccess();
-                    if (TextUtils.equals("1",String.valueOf(operation))) {
-                        ToastUtils.showToast("收藏成功");
-                    }else {
-                        ToastUtils.showToast("取消收藏");
+                NetBaseBean netBaseBean = JSON.parseObject(result, NetBaseBean.class);
+                if (netBaseBean != null) {
+                    if (REQUEST_SUCCESS.equals(netBaseBean.getStatus())) {
+                        mCollectionListener.collectionSuccess();
+                        if (TextUtils.equals("1", String.valueOf(operation))) {
+                            ToastUtils.showToast("收藏成功");
+                        } else {
+                            ToastUtils.showToast("取消收藏");
+                        }
+                    } else {
+                        ToastUtils.showToast(netBaseBean.getErrorMsg());
+                        mCollectionListener.collectionField();
                     }
-                }else {
-                    ToastUtils.showToast(netBaseBean.getErrorMsg());
-                    mCollectionListener.collectionField();
                 }
             }
         });
     }
 
 
-    public interface CollectionListener{
+    public interface CollectionListener {
         void collectionSuccess();
+
         void collectionField();
     }
 

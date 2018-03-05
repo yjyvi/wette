@@ -133,6 +133,9 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         payHint();
     }
 
+    /**
+     * 支付成功的提示和跳转
+     */
     private void payHint() {
         ToastUtils.showToast("支付成功");
         EventBus.getDefault().post("paySuccess");
