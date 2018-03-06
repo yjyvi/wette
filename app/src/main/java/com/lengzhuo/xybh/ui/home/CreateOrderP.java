@@ -7,7 +7,6 @@ import com.lengzhuo.xybh.beans.CreateOrderBean;
 import com.lengzhuo.xybh.network.OKHttpManager;
 import com.lengzhuo.xybh.ui.PresenterBase;
 import com.lengzhuo.xybh.utils.NetworkUtils;
-import com.lengzhuo.xybh.utils.ToastUtils;
 
 import java.io.IOException;
 
@@ -30,7 +29,7 @@ public class CreateOrderP extends PresenterBase {
         NetworkUtils.getNetworkUtils().createOrder(goodsId, addressId, new OKHttpManager.StringCallBack() {
             @Override
             public void requestFailure(Call call, IOException e) {
-                mCreateOrderListener.createField();
+                mCreateOrderListener.createField(e.getMessage());
             }
 
             @Override
@@ -40,8 +39,7 @@ public class CreateOrderP extends PresenterBase {
                     if (TextUtils.equals(REQUEST_SUCCESS, createOrderBean.getStatus())) {
                         mCreateOrderListener.createSuccess(String.valueOf(createOrderBean.getData().getOrderId()));
                     } else {
-                        ToastUtils.showToast(createOrderBean.getErrorMsg());
-                        mCreateOrderListener.createField();
+                        mCreateOrderListener.createField(createOrderBean.getErrorMsg());
                     }
                 }
             }
@@ -52,6 +50,6 @@ public class CreateOrderP extends PresenterBase {
     public interface CreateOrderListener {
         void createSuccess(String orderNo);
 
-        void createField();
+        void createField(String msg);
     }
 }

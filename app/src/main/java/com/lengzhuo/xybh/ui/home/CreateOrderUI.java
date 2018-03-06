@@ -214,8 +214,8 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     }
 
     @Override
-    public void createField() {
-        ToastUtils.showToast("创建订单失败");
+    public void createField(String msg) {
+        ToastUtils.showToast(msg);
     }
 
     @Subscribe
@@ -227,7 +227,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 ll_selected_address.setVisibility(View.VISIBLE);
                 tv_add_address.setVisibility(View.GONE);
                 initShowAddressText(data);
-            }else {
+            } else {
                 getAddressList();
             }
         }
@@ -245,7 +245,6 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
         tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
     }
-
 
 
     /**

@@ -13,6 +13,7 @@ import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.utils.GlideApp;
 import com.lengzhuo.xybh.utils.PlaceholderUtils;
+import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,14 +74,14 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseV
             holder.<ImageView>getView(R.id.iv_reduce).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    numAddOrReduce(tvGoodsNum, false, holder.getLayoutPosition());
+                    numAddOrReduce(tvGoodsNum, false, holder.getLayoutPosition(), item.getSkuStock());
                 }
             });
 
             holder.<ImageView>getView(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    numAddOrReduce(tvGoodsNum, true, holder.getLayoutPosition());
+                    numAddOrReduce(tvGoodsNum, true, holder.getLayoutPosition(), item.getSkuStock());
                 }
             });
         }
@@ -92,14 +93,22 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseV
      *
      * @param isAdd
      */
-    private void numAddOrReduce(TextView goodsNum, boolean isAdd, int position) {
+    private void numAddOrReduce(TextView goodsNum, boolean isAdd, int position, int goodsMax) {
         String num = goodsNum.getText().toString().trim();
         int i = Integer.parseInt(num);
-        if (isAdd && i < 99) {
+        
+        if (isAdd && i < goodsMax) {
             i++;
-        } else if (i > 1) {
+        }
+
+        if (i > goodsMax) {
+            ToastUtils.showToast("超出库存数量!");
+        }
+
+        if (!isAdd && i > 1) {
             i--;
         }
+
         goodsNum.setText(String.valueOf(i));
         mGoodsNumListener.addOrReduce(Integer.parseInt(goodsNum.getText().toString().trim()), position);
     }
