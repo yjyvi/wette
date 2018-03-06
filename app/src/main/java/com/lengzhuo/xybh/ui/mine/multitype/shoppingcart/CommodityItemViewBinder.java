@@ -96,17 +96,17 @@ public class CommodityItemViewBinder extends ItemViewBinder<CommodityBean, BaseV
     private void numAddOrReduce(TextView goodsNum, boolean isAdd, int position, int goodsMax) {
         String num = goodsNum.getText().toString().trim();
         int i = Integer.parseInt(num);
-        
+
         if (isAdd && i < goodsMax) {
             i++;
         }
 
-        if (i > goodsMax) {
-            ToastUtils.showToast("超出库存数量!");
-        }
-
         if (!isAdd && i > 1) {
             i--;
+        }
+
+        if (i >= goodsMax) {
+            ToastUtils.showToast("超出库存数量!");
         }
 
         goodsNum.setText(String.valueOf(i));
