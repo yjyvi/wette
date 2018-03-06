@@ -60,6 +60,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
+
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,12 +75,53 @@
                     android:textSize="34px"
                     android:textColor="@color/red"/>
 
-            <TextView
-                    android:id="@+id/tv_count"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginRight="30px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@mipmap/add_reduce_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_reduce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="24px"
-                    android:textColor="#999999"/>
+                    android:layout_weight="1"
+                    android:paddingBottom="20px"
+                    android:paddingTop="20px"
+                    android:src="@mipmap/reduce"/>
+
+                <TextView
+                    android:id="@+id/tv_goods_num"
+                    style="@style/text_gray_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="5px"
+                    android:paddingRight="5px"
+                    android:text="1"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="10px"
+                    android:paddingTop="10px"
+                    android:src="@mipmap/add"/>
+
+            </LinearLayout>
+
+            <!--<TextView-->
+                    <!--android:id="@+id/tv_count"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="24px"-->
+                    <!--android:textColor="#999999"/>-->
 
 
         </LinearLayout>

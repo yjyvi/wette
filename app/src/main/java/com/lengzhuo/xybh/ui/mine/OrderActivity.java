@@ -72,7 +72,6 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     protected void back() {
-
         finish();
     }
 

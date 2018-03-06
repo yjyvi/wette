@@ -17,6 +17,7 @@ import com.lengzhuo.xybh.beans.order.OrderListBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.mine.OrderActivity;
 import com.lengzhuo.xybh.utils.GlideApp;
+import com.lengzhuo.xybh.utils.GlideImgUtils;
 import com.lengzhuo.xybh.utils.PlaceholderUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
@@ -59,14 +60,13 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         RecyclerView recyclerView = holder.getView(R.id.goods_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
-        GlideApp.with(holder.itemView.getContext())
-                .load(item.getLogo())
-                .into(holder.<ImageView>getView(R.id.iv_shop_img));
+        GlideImgUtils.loadImg(holder.itemView.getContext(),item.getLogo(),holder.<ImageView>getView(R.id.iv_shop_img));
+
         ((TextView) holder.getView(R.id.tv_shop_name)).setText(item.getShopName());
-        ((TextView) holder.getView(R.id.tv_order_des)).setText("共" + item.getGoodsAmount() + "件商品 合计"+PlaceholderUtils.pricePlaceholder(item.getTotalFee()) + "(含运费"+PlaceholderUtils.pricePlaceholder(item.getFreight()) + ")");
+        ((TextView) holder.getView(R.id.tv_order_des)).setText(String.format("共%1$s件商品 合计%2$s(含运费%3$s)" , item.getGoodsAmount() ,PlaceholderUtils.pricePlaceholder(item.getTotalFee()) ,PlaceholderUtils.pricePlaceholder(item.getFreight()) ));
         ((TextView) holder.getView(R.id.bt_order_state)).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[1]);
         holder.<TextView>getView(R.id.tv_status).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[0]);
-        holder.<TextView>getView(R.id.tv_order_number).setText("订单编号：" + item.getOrderNo());
+        holder.<TextView>getView(R.id.tv_order_number).setText(String.format("订单编号：%1$s" ,item.getOrderNo()));
         holder.getView(R.id.bt_order_state).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
