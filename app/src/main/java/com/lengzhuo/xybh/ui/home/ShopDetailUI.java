@@ -140,7 +140,6 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
                 SearchResultUI.start(view.getContext(), "");
                 break;
             case R.id.rl_cart:
-
                 if (isLoginClick()) {
                     return;
                 }

@@ -12,6 +12,7 @@ import com.lengzhuo.xybh.beans.CollectionBean;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.home.GoodDetailsUI;
 import com.lengzhuo.xybh.utils.GlideApp;
+import com.lengzhuo.xybh.utils.PlaceholderUtils;
 
 import me.drakeet.multitype.ItemViewBinder;
 
@@ -36,7 +37,7 @@ public class CommodityItemViewBinder extends ItemViewBinder<CollectionBean,BaseV
     @Override
     protected void onBindViewHolder(@NonNull final BaseViewHolder holder, @NonNull final CollectionBean item) {
         holder.<TextView>getView(R.id.tv_good_name).setText(item.getName());
-        holder.<TextView>getView(R.id.tv_good_price).setText("¥"+item.getPrice());
+        holder.<TextView>getView(R.id.tv_good_price).setText(PlaceholderUtils.pricePlaceholder(item.getPrice()));
         GlideApp.with(holder.itemView.getContext())
                 .load(item.getImage())
                 .into(holder.<ImageView>getView(R.id.iv_good_img));

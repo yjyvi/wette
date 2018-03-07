@@ -209,7 +209,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Override
     public void createSuccess(String orderNo) {
         this.mOrderNo = orderNo;
-        PaymentMethodActivity.toActivity(this, mOrderNo);
+        PaymentMethodActivity.toActivity(this, mOrderNo, false);
         finish();
     }
 
