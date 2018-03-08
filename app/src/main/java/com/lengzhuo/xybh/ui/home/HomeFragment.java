@@ -161,8 +161,8 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
     public void resultGoodsListData(GoodsListBean result) {
         refreshLayout.loadMoreComplete();
         refreshLayout.refreshComplete();
-        this.goodsListBean = result.getData();
         if (page == 1) {
+            this.goodsListBean = result.getData();
             mHomeAdapter.setGoodsListBean(result.getData());
             mHomeAdapter.notifyDataSetChanged();
         } else {

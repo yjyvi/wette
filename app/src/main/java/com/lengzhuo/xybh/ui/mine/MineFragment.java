@@ -124,7 +124,7 @@ public class MineFragment extends LazyLoadFragment {
         switch (view.getId()) {
             case R.id.iv_avatar:
             case R.id.tv_nick_name:
-                if (isLoginClick())  
+                if (isLoginClick())
                 break;
             case R.id.ll_account_setting:
                 AccountSettingActivity.toActivity(view.getContext());
