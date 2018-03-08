@@ -1,5 +1,6 @@
 package com.lengzhuo.xybh.ui;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,9 @@ public abstract class BaseUI extends AutoLayoutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //强制竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         x.view().inject(getActivity());
         View back = findViewById(R.id.common_title_back);
         if (back != null) {
@@ -104,7 +108,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
             //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             //设置状态栏颜色
             getWindow().setStatusBarColor(Color.TRANSPARENT);
 

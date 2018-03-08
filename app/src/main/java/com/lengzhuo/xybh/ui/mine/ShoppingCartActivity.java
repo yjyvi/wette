@@ -437,7 +437,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             iv_all_selected.setTag("unSelected");
             tv_settlement.setBackgroundColor( Color.parseColor("#aaaaaa"));
             tv_total_price.setText(PlaceholderUtils.pricePlaceholder(0));
-            tv_settlement.setText("结算(" + 0 + ")");
+            tv_settlement.setText(String.format("结算(%1$s)" , 0));
             rl_shopping_cart.setIsLoadingMoreEnabled(true);
             getShoppingCartList();
             mIsSubmitOrder = !mIsSubmitOrder;
@@ -472,6 +472,6 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             totalPrice = b1.add(b2).doubleValue();
         }
         tv_total_price.setText(PlaceholderUtils.pricePlaceholder(totalPrice));
-        tv_settlement.setText("结算(" + mSelectedCommodityList.size() + ")");
+        tv_settlement.setText(String.format("结算(%1$s)" , mSelectedCommodityList.size()));
     }
 }

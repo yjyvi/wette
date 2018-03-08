@@ -72,7 +72,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
     private ArrayList<BannerBean.ResultdataBean> mResultBannerBean;
     private GoodDetailsBean.DataBean mDataBean;
     private GoodsSkuP mGoodsSkuP;
-    private boolean isAddCart;
+    private boolean isAddCart = false;
     private AddCartP mAddCartP;
     private String mSkuContent;
     private int mSkuId;
@@ -271,6 +271,7 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
         mSkuContent += "]";
 
+        isAddCart = false;
         mGoodsSkuP.setGoodsSku(String.valueOf(mDataBean.getGoodsId()), mSkuContent);
 
         tv_style.setText(colorName.toString());
