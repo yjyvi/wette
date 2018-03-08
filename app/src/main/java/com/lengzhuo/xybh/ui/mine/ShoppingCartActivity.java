@@ -54,7 +54,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  * </pre>
  */
 @ContentView(R.layout.activity_shopping_cart)
-public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListener {
+public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListener, CommodityItemViewBinder.GoodsNumListener {
 
     private Items mItems;
 
@@ -101,7 +101,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         mItems = new Items();
         mAdapter.setItems(mItems);
         mAdapter.register(ShopBean.class, new ShopItemViewBinder());
-        mAdapter.register(CommodityBean.class, new CommodityItemViewBinder());
+        mAdapter.register(CommodityBean.class, new CommodityItemViewBinder(this));
         rv_shopping_cart.addItemDecoration(new RecyclerView.ItemDecoration() {
 
             Paint mPaint;
@@ -139,11 +139,15 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             }
 
             private boolean isShow(int position) {
+                if (mItems.size() <= 0) {
+                    return false;
+                }
                 Object item = mItems.get(position);
                 Object lastItem = mItems.get(position - 1);
                 return position != 1
                         && item.getClass().getName().equals(ShopBean.class.getName())
                         && !item.getClass().getName().equals(lastItem.getClass().getName());
+
             }
 
         });
@@ -303,7 +307,6 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
                 }
             }
             shopBean.setSelected(result);
-
             if (commodityBean.isSelected()) {
                 addSelectedCommodity(commodityBean);
             } else {
@@ -318,6 +321,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     @Subscribe
     public void onSelectedShopEvent(BaseEvent<ShopBean> event) {
         if (event.getEventType() == 2) {
+
             boolean isSelected = !event.getData().isSelected();
             for (CommodityBean commodityBean : event.getData().getGoodList()) {
                 commodityBean.setSelected(isSelected);
@@ -386,8 +390,7 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
     }
 
     private void onCommodityOrShopSelected() {
-        boolean isAllSelected = isAllSelected();
-        setAllSelectedImageView(isAllSelected);
+        setAllSelectedImageView(isAllSelected());
         if (mIsEdit) return;
         //设置结算按钮和设置结算金额
         tv_settlement.setBackgroundColor(mSelectedCommodityList.isEmpty() ? Color.parseColor("#aaaaaa") : Color.parseColor("#ee4716"));
@@ -429,8 +432,45 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
             mItems.clear();
             mSelectedCommodityList.clear();
             mPageIndex = 1;
+            iv_all_selected.setImageResource(R.drawable.shopping_cart_unselected);
+            iv_all_selected.setTag("unSelected");
+            tv_settlement.setBackgroundColor( Color.parseColor("#aaaaaa"));
+            tv_total_price.setText(PlaceholderUtils.pricePlaceholder(0));
+            tv_settlement.setText(String.format("结算(%1$s)" , 0));
             rl_shopping_cart.setIsLoadingMoreEnabled(true);
+            getShoppingCartList();
             mIsSubmitOrder = !mIsSubmitOrder;
         }
+    }
+
+    @Override
+    public void addOrReduce(int num, int position) {
+
+        if (mSelectedCommodityList == null) {
+            return;
+        }
+
+        if (mIsEdit) return;
+
+
+        for (int i = 0; i < mItems.size(); i++) {
+            if (mItems.get(position) instanceof CommodityBean) {
+                ((CommodityBean) mItems.get(position)).setAmount(num);
+            }
+        }
+
+        setAllSelectedImageView(isAllSelected());
+
+        //设置结算按钮和设置结算金额
+        tv_settlement.setBackgroundColor(mSelectedCommodityList.isEmpty() ? Color.parseColor("#aaaaaa") : Color.parseColor("#ee4716"));
+        double totalPrice = 0;
+        for (CommodityBean commodityBean : mSelectedCommodityList) {
+            double commodityTotalPrice = commodityBean.getPrice() * commodityBean.getAmount();
+            BigDecimal b1 = new BigDecimal(Double.toString(totalPrice));
+            BigDecimal b2 = new BigDecimal(Double.toString(commodityTotalPrice));
+            totalPrice = b1.add(b2).doubleValue();
+        }
+        tv_total_price.setText(PlaceholderUtils.pricePlaceholder(totalPrice));
+        tv_settlement.setText(String.format("结算(%1$s)" , mSelectedCommodityList.size()));
     }
 }

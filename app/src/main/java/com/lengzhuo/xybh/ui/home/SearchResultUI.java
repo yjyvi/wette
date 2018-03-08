@@ -52,7 +52,6 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
     public SearchGoodsListAdapter mSearchGoodsListAdapter;
     public List<SearchBean.DataBean.GoodsListBean> mGoodsList;
     private int page = 1;
-    private int limit = 10;
     public String mSearchContent;
 
 
@@ -85,7 +84,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
 
         if (!TextUtils.isEmpty(mSearchContent)) {
             et_search.setText(mSearchContent);
-            mSearchP.setSearchData(mSearchContent, page, limit);
+            mSearchP.setSearchData(mSearchContent, page, 10);
         }
 
         et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -96,7 +95,7 @@ public class SearchResultUI extends BaseUI implements SearchP.SearchGoodsListene
                 } else {
                     //搜索接口
                     mSearchContent = textView.getText().toString().trim();
-                    mSearchP.setSearchData(mSearchContent, page, limit);
+                    mSearchP.setSearchData(mSearchContent, page, 10);
                     KeyboardUtils.hideKeyBoard(getActivity(), textView);
                 }
                 return true;

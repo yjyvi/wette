@@ -55,7 +55,6 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
 
     private GoodsListP mGoodsListP;
     private int page = 1;
-    private int limit = 10;
     public GoodListAdapter mProductListAdapter;
     private List<GoodsListBean.DataBean> mGoodsList;
     public String mShopId;
@@ -85,8 +84,8 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     protected void prepareData() {
 
 
-        mShopDetailP.setShopData(mShopId, page, limit);
-        mGoodsListP.setGoodsList(0, mShopId, page, limit);
+        mShopDetailP.setShopData(mShopId, page, 10);
+        mGoodsListP.setGoodsList(0, mShopId, page, 10);
 
         GridLayoutManager layout = new GridLayoutManager(this, 2);
         layout.setAutoMeasureEnabled(true);
@@ -140,7 +139,6 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
                 SearchResultUI.start(view.getContext(), "");
                 break;
             case R.id.rl_cart:
-
                 if (isLoginClick()) {
                     return;
                 }
@@ -181,14 +179,14 @@ public class ShopDetailUI extends BaseUI implements GoodsListP.GoodsListListener
     @Override
     public void onRefresh(View view) {
         page = 1;
-        mGoodsListP.setGoodsList(0, mShopId, page, limit);
-        mShopDetailP.setShopData(mShopId, page, limit);
+        mGoodsListP.setGoodsList(0, mShopId, page, 10);
+        mShopDetailP.setShopData(mShopId, page, 10);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        mGoodsListP.setGoodsList(0, mShopId, page, limit);
+        mGoodsListP.setGoodsList(0, mShopId, page, 10);
     }
 
     @Override

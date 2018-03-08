@@ -43,11 +43,14 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
     public String mOrderNo;
     public PayOrderP mPayOrderP;
     public PayUtils mPayUtils;
+    public boolean isOrderUI;
 
 
     @Override
     protected void back() {
-        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_WAITING_PAY);
+        if (!isOrderUI) {
+            OrderActivity.toActivity(this, OrderActivity.ORDER_STATE_WAITING_PAY);
+        }
         finish();
     }
 
@@ -63,6 +66,7 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         mPayUtils = new PayUtils(this);
         mPayUtils.setPayCallBack(this);
         mOrderNo = getIntent().getStringExtra("orderNo");
+        isOrderUI = getIntent().getBooleanExtra("isOrderUI", false);
         mPayOrderP = new PayOrderP(this);
 
         //隐藏后默认勾选支付宝
@@ -99,9 +103,10 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         }
     }
 
-    public static void toActivity(Context context, String orderNo) {
+    public static void toActivity(Context context, String orderNo, boolean isOrderUI) {
         Intent intent = new Intent(context, PaymentMethodActivity.class);
         intent.putExtra("orderNo", orderNo);
+        intent.putExtra("isOrderUI", isOrderUI);
         context.startActivity(intent);
     }
 
@@ -139,14 +144,14 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
     private void payHint() {
         ToastUtils.showToast("支付成功");
         EventBus.getDefault().post("paySuccess");
-        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_SENDING_GOODS);
+        OrderActivity.toActivity(this, OrderActivity.ORDER_STATE_SENDING_GOODS);
         finish();
     }
 
     @Override
     public void aliPayFailure() {
         ToastUtils.showToast("支付失败");
-        OrderActivity.toActivity(this,OrderActivity.ORDER_STATE_WAITING_PAY);
+        OrderActivity.toActivity(this, OrderActivity.ORDER_STATE_WAITING_PAY);
         finish();
     }
 

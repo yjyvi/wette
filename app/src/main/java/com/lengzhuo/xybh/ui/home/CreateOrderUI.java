@@ -37,7 +37,7 @@ import java.util.List;
  * 预览订单界面
  */
 @ContentView(R.layout.activity_pay_order)
-public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener, CreateOrderGoodsListAdapter.GoodsNumListener {
+public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderListener {
 
 
     @ViewInject(R.id.rv_good_list)
@@ -97,7 +97,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         mGoodsDataBean = getIntent().getParcelableArrayListExtra(mGoodsDataBeanStr);
 
         rv_good_list.setLayoutManager(new LinearLayoutManager(this));
-        CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean, this);
+        CreateOrderGoodsListAdapter createOrderGoodsListAdapter = new CreateOrderGoodsListAdapter(R.layout.item_create_order_goods, mGoodsDataBean);
         rv_good_list.setAdapter(createOrderGoodsListAdapter);
 
         showTotalMoney();
@@ -209,13 +209,13 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
     @Override
     public void createSuccess(String orderNo) {
         this.mOrderNo = orderNo;
-        PaymentMethodActivity.toActivity(this, mOrderNo);
+        PaymentMethodActivity.toActivity(this, mOrderNo, false);
         finish();
     }
 
     @Override
-    public void createField() {
-        ToastUtils.showToast("创建订单失败");
+    public void createField(String msg) {
+        ToastUtils.showToast(msg);
     }
 
     @Subscribe
@@ -227,7 +227,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
                 ll_selected_address.setVisibility(View.VISIBLE);
                 tv_add_address.setVisibility(View.GONE);
                 initShowAddressText(data);
-            }else {
+            } else {
                 getAddressList();
             }
         }
@@ -244,12 +244,6 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
         tv_name.setText(String.format(getResources().getString(R.string.default_name), datum.getAddressee()));
         tv_tel.setText(String.format(getResources().getString(R.string.default_tel), datum.getTelephone()));
         tv_address.setText(String.format(getResources().getString(R.string.default_address), datum.getProvinceName() + datum.getCityName() + datum.getAreaName() + datum.getAddress()));
-    }
-
-    @Override
-    public void addOrReduce(int num, int position) {
-        mGoodsDataBean.get(position).setGoodsAmount(String.valueOf(num));
-        showTotalMoney();
     }
 
 

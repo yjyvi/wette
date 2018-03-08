@@ -72,7 +72,6 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     protected void back() {
-
         finish();
     }
 
@@ -161,7 +160,8 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
         switch (event.getEventType()) {
             case 1:
                 //待支付
-                PaymentMethodActivity.toActivity(this, String.valueOf(event.getData().getOrderId()));
+                PaymentMethodActivity.toActivity(this, String.valueOf(event.getData().getOrderId()), true);
+                finish();
                 break;
             case 2:
                 //再次购买

@@ -103,6 +103,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
         mProductDetailP.setProductDetailsData(mGoodsId);
 
+
     }
 
     @Override

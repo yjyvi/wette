@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,30 +60,39 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         RecyclerView recyclerView = holder.getView(R.id.goods_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
+
         GlideApp.with(holder.itemView.getContext())
-                .load(item.getLogo())
+                .load(TextUtils.isEmpty(item.getLogo())?R.mipmap.home_logo:item.getLogo())
+                .fitCenter()
                 .into(holder.<ImageView>getView(R.id.iv_shop_img));
+
         ((TextView) holder.getView(R.id.tv_shop_name)).setText(item.getShopName());
-        ((TextView) holder.getView(R.id.tv_order_des)).setText("共" + item.getGoodsAmount() + "件商品 合计"+PlaceholderUtils.pricePlaceholder(item.getTotalFee()) + "(含运费"+PlaceholderUtils.pricePlaceholder(item.getFreight()) + ")");
+        ((TextView) holder.getView(R.id.tv_order_des)).setText(String.format("共%1$s件商品 合计%2$s(含运费%3$s)", item.getGoodsAmount(), PlaceholderUtils.pricePlaceholder(item.getTotalFee()), PlaceholderUtils.pricePlaceholder(item.getFreight())));
         ((TextView) holder.getView(R.id.bt_order_state)).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[1]);
         holder.<TextView>getView(R.id.tv_status).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[0]);
-        holder.<TextView>getView(R.id.tv_order_number).setText("订单编号：" + item.getOrderNo());
+        holder.<TextView>getView(R.id.tv_order_number).setText(String.format("订单编号：%1$s", item.getOrderNo()));
         holder.getView(R.id.bt_order_state).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BaseEvent<OrderListBean.DataBean> event = new BaseEvent<>();
                 switch (item.getOrderStatus()) {
-                    case OrderActivity.ORDER_STATE_WAITING_PAY://待支付
+                    //待支付
+                    case OrderActivity.ORDER_STATE_WAITING_PAY:
                         event.setEventType(1);
                         break;
-                    case OrderActivity.ORDER_STATE_CANCELED_ORDER://已取消
+                    //已取消
+                    case OrderActivity.ORDER_STATE_CANCELED_ORDER:
                         event.setEventType(2);
                         break;
-                    case OrderActivity.ORDER_STATE_SENDING_GOODS://发货中
+                    //发货中
+                    case OrderActivity.ORDER_STATE_SENDING_GOODS:
                         event.setEventType(3);
                         break;
-                    case OrderActivity.ORDER_STATE_WAITING_EVA://待评价
+                    //待评价
+                    case OrderActivity.ORDER_STATE_WAITING_EVA:
                         event.setEventType(4);
+                        break;
+                    default:
                         break;
                 }
                 event.setData(item);

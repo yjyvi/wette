@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include layout="@layout/common_title"/>
 
     <com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout
         android:id="@+id/rv_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <android.support.v7.widget.RecyclerView
-        android:paddingLeft="10px"
-        android:paddingRight="10px"
-        android:id="@+id/rv_good_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_good_list"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"/>
     </com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout>
 
     <include layout="@layout/common_no_data_list"/>

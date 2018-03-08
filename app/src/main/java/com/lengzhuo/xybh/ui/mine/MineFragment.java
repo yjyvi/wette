@@ -86,6 +86,7 @@ public class MineFragment extends LazyLoadFragment {
             R.id.bt_waiting_evaluation,
             R.id.bt_waiting_pay,
             R.id.tv_nick_name,
+            R.id.iv_avatar,
             R.id.ll_account_setting,
             R.id.fl_feedback,
             R.id.tv_collection,
@@ -100,13 +101,13 @@ public class MineFragment extends LazyLoadFragment {
     private void onClick(View view) {
 
         //反馈
-        if(view.getId() == R.id.fl_feedback){
+        if (view.getId() == R.id.fl_feedback) {
             FeedbackActivity.toActivity(view.getContext());
             return;
         }
 
         //拨打客服电话
-        if(view.getId() == R.id.fl_customer_service){
+        if (view.getId() == R.id.fl_customer_service) {
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:15117934180"));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -118,10 +119,12 @@ public class MineFragment extends LazyLoadFragment {
             return;
         }
 
+
+
         switch (view.getId()) {
+            case R.id.iv_avatar:
             case R.id.tv_nick_name:
-                if (!UserManager.isLogin())
-                    LoginActivity.toActivity(view.getContext());
+                if (isLoginClick())
                 break;
             case R.id.ll_account_setting:
                 AccountSettingActivity.toActivity(view.getContext());
@@ -178,6 +181,8 @@ public class MineFragment extends LazyLoadFragment {
                             .create();
                 }
                 mExitLoginDialog.show();
+                break;
+            default:
                 break;
         }
     }
