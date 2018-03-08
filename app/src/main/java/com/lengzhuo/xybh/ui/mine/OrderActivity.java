@@ -98,7 +98,7 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
     @Override
     protected void setControlBasis() {
         orderState = getIntent().getIntExtra(KEY_ORDER_STATE, ORDER_STATE_ALL);
-        setTitle(orderState == ORDER_STATE_WAITING_PAY ? "待支付":"我的订单");
+        setTitle(orderState == ORDER_STATE_WAITING_PAY ? "待支付" : "我的订单");
         mItems = new Items();
         mAdapter = new MultiTypeAdapter();
         mAdapter.setItems(mItems);
@@ -140,12 +140,12 @@ public class OrderActivity extends BaseUI implements MyRefreshLayoutListener, My
 
     @Override
     public void loadListSuccess(List<OrderListBean.DataBean> data) {
-        if (Utils.isShowEmptyLayout(mPage,data, refreshLayout, fl_empty_data)) return;
+        refreshLayout.refreshComplete();
+        refreshLayout.loadMoreComplete();
+        if (Utils.isShowEmptyLayout(mPage, data, refreshLayout, fl_empty_data)) return;
         if (data.size() < 10) {
             refreshLayout.setIsLoadingMoreEnabled(false);
         }
-        refreshLayout.refreshComplete();
-        refreshLayout.loadMoreComplete();
         mItems.addAll(data);
         mAdapter.notifyDataSetChanged();
     }

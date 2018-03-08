@@ -159,10 +159,10 @@ public class ShoppingCartActivity extends BaseUI implements MyRefreshLayoutListe
         NetworkUtils.getNetworkUtils().getShoppingCartList(String.valueOf(mPageIndex), new CommonCallBack<List<ShopBean>>() {
             @Override
             protected void onSuccess(List<ShopBean> data) {
-                if (Utils.isShowEmptyLayout(mPageIndex,data, rl_shopping_cart, fl_empty_data)) return;
-                if (data.size() < 10) rl_shopping_cart.setIsLoadingMoreEnabled(false);
                 rl_shopping_cart.refreshComplete();
                 rl_shopping_cart.loadMoreComplete();
+                if (Utils.isShowEmptyLayout(mPageIndex,data, rl_shopping_cart, fl_empty_data)) return;
+                if (data.size() < 10) rl_shopping_cart.setIsLoadingMoreEnabled(false);
                 for (ShopBean shopBean : data) {
                     mItems.add(shopBean);
                     for (CommodityBean commodityBean : shopBean.getGoodList()) {
