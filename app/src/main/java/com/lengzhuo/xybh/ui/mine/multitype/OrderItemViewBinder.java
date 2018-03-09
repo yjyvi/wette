@@ -58,9 +58,11 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         //商品adapter配置
         Adapter adapter = new Adapter(R.layout.item_order_goods, item.getGoodList());
         RecyclerView recyclerView = holder.getView(R.id.goods_rv);
+
+        recyclerView.setFocusableInTouchMode(false);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
-
         GlideApp.with(holder.itemView.getContext())
                 .load(TextUtils.isEmpty(item.getLogo())?R.mipmap.home_logo:item.getLogo())
                 .fitCenter()
@@ -71,6 +73,8 @@ public class OrderItemViewBinder extends ItemViewBinder<OrderListBean.DataBean, 
         ((TextView) holder.getView(R.id.bt_order_state)).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[1]);
         holder.<TextView>getView(R.id.tv_status).setText(ORDER_STATUS_MAP.get(item.getOrderStatus())[0]);
         holder.<TextView>getView(R.id.tv_order_number).setText(String.format("订单编号：%1$s", item.getOrderNo()));
+
+
         holder.getView(R.id.bt_order_state).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

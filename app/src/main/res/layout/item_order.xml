@@ -15,6 +15,7 @@
             android:orientation="horizontal">
 
         <ImageView
+            android:duplicateParentState="true"
                 android:id="@+id/iv_shop_img"
                 android:scaleType="fitXY"
                 android:layout_width="48px"

@@ -18,7 +18,9 @@ import com.lengzhuo.xybh.ui.BaseUI;
 import com.lengzhuo.xybh.ui.BaseViewHolder;
 import com.lengzhuo.xybh.ui.mine.EditAddressActivity;
 import com.lengzhuo.xybh.utils.NetworkUtils;
+import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.evntBusBean.AddressEvent;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +35,7 @@ import java.util.List;
  * @data 2018/2/9.
  */
 @ContentView(R.layout.activity_address_list)
-public class AddressSelectedUi extends BaseUI {
+public class AddressSelectedUI extends BaseUI {
 
     @ViewInject(R.id.rv_address_list)
     private RecyclerView rv_address_list;
@@ -98,7 +100,7 @@ public class AddressSelectedUi extends BaseUI {
     }
 
     public static void start(Context context) {
-        Intent starter = new Intent(context, AddressSelectedUi.class);
+        Intent starter = new Intent(context, AddressSelectedUI.class);
         context.startActivity(starter);
     }
 
@@ -140,6 +142,15 @@ public class AddressSelectedUi extends BaseUI {
                 @Override
                 public void onClick(View view) {
                     if (!view.isSelected()) {
+
+                        NetworkUtils.getNetworkUtils().updateAddress(String.valueOf(item.getAddressId()), "0", new CommonCallBack<String>() {
+                            @Override
+                            protected void onSuccess(String data) {
+                                ToastUtils.showToast("设置成功");
+                                EventBus.getDefault().post(new BaseEvent<AddressBean>().setEventType(2).setData(item));
+                            }
+                        });
+
                         //后面需要增加修改默认地址的
                         lastView.setImageResource(R.drawable.address_list_unselected);
                         ivIsDefault.setImageResource(R.drawable.address_list_selected);
@@ -160,6 +171,8 @@ public class AddressSelectedUi extends BaseUI {
 
     @Subscribe
     public void addressEvent(AddressEvent addressEvent) {
-
+        if (addressEvent.getEventType() == 2) {
+            getAddressList();
+        }
     }
 }

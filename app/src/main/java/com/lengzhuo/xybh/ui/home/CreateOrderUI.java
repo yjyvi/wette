@@ -190,7 +190,7 @@ public class CreateOrderUI extends BaseUI implements CreateOrderP.CreateOrderLis
             case R.id.ll_selected_address:
             case R.id.tv_add_address:
                 //选择地址
-                AddressSelectedUi.start(view.getContext());
+                AddressSelectedUI.start(view.getContext());
                 break;
             case R.id.bt_pay:
                 if (mAddressId == 0) {
