@@ -68,6 +68,7 @@
             style="@style/common_line"/>
 
     <TextView
+            android:id="@+id/tv_about_us"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:text="法律条款与关于"

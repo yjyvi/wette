@@ -199,6 +199,8 @@
         <activity android:name=".ui.home.AddressSelectedUI"/>
         <activity android:name=".ui.home.HotWebUI"/>
         <activity android:name=".views.arl.PhotoViewActivity"/>
+        <!-- 用户协议 or 关于我们 -->
+        <activity android:name=".ui.mine.UserProtocolAndAboutUsActivity"/>
     </application>
 
 </manifest>

@@ -87,5 +87,7 @@
     <!-- 完成 or 取消 订单 -->
     <string name="order_update_status">/order/cancelOrder</string>
 
+    <!-- 用户协议 or 关于我们 -->
+    <string name="user_procotol_and_about_us">/base/dictionary</string>
 
 </resources>
