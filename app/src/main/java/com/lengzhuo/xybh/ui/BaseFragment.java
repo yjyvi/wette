@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.mine.LoginActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
@@ -30,7 +29,6 @@ public abstract class BaseFragment extends Fragment {
      */
     protected View view;
     protected LayoutInflater inflater;
-    protected MyApplication application = null;
 
     /**
      * 描述：创建
@@ -167,7 +165,7 @@ public abstract class BaseFragment extends Fragment {
      *
      * @return
      */
-    public boolean isLoginClick() {
+    protected boolean isLoginClick() {
         if (!UserManager.isLogin()) {
             ToastUtils.showToast(getResources().getString(R.string.login_hint));
             LoginActivity.toActivity(getActivity());
@@ -182,11 +180,13 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param dataBean
      */
-    public void showEmptyView(List<?> dataBean, View  emptyView) {
-        if (dataBean.size() == 0) {
+    protected void showEmptyView(List dataBean, View emptyView) {
+
+        if (dataBean != null && dataBean.size() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);
         }
     }
+
 }

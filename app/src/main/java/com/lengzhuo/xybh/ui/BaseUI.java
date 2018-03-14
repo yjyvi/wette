@@ -1,5 +1,6 @@
 package com.lengzhuo.xybh.ui;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.ui.mine.LoginActivity;
 import com.lengzhuo.xybh.utils.StatusBarUtils;
@@ -30,9 +30,10 @@ import java.util.List;
  * @author wangjian
  */
 public abstract class BaseUI extends AutoLayoutActivity {
-    private long exitTime = 0;
-    protected MyApplication application;
 
+    private long exitTime = 0;
+
+    private static ProgressDialog mProgressDialog;
     /**
      * 描述：返回
      */
@@ -117,7 +118,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
             View decor = getWindow().getDecorView();
             int ui = decor.getSystemUiVisibility();
             if (true) {
-                ui |=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                ui |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             } else {
                 ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             }
@@ -232,7 +233,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
      *
      * @return
      */
-    public boolean isLoginClick() {
+    protected boolean isLoginClick() {
         if (!UserManager.isLogin()) {
             ToastUtils.showToast(getResources().getString(R.string.login_hint));
             LoginActivity.toActivity(getActivity());
@@ -246,11 +247,12 @@ public abstract class BaseUI extends AutoLayoutActivity {
      *
      * @param dataBean
      */
-    public void showEmptyView(List<?> dataBean, View emptyView) {
-        if (dataBean.size() == 0) {
+    protected void showEmptyView(List dataBean, View emptyView) {
+        if (dataBean != null && dataBean.size() == 0) {
             emptyView.setVisibility(View.VISIBLE);
         } else {
             emptyView.setVisibility(View.GONE);
         }
     }
+
 }

@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.lengzhuo.xybh.MyApplication;
 import com.lengzhuo.xybh.R;
-import com.lengzhuo.xybh.network.DataCallBack;
 import com.lengzhuo.xybh.network.OKHttpManager;
 
 import java.util.HashMap;
@@ -31,20 +30,6 @@ public class NetworkUtils {
 
     private String getUrl(int id) {
         return MyApplication.applicationContext.getResources().getString(R.string.service_host_address).concat(MyApplication.applicationContext.getString(id).concat(".do"));
-    }
-
-    /**
-     * 获取验证码
-     *
-     * @param httpBack type  是否需要验证手机号是否存在注册，0-不需要，1-需要 2-忘记密码
-     */
-    public void getCode(String phone, String type, DataCallBack httpBack) {
-        Map<String, String> params = new TreeMap<>();
-        params.put("mobile", phone);
-        params.put("type", type);
-
-        OKHttpManager.postAsync("http://web.rongyaojiazu.com/api/user/smsCode", params, httpBack);
-
     }
 
     /**
@@ -212,15 +197,6 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.orderGoods), params, stringCallBack);
     }
 
-
-    /**
-     * 查看商品评价
-     */
-    public void viewEvaluate(String orderGid, OKHttpManager.StringCallBack stringCallBack) {
-        Map<String, String> params = getParams();
-        params.put("orderGid", orderGid);
-        OKHttpManager.postAsync(getUrl(R.string.viewEvaluate), params, stringCallBack);
-    }
 
     /**
      * 评价商品

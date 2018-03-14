@@ -19,6 +19,7 @@ import com.lengzhuo.xybh.beans.GoodsListBean;
 import com.lengzhuo.xybh.beans.HomeBean;
 import com.lengzhuo.xybh.ui.LazyLoadFragment;
 import com.lengzhuo.xybh.ui.mine.ShoppingCartActivity;
+import com.lengzhuo.xybh.ui.mytest.SearchResultActivity;
 import com.lengzhuo.xybh.utils.KeyboardUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.views.refreshlayout.MyRefreshLayout;
@@ -68,7 +69,6 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
 
     @Override
     protected void setControlBasis() {
-
         //跳转购物车
         rl_cart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +105,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
                         if (TextUtils.isEmpty(textView.getText().toString().trim())) {
                             ToastUtils.showToast("请输入搜索关键字");
                         } else {
-                            SearchResultUI.start(view.getContext(), et_search.getText().toString().trim());
+                            SearchResultActivity.start(view.getContext(), et_search.getText().toString().trim());
                             et_search.setVisibility(View.GONE);
                             et_search.setText("");
                             rl_title_search.setVisibility(View.VISIBLE);
@@ -165,6 +165,7 @@ public class HomeFragment extends LazyLoadFragment implements HomeP.HomeListener
             this.goodsListBean = result.getData();
             mHomeAdapter.setGoodsListBean(result.getData());
             mHomeAdapter.notifyDataSetChanged();
+            showEmptyView(result.getData(),ll_empty_view);
         } else {
             if (result.getData().size() > 0) {
                 goodsListBean.addAll(result.getData());

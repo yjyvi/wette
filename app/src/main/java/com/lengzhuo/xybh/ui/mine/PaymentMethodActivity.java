@@ -69,10 +69,6 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         isOrderUI = getIntent().getBooleanExtra("isOrderUI", false);
         mPayOrderP = new PayOrderP(this);
 
-        //隐藏后默认勾选支付宝
-        ll_pay_wx.setVisibility(View.GONE);
-        iv_zfb.setSelected(true);
-        payChannel = CommonConstant.Common.PAY_METHOD_ZFB;
     }
 
     @Event(value = {
@@ -148,13 +144,20 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         finish();
     }
 
-    @Override
-    public void aliPayFailure() {
+
+    /**
+     * 支付失败提示及跳转
+     */
+    private void payFailureHint() {
         ToastUtils.showToast("支付失败");
         OrderActivity.toActivity(this, OrderActivity.ORDER_STATE_WAITING_PAY);
         finish();
     }
 
+    @Override
+    public void aliPayFailure() {
+        payFailureHint();
+    }
     @Override
     public void wechatPaySuccess() {
         payHint();
@@ -162,11 +165,11 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
 
     @Override
     public void wechatPayFailure() {
-        ToastUtils.showToast("支付失败");
+        payFailureHint();
     }
 
     @Override
     public void wechatPayCancel() {
-        ToastUtils.showToast("支付取消");
+        payFailureHint();
     }
 }

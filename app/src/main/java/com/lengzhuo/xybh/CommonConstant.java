@@ -1,26 +1,41 @@
 package com.lengzhuo.xybh;
 
 /**
- * Created by yjyvi on 2018/1/30.
+ *
+ * @author yjyvi
+ * @date 2018/1/30
  */
 
 public class CommonConstant {
 
     public   static  class Common {
-        //数据库名
-        public static final String DB_NAME = "app.db";
 
-        //第一次启动
+        /**
+         * 第一次启动
+         */
         public static final String FIRST_LAUNCHER = "first_launcher";
 
-        //支付方式-> 微信
+
+        /**
+         * 支付方式-> 微信
+         */
         public static final String PAY_METHOD_WX = "1";
 
-        //支付方式-> 支付宝
+
+        /**
+         * 支付方式-> 支付宝
+         */
         public static final String PAY_METHOD_ZFB = "2";
 
 
-        //微信APP ID
-        public static final String WX_APP_ID = "wx40a58b3c2f3872ad";
+        /**
+         * 微信APP ID
+         */
+        public static final String WX_APP_ID = "wxc76b0352eb334e37";
+
+        /**
+         * 微信SECRET
+         */
+        public static final String WX_SECRET = "e70b7d10a7a268e2d2c9341e2399f877";
     }
 }

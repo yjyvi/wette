@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.lengzhuo.xybh.BuildConfig;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +77,6 @@ public class OKHttpManager {
                     String result = response.body().string();
                     Log.d("OKHttpManager", result);
 
-//                    deliverDataSuccess(result, callBack);
                 } catch (IOException e) {
                     deliverDataFailure(call, e, callBack);
                 }
@@ -95,7 +96,7 @@ public class OKHttpManager {
         RequestBody requestBody = null;
 
         if (params == null) {
-            params = new HashMap<String, String>();
+            params = new HashMap<>(1);
         }
         FormBody.Builder builder = new FormBody.Builder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -110,7 +111,7 @@ public class OKHttpManager {
         }
         requestBody = builder.build();
 
-        Log.e("请求返回参数=", url + params.toString());
+        if (BuildConfig.DEBUG)   Log.e("请求返回参数=", url + params.toString());
         final Request request = new Request.Builder().url(url).post(requestBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -123,7 +124,7 @@ public class OKHttpManager {
 
                 try {
                     String result = response.body().string();
-                    Log.e(url + "请求成功返回参数=", result);
+                    if (BuildConfig.DEBUG)   Log.e(url + "请求成功返回参数=", result);
                     deliverDataSuccess(result, callBack);
                 } catch (IOException e) {
                     deliverDataFailure(call, e, callBack);
@@ -161,8 +162,6 @@ public class OKHttpManager {
 
 
     //===================不经反射基类的网络请求========================================
-
-
     private void p_postAsync(final String url, Map<String, String> params, final StringCallBack callBack) {
         RequestBody requestBody = null;
 
@@ -182,7 +181,8 @@ public class OKHttpManager {
         }
         requestBody = builder.build();
 
-        Log.e("请求返回参数=", url + params.toString());
+        if (BuildConfig.DEBUG)   Log.e("请求返回参数=", url + params.toString());
+
         final Request request = new Request.Builder().url(url).post(requestBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -195,12 +195,39 @@ public class OKHttpManager {
 
                 try {
                     String result = response.body().string();
-                    Log.e(url+"请求成功返回参数=", result);
+                    if (BuildConfig.DEBUG)    Log.e(url + "请求成功返回参数=", result);
                     deliverDataSuccess(result, callBack);
                 } catch (IOException e) {
                     deliverDataFailure(call, e, callBack);
                 }
 
+            }
+        });
+    }
+
+    /**
+     * get异步请求
+     *
+     * @param url
+     * @param callBack
+     */
+    private void p_getAsync(String url, final StringCallBack callBack) {
+        final Request request = new Request.Builder().url(url).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                deliverDataFailure(call, e, callBack);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    String result = response.body().string();
+                    Log.d("OKHttpManager", result);
+                    deliverDataSuccess(result, callBack);
+                } catch (IOException e) {
+                    deliverDataFailure(call, e, callBack);
+                }
             }
         });
     }
@@ -234,6 +261,10 @@ public class OKHttpManager {
 
     public static void postAsync(String url, Map<String, String> params, StringCallBack callBack) {
         getInstance().p_postAsync(url, params, callBack);
+    }
+
+    public static void getAsync(String url, StringCallBack callBack) {
+        getInstance().p_getAsync(url, callBack);
     }
 
     //===========================================================

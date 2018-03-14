@@ -195,10 +195,22 @@
         <activity android:name="com.lengzhuo.xybh.ui.home.SearchResultUI"
                   android:windowSoftInputMode="adjustPan"
             />
+
         <activity android:name=".ui.home.OrderGoodsCommentListUI"/>
         <activity android:name=".ui.home.AddressSelectedUI"/>
         <activity android:name=".ui.home.HotWebUI"/>
         <activity android:name=".views.arl.PhotoViewActivity"/>
+        <activity android:name=".ui.mytest.SearchResultActivity"/>
+        <activity android:name="com.lengzhuo.xybh.wxapi.WXPayEntryActivity"
+                  android:exported="true"
+                  android:launchMode="singleTop"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
+        <activity android:name="com.lengzhuo.xybh.wxapi.WXEntryActivity"
+                  android:exported="true"
+                  android:launchMode="singleTop"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
     </application>
 
 </manifest>

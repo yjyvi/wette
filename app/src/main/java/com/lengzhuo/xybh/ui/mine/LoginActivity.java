@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
+import com.lengzhuo.xybh.CommonConstant;
 import com.lengzhuo.xybh.R;
 import com.lengzhuo.xybh.beans.User;
 import com.lengzhuo.xybh.network.CommonCallBack;
@@ -13,6 +14,9 @@ import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.Utils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -70,10 +74,13 @@ public class LoginActivity extends BaseUI {
                 break;
             //微信登录
             case R.id.iv_wechat_login:
-                BindPhoneNumberActivity.toActivity(view.getContext());
+                setWXLogin();
+//                BindPhoneNumberActivity.toActivity(view.getContext());
                 break;
             case R.id.tv_login:
                 if (validate()) login();
+                break;
+            default:
                 break;
         }
     }
@@ -99,6 +106,23 @@ public class LoginActivity extends BaseUI {
                 finish();
             }
         });
+    }
+
+
+    /**
+     * 微信登录
+     */
+    private void setWXLogin() {
+        IWXAPI api = WXAPIFactory.createWXAPI(this, CommonConstant.Common.WX_APP_ID, true);
+        api.registerApp(CommonConstant.Common.WX_APP_ID);
+        if (api.isWXAppInstalled()) {
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo_test";
+            api.sendReq(req);
+        } else {
+            ToastUtils.showToast("您尚未安装微信");
+        }
     }
 
 }

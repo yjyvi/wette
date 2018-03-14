@@ -336,6 +336,8 @@ public class GoodFragment extends LazyLoadFragment implements GoodsSkuP.GoodsSku
 
     }
 
+
+
     @Override
     public void requestSkuField() {
         ToastUtils.showToast("查询库存失败");

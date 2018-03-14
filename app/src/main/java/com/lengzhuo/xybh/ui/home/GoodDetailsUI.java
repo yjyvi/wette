@@ -1,5 +1,6 @@
 package com.lengzhuo.xybh.ui.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -67,6 +68,9 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     private int mType = 1;
     public static final String GOODS_ID = "goodsId";
     public static final String SHOP_ID = "shopId";
+    public ProgressDialog mProgressDialog;
+    private GoodDetailsBean.DataBean mGoodsData;
+    public String mWebUrl;
 
     @Override
     protected void back() {
@@ -84,12 +88,15 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     protected void setControlBasis() {
-
         EventBus.getDefault().register(this);
 
         mCollectionP = new CollectionP(this);
 
         mProductDetailP = new GoodDetailP(getActivity(), this);
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("加载中...");
+        mProgressDialog.show();
     }
 
 
@@ -114,7 +121,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mShopId = getIntent().getStringExtra(SHOP_ID);
         mType = getIntent().getIntExtra("type", 0);
 
-        String webUrl = getResources().getString(R.string.service_host_address)
+        mWebUrl = getResources().getString(R.string.service_host_address)
                 .concat(getResources().getString(R.string.detailHtm))
                 .concat(".do?")
                 .concat("goodsId=")
@@ -123,7 +130,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         mProductDetailP.setProductDetailsData(mGoodsId);
 
         mFragmentLists.add(GoodFragment.newInstance());
-        mFragmentLists.add(GoodDetailFragment.newInstance(webUrl));
+        mFragmentLists.add(GoodDetailFragment.newInstance(mWebUrl));
         mFragmentLists.add(GoodCommentFragment.newInstance(mGoodsId));
 
         vp_content.setAdapter(new GoodTableAdapter(getSupportFragmentManager(), mFragmentLists));
@@ -196,6 +203,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
     @Event(value = {
             R.id.iv_back,
             R.id.iv_cart,
+            R.id.iv_share,
             R.id.ll_shop,
             R.id.tv_login,
             R.id.ll_collection,
@@ -206,6 +214,9 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
         switch (view.getId()) {
             case R.id.iv_back:
                 back();
+                break;
+            case R.id.iv_share:
+                PopUtils.sharePop(this, view, mWebUrl, mGoodsData.getGoodsName(), mGoodsData.getGoodsIntroduce(), mGoodsData.getCover());
                 break;
             case R.id.iv_cart:
                 //购物车
@@ -263,15 +274,16 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void goodsData(GoodDetailsBean.DataBean dataBean) {
+
+        this.mGoodsData = dataBean;
+
+        mProgressDialog.dismiss();
+
         //传递商品数据
         EventBus.getDefault().post(new GoodDetailsEvent().setEventType(GoodDetailsEvent.GOOD_DATA).setData(dataBean));
 
         //收藏按扭回显
-        if (1 == dataBean.getIsCollection()) {
-            ll_collection.setSelected(true);
-        } else {
-            ll_collection.setSelected(false);
-        }
+        ll_collection.setSelected(dataBean.getIsCollection() == 1 ? dataBean.getIsCollection() == 1 : dataBean.getIsCollection() != 1);
 
         mShopId = String.valueOf(dataBean.getShopId());
 
@@ -279,6 +291,7 @@ public class GoodDetailsUI extends BaseUI implements CollectionP.CollectionListe
 
     @Override
     public void requestGoodsDataField() {
+        mProgressDialog.dismiss();
         ToastUtils.showToast("加载失败");
     }
 

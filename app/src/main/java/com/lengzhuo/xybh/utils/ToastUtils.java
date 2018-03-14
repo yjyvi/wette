@@ -1,6 +1,5 @@
 package com.lengzhuo.xybh.utils;
 
-import android.content.Context;
 import android.widget.Toast;
 
 import com.lengzhuo.xybh.MyApplication;
@@ -24,9 +23,8 @@ public class ToastUtils {
      * @param message
      */
     public static void showToast(String message){
-        Context context= MyApplication.applicationContext;
         if(toast == null){
-            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+            toast = Toast.makeText(MyApplication.applicationContext, message, Toast.LENGTH_SHORT);
             toast.show() ;
             oneTime = System.currentTimeMillis() ;
         }else{

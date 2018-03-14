@@ -81,13 +81,13 @@ public class PayUtils {
         if (!TextUtils.isEmpty(weChatPayParams)) {
             JSONObject wxParams = JSON.parseObject(weChatPayParams);
 
-            String packageValue = wxParams.getString("packageValue");
-            String appId = wxParams.getString("appId");
+            String packageValue = wxParams.getString("package");
+            String appId = wxParams.getString("appid");
             String sign = wxParams.getString("sign");
-            String partnerId = wxParams.getString("partnerId");
-            String prepayId = wxParams.getString("prepayId");
-            String nonceStr = wxParams.getString("nonceStr");
-            String timeStamp = wxParams.getString("timeStamp");
+            String partnerId = wxParams.getString("partnerid");
+            String prepayId = wxParams.getString("prepayid");
+            String nonceStr = wxParams.getString("noncestr");
+            String timeStamp = wxParams.getString("timestamp");
 
             IWXAPI api = WXAPIFactory.createWXAPI(mContext, CommonConstant.Common.WX_APP_ID);
             api.registerApp(CommonConstant.Common.WX_APP_ID);

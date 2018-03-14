@@ -54,6 +54,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 EventBus.getDefault().post(PayUtils.EVENT_WX_CHAT_PAY_FAILURE);
             }
         }
+
         finish();
     }
 

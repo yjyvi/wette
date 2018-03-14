@@ -29,7 +29,7 @@ public class SPUtils {
         } else if (value instanceof Boolean) {
             edit.putBoolean(key, (boolean) value);
         }
-        edit.commit();
+        edit.apply();
     }
 
     /**
@@ -86,7 +86,7 @@ public class SPUtils {
      * */
     public static void clearData(Context context){
         SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        sp.edit().clear().commit();
+        sp.edit().clear().apply();
     }
 
 

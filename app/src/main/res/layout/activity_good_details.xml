@@ -24,13 +24,16 @@
             android:layout_height="128px">
 
             <ImageView
-                android:id="@+id/iv_back"
+                android:layout_toLeftOf="@id/iv_cart"
+                android:id="@+id/iv_share"
                 android:layout_width="wrap_content"
-                android:src="@mipmap/back"
+                android:src="@mipmap/icon_share"
                 android:paddingLeft="10px"
                 android:paddingTop="50px"
-                android:paddingRight="100px"
+                android:paddingRight="30px"
                 android:layout_height="wrap_content"/>
+
+
 
             <ImageView
                 android:paddingTop="50px"

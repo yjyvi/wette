@@ -1,0 +1,132 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingTop="41px">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom">
+
+            <LinearLayout
+                android:id="@+id/ll_wx_friend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:src="@mipmap/pop_share_friend_circle"/>
+
+                <TextView
+                    style="@style/text_gray_32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    android:text="朋友圈"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_wx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:src="@mipmap/pop_share_wx"/>
+
+                <TextView
+                    style="@style/text_gray_32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    android:text="微信"
+                    />
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_qq"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="130px"-->
+                    <!--android:layout_height="130px"-->
+                    <!--android:src="@mipmap/pop_share_qq"/>-->
+
+                <!--<TextView-->
+                    <!--style="@style/text_style_black_36"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="18px"-->
+                    <!--android:text="QQ"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout
+                android:id="@+id/ll_sina"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="130px"
+                    android:layout_height="130px"
+                    android:src="@mipmap/pop_share_sina"/>
+
+                <TextView
+                    style="@style/text_style_black_36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18px"
+                    android:text="微博"
+                    />
+            </LinearLayout>-->
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_close"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingBottom="31px"-->
+            <!--android:paddingTop="72px">-->
+
+            <!--<TextView-->
+                <!--style="@style/text_gray_32"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:text="取消"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+
+</LinearLayout>
