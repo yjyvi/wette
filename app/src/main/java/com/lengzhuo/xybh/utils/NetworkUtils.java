@@ -56,13 +56,8 @@ public class NetworkUtils {
 
     /**
      * 获取店铺商品列表
-     * @param categoryTid
-     * @param shopId
-     * @param pageSize
-     * @param pageNo
-     * @param httpBack
      */
-    public void getGoodList(int categoryTid, String  shopId, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
+    public void getGoodList(int categoryTid, String shopId, int pageSize, int pageNo, OKHttpManager.StringCallBack httpBack) {
         Map<String, String> params = new TreeMap<>();
         if (categoryTid != 0) {
             params.put("categoryTid", String.valueOf(categoryTid));
@@ -421,6 +416,13 @@ public class NetworkUtils {
         params.put("orderId", orderId);
         params.put("orderStatus", orderStatus);
         OKHttpManager.postAsync(getUrl(R.string.order_update_status), params, callBack);
+    }
+
+    public void getUserProtocolOrAboutUs(int type, OKHttpManager.StringCallBack callBack) {
+        Map<String, String> params = getParams();
+        params.put("abbreviate", type == 1 ? "userProtocol" : "aboutUs");
+        OKHttpManager.postAsync(getUrl(R.string.user_procotol_and_about_us), params, callBack);
+
     }
 
     public Map<String, String> getParams() {

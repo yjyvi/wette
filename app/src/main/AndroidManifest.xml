@@ -211,6 +211,8 @@
                   android:launchMode="singleTop"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar"
             />
+        <!-- 用户协议 or 关于我们 -->
+        <activity android:name=".ui.mine.UserProtocolAndAboutUsActivity"/>
     </application>
 
 </manifest>

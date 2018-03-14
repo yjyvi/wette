@@ -47,7 +47,7 @@ public class AccountSettingActivity extends BaseUI {
 
     }
 
-    @Event(value = {R.id.tv_modify_account_setting,R.id.tv_address_list,R.id.tv_clear_cache,R.id.tv_score},type = View.OnClickListener.class)
+    @Event(value = {R.id.tv_modify_account_setting,R.id.tv_address_list,R.id.tv_clear_cache,R.id.tv_score,R.id.tv_about_us},type = View.OnClickListener.class)
     private void onClick(View view){
         switch (view.getId()){
             case R.id.tv_modify_account_setting:
@@ -69,6 +69,9 @@ public class AccountSettingActivity extends BaseUI {
                 }catch(Exception e){
                     ToastUtils.showToast("您的手机没有安装Android应用市场");
                 }
+                break;
+            case R.id.tv_about_us:
+                UserProtocolAndAboutUsActivity.toAboutUsActivity(view.getContext());
                 break;
         }
     }
