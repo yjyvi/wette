@@ -36,6 +36,6 @@ public class CommonConstant {
         /**
          * 微信SECRET
          */
-        public static final String WX_SECRET = "e70b7d10a7a268e2d2c9341e2399f877";
+        public static final String WX_SECRET = "aa899e5be0e49b698e00d29c2b9db917";
     }
 }

@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lengzhuo.xybh.CommonConstant;
 import com.lengzhuo.xybh.network.OKHttpManager;
+import com.lengzhuo.xybh.ui.mine.BindPhoneNumberActivity;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -79,6 +80,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     /**
      * 获取Token
+     *
      * @param code
      */
     private void getAccessToken(String code) {
@@ -100,15 +102,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             public void requestSuccess(String result) {
                 Log.e("WXEntryActivity", "getAccessToken=" + result);
                 JSONObject jsonObject = JSON.parseObject(result);
-                int errcode = jsonObject.getInteger("errcode");
-                if (errcode == 0) {
-                    String openid = jsonObject.getString("openid");
-                    String accessToken = jsonObject.getString("access_token");
-                    getUserInfo(openid, accessToken);
-                } else {
-                    ToastUtils.showToast(jsonObject.getString("errmsg"));
-                }
-
+                String openid = jsonObject.getString("openid");
+                String accessToken = jsonObject.getString("access_token");
+                getUserInfo(openid, accessToken);
             }
         });
     }
@@ -116,6 +112,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     /**
      * 授权后获取微信端的用户信息
+     *
      * @param openid
      * @param accessToken
      */
@@ -143,6 +140,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             public void requestSuccess(String result) {
                 Log.e("WXEntryActivity", "getUserInfo=" + result);
                 JSONObject jsonObject = JSON.parseObject(result);
+                String openid1 = jsonObject.getString("openid");
+                String nickname = jsonObject.getString("nickname");
+                String headimgurl = jsonObject.getString("headimgurl");
+
+                BindPhoneNumberActivity.toActivity(WXEntryActivity.this);
+
             }
         });
     }

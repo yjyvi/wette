@@ -59,11 +59,19 @@ public class PaymentMethodActivity extends BaseUI implements PayOrderP.PayOrderL
         setTitle("支付方式");
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPayUtils.unRegisterEventBus();
+    }
+
     @Override
     protected void prepareData() {
 
         iv_wx.setSelected(true);
         mPayUtils = new PayUtils(this);
+        mPayUtils.registerEventBus();
         mPayUtils.setPayCallBack(this);
         mOrderNo = getIntent().getStringExtra("orderNo");
         isOrderUI = getIntent().getBooleanExtra("isOrderUI", false);

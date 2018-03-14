@@ -10,7 +10,5 @@
 mylibrary/mylibrary.iml
 .idea/gradle.xml
 .idea/modules.xml
-app/app.iml
 lib-arl/lib-arl.iml
 release/app-release.apk
-app/app.iml
