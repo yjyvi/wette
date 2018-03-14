@@ -35,7 +35,7 @@ import java.util.List;
  * @data 2018/2/9.
  */
 @ContentView(R.layout.activity_address_list)
-class AddressSelectedUI extends BaseUI {
+public class AddressSelectedUI extends BaseUI {
 
     @ViewInject(R.id.rv_address_list)
     private RecyclerView rv_address_list;
