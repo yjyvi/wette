@@ -1,7 +1,11 @@
 package com.lengzhuo.xybh.ui.mine;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,10 +18,13 @@ import com.lengzhuo.xybh.utils.NetworkUtils;
 import com.lengzhuo.xybh.utils.ToastUtils;
 import com.lengzhuo.xybh.utils.UserManager;
 import com.lengzhuo.xybh.utils.Utils;
+import com.lengzhuo.xybh.utils.evntBusBean.BaseEvent;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -34,12 +41,25 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseUI {
 
+    public static final int EVENT_WX_LOGIN = 23;
+
     @ViewInject(R.id.et_phone_number)
     EditText et_phone_number;
 
     @ViewInject(R.id.et_password)
     EditText et_password;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void back() {
@@ -100,14 +120,58 @@ public class LoginActivity extends BaseUI {
         NetworkUtils.getNetworkUtils().login("1", phoneNumber, password, new CommonCallBack<User>() {
             @Override
             protected void onSuccess(User data) {
-                ToastUtils.showToast("登录成功");
-                UserManager.saveUser(data);
-
-                finish();
+                handleLoginSuccess(data);
             }
         });
     }
 
+    @Subscribe
+    public void onWxLoginEvent(BaseEvent<String> event) {
+        if (event.getEventType() == EVENT_WX_LOGIN) {
+            final String openId = event.getData();
+            if (TextUtils.isEmpty(openId)) {
+                ToastUtils.showToast("微信授权失败！");
+                return;
+            }
+            NetworkUtils.getNetworkUtils().weChatLogin(openId, new CommonCallBack<User>() {
+                @Override
+                protected void onSuccess(User data) {
+                    handleLoginSuccess(data);
+                }
+
+                @Override
+                protected void onError(String msg) {
+                    bindPhoneNumber(openId);
+                }
+            });
+
+
+        }
+    }
+
+    private void bindPhoneNumber(final String openId) {
+        new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setItems(new String[]{"绑定新手机号", "绑定已有手机号"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            RegisterActivity.toActivity(LoginActivity.this, openId);
+                        } else {
+                            BindPhoneNumberActivity.toActivity(LoginActivity.this,openId);
+                        }
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+
+    private void handleLoginSuccess(User user) {
+        ToastUtils.showToast("登录成功");
+        UserManager.saveUser(user);
+        finish();
+    }
 
     /**
      * 微信登录

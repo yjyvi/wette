@@ -215,8 +215,12 @@ public class NetworkUtils {
         OKHttpManager.postAsync(getUrl(R.string.order_list), params, stringCallBack);
     }
 
-    public void register(String type, String phone, String password, String code, String nickName, OKHttpManager.StringCallBack callBack) {
-        register(type, phone, password, code, nickName, "", callBack);
+    public void register(String phone, String password, String code, String nickName, OKHttpManager.StringCallBack callBack) {
+        register("1", phone, password, code, nickName, "", callBack);
+    }
+
+    public void wechatRegister(String phone, String password, String code, String nickName, String authorize, OKHttpManager.StringCallBack callBack) {
+        register("2", phone, password, code, nickName, authorize, callBack);
     }
 
     public void register(String type, String phone, String password, String code, String nickName, String authorize, OKHttpManager.StringCallBack callBack) {
@@ -233,6 +237,10 @@ public class NetworkUtils {
 
     public void login(String type, String phone, String password, OKHttpManager.StringCallBack callBack) {
         login(type, phone, password, "", callBack);
+    }
+
+    public void weChatLogin(String authorize, OKHttpManager.StringCallBack callBack) {
+        login("2", "", "", authorize, callBack);
     }
 
     public void login(String type, String phone, String password, String authorize, OKHttpManager.StringCallBack callBack) {

@@ -54,6 +54,8 @@ public class RegisterActivity extends BaseUI {
 
     ValidateHandler mHandler;
 
+    String mOpenId;
+
     @Override
     protected void back() {
         finish();
@@ -61,7 +63,7 @@ public class RegisterActivity extends BaseUI {
 
     @Override
     protected void setControlBasis() {
-        setTitle("注册");
+        mOpenId = getIntent().getStringExtra("openId");
         rightVisible("登录");
         mHandler = new ValidateHandler(tv_validate_code);
     }
@@ -85,14 +87,46 @@ public class RegisterActivity extends BaseUI {
         String phoneNumber = Utils.getText(et_phone_number);
         String validateCode = Utils.getText(et_validate_code);
         String password = Utils.getText(et_password);
-        NetworkUtils.getNetworkUtils().register("1", phoneNumber, password, validateCode, nickName, new CommonCallBack<User>() {
+
+        if (TextUtils.isEmpty(mOpenId))
+            simpleRegister(phoneNumber, password, nickName, validateCode);
+        else
+            wechatRegister(phoneNumber, password, nickName, validateCode);
+
+    }
+
+
+    /**
+     * 一般注册
+     */
+    private void simpleRegister(String phoneNumber, String password, String nickName, String validateCode) {
+        NetworkUtils.getNetworkUtils().register(phoneNumber, password, validateCode, nickName, new CommonCallBack<User>() {
             @Override
             protected void onSuccess(User data) {
-                ToastUtils.showToast("注册成功");
-                UserManager.saveUser(data);
-                startActivity(new Intent(RegisterActivity.this, HomeTableUI.class));
+                handleRegisterResult(data);
             }
         });
+    }
+
+    /**
+     * 微信注册
+     */
+    private void wechatRegister(String phoneNumber, String password, String nickName, String validateCode) {
+        NetworkUtils.getNetworkUtils().wechatRegister(phoneNumber, password, validateCode, nickName, mOpenId, new CommonCallBack<User>() {
+            @Override
+            protected void onSuccess(User data) {
+                handleRegisterResult(data);
+            }
+        });
+    }
+
+    /**
+     * 处理注册结果
+     */
+    private void handleRegisterResult(User user) {
+        ToastUtils.showToast("注册成功");
+        UserManager.saveUser(user);
+        startActivity(new Intent(RegisterActivity.this, HomeTableUI.class));
     }
 
     private void sendValidateCode() {
@@ -120,6 +154,12 @@ public class RegisterActivity extends BaseUI {
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void toActivity(Context context, String openId) {
+        Intent intent = new Intent(context, RegisterActivity.class);
+        intent.putExtra("openId", openId);
         context.startActivity(intent);
     }
 
