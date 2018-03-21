@@ -2,7 +2,6 @@ package com.lengzhuo.xybh.pop;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +28,9 @@ import java.util.Map;
 
 
 /**
- * Created by yjyvi on 2017/9/21.
+ *
+ * @author yjyvi
+ * @date 2017/9/21
  */
 
 public class PopUtils {
@@ -38,13 +39,12 @@ public class PopUtils {
      * 返回的结果
      */
 
-    public static Map<Integer, String> valueList = new HashMap();
-    public static String valueId = "";
+    private static Map<Integer, String> valueList = new HashMap();
+    private static String valueId = "";
     private static GoodsSelectedStyleListener mClickListener;
     private static Map<Integer, Integer> lastAttrId = new HashMap<>();
-    private static Map<Integer, String> AttrName = new HashMap<>();
-    private static WxShareUtils sWxShareUtils;
-    public static Bitmap sBitmap;
+    private static Map<Integer, String> sAttrName = new HashMap<>();
+    private static Bitmap sBitmap;
 
     public static void showGoodsStyle2(final boolean isOne, final Activity context, View contentView, final GoodDetailsBean.DataBean dataBean, final GoodsSelectedStyleListener clickListener) {
 
@@ -54,12 +54,12 @@ public class PopUtils {
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.fragment_selected_style, null);
         final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
 
-        RecyclerView rv_style = (RecyclerView) layoutView.findViewById(R.id.rv_style);
+        RecyclerView rvStyle = (RecyclerView) layoutView.findViewById(R.id.rv_style);
 
         LinearLayoutManager layout = new LinearLayoutManager(context);
         layout.setAutoMeasureEnabled(true);
 
-        rv_style.setLayoutManager(layout);
+        rvStyle.setLayoutManager(layout);
         GoodStyleAdapter goodStyleAdapter = new GoodStyleAdapter(R.layout.item_selected_style, dataBean.getAttrList(), lastAttrId, new GoodStyleAdapter.ValueAttrListener() {
             @Override
             public void valueResult(int parentAttrId, int attrId, String result) {
@@ -72,7 +72,7 @@ public class PopUtils {
         });
 
 
-        rv_style.setAdapter(goodStyleAdapter);
+        rvStyle.setAdapter(goodStyleAdapter);
         popupWindow.setTouchable(true);
         showPoPNormal(context, contentView, popupWindow, Gravity.BOTTOM);
 
@@ -86,7 +86,7 @@ public class PopUtils {
         for (Map.Entry<Integer, String> integerStringEntry : valueList.entrySet()) {
             integerStringEntry.getValue();
             integerStringEntry.getKey();
-            valueId = valueId + ";" + valueList.get(integerStringEntry.getKey());
+            valueId = valueId.concat(";").concat(valueList.get(integerStringEntry.getKey()));
         }
 
         if (valueId.length() > 1) {
@@ -107,13 +107,13 @@ public class PopUtils {
 
         View layoutView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.item_normal_notify, null);
         final PopupWindow popupWindow = new PopupWindow(layoutView, AutoLinearLayout.LayoutParams.MATCH_PARENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT);
-        TextView tv_msg = (TextView) layoutView.findViewById(R.id.tv_msg);
-        TextView tv_commit = (TextView) layoutView.findViewById(R.id.tv_commit);
+        TextView tvMsg = (TextView) layoutView.findViewById(R.id.tv_msg);
+        TextView tvCommit = (TextView) layoutView.findViewById(R.id.tv_commit);
 
-        tv_msg.setText(msg);
-        tv_commit.setText(commitContent);
+        tvMsg.setText(msg);
+        tvCommit.setText(commitContent);
 
-        tv_commit.setOnClickListener(new View.OnClickListener() {
+        tvCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickListener.commitClick();
@@ -144,7 +144,7 @@ public class PopUtils {
      * @param contentView
      * @param popupWindow
      */
-    public static void showPoPNormal(final Activity context, View contentView, PopupWindow popupWindow, int location) {
+    private static void showPoPNormal(final Activity context, View contentView, PopupWindow popupWindow, int location) {
         //设置SelectPicPopupWindow弹出窗体可点击
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(false);
@@ -171,11 +171,12 @@ public class PopUtils {
 
         final View sharePhotoView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.item_share, null);
         final PopupWindow sharePopupWindow = new PopupWindow(sharePhotoView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout ll_wx_friend = (LinearLayout) sharePhotoView.findViewById(R.id.ll_wx_friend);
-        LinearLayout ll_wx = (LinearLayout) sharePhotoView.findViewById(R.id.ll_wx);
+        LinearLayout llWxFriend = (LinearLayout) sharePhotoView.findViewById(R.id.ll_wx_friend);
+        LinearLayout llWx = (LinearLayout) sharePhotoView.findViewById(R.id.ll_wx);
 
-        sWxShareUtils = WxShareUtils.getInstance(context);
+        final WxShareUtils wxShareUtils = WxShareUtils.getInstance(context.getApplicationContext());
 
+        //通过Glide加载封面图片URL --获取图片
         GlideApp.with(context).asBitmap().load(bitmapUrl).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
@@ -183,20 +184,20 @@ public class PopUtils {
             }
         });
 
-        ll_wx_friend.setOnClickListener(new View.OnClickListener() {
+        llWxFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sWxShareUtils.shareUrl(shareUrl, shareTitle, sBitmap, ShareContent, SendMessageToWX.Req.WXSceneTimeline);
+                wxShareUtils.shareUrl(shareUrl, shareTitle, sBitmap, ShareContent, SendMessageToWX.Req.WXSceneTimeline);
                 ToastUtils.showToast("分享到朋友圈");
                 sharePopupWindow.dismiss();
             }
         });
 
-        ll_wx.setOnClickListener(new View.OnClickListener() {
+        llWx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ToastUtils.showToast("分享到微信好友");
-                sWxShareUtils.shareUrl(shareUrl, shareTitle, sBitmap, ShareContent, SendMessageToWX.Req.WXSceneSession);
+                wxShareUtils.shareUrl(shareUrl, shareTitle, sBitmap, ShareContent, SendMessageToWX.Req.WXSceneSession);
                 sharePopupWindow.dismiss();
             }
         });
@@ -211,7 +212,7 @@ public class PopUtils {
      */
     public static void clearData() {
         lastAttrId.clear();
-        AttrName.clear();
+        sAttrName.clear();
 
         if (sBitmap != null) {
             sBitmap.recycle();
@@ -222,10 +223,18 @@ public class PopUtils {
      * 默认弹窗的回调
      */
     public interface NormalNotifyPopListener {
+        /**
+         * 点击事件回调
+         */
         void commitClick();
     }
 
     public interface GoodsSelectedStyleListener {
+        /**
+         * 选择结果回调
+         *
+         * @param result 返回的结果值
+         */
         void selectedResult(String result);
     }
 

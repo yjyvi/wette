@@ -3,7 +3,6 @@ package com.lengzhuo.xybh.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -102,7 +101,7 @@ public class HotWebUI extends BaseUI {
     private class JsInterface {
         private Context mContext;
 
-        public JsInterface(Context context) {
+        private JsInterface(Context context) {
             this.mContext = context;
         }
 
