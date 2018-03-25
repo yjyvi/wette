@@ -104,7 +104,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
         StatusBarUtils.MIUISetStatusBarLightMode(this, true);
         StatusBarUtils.FlymeSetStatusBarLightMode(getWindow(), true);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
             //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -123,7 +123,7 @@ public abstract class BaseUI extends AutoLayoutActivity {
                 ui &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             }
             decor.setSystemUiVisibility(ui);
-        }
+//        }
     }
 
     /**
