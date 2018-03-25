@@ -20,14 +20,14 @@ android {
     }
 
 
-    signingConfigs {
-        release {
-            keyAlias "xybh"
-            keyPassword "123456"
-            storeFile file("C:/my/privateProject/wette/xybh.jks")
-            storePassword "123456"
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias "xybh"
+//            keyPassword "123456"
+//            storeFile file("C:/my/privateProject/wette/xybh.jks")
+//            storePassword "123456"
+//        }
+//    }
 
 
 //    //打包后自动生成文件
@@ -49,13 +49,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //            signingConfig signingConfigs.release
             debuggable true
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
         release {
             minifyEnabled = false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 

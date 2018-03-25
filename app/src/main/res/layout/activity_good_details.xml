@@ -24,6 +24,14 @@
             android:layout_height="128px">
 
             <ImageView
+                    android:paddingTop="50px"
+                    android:id="@+id/iv_cart"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:src="@mipmap/home_cart"
+                    android:layout_height="wrap_content"/>
+
+            <ImageView
                 android:layout_toLeftOf="@id/iv_cart"
                 android:id="@+id/iv_share"
                 android:layout_width="wrap_content"
@@ -35,13 +43,6 @@
 
 
 
-            <ImageView
-                android:paddingTop="50px"
-                android:id="@+id/iv_cart"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:src="@mipmap/home_cart"
-                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
 
